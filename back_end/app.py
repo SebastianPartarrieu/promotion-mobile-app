@@ -11,7 +11,7 @@ with open("VERSION") as VERSION:
 
 # start flask service
 from flask import Flask, jsonify, request, Response
-app = Flask("kiva")
+app = Flask("promotion")
 
 # load configuration, fall back on environment
 from os import environ as ENV
@@ -31,6 +31,7 @@ db = anodb.DB(
 #
 # Request parameters as a dict, in json, form or args
 #
+
 PARAMS = {}
 
 def set_params():
