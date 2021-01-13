@@ -1,0 +1,2 @@
+-- cleanup data
+TRUNCATE Store;
