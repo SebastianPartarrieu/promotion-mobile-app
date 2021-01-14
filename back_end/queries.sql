@@ -34,4 +34,11 @@ JOIN Commerce AS c USING (cid)
 ORDER BY p.tdebut DESC
 LIMIT :nb;
 
-
+--name: get_commerce
+SELECT DISTINCT c.cnom, c.cpresentation, a.anom, c.code_postal, c.rue_and_num
+FROM Commerce AS c
+JOIN CommerceCategorie AS cc USING (cid)
+JOIN Categorie AS ca USING (catid)
+JOIN Agglomeration AS a USING (aid)
+WHERE a.anom LIKE :agg AND ca.catnom LIKE :cat
+ORDER BY 1;

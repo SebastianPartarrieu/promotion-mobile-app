@@ -125,9 +125,13 @@ def test_1():
     check_api('GET', '/promotion', 200, data={"nb": 3})
     check_api('GET', '/promotion', 200)
 
-# GET /client
-#def test_2():
- #   check_api('GET', '/client', 200, data={})
+# GET /commerce with filter for categories and agglomeration
+def test_2():
+   check_api('GET', '/commerce', 200, data={"categorie": "restaurant", "agglomeration": "Paris"})
+   check_api('GET', '/commerce', 200, data={"categorie": "restaurant"})
+   check_api('GET', '/commerce', 200, data={"agglomeration": "Paris"})
+   check_api('GET', '/commerce', 200)
+
 
 ### ACCOUNT RELATED QUERIES
 

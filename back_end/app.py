@@ -106,29 +106,33 @@ def get_version():
 
 # GET /promotion with filter for number returned and agglomeration
 @app.route("/promotion", methods=["GET"])
-def get_promotion_agg():
+def get_promotion():
     if PARAMS.get("nb", None) is None:
         if PARAMS.get("agglomeration", None) is None:
             res = db.get_promotion_all()
-            db.commit()
-            return jsonify(res)
         else:
             agglo = PARAMS.get("agglomeration", None)
             res = db.get_promotion_agg_all(agg=agglo)
-            db.commit()
-            return jsonify(res)
     else:
         nb = PARAMS.get("nb", None)
         agglo = PARAMS.get("agglomeration", None)
         if agglo is None:
             res = db.get_promotion_nb_all(nb=nb)
-            db.commit()
-            return jsonify(res)
         else:
             res = db.get_promotion_agg_nb(nb=nb, agg=agglo)
-            db.commit()
-            return jsonify(res)
+    db.commit()
+    return jsonify(res)
 
+# GET /commerce with filter for categorie and agglomeration
+# different approach than above; we don't treat individual cases
+# rather we will do the join anyway 
+@app.route("/commerce", methods=["GET"])
+def get_commerce():
+    cat = PARAMS.get("categorie", '%')
+    agglo = PARAMS.get("agglomeration", '%')
+    res = db.get_commerce(agg=agglo, cat=cat)
+    db.commit()
+    return jsonify(res)
 
 ### ACCOUNT RELATED QUERIES
 
