@@ -5,26 +5,29 @@ CREATE TABLE Agglomeration(aid SERIAL PRIMARY KEY,
 CREATE TABLE Categorie(catid SERIAL PRIMARY KEY,
                        catnom TEXT UNIQUE NOT NULL);
 
+-- no authentification yet for clients
 CREATE TABLE Client(clid SERIAL PRIMARY KEY,
-                    clnom TEXT NOT NULL,
-                    clpnom TEXT NOT NULL,
-                    clemail TEXT UNIQUE NOT NULL,
+                    clnom VARCHAR(32) NOT NULL,
+                    clpnom VARCHAR(32) NOT NULL,
+                    clemail VARCHAR(50) UNIQUE NOT NULL,
                     aid INTEGER NOT NULL REFERENCES Agglomeration);
 
 --CREATE TABLE Image(imid SERIAL PRIMARY KEY,  need to revisit  image database
 --                 im ByteARRAY);      
 
+-- no authentification yet for commerce either 
 CREATE TABLE Commerce(cid SERIAL PRIMARY KEY,
-                      cnom TEXT NOT NULL,
-                      cpresentation TEXT NOT NULL,
-                      url_ext TEXT,
+                      cnom VARCHAR(32) NOT NULL,
+                      cpresentation VARCHAR(400) NOT NULL,
+                      url_ext VARCHAR(150),
+                      code_postal INTEGER NOT NULL,
+                      rue_and_num TEXT NOT NULL,
+                      aid INTEGER NOT NULL REFERENCES Agglomeration,
+                      UNIQUE(cnom, cpresentation, code_postal, rue_and_num));
                       -- clocation GEOGRAPHY UNIQUE NOT NULL,
                       -- imid INTEGER NOT NULL REFERENCES Image,  
                       -- mdp TEXT NOT NULL,
-                      code_postal INTEGER NOT NULL,
-                      rue_num TEXT NOT NULL,
-                      aid INTEGER NOT NULL REFERENCES Agglomeration,
-                      UNIQUE (cnom, mdp));
+                      --UNIQUE (cnom, mdp));
 
 CREATE TABLE CommerceCategorie(cid INTEGER NOT NULL REFERENCES Commerce,
                                catid INTEGER NOT NULL REFERENCES Categorie,
@@ -33,9 +36,9 @@ CREATE TABLE CommerceCategorie(cid INTEGER NOT NULL REFERENCES Commerce,
 CREATE TABLE Promotion(pid SERIAL PRIMARY KEY,
                        cid INTEGER NOT NULL REFERENCES Commerce,
                        -- imid INTEGER NOT NULL REFERENCES Image,
-                       pdescription TEXT NOT NULL,
-                       tdebut TIMESTAMP,
-                       tfin TIMESTAMP);
+                       pdescription VARCHAR(400) NOT NULL,
+                       tdebut DATE,
+                       tfin DATE);
 
 CREATE TABLE ClientCategorie(clid INTEGER NOT NULL REFERENCES Client,
                              catid INTEGER NOT NULL REFERENCES Categorie,

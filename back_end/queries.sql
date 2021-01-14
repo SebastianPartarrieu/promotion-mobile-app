@@ -4,29 +4,34 @@
 -- name: now
 SELECT CURRENT_TIMESTAMP;
 
---name: get_store_all
-SELECT key, val FROM Store ORDER BY 1;
+--name: get_promotion_all
+SELECT DISTINCT p.pid, p.pdescription, c.cnom, p.tdebut 
+FROM Promotion AS p
+JOIN Commerce AS c USING (cid)
+ORDER BY p.tdebut DESC;
 
---name: post_store!
-INSERT INTO Store VALUES (:mykey, :myval);
+--name: get_promotion_agg_all
+SELECT DISTINCT p.pid, p.pdescription, c.cnom, p.tdebut
+FROM Promotion AS p
+JOIN Commerce AS c USING (cid)
+JOIN Agglomeration AS a USING (aid)
+WHERE a.anom = :agg
+ORDER BY p.tdebut DESC;
 
---name: delete_store!
-DELETE FROM Store;
+--name: get_promotion_agg_nb
+SELECT DISTINCT p.pid, p.pdescription, c.cnom, p.tdebut
+FROM Promotion AS p
+JOIN Commerce AS c USING (cid)
+JOIN Agglomeration AS a USING (aid)
+WHERE a.anom = :agg 
+ORDER BY p.tdebut DESC
+LIMIT :nb;
 
---name: get_store_filter
-SELECT key, val FROM Store
-WHERE key LIKE :myfilter;
+--name: get_promotion_nb_all
+SELECT DISTINCT p.pid, p.pdescription, c.cnom, p.tdebut
+FROM Promotion AS p
+JOIN Commerce AS c USING (cid)
+ORDER BY p.tdebut DESC
+LIMIT :nb;
 
---name: delete_store_filter!
-DELETE FROM Store 
-WHERE key LIKE :myfilter;
 
---name: get_store_key
-SELECT val FROM Store WHERE key = :mykey;
-
---name: patch_value_with_key!
-UPDATE Store SET val = :myval WHERE key = :mykey;
-
---name: delete_store_key!
-DELETE FROM Store 
-WHERE key = :mykey;

@@ -101,3 +101,39 @@ def get_version():
             "now": now,
         }
     )
+
+### FRONT PAGE QUERIES 
+
+# GET /promotion with filter for number returned and agglomeration
+@app.route("/promotion", methods=["GET"])
+def get_promotion_agg():
+    if PARAMS.get("nb", None) is None:
+        if PARAMS.get("agglomeration", None) is None:
+            res = db.get_promotion_all()
+            db.commit()
+            return jsonify(res)
+        else:
+            agglo = PARAMS.get("agglomeration", None)
+            res = db.get_promotion_agg_all(agg=agglo)
+            db.commit()
+            return jsonify(res)
+    else:
+        nb = PARAMS.get("nb", None)
+        agglo = PARAMS.get("agglomeration", None)
+        if agglo is None:
+            res = db.get_promotion_nb_all(nb=nb)
+            db.commit()
+            return jsonify(res)
+        else:
+            res = db.get_promotion_agg_nb(nb=nb, agg=agglo)
+            db.commit()
+            return jsonify(res)
+
+
+### ACCOUNT RELATED QUERIES
+
+### INTERACTION WITH FRONT PAGE
+
+### SECOND PAGE - MAP - QUERIES
+
+### THIRD PAGE - LISTS - QUERIES 

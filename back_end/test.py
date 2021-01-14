@@ -18,7 +18,7 @@ from typing import Dict, Union, Tuple
 URL = ENV.get('APP_URL', 'http://0.0.0.0:5000')
 
 # real (or fake) authentication
-ADMIN, WRITE, READ, NONE = 'kiva', 'calvin', 'hobbes', 'moe'
+ADMIN, WRITE, READ, NONE = 'promotion', 'calvin', 'hobbes', 'moe'
 AUTH: Dict[str, Union[str, None]] = {}
 if 'APP_AUTH' in ENV:
     # we are running with a real server with authentication
@@ -105,11 +105,34 @@ def test_whatever():
 # /version
 def test_version():
     # only GET is implemented
-    check_api('GET', '/version', 200, '"kiva"', login=ADMIN)
-    check_api('GET', '/version', 200, '"kiva"', login=WRITE)
-    check_api('GET', '/version', 200, '"kiva"', login=READ)
+    check_api('GET', '/version', 200, '"promotion"', login=ADMIN)
+    check_api('GET', '/version', 200, '"promotion"', login=WRITE)
+    check_api('GET', '/version', 200, '"promotion"', login=READ)
     # check_api('GET', '/version', 403, '"kiva"', login=NONE)
     check_api('POST', '/version', 405)
     check_api('DELETE', '/version', 405)
     check_api('PUT', '/version', 405)
     check_api('PATCH', '/version', 405)
+
+
+### FRONT PAGE QUERIES 
+
+# GET /promotion with filter for number of promotions returned and for agglomeration
+def test_1():
+    check_api('GET', '/promotion', 200, data={"nb": 3, "agglomeration": "Paris"})
+    check_api('GET', '/promotion', 200, data={"agglomeration": "Paris"})
+    check_api('GET', '/promotion', 200, data={"nb": 3, "agglomeration": "Caen"})
+    check_api('GET', '/promotion', 200, data={"nb": 3})
+    check_api('GET', '/promotion', 200)
+
+# GET /client
+#def test_2():
+ #   check_api('GET', '/client', 200, data={})
+
+### ACCOUNT RELATED QUERIES
+
+### INTERACTION WITH FRONT PAGE
+
+### SECOND PAGE - MAP - QUERIES
+
+### THIRD PAGE - LISTS - QUERIES 
