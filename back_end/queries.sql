@@ -50,3 +50,6 @@ WHERE clid = :clid;
 
 --name: post_client_info!
 INSERT INTO Client(clnom, clpnom, clemail, aid) VALUES (:clnom, :clpnom, :clemail, :aid);
+
+--name: patch_client_nom!
+UPDATE Client(clnom)

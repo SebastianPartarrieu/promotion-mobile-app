@@ -110,7 +110,7 @@ def get_version():
 # GET /promotion with filter for number returned and agglomeration
 @app.route("/promotion", methods=["GET"])
 def get_promotion():
-    if PARAMS.get("nb", None) is None:
+    if PARAMS.get("nb", None) is None: 
         if PARAMS.get("agglomeration", None) is None:
             res = db.get_promotion_all()
         else:
@@ -146,13 +146,24 @@ def get_client_info(clid):
     db.commit()
     return jsonify(res)
 
-#@app.route('/client/<int:clid>', methods=["PATCH"])
-#def patch_client_info(clid):
-
+@app.route('/client/<int:clid>', methods=["PATCH"])
+def patch_client_info(clid):
+    clnom, clpnom = PARAMS.get("clnom", None), PARAMS.get("clpnom", None), 
+    clemail, aid = PARAMS.get("clemail", None), PARAMS.get("aid", None)
+    if clnom != None:
+        db.patch_client_nom(clnom=clnom), clid=clid
+    if clpnom != None:
+        db.patch_client_pnmo(clpnom=clpnom, clid=clid)
+    if clemail != None:
+        db.patch_client_email(clemail=clemail, clid=clid)
+    if aid != None:
+        db.patch_client_aid(aid=aid, clid=clid)
+    db.commit()
+    return Response(status=201)
 
 @app.route('/client', methods=["POST"])
 def post_client_info():
-    #authentication check that query coming from app?
+    #authentication check that query coming fro&m app?
     clnom, clpnom = PARAMS.get("clnom", None), PARAMS.get("clpnom", None), 
     clemail, aid = PARAMS.get("clemail", None), PARAMS.get("aid", None)
     db.post_client_info(clnom=clnom, clpnom=clpnom, clemail=clemail, aid=aid)
