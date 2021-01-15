@@ -21,7 +21,7 @@ CREATE TABLE Commerce(cid SERIAL PRIMARY KEY,
                       cpresentation VARCHAR(400) NOT NULL,
                       url_ext VARCHAR(150),
                       code_postal INTEGER NOT NULL,
-                      rue_and_num TEXT NOT NULL,
+                      rue_and_num VARCHAR(100) NOT NULL,
                       aid INTEGER NOT NULL REFERENCES Agglomeration,
                       UNIQUE(cnom, cpresentation, code_postal, rue_and_num));
                       -- clocation GEOGRAPHY UNIQUE NOT NULL,

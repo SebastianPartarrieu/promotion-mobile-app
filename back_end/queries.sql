@@ -42,3 +42,11 @@ JOIN Categorie AS ca USING (catid)
 JOIN Agglomeration AS a USING (aid)
 WHERE a.anom LIKE :agg AND ca.catnom LIKE :cat
 ORDER BY 1;
+
+--name: get_client_info
+SELECT clnom, clpnom, clemail, aid
+FROM Client 
+WHERE clid = :clid;
+
+--name: post_client_info!
+INSERT INTO Client(clnom, clpnom, clemail, aid) VALUES (:clnom, :clpnom, :clemail, :aid);

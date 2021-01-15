@@ -16,6 +16,9 @@ app = Flask("promotion")
 # load configuration, fall back on environment
 from os import environ as ENV
 
+# will be used later 
+from werkzeug.security import generate_password_hash, check_password_hash
+
 if "APP_CONFIG" in ENV:
     app.config.from_envvar("APP_CONFIG")
     CONF = app.config  # type: ignore
@@ -134,7 +137,29 @@ def get_commerce():
     db.commit()
     return jsonify(res)
 
+
 ### ACCOUNT RELATED QUERIES
+@app.route('/client/<int:clid>', methods=["GET"])
+def get_client_info(clid):
+    # authentication checks required 
+    res = db.get_client_info(clid=clid)
+    db.commit()
+    return jsonify(res)
+
+#@app.route('/client/<int:clid>', methods=["PATCH"])
+#def patch_client_info(clid):
+
+
+@app.route('/client', methods=["POST"])
+def post_client_info():
+    #authentication check that query coming from app?
+    clnom, clpnom = PARAMS.get("clnom", None), PARAMS.get("clpnom", None), 
+    clemail, aid = PARAMS.get("clemail", None), PARAMS.get("aid", None)
+    db.post_client_info(clnom=clnom, clpnom=clpnom, clemail=clemail, aid=aid)
+    db.commit()
+    return Response(status=201)
+
+
 
 ### INTERACTION WITH FRONT PAGE
 

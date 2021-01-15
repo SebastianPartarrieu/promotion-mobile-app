@@ -132,8 +132,11 @@ def test_2():
    check_api('GET', '/commerce', 200, data={"agglomeration": "Paris"})
    check_api('GET', '/commerce', 200)
 
-
 ### ACCOUNT RELATED QUERIES
+def test_3():
+    check_api('GET', '/client/1', 200)
+    check_api('POST', '/client', 201, data={"clnom": "Partarrieu", "clpnom": "Sebastian", "clemail": "s.a.partarrieu@gmail.com", "aid": 3})
+
 
 ### INTERACTION WITH FRONT PAGE
 
