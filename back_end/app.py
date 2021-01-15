@@ -146,29 +146,33 @@ def get_client_info(clid):
     db.commit()
     return jsonify(res)
 
-@app.route('/client/<int:clid>', methods=["PATCH"])
+@app.route('/client/<int:clid>', methods=["PATCH", "PUT"])
 def patch_client_info(clid):
-    clnom, clpnom = PARAMS.get("clnom", None), PARAMS.get("clpnom", None), 
+    clnom, clpnom = PARAMS.get("clnom", None), PARAMS.get("clpnom", None)
     clemail, aid = PARAMS.get("clemail", None), PARAMS.get("aid", None)
     if clnom != None:
-        db.patch_client_nom(clnom=clnom), clid=clid
-    if clpnom != None:
-        db.patch_client_pnmo(clpnom=clpnom, clid=clid)
-    if clemail != None:
-        db.patch_client_email(clemail=clemail, clid=clid)
-    if aid != None:
+        db.patch_client_nom(clnom=clnom, clid=clid)
+    elif clpnom != None:
+        db.patch_client_pnom(clpnom=clpnom, clid=clid)
+    elif clemail != None:
+        db.patch_client_clemail(clemail=clemail, clid=clid)
+    elif aid != None:
         db.patch_client_aid(aid=aid, clid=clid)
     db.commit()
     return Response(status=201)
 
 @app.route('/client', methods=["POST"])
 def post_client_info():
-    #authentication check that query coming fro&m app?
+    #authentication check that query coming from app?
     clnom, clpnom = PARAMS.get("clnom", None), PARAMS.get("clpnom", None), 
     clemail, aid = PARAMS.get("clemail", None), PARAMS.get("aid", None)
-    db.post_client_info(clnom=clnom, clpnom=clpnom, clemail=clemail, aid=aid)
-    db.commit()
-    return Response(status=201)
+    clmdp = PARAMS.get("clmdp", None)
+    try: #catch the exception if the client already exists in the database
+        db.post_client_info(clnom=clnom, clpnom=clpnom, clemail=clemail, aid=aid, clmdp=clmdp)
+        db.commit()
+        return Response(status=201)
+    except:
+        return Response(status=400)
 
 
 

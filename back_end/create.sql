@@ -10,7 +10,9 @@ CREATE TABLE Client(clid SERIAL PRIMARY KEY,
                     clnom VARCHAR(32) NOT NULL,
                     clpnom VARCHAR(32) NOT NULL,
                     clemail VARCHAR(50) UNIQUE NOT NULL,
-                    aid INTEGER NOT NULL REFERENCES Agglomeration);
+                    clmdp VARCHAR(100) NOT NULL,
+                    aid INTEGER NOT NULL REFERENCES Agglomeration,
+                    UNIQUE(clemail, clmdp));
 
 --CREATE TABLE Image(imid SERIAL PRIMARY KEY,  need to revisit  image database
 --                 im ByteARRAY);      
@@ -19,14 +21,16 @@ CREATE TABLE Client(clid SERIAL PRIMARY KEY,
 CREATE TABLE Commerce(cid SERIAL PRIMARY KEY,
                       cnom VARCHAR(32) NOT NULL,
                       cpresentation VARCHAR(400) NOT NULL,
+                      cemail VARCHAR(100) UNIQUE NOT NULL,
                       url_ext VARCHAR(150),
                       code_postal INTEGER NOT NULL,
                       rue_and_num VARCHAR(100) NOT NULL,
                       aid INTEGER NOT NULL REFERENCES Agglomeration,
-                      UNIQUE(cnom, cpresentation, code_postal, rue_and_num));
-                      -- clocation GEOGRAPHY UNIQUE NOT NULL,
+                      cmdp VARCHAR(100) NOT NULL,
+                      UNIQUE(cnom, cpresentation, code_postal, rue_and_num),
+                      UNIQUE(cemail, cmdp));
                       -- imid INTEGER NOT NULL REFERENCES Image,  
-                      -- mdp TEXT NOT NULL,
+                      -- clocation GEOGRAPHY UNIQUE NOT NULL,
                       --UNIQUE (cnom, mdp));
 
 CREATE TABLE CommerceCategorie(cid INTEGER NOT NULL REFERENCES Commerce,

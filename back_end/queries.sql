@@ -5,7 +5,7 @@
 SELECT CURRENT_TIMESTAMP;
 
 --name: get_promotion_all
-SELECT DISTINCT p.pid, p.pdescription, c.cnom, p.tdebut 
+SELECT DISTINCT p.pid, p.pdescription, c.cnom, p.tdebut
 FROM Promotion AS p
 JOIN Commerce AS c USING (cid)
 ORDER BY p.tdebut DESC;
@@ -49,7 +49,16 @@ FROM Client
 WHERE clid = :clid;
 
 --name: post_client_info!
-INSERT INTO Client(clnom, clpnom, clemail, aid) VALUES (:clnom, :clpnom, :clemail, :aid);
+INSERT INTO Client(clnom, clpnom, clemail, aid, clmdp) VALUES (:clnom, :clpnom, :clemail, :aid, :clmdp);
 
 --name: patch_client_nom!
-UPDATE Client(clnom)
+UPDATE Client SET clnom = :clnom WHERE clid = :clid;
+
+--name: patch_client_pnom!
+UPDATE Client SET clpnom = :clpnom WHERE clid = :clid;
+
+--name: patch_client_clemail!
+UPDATE Client SET clemail = :clemail WHERE clid = :clid;
+
+--name: patch_client_aid!
+UPDATE Client SET aid = :aid WHERE clid = :clid;

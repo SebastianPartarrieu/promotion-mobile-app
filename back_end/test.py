@@ -115,6 +115,7 @@ def test_version():
     check_api('PATCH', '/version', 405)
 
 
+
 ### FRONT PAGE QUERIES 
 
 # GET /promotion with filter for number of promotions returned and for agglomeration
@@ -133,10 +134,12 @@ def test_2():
    check_api('GET', '/commerce', 200)
 
 ### ACCOUNT RELATED QUERIES
-def test_3():
+def test_3():   
     check_api('GET', '/client/1', 200)
-    check_api('POST', '/client', 201, data={"clnom": "Partarrieu", "clpnom": "Sebastian", "clemail": "s.a.partarrieu@gmail.com", "aid": 3})
-
+    check_api('POST', '/client', 201, data={"clnom": "Partarrieu", "clpnom": "Sebastian", "clemail": "s.a.partarrieu@gmail.com", "aid": 3, "clmdp": "pass"})
+    check_api('POST', '/client', 400, data={"clnom": "Partarrieu", "clpnom": "Sebastian", "clemail": "s.a.partarrieu@gmail.com", "aid": 3, "clmdp": "pass"})
+    check_api('PATCH', '/client/1', 201, data={'clpnom': 'Mike'})
+    check_api('PUT', '/client/2', 201, data={"clpnom": "Eddy", "clnom": "Coddd", "aid": 1, "clemail": "junk@email.com", "clmdp": "theman"})
 
 ### INTERACTION WITH FRONT PAGE
 
