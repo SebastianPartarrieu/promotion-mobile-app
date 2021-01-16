@@ -1,0 +1,65 @@
+Metadata-Version: 2.1
+Name: anodb
+Version: 1.3.1
+Summary: Convenient Wrapper around AnoSQL and a Database Connection
+Home-page: https://github.com/zx80/anodb
+Author: Fabien Coelho
+Author-email: ano.db@coelho.net
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: SQL
+Classifier: Topic :: Database :: Front-Ends
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Description-Content-Type: text/markdown
+Requires-Dist: anosql (>=1.0.0)
+
+# AnoDB
+
+Convenient Wrapper around [anosql](https://github.com/honza/anosql)
+and a [Database Connection](https://www.python.org/dev/peps/pep-0249).
+
+## Description
+
+This class creates a persistent database connection and imports
+SQL queries from a file.
+
+## Example
+
+```Python
+import anodb
+db = anodb.DB('sqlite3', 'test.db', 'test.sql')
+
+db.do_some_insert(key=1, val='hello')
+res = db.do_some_update(key=1, val='world')
+db.commit()
+
+db.close()
+```
+
+## Versions
+
+### 1.3
+
+Make `options` accept different types.
+
+Make `queries` optional, and allow to load from files or strings.
+
+### 1.2
+
+Add `options` string parameter to constructor.
+
+### 1.1
+
+Add `**conn_options` parameter to constructor.
+
+Add `cursor()` method.
+
+### 1.0
+
+Initial release.
+
+
