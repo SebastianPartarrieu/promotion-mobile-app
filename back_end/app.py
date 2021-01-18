@@ -125,6 +125,7 @@ def get_promotion():
             res = db.get_promotion_agg_nb(nb=nb, agg=agglo)
     db.commit()
     return jsonify(res)
+#filter by categories?
 
 # GET /commerce with filter for categorie and agglomeration
 # different approach than above; we don't treat individual cases
@@ -160,6 +161,7 @@ def patch_client_info(clid):
         db.patch_client_aid(aid=aid, clid=clid)
     db.commit()
     return Response(status=201)
+## mais ca change pas les autres si une la premiere n est pas none? il faut eliminer elif?
 
 @app.route('/signup', methods=["POST"])
 def post_client_info():
@@ -193,3 +195,72 @@ def check_client_get_clid():
 ### SECOND PAGE - MAP - QUERIES
 
 ### THIRD PAGE - LISTS - QUERIES 
+
+### commerce interface
+
+@app.route('/commerce/<int:cid>', methods=["GET"])
+def get_commerce_info(cid):
+    # authentication checks required 
+    res = db.get_commerce_info(cid=cid)
+    db.commit()
+    return jsonify(res)
+#curl -i -X GET http://0.0.0.0:5000/commerce/1
+
+
+@app.route('/commerce/<int:cid>', methods=["PATCH", "PUT"])
+def patch_commerce_info(cid):
+    cnom, cpresentation = PARAMS.get("cnom", None), PARAMS.get("cpresentation", None)
+    cemail, aid = PARAMS.get("cemail", None), PARAMS.get("aid", None)
+    url_ext, code_postal = PARAMS.get("url_ext", None), PARAMS.get("code_postal", None)
+    rue_and_num = PARAMS.get("rue_and_num", None)
+    catnom=PARAMS.get("catnom", None)
+    ## catnom=Restaurant,Textile
+    if cnom != None:
+        db.patch_commerce_nom(cnom=cnom, cid=cid)
+    if cpresentation != None:
+        db.patch_commerce_cpresentation(cpresentation=cpresentation, cid=cid)
+    if cemail != None:
+        db.patch_commerce_cemail(cemail=cemail, cid=cid)
+    if aid != None:
+        db.patch_commerce_aid(aid=aid, cid=cid)
+    if url_ext != None:
+        db.patch_commerce_url_ext(url_ext=url_ext, cid=cid)
+    if  code_postal != None:
+        db.patch_commerce_code_postal(code_postal=code_postal, cid=cid)
+    if rue_and_num != None:
+        db.patch_commerce_rue_and_num(rue_and_num=rue_and_num, cid=cid)
+    if catnom != None:
+        db.delete_commerce_categorie(cid=cid)
+        db.commit()
+        catnom=catnom.split(",")
+        for x in catnom:
+            db.post_commerce_categorie(catnom=x, cid=cid)
+    db.commit()
+    return Response(status=201)
+#curl -i -X PATCH -d cnom=zara -d cpresentation=casual -d cemail=zara@hotmail.com -d aid=1 -d cmdp=zarapassword -d rue_and_num=270 rue saint jacques -d code_postal=75005 -d url_ext=xyz -d catnom=Textile,Restaurant http://0.0.0.0:5000/commerce/1
+
+@app.route('/commerce', methods=["POST"])
+def post_commerce_info():
+    #authentication check that query coming from app?
+    cnom, cpresentation = PARAMS.get("cnom", None), PARAMS.get("cpresentation", None)
+    cemail, aid = PARAMS.get("cemail", None), int(PARAMS.get("aid", None))
+    url_ext, code_postal = PARAMS.get("url_ext", None), int(PARAMS.get("code_postal", None))
+    rue_and_num = PARAMS.get("rue_and_num", None)
+    cmdp = PARAMS.get("cmdp", None)
+    catnom=PARAMS.get("catnom", None)
+
+    try: #catch the exception if the commerce already exists in the database
+        res=db.post_commerce_info(cnom= cnom, cpresentation= cpresentation, cemail= cemail, aid= aid, cmdp= cmdp, rue_and_num= rue_and_num, code_postal= code_postal, url_ext= url_ext, catnom= catnom)
+        db.commit()
+       # return(repr(res))
+        p = int(res[0][0])
+        if "catnom" in PARAMS:
+            catnom=catnom.split(",")
+            for x in catnom:
+                db.post_commerce_categorie(catnom=x, cid=p)
+                db.commit()
+            return jsonify(res[0][0])
+    except Exception as e:
+        #return str(e)
+        return Response(status=400)
+

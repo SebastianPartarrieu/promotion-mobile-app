@@ -1,0 +1,34 @@
+\d
+curl -i http://0.0.0.0:5000/store
+make stop
+q
+\q
+select *
+q
+quit
+/q
+\q
+Store
+\q
+\q
+\l
+\c kiva
+\dt
+select * from store;
+psql kiva
+cd data
+select * from store;
+\q
+\?
+kiva
+psql kiva
+\q
+\l
+\c promotion
+select * from Commerce
+;
+\q
+l
+ls
+\l
+\s promotion

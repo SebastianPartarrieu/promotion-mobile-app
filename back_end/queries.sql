@@ -35,7 +35,7 @@ ORDER BY p.tdebut DESC
 LIMIT :nb;
 
 --name: get_commerce
-SELECT DISTINCT c.cnom, c.cpresentation, a.anom, c.code_postal, c.rue_and_num
+SELECT c.cnom, c.cpresentation, a.anom, c.code_postal, c.rue_and_num
 FROM Commerce AS c
 JOIN CommerceCategorie AS cc USING (cid)
 JOIN Categorie AS ca USING (catid)
@@ -66,3 +66,44 @@ UPDATE Client SET aid = :aid WHERE clid = :clid;
 --name: fetch_login_client
 SELECT clid, clemail, clmdp FROM Client
 WHERE clemail = :clemail;
+
+--name: get_commerce_info
+SELECT cnom, cpresentation, cemail, url_ext, code_postal, rue_and_num, aid, catnom
+FROM Commerce 
+join CommerceCategorie using (cid)
+join Categorie using (catid)
+WHERE cid = :cid;
+
+--name: patch_commerce_cpresentation!
+UPDATE Commerce SET cpresentation = :cpresentation WHERE cid = :cid;
+
+--name: patch_commerce_nom!
+UPDATE Commerce SET cnom = :cnom WHERE cid = :cid;
+
+--name: patch_commerce_cemail!
+UPDATE Commerce SET cemail = :cemail WHERE cid = :cid;
+
+--name: patch_commerce_url_ext!
+UPDATE Commerce SET url_ext = :url_ext WHERE cid = :cid;
+
+--name: patch_commerce_code_postal!
+UPDATE Commerce SET code_postal = :code_postal WHERE cid = :cid;
+
+--name: patch_commerce_rue_and_num!
+UPDATE Commerce SET rue_and_num = :rue_and_num WHERE cid = :cid;
+
+--name: patch_commerce_aid!
+UPDATE Commerce SET aid = :aid WHERE cid = :cid;
+
+--name: patch_commerce_catnom!
+UPDATE CommerceCategorie SET catnom = :catnom WHERE cid = :cid;
+
+--name: post_commerce_info
+INSERT INTO Commerce (cnom, cpresentation, code_postal, rue_and_num, aid, cmdp, cemail, url_ext) 
+VALUES (:cnom, :cpresentation, :code_postal, :rue_and_num, :aid, :cmdp, :cemail, :url_ext) returning cid;
+
+--name: post_commerce_categorie!
+INSERT INTO CommerceCategorie (cid, catid) values (:cid, (select catid from Categorie where catnom=:catnom));
+
+--name: delete_commerce_categorie!
+DELETE from CommerceCategorie where cid=1;

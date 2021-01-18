@@ -13,6 +13,7 @@ CREATE TABLE Client(clid SERIAL PRIMARY KEY,
                     clmdp VARCHAR(100) NOT NULL,
                     aid INTEGER NOT NULL REFERENCES Agglomeration,
                     UNIQUE(clemail, clmdp));
+-- unique pour l'email?
 
 --CREATE TABLE Image(imid SERIAL PRIMARY KEY,  need to revisit  image database
 --                 im ByteARRAY);      
