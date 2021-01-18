@@ -62,3 +62,7 @@ UPDATE Client SET clemail = :clemail WHERE clid = :clid;
 
 --name: patch_client_aid!
 UPDATE Client SET aid = :aid WHERE clid = :clid;
+
+--name: fetch_login_client
+SELECT clid, clemail, clmdp FROM Client
+WHERE clemail = :clemail;
