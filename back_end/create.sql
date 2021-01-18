@@ -15,8 +15,7 @@ CREATE TABLE Client(clid SERIAL PRIMARY KEY,
                     UNIQUE(clemail, clmdp));
 -- unique pour l'email?
 
---CREATE TABLE Image(imid SERIAL PRIMARY KEY,  need to revisit  image database
---                 im ByteARRAY);      
+--CREATE TABLE Image(imid SERIAL PRIMARY KEY,  imnom TUNN, rank, cid INNR Commerce);      
 
 -- no authentification yet for commerce either 
 CREATE TABLE Commerce(cid SERIAL PRIMARY KEY,

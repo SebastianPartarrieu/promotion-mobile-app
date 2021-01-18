@@ -144,7 +144,9 @@ def test_3():
 
 def test_4():
     check_api('GET', '/login', 200, data={"clemail": "s.a.partarrieu@gmail.com", "clmdp": "pass"})
-    check_api('GET', '/login', 200, data={"clemail": "s.a.partarrieu@gmail.com", "clmdp": "passworddd"})
+    check_api('GET', '/login', 401, data={"clemail": "s.a.partarrieu@gmail.com", "clmdp": "passworddd"})
+
+
 ### INTERACTION WITH FRONT PAGE
 
 ### SECOND PAGE - MAP - QUERIES

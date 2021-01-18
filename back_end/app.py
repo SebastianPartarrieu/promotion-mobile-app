@@ -110,22 +110,19 @@ def get_version():
 # GET /promotion with filter for number returned and agglomeration
 @app.route("/promotion", methods=["GET"])
 def get_promotion():
-    if PARAMS.get("nb", None) is None: 
-        if PARAMS.get("agglomeration", None) is None:
-            res = db.get_promotion_all()
-        else:
-            agglo = PARAMS.get("agglomeration", None)
-            res = db.get_promotion_agg_all(agg=agglo)
+    cat = PARAMS.get("categorie", '%')
+    agglo = PARAMS.get("agglomeration", '%')
+    nb = PARAMS.get("nb", 100) #arbitraire
+    cat = cat.split(',')
+    if len(cat) == 1:
+        res = db.get_promotion(agg=agglo, nb=nb, cat=cat[0])
     else:
-        nb = PARAMS.get("nb", None)
-        agglo = PARAMS.get("agglomeration", None)
-        if agglo is None:
-            res = db.get_promotion_nb_all(nb=nb)
-        else:
-            res = db.get_promotion_agg_nb(nb=nb, agg=agglo)
+        res = []
+        for x in cat:
+            res.append(db.get_promotion(agg=agglo, nb=nb, cat=x))
     db.commit()
     return jsonify(res)
-#filter by categories?
+
 
 # GET /commerce with filter for categorie and agglomeration
 # different approach than above; we don't treat individual cases
@@ -153,15 +150,15 @@ def patch_client_info(clid):
     clemail, aid = PARAMS.get("clemail", None), PARAMS.get("aid", None)
     if clnom != None:
         db.patch_client_nom(clnom=clnom, clid=clid)
-    elif clpnom != None:
+    if clpnom != None:
         db.patch_client_pnom(clpnom=clpnom, clid=clid)
-    elif clemail != None:
+    if clemail != None:
         db.patch_client_clemail(clemail=clemail, clid=clid)
-    elif aid != None:
+    if aid != None:
         db.patch_client_aid(aid=aid, clid=clid)
     db.commit()
     return Response(status=201)
-## mais ca change pas les autres si une la premiere n est pas none? il faut eliminer elif?
+
 
 @app.route('/signup', methods=["POST"])
 def post_client_info():
@@ -185,8 +182,9 @@ def check_client_get_clid():
     else:
         res = list(db.fetch_login_client(clemail=clemail))
         db.commit()
-        #will have to work with hashed passwords later on
-        if check_password_hash(clmdp, res[0][2]):
+        app.logger.debug(res)
+        app.logger.debug(clmdp)
+        if check_password_hash(res[0][2], clmdp):
             return jsonify(res[0][0])
         else:
             return Response(status=401)
@@ -247,7 +245,7 @@ def post_commerce_info():
     cemail, aid = PARAMS.get("cemail", None), int(PARAMS.get("aid", None))
     url_ext, code_postal = PARAMS.get("url_ext", None), int(PARAMS.get("code_postal", None))
     rue_and_num = PARAMS.get("rue_and_num", None)
-    cmdp = PARAMS.get("cmdp", None)
+    cmdp = generate_password_hash(PARAMS.get("cmdp", None))
     catnom=PARAMS.get("catnom", None)
 
     try: #catch the exception if the commerce already exists in the database
