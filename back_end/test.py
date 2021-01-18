@@ -136,11 +136,15 @@ def test_2():
 ### ACCOUNT RELATED QUERIES
 def test_3():   
     check_api('GET', '/client/1', 200)
-    check_api('POST', '/client', 201, data={"clnom": "Partarrieu", "clpnom": "Sebastian", "clemail": "s.a.partarrieu@gmail.com", "aid": 3, "clmdp": "pass"})
-    check_api('POST', '/client', 400, data={"clnom": "Partarrieu", "clpnom": "Sebastian", "clemail": "s.a.partarrieu@gmail.com", "aid": 3, "clmdp": "pass"})
+    check_api('POST', '/signup', 201, data={"clnom": "Partarrieu", "clpnom": "Sebastian", "clemail": "s.a.partarrieu@gmail.com", "aid": 3, "clmdp": "pass"})
+    check_api('POST', '/signup', 400, data={"clnom": "Partarrieu", "clpnom": "Sebastian", "clemail": "s.a.partarrieu@gmail.com", "aid": 3, "clmdp": "pass"})
     check_api('PATCH', '/client/1', 201, data={'clpnom': 'Mike'})
     check_api('PUT', '/client/2', 201, data={"clpnom": "Eddy", "clnom": "Coddd", "aid": 1, "clemail": "junk@email.com", "clmdp": "theman"})
 
+
+def test_4():
+    check_api('GET', '/login', 200, data={"clemail": "mstonebraker@turing.org", "clmdp": "password"})
+    check_api('GET', '/login', 401, data="clemail": "mstonebraker@turing.org", "clmdp": "passworddd"})
 ### INTERACTION WITH FRONT PAGE
 
 ### SECOND PAGE - MAP - QUERIES

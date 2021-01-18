@@ -163,7 +163,7 @@ def patch_client_info(clid):
     return Response(status=201)
 ## mais ca change pas les autres si une la premiere n est pas none? il faut eliminer elif?
 
-@app.route('/client', methods=["POST"])
+@app.route('/signup', methods=["POST"])
 def post_client_info():
     #authentication check that query coming from app?
     clnom, clpnom = PARAMS.get("clnom", None), PARAMS.get("clpnom", None), 
@@ -176,6 +176,19 @@ def post_client_info():
     except:
         return Response(status=400)
 
+
+@app.route('/login', methods=["GET"])
+def check_client_get_clid():
+    clemail, clmdp = PARAMS.get('clemail', None), PARAMS.get('clmdp', None)
+    if clemail or clmdp is None:
+        return Response(status=400)
+    else:
+        res = jsonify(db.fetch_login_client(clemail=clemail))
+        #will have to work with hashed passwords later on
+        if res["clmdp"] == clmdp:
+            return res["clid"]
+        else:
+            return Response(status=401)
 
 ### INTERACTION WITH FRONT PAGE
 
