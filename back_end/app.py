@@ -86,7 +86,44 @@ else:
 
 app.before_request(set_login)
 
+### Tests for authentication based on JWT (Json Web tokens)
 
+if CONF.get("SECRET_KEY", False):
+    global SECRET_KEY
+    SECRET_KEY = CONF["SECRET_KEY"] #for JWTs
+
+    def encode_auth_token(user_id):
+        '''
+        Generates the Auth token (string).
+        Given a user_id, return token
+        '''
+        try:
+            payload = {
+                'exp': dt.datetime.utcnow() + dt.timedelta(days=0, seconds=5),
+                'iat': dt.datetime.utcnow(),
+                'sub': user_id
+            }
+            return jwt.encode(
+                payload,
+                SECRET_KEY,
+                algorithm='HS256'
+            )
+        except Exception as e:
+            return e
+
+    def decode_auth_token(auth_token):
+        '''
+        Decodes an auth token which will be sent with http requests from FE
+        param: auth_token
+        return: integer or string
+        '''
+        try:
+            payload = jwt.decode(auth_token, SECRET_KEY)
+            return payload['sub'] #user_id
+        except jwt.ExpiredSignatureError:
+            return 'Signature Expired. Please log in again!'
+        except jwt.InvalidTokenError:
+            return 'Invalid token. Please log in again.'
 #
 # GET /version
 #
@@ -137,6 +174,11 @@ def get_commerce():
     res = db.get_commerce(agg=agglo, cat=cat)
     return jsonify(res)
 
+### INTERACTION WITH FRONT PAGE
+@app.route('/promotion/<int:pid>', methods=["GET"])
+def get_promotion_info(pid):
+    res = db.get_promotion_info(pid=pid)
+    return jsonify(res)
 
 ### ACCOUNT RELATED QUERIES
 @app.route('/client/<int:clid>', methods=["GET"])
@@ -162,7 +204,6 @@ def patch_client_info(clid):
 
 @app.route('/signup', methods=["POST"])
 def post_client_info():
-    #authentication check that query coming from app?
     clnom, clpnom = PARAMS.get("clnom", None), PARAMS.get("clpnom", None), 
     clemail, aid = PARAMS.get("clemail", None), PARAMS.get("aid", None)
     clmdp = generate_password_hash(PARAMS.get("clmdp", None))
@@ -185,9 +226,6 @@ def check_client_get_clid():
         else:
             return Response(status=401)
 
-### INTERACTION WITH FRONT PAGE
-
-### SECOND PAGE - MAP - QUERIES
 
 ### commerce interface
 
@@ -259,23 +297,6 @@ def post_commerce_info():
 
 
 
-### Tests for authentication based on JWT (Json Web tokens)
-# def encode_auth_token(user_id):
-#     '''
-#     Generates the Auth token (string).
-#     Given a user_id, return token
-#     '''
-#     try:
-#         payload = {
-#             'exp': dt.datetime.utcnow() + dt.timedelta(days=0, seconds=5),
-#             'iat': dt.datetime.utcnow(),
-#             'sub': user_id
-#         }
-#         return jwt.encode(
-#             payload,
-#             app.config.get('SECRET_KEY'),
-#             algorithm='HS256'
-#         )
-#     except Exception as e:
-#         return e
+
+    
 

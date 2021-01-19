@@ -133,16 +133,21 @@ def test_2():
    check_api('GET', '/commerce', 200, data={"agglomeration": "Paris"})
    check_api('GET', '/commerce', 200)
 
+# GET /promotion/<pid>
+def test_3():
+    check_api('GET', '/promotion/1', 200)
+
 ### ACCOUNT RELATED QUERIES
-def test_3():   
+# Get client info, signup and patch client info
+def test_4():   
     check_api('GET', '/client/1', 200)
     check_api('POST', '/signup', 201, data={"clnom": "Partarrieu", "clpnom": "Sebastian", "clemail": "s.a.partarrieu@gmail.com", "aid": 3, "clmdp": "pass"})
     check_api('POST', '/signup', 400, data={"clnom": "Partarrieu", "clpnom": "Sebastian", "clemail": "s.a.partarrieu@gmail.com", "aid": 3, "clmdp": "pass"})
     check_api('PATCH', '/client/1', 201, data={'clpnom': 'Mike'})
     check_api('PUT', '/client/2', 201, data={"clpnom": "Eddy", "clnom": "Coddd", "aid": 1, "clemail": "junk@email.com", "clmdp": "theman"})
 
-
-def test_4():
+# Login with email and password
+def test_5():
     check_api('GET', '/login', 200, data={"clemail": "s.a.partarrieu@gmail.com", "clmdp": "pass"})
     check_api('GET', '/login', 401, data={"clemail": "s.a.partarrieu@gmail.com", "clmdp": "passworddd"})
 

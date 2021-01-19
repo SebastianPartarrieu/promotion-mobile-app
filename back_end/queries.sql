@@ -15,6 +15,12 @@ WHERE a.anom LIKE :agg AND ca.catnom LIKE :cat
 ORDER BY p.tdebut DESC
 LIMIT :nb;
 
+--name: get_promotion_info
+SELECT p.pdescription, c.cnom, p.tdebut, p.tfin
+FROM Promotion AS p
+JOIN Commerce AS c USING (cid)
+WHERE p.pid = :pid;
+
 --name: get_commerce
 SELECT c.cnom, c.cpresentation, a.anom, c.code_postal, c.rue_and_num
 FROM Commerce AS c

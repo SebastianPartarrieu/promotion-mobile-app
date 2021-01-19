@@ -93,7 +93,7 @@ app.pid: pg
 
 app.pid: version
 	export FLASK_APP=app.py FLASK_ENV=development
-	export APP_CONFIG='pg.conf'
+	export APP_CONFIG='app.conf'
 	flask run $(FLASK.opt) >> app.log 2>&1 &
 	echo $$! > app.pid
 
