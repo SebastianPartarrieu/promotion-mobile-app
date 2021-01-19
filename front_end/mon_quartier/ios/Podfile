@@ -1,17 +1,14 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
+require_relative '../node_modules/react-native-unimodules/cocoapods.rb'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
 platform :ios, '10.0'
 
-target 'mon_quartier' do
+target 'monquartier' do
+  use_unimodules!
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
-
-  target 'mon_quartierTests' do
-    inherit! :complete
-    # Pods for testing
-  end
 
   # Enables Flipper.
   #
@@ -20,14 +17,5 @@ target 'mon_quartier' do
   use_flipper!
   post_install do |installer|
     flipper_post_install(installer)
-  end
-end
-
-target 'mon_quartier-tvOS' do
-  # Pods for mon_quartier-tvOS
-
-  target 'mon_quartier-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
   end
 end

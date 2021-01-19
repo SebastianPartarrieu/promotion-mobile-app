@@ -1,4 +1,16 @@
 {
-  "name": "mon_quartier",
-  "displayName": "mon_quartier"
+  "expo": {
+   "name": "mon_quartier",
+   "icon": "/Users/pierrebelamri/Documents/MINES/2A/MobAPP/Mon_quartier/icons8-mytikr-64.png",
+   "version": "1.0.0",
+   "slug": "mines-paris-monsquartie",
+   "ios": {
+     "bundleIdentifier": "com.minesparis.monquartier",
+     "buildNumber": "1.0.0"
+   },
+   "android": {
+     "package": "com.minesparis.monquartier",
+     "versionCode": 1
+   }
+  }
 }
