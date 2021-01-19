@@ -52,6 +52,10 @@ CREATE TABLE ClientFavCommerce(clid INTEGER NOT NULL REFERENCES Client,
                                cid INTEGER NOT NULL REFERENCES Commerce,
                                UNIQUE(clid, cid));
 
+CREATE TABLE Admins(adminid SERIAL PRIMARY KEY, 
+                    adminemail VARCHAR(150) UNIQUE NOT NULL,
+                    adminmdp VARCHAR(100) NOT NULL)
+
 --CREATE TABLE CarteFidelite(carteid SERIAL PRIMARY KEY,
 --                           clid INTEGER NOT NULL REFERENCES Client,
 --                           QRCode UNIQUE BYTEARRAY);

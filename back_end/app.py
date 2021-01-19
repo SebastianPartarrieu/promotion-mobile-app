@@ -11,13 +11,15 @@ with open("VERSION") as VERSION:
 
 # start flask service
 from flask import Flask, jsonify, request, Response
+
 app = Flask("promotion")
 
 # load configuration, fall back on environment
 from os import environ as ENV
 
-# will be used later 
+# added imports - token based auth and hash for password storage
 from werkzeug.security import generate_password_hash, check_password_hash
+import jwt
 
 if "APP_CONFIG" in ENV:
     app.config.from_envvar("APP_CONFIG")
@@ -42,6 +44,13 @@ def set_params():
     PARAMS = request.values if request.json is None else request.json
 
 app.before_request(set_params)
+
+def do_commit(res: Response):
+    global db
+    db.commit()
+    return res
+
+app.after_request(do_commit)
 
 
 #
@@ -87,9 +96,6 @@ app.before_request(set_login)
 def get_version():
     # TODO check read permission
     now = db.now()[0][0]
-    # BEWARE all requests must commit…
-    # TODO automate commit call on all requests
-    db.commit()
     return jsonify(
         {
             "app": app.name,
@@ -107,7 +113,7 @@ def get_version():
 
 ### FRONT PAGE QUERIES 
 
-# GET /promotion with filter for number returned and agglomeration
+# GET /promotion with filter for number returned, agglomeration and categories
 @app.route("/promotion", methods=["GET"])
 def get_promotion():
     cat = PARAMS.get("categorie", '%')
@@ -120,19 +126,15 @@ def get_promotion():
         res = []
         for x in cat:
             res.append(db.get_promotion(agg=agglo, nb=nb, cat=x))
-    db.commit()
     return jsonify(res)
 
 
 # GET /commerce with filter for categorie and agglomeration
-# different approach than above; we don't treat individual cases
-# rather we will do the join anyway 
 @app.route("/commerce", methods=["GET"])
 def get_commerce():
     cat = PARAMS.get("categorie", '%')
     agglo = PARAMS.get("agglomeration", '%')
     res = db.get_commerce(agg=agglo, cat=cat)
-    db.commit()
     return jsonify(res)
 
 
@@ -141,7 +143,6 @@ def get_commerce():
 def get_client_info(clid):
     # authentication checks required 
     res = db.get_client_info(clid=clid)
-    db.commit()
     return jsonify(res)
 
 @app.route('/client/<int:clid>', methods=["PATCH", "PUT"])
@@ -156,7 +157,6 @@ def patch_client_info(clid):
         db.patch_client_clemail(clemail=clemail, clid=clid)
     if aid != None:
         db.patch_client_aid(aid=aid, clid=clid)
-    db.commit()
     return Response(status=201)
 
 
@@ -168,7 +168,6 @@ def post_client_info():
     clmdp = generate_password_hash(PARAMS.get("clmdp", None))
     try: #catch the exception if the client already exists in the database
         db.post_client_info(clnom=clnom, clpnom=clpnom, clemail=clemail, aid=aid, clmdp=clmdp)
-        db.commit()
         return Response(status=201)
     except:
         return Response(status=400)
@@ -181,9 +180,6 @@ def check_client_get_clid():
         return Response(status=400)
     else:
         res = list(db.fetch_login_client(clemail=clemail))
-        db.commit()
-        app.logger.debug(res)
-        app.logger.debug(clmdp)
         if check_password_hash(res[0][2], clmdp):
             return jsonify(res[0][0])
         else:
@@ -193,15 +189,12 @@ def check_client_get_clid():
 
 ### SECOND PAGE - MAP - QUERIES
 
-### THIRD PAGE - LISTS - QUERIES 
-
 ### commerce interface
 
 @app.route('/commerce/<int:cid>', methods=["GET"])
 def get_commerce_info(cid):
     # authentication checks required 
     res = db.get_commerce_info(cid=cid)
-    db.commit()
     return jsonify(res)
 #curl -i -X GET http://0.0.0.0:5000/commerce/1
 
@@ -230,11 +223,9 @@ def patch_commerce_info(cid):
         db.patch_commerce_rue_and_num(rue_and_num=rue_and_num, cid=cid)
     if catnom != None:
         db.delete_commerce_categorie(cid=cid)
-        db.commit()
         catnom=catnom.split(",")
         for x in catnom:
             db.post_commerce_categorie(catnom=x, cid=cid)
-    db.commit()
     return Response(status=201)
 #curl -i -X PATCH -d cnom=zara -d cpresentation=casual -d cemail=zara@hotmail.com -d aid=1 -d cmdp=zarapassword -d rue_and_num=270 rue saint jacques -d code_postal=75005 -d url_ext=xyz -d catnom=Textile,Restaurant http://0.0.0.0:5000/commerce/1
 
@@ -249,17 +240,42 @@ def post_commerce_info():
     catnom=PARAMS.get("catnom", None)
 
     try: #catch the exception if the commerce already exists in the database
-        res=db.post_commerce_info(cnom= cnom, cpresentation= cpresentation, cemail= cemail, aid= aid, cmdp= cmdp, rue_and_num= rue_and_num, code_postal= code_postal, url_ext= url_ext, catnom= catnom)
-        db.commit()
+        res=db.post_commerce_info(cnom= cnom,
+                                  cpresentation= cpresentation,
+                                  cemail= cemail, aid= aid,
+                                  cmdp= cmdp, rue_and_num= rue_and_num,
+                                  code_postal= code_postal, url_ext= url_ext,
+                                  catnom= catnom)
        # return(repr(res))
         p = int(res[0][0])
         if "catnom" in PARAMS:
             catnom=catnom.split(",")
             for x in catnom:
                 db.post_commerce_categorie(catnom=x, cid=p)
-                db.commit()
             return jsonify(res[0][0])
     except Exception as e:
         #return str(e)
         return Response(status=400)
+
+
+
+### Tests for authentication based on JWT (Json Web tokens)
+# def encode_auth_token(user_id):
+#     '''
+#     Generates the Auth token (string).
+#     Given a user_id, return token
+#     '''
+#     try:
+#         payload = {
+#             'exp': dt.datetime.utcnow() + dt.timedelta(days=0, seconds=5),
+#             'iat': dt.datetime.utcnow(),
+#             'sub': user_id
+#         }
+#         return jwt.encode(
+#             payload,
+#             app.config.get('SECRET_KEY'),
+#             algorithm='HS256'
+#         )
+#     except Exception as e:
+#         return e
 

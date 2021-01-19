@@ -7,3 +7,4 @@ TRUNCATE CommerceCategorie;
 TRUNCATE Promotion;
 TRUNCATE ClientCategorie;
 TRUNCATE ClientFavCommerce;
+TRUNCATE Admins;

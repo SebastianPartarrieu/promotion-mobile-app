@@ -33,3 +33,5 @@ INSERT INTO ClientCategorie(clid, catid) VALUES (4, 1), (1, 3);
 
 -- calvin loves mario's pizzas
 INSERT INTO ClientFavCommerce(clid, cid) VALUES (4, 4), (2, 1), (3, 2); 
+
+INSERT INTO Admins(adminemail, adminmdp) VALUES ('sebastian.partarrieu@mines-paristech.fr', 'amazingpassword');
