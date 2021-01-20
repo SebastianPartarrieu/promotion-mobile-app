@@ -65,7 +65,7 @@ class Articles extends React.Component {
     return (
       <TouchableWithoutFeedback
         style={{ zIndex: 3 }}
-        key={`product-${item.title}`}
+        key={"product-${item.title}"}
         onPress={() => navigation.navigate("Pro", { product: item })}
       >
         <Block center style={styles.productItem}>
