@@ -8,5 +8,4 @@
 - add functionnality to delete your own account, for client and commerce
 - 2FA? Third Party Auth?
 - constraints on min amount of characters for passwords
-- sort out problem of non hashed passwords for database initialization
-- handle json on all queries
+- one person can only ask for so many tokens

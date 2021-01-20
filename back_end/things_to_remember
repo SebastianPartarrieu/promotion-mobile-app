@@ -9,3 +9,7 @@ Random things to keep in mind:
 - If we add Image table we need to make sure to drop it in drop.sql and truncate in truncate.sql
 - Same for any other added tables (card scanning functionnality for example)
 - Need to install pyjwt for tokens to work.
+- pid for promotion will be kept with image. If we click on image of promotion and want to go see it's info.
+- when does FE acces client id or commerce id? When account is created then cached or through token?
+- if token expires need to go back to login page on FE
+- Be careful for added ' and \n or other escape sequences in strings. Might be a problem when FE sends a token 

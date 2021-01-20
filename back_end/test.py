@@ -86,6 +86,9 @@ def check_api(method: str, path: str, status: int, content: str = None,
         assert re.search(content, r.text, re.DOTALL) is not None
     return r.text
 
+
+# def check_api_authorization
+
 # sanity check
 def test_sanity():
     assert re.match(r"https?://", URL)
@@ -115,7 +118,6 @@ def test_version():
     check_api('PATCH', '/version', 405)
 
 
-
 ### FRONT PAGE QUERIES 
 
 # GET /promotion with filter for number of promotions returned and for agglomeration
@@ -140,16 +142,32 @@ def test_3():
 ### ACCOUNT RELATED QUERIES
 # Get client info, signup and patch client info
 def test_4():   
-    check_api('GET', '/client/1', 200)
     check_api('POST', '/signup', 201, data={"clnom": "Partarrieu", "clpnom": "Sebastian", "clemail": "s.a.partarrieu@gmail.com", "aid": 3, "clmdp": "pass"})
     check_api('POST', '/signup', 400, data={"clnom": "Partarrieu", "clpnom": "Sebastian", "clemail": "s.a.partarrieu@gmail.com", "aid": 3, "clmdp": "pass"})
-    check_api('PATCH', '/client/1', 201, data={'clpnom': 'Mike'})
-    check_api('PUT', '/client/2', 201, data={"clpnom": "Eddy", "clnom": "Coddd", "aid": 1, "clemail": "junk@email.com", "clmdp": "theman"})
 
-# Login with email and password
+
+
 def test_5():
     check_api('GET', '/login', 200, data={"clemail": "s.a.partarrieu@gmail.com", "clmdp": "pass"})
     check_api('GET', '/login', 401, data={"clemail": "s.a.partarrieu@gmail.com", "clmdp": "passworddd"})
+
+
+### Authentication and authorization
+def test_AA_workflow_client():
+    auth_token = check_api('GET', '/login', 200, data={"clemail": "s.a.partarrieu@gmail.com", "clmdp": "pass"})
+    #for some reason escape characters are added to the auth_token when we fetch text from response in check_api
+    check_api('GET', '/client/5', 200, data={'token': auth_token[1:-2]}) # 5 is relative, when s.a.partarrieu is created given current intialization id 5 is given. If not we need to keep id FE
+    check_api('GET', '/client/5', 401, data={'token': ''})
+    check_api('GET', '/client/3', 401, data={'token': auth_token[1:-2]})
+    check_api('GET', '/client/5', 401, data={'token': 'blalallvjhfqjksdfhql'})
+    check_api('PATCH', '/client/5', 201, data={'clpnom': 'Sebby', 'token': auth_token[1:-2]})
+    check_api('PUT', '/client/5', 201, data={"clnom": "PARTARRIEU", 'token': auth_token[1:-2]})
+
+def test_AA_workflow_commerce():
+    pass
+    
+# Login with email and password
+
 
 
 ### INTERACTION WITH FRONT PAGE
