@@ -6,3 +6,4 @@ hash for password storage
 added admin table, will be useful for admin interface
 automatic commits via hook
 added /promotion/pid
+started work on authentication/authorization via JWTs
