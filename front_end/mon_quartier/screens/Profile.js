@@ -8,9 +8,8 @@ import {
   Platform
 } from "react-native";
 import { Block, Text, theme } from "galio-framework";
-
 import { Button } from "../components";
-import { Images, argonTheme } from "../constants";
+import { Images, argonTheme, csvjson } from "../constants";
 import { HeaderHeight } from "../constants/utils";
 
 const { width, height } = Dimensions.get("screen");
@@ -43,67 +42,27 @@ class Profile extends React.Component {
                     middle
                     row
                     space="evenly"
-                    style={{ marginTop: 20, paddingBottom: 24 }}
+                    style={{ marginTop: 10, paddingBottom: 0}}
                   >
                     <Button
                       small
                       style={{ backgroundColor: argonTheme.COLORS.INFO }}
                     >
-                      CONNECT
-                    </Button>
-                    <Button
-                      small
-                      style={{ backgroundColor: argonTheme.COLORS.DEFAULT }}
-                    >
-                      MESSAGE
+                      SITE WEB
                     </Button>
                   </Block>
-                  <Block row space="between">
-                    <Block middle>
-                      <Text
-                        bold
-                        size={18}
-                        color="#525F7F"
-                        style={{ marginBottom: 4 }}
-                      >
-                        2K
-                      </Text>
-                      <Text size={12} color={argonTheme.COLORS.TEXT}>Orders</Text>
-                    </Block>
-                    <Block middle>
-                      <Text
-                        bold
-                        color="#525F7F"
-                        size={18}
-                        style={{ marginBottom: 4 }}
-                      >
-                        10
-                      </Text>
-                      <Text size={12} color={argonTheme.COLORS.TEXT}>Photos</Text>
-                    </Block>
-                    <Block middle>
-                      <Text
-                        bold
-                        color="#525F7F"
-                        size={18}
-                        style={{ marginBottom: 4 }}
-                      >
-                        89
-                      </Text>
-                      <Text size={12} color={argonTheme.COLORS.TEXT}>Comments</Text>
-                    </Block>
-                  </Block>
+                  
                 </Block>
                 <Block flex>
                   <Block middle style={styles.nameInfo}>
                     <Text bold size={28} color="#32325D">
-                      Jessica Jones, 27
+                      Belam Coiffure
                     </Text>
-                    <Text size={16} color="#32325D" style={{ marginTop: 10 }}>
-                      San Francisco, USA
+                    <Text size={16} color="#32325D" style={{ marginTop: 0 }}>
+                      512
                     </Text>
                   </Block>
-                  <Block middle style={{ marginTop: 30, marginBottom: 16 }}>
+                  <Block middle style={{ marginTop: 20, marginBottom: 16 }}>
                     <Block style={styles.divider} />
                   </Block>
                   <Block middle>
@@ -299,7 +258,7 @@ const styles = StyleSheet.create({
     // position: "relative",
     padding: theme.SIZES.BASE,
     marginHorizontal: theme.SIZES.BASE,
-    marginTop: 65,
+    marginTop: 165,
     borderTopLeftRadius: 6,
     borderTopRightRadius: 6,
     backgroundColor: theme.COLORS.WHITE,
@@ -323,7 +282,7 @@ const styles = StyleSheet.create({
     borderWidth: 0
   },
   nameInfo: {
-    marginTop: 35
+    marginTop: 5
   },
   divider: {
     width: "90%",
