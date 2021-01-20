@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Block } from "galio-framework";
 
 // screens
-import Home from "../screens/Home";
+import Accueil from "../screens/Home";
 import Onboarding from "../screens/Onboarding";
 import Pro from "../screens/Pro";
 import Profile from "../screens/Profile";
@@ -62,29 +62,7 @@ function ElementsStack(props) {
   );
 }
 
-function ArticlesStack(props) {
-  return (
-    <Stack.Navigator mode="card" headerMode="screen">
-      <Stack.Screen
-        name="Articles"
-        component={Articles}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              transparent
-              title="Articles"
-              search
-              //options
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-          cardStyle: { backgroundColor: "#F8F9FE" }
-        }}
-      />
-    </Stack.Navigator>
-  );
-}
+
 
 function ProfileStack(props) {
   return (
@@ -131,14 +109,15 @@ function HomeStack(props) {
   return (
     <Stack.Navigator mode="card" headerMode="screen">
       <Stack.Screen
-        name="Home"
-        component={Home}
+        name="Accueil"
+        component={Articles}
         options={{
           header: ({ navigation, scene }) => (
             <Header
-              title="Home"
+              transparent
+              title="Accueil"
               search
-              options
+              //options
               navigation={navigation}
               scene={scene}
             />
@@ -201,7 +180,6 @@ function AppStack(props) {
       <Drawer.Screen name="Profile" component={ProfileStack} />
       <Drawer.Screen name="Account" component={Register} />
       <Drawer.Screen name="Elements" component={ElementsStack} />
-      <Drawer.Screen name="Articles" component={ArticlesStack} />
     </Drawer.Navigator>
   );
 }
