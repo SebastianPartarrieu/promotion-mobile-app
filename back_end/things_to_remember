@@ -1,0 +1,11 @@
+When we will link everything to front end, there will be lots of things to keep in mind.
+Here is a short (non exhaustive) list of some of these:
+- on /login it's an HTTP get because we send the clid back
+- we will need to store clid and cid locally on FE
+- login FE page should have email, pwd, remember me tick box, , create a new account, change existing pwd
+- format of categorie names "restaurant,textile"
+
+Random things to keep in mind:
+- If we add Image table we need to make sure to drop it in drop.sql and truncate in truncate.sql
+- Same for any other added tables (card scanning functionnality for example)
+- Need to install pyjwt for tokens to work.

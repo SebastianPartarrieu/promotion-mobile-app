@@ -221,7 +221,9 @@ def check_client_get_clid():
         return Response(status=400)
     else:
         res = list(db.fetch_login_client(clemail=clemail))
-        if check_password_hash(res[0][2], clmdp):
+        if len(res) == 0:
+            return Response(status=401)
+        elif check_password_hash(res[0][2], clmdp):
             return jsonify(res[0][0])
         else:
             return Response(status=401)
