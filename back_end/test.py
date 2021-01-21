@@ -164,7 +164,29 @@ def test_AA_workflow_client():
     check_api('PUT', '/client/5', 201, data={"clnom": "PARTARRIEU", 'token': auth_token[1:-2]})
 
 def test_AA_workflow_commerce():
-    pass
+    check_api('POST', '/signupcommerce', 201, data={'cnom': 'Fromager Saint Louis',
+                                                     'cpresentation': 'Vend du fromage de bonne qualité',
+                                                     'cemail': 'fromager@fromage.com',
+                                                     'code_postal': 75005,
+                                                     'rue_and_num': '80 Boulevard Saint-Michel',
+                                                     'aid': 1,
+                                                     'cmdp': 'dubonfromage', 'catom': 'Restaurant,Textile'})
+    check_api('POST', '/signupcommerce', 400, data={'cnom': 'Fromager Saint Louis',
+                                                    'cpresentation': '',
+                                                    'url_ext': 'fromager@fromage.com',
+                                                    'code_postal': 75005,
+                                                    'rue_and_num': '80 Boulevard Saint-Michel',
+                                                    'aid': 1,
+                                                    'cmdp': 'dubonfromage', 'catom': 'Restaurant,Textile'})
+    check_api('POST', '/signupcommerce', 400, data={'cnom': 'Fromager Saint Louis',
+                                                    'cpresentation': '',
+                                                    'code_postal': 75005,
+                                                    'rue_and_num': '80 Boulevard Saint-Michel',
+                                                    'aid': 1,
+                                                    'cmdp': 'dubonfromage', 'catom': 'Restaurant,Textile'})      
+    auth_token = check_api('GET', '/logincommerce', 200, data={'cemail': 'fromager@fromage.com', 'cmdp': 'dubonfromage'})
+    check_api('PATCH', '/commerce/5', 201, data={'cnom': 'Fromager Saint Jacques', 'token': auth_token[1:-2]})
+    check_api('PUT', '/commerce/5', 201, data={'cpresentation': 'Fromage frais', 'token': auth_token[1:-2]})
     
 # Login with email and password
 

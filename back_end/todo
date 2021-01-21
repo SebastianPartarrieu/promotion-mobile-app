@@ -1,11 +1,12 @@
 - tests for latest additions (/commerce)
 - for now we don't allow password changes: will need to be implemented
-- authentication solved properly with JWTs
 - commerce login and signup
 - image in seperate folder and Image table in db with relevant names
 - https://realpython.com/token-based-authentication-with-flask/ interesting link for how we'll handle authentication
-- add admin functionnalities (checking images but also deleting promotion and commerce)
 - add functionnality to delete your own account, for client and commerce
 - 2FA? Third Party Auth?
-- constraints on min amount of characters for passwords
+
+- authentication solved properly with JWTs
 - one person can only ask for so many tokens
+- constraints on min amount of characters for passwords
+- add admin functionnalities (checking images but also deleting promotion and commerce)
