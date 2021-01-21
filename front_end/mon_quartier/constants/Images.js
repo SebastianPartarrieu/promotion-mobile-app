@@ -10,7 +10,7 @@ const iOSLogo = require("../assets/imgs/ios.png");
 const androidLogo = require("../assets/imgs/android.png");
 // internet imgs
 
-const ProfilePicture = 'https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?fit=crop&w=1650&q=80';
+const ProfilePicture = 'https://media-exp1.licdn.com/dms/image/C4E03AQFroYFYvlF38A/profile-displayphoto-shrink_400_400/0/1610810708446?e=1616630400&v=beta&t=sa6OTAoAal8b4fTCv7_r7deoHOYqlbmDB6V09ilykaE';
 
 const Viewed = [
   'https://images.unsplash.com/photo-1501601983405-7c7cabaa1581?fit=crop&w=240&q=80',
