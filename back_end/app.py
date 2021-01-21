@@ -20,6 +20,7 @@ from os import environ as ENV
 # added imports - token based auth and hash for password storage
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
+import re #will be useful
 
 if "APP_CONFIG" in ENV:
     app.config.from_envvar("APP_CONFIG")
@@ -92,38 +93,62 @@ if CONF.get("SECRET_KEY", False):
     global SECRET_KEY
     SECRET_KEY = CONF["SECRET_KEY"] #for JWTs
 
-    def encode_auth_token(user_id):
-        '''
-        Generates the Auth token (string).
-        Given a user_id, return token
-        '''
-        try:
-            payload = {
-                'exp': dt.datetime.utcnow() + dt.timedelta(days=0, seconds=5),
-                'iat': dt.datetime.utcnow(),
-                'sub': user_id
-            }
-            return jwt.encode(
-                payload,
-                SECRET_KEY,
-                algorithm='HS256'
-            )
-        except Exception as e:
-            return e
+def encode_auth_token(user_id, user_type='client'):
+    '''
+    Generates the Auth token (string).
+    Given a user_id, return token
+    '''
+    try:
+        payload = {
+            'exp': dt.datetime.utcnow() + dt.timedelta(days=1, seconds=5),
+            'iat': dt.datetime.utcnow(),
+            'sub': user_id,
+            'ust': user_type
+        }
+        return jwt.encode(
+            payload,
+            SECRET_KEY,
+            algorithm='HS256'
+        )
+    except Exception as e:
+        return e
 
-    def decode_auth_token(auth_token):
-        '''
-        Decodes an auth token which will be sent with http requests from FE
-        param: auth_token
-        return: integer or string
-        '''
-        try:
-            payload = jwt.decode(auth_token, SECRET_KEY)
-            return payload['sub'] #user_id
-        except jwt.ExpiredSignatureError:
-            return 'Signature Expired. Please log in again!'
-        except jwt.InvalidTokenError:
-            return 'Invalid token. Please log in again.'
+def decode_auth_token(auth_token):
+    '''
+    Decodes an auth token which will be sent with http requests from FE
+    param: auth_token
+    return: integer and string or string
+    '''
+    try:
+        payload = jwt.decode(auth_token, SECRET_KEY, algorithms="HS256")
+        return payload['sub'], payload['ust'] #user_id and type (client, commerce, ...)
+    except jwt.ExpiredSignatureError:
+        return 'Signature Expired. Please log in again!'
+    except jwt.InvalidTokenError:
+        return 'Invalid token. Please log in again.'
+
+def is_authorized(auth_token, user_id, user_type='client'):
+    '''
+    Given an auth_token and a user_id tells whether the token is one of a
+    client and is valid.
+    param: auth_token and user_it(int)
+    return: bool
+    '''
+    if auth_token == '':
+        return False
+    elif decode_auth_token(auth_token) == 'Signature Expired. Please log in again!':
+        return False
+    elif decode_auth_token(auth_token) == 'Invalid token. Please log in again.':
+        return False
+    else:
+        user_id_received, user_type_received = decode_auth_token(auth_token)
+        if str(user_type_received) != user_type:
+            return False
+        elif int(user_id_received) != int(user_id):
+            return False
+        else:
+            return True
+
 #
 # GET /version
 #
@@ -183,24 +208,30 @@ def get_promotion_info(pid):
 ### ACCOUNT RELATED QUERIES
 @app.route('/client/<int:clid>', methods=["GET"])
 def get_client_info(clid):
-    # authentication checks required 
-    res = db.get_client_info(clid=clid)
-    return jsonify(res)
+    auth_token = PARAMS.get("token", '')
+    if is_authorized(auth_token, user_id=clid, user_type='client'):
+        res = db.get_client_info(clid=clid)
+        return jsonify(res)
+    else:
+        return Response(status=401)
 
 @app.route('/client/<int:clid>', methods=["PATCH", "PUT"])
 def patch_client_info(clid):
-    clnom, clpnom = PARAMS.get("clnom", None), PARAMS.get("clpnom", None)
-    clemail, aid = PARAMS.get("clemail", None), PARAMS.get("aid", None)
-    if clnom != None:
-        db.patch_client_nom(clnom=clnom, clid=clid)
-    if clpnom != None:
-        db.patch_client_pnom(clpnom=clpnom, clid=clid)
-    if clemail != None:
-        db.patch_client_clemail(clemail=clemail, clid=clid)
-    if aid != None:
-        db.patch_client_aid(aid=aid, clid=clid)
-    return Response(status=201)
-
+    auth_token = PARAMS.get("token", '')
+    if is_authorized(auth_token, user_id=clid, user_type='client'):
+        clnom, clpnom = PARAMS.get("clnom", None), PARAMS.get("clpnom", None)
+        clemail, aid = PARAMS.get("clemail", None), PARAMS.get("aid", None)
+        if clnom != None:
+            db.patch_client_nom(clnom=clnom, clid=clid)
+        if clpnom != None:
+            db.patch_client_pnom(clpnom=clpnom, clid=clid)
+        if clemail != None:
+            db.patch_client_clemail(clemail=clemail, clid=clid)
+        if aid != None:
+            db.patch_client_aid(aid=aid, clid=clid)
+        return Response(status=201)
+    else:
+        return Response(status=401)
 
 @app.route('/signup', methods=["POST"])
 def post_client_info():
@@ -224,16 +255,16 @@ def check_client_get_clid():
         if len(res) == 0:
             return Response(status=401)
         elif check_password_hash(res[0][2], clmdp):
-            return jsonify(res[0][0])
+            return jsonify(encode_auth_token(res[0][0], user_type='client'))
         else:
             return Response(status=401)
 
 
 ### commerce interface
 
+#no real authentication and authorization needed here as clients will access this all the time
 @app.route('/commerce/<int:cid>', methods=["GET"])
 def get_commerce_info(cid):
-    # authentication checks required 
     res = db.get_commerce_info(cid=cid)
     return jsonify(res)
 #curl -i -X GET http://0.0.0.0:5000/commerce/1
@@ -241,37 +272,41 @@ def get_commerce_info(cid):
 
 @app.route('/commerce/<int:cid>', methods=["PATCH", "PUT"])
 def patch_commerce_info(cid):
-    cnom, cpresentation = PARAMS.get("cnom", None), PARAMS.get("cpresentation", None)
-    cemail, aid = PARAMS.get("cemail", None), PARAMS.get("aid", None)
-    url_ext, code_postal = PARAMS.get("url_ext", None), PARAMS.get("code_postal", None)
-    rue_and_num = PARAMS.get("rue_and_num", None)
-    catnom=PARAMS.get("catnom", None)
-    ## catnom=Restaurant,Textile
-    if cnom != None:
-        db.patch_commerce_nom(cnom=cnom, cid=cid)
-    if cpresentation != None:
-        db.patch_commerce_cpresentation(cpresentation=cpresentation, cid=cid)
-    if cemail != None:
-        db.patch_commerce_cemail(cemail=cemail, cid=cid)
-    if aid != None:
-        db.patch_commerce_aid(aid=aid, cid=cid)
-    if url_ext != None:
-        db.patch_commerce_url_ext(url_ext=url_ext, cid=cid)
-    if  code_postal != None:
-        db.patch_commerce_code_postal(code_postal=code_postal, cid=cid)
-    if rue_and_num != None:
-        db.patch_commerce_rue_and_num(rue_and_num=rue_and_num, cid=cid)
-    if catnom != None:
-        db.delete_commerce_categorie(cid=cid)
-        catnom=catnom.split(",")
-        for x in catnom:
-            db.post_commerce_categorie(catnom=x, cid=cid)
-    return Response(status=201)
+    auth_token = PARAMS.get("token", "")
+    if is_authorized(auth_token, user_id=cid, user_type='commerce'):
+        cnom, cpresentation = PARAMS.get("cnom", None), PARAMS.get("cpresentation", None)
+        cemail, aid = PARAMS.get("cemail", None), PARAMS.get("aid", None)
+        url_ext, code_postal = PARAMS.get("url_ext", None), PARAMS.get("code_postal", None)
+        rue_and_num = PARAMS.get("rue_and_num", None)
+        catnom=PARAMS.get("catnom", None)
+        ## catnom=Restaurant,Textile
+        if cnom != None:
+            db.patch_commerce_nom(cnom=cnom, cid=cid)
+        if cpresentation != None:
+            db.patch_commerce_cpresentation(cpresentation=cpresentation, cid=cid)
+        if cemail != None:
+            db.patch_commerce_cemail(cemail=cemail, cid=cid)
+        if aid != None:
+            db.patch_commerce_aid(aid=aid, cid=cid)
+        if url_ext != None:
+            db.patch_commerce_url_ext(url_ext=url_ext, cid=cid)
+        if  code_postal != None:
+            db.patch_commerce_code_postal(code_postal=code_postal, cid=cid)
+        if rue_and_num != None:
+            db.patch_commerce_rue_and_num(rue_and_num=rue_and_num, cid=cid)
+        if catnom != None:
+            db.delete_commerce_categorie(cid=cid)
+            catnom=catnom.split(",")
+            for x in catnom:
+                db.post_commerce_categorie(catnom=x, cid=cid)
+        return Response(status=201)
+    else:
+        return Response(status=401)
+
 #curl -i -X PATCH -d cnom=zara -d cpresentation=casual -d cemail=zara@hotmail.com -d aid=1 -d cmdp=zarapassword -d rue_and_num=270 rue saint jacques -d code_postal=75005 -d url_ext=xyz -d catnom=Textile,Restaurant http://0.0.0.0:5000/commerce/1
 
-@app.route('/commerce', methods=["POST"])
+@app.route('/signupcommerce', methods=["POST"])
 def post_commerce_info():
-    #authentication check that query coming from app?
     cnom, cpresentation = PARAMS.get("cnom", None), PARAMS.get("cpresentation", None)
     cemail, aid = PARAMS.get("cemail", None), int(PARAMS.get("aid", None))
     url_ext, code_postal = PARAMS.get("url_ext", None), int(PARAMS.get("code_postal", None))
@@ -280,22 +315,41 @@ def post_commerce_info():
     catnom=PARAMS.get("catnom", None)
 
     try: #catch the exception if the commerce already exists in the database
-        res=db.post_commerce_info(cnom= cnom,
-                                  cpresentation= cpresentation,
-                                  cemail= cemail, aid= aid,
-                                  cmdp= cmdp, rue_and_num= rue_and_num,
-                                  code_postal= code_postal, url_ext= url_ext,
-                                  catnom= catnom)
-       # return(repr(res))
+        res = db.post_commerce_info(cnom=cnom,
+                              cpresentation=cpresentation,
+                              cemail=cemail, aid=aid,
+                              cmdp=cmdp, rue_and_num=rue_and_num,
+                              code_postal=code_postal, url_ext=url_ext)
         p = int(res[0][0])
-        if "catnom" in PARAMS:
+        app.logger.debug(p)
+        if catnom is not None:
             catnom=catnom.split(",")
+            app.logger.debug(catnom)
             for x in catnom:
+                app.logger.debug(x)
                 db.post_commerce_categorie(catnom=x, cid=p)
-            return jsonify(res[0][0])
+            return Response(status=201)
+        else:
+            return Response(status=201)
     except Exception as e:
         #return str(e)
         return Response(status=400)
+
+@app.route('/logincommerce', methods=["GET"])
+def check_commerce_get_cid():
+    cemail, cmdp = PARAMS.get('cemail', None), PARAMS.get('cmdp', None)
+    if (cemail is None) or (cmdp is None):
+        return Response(status=400)
+    else:
+        res = list(db.fetch_login_commerce(cemail=cemail))
+        if len(res) == 0:
+            return Response(status=401)
+        elif check_password_hash(res[0][2], cmdp):
+            return jsonify(encode_auth_token(res[0][0], user_type='commerce'))
+        else:
+            return Response(status=401)
+
+
 
 
 

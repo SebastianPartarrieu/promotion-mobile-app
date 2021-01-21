@@ -87,10 +87,15 @@ UPDATE CommerceCategorie SET catnom = :catnom WHERE cid = :cid;
 
 --name: post_commerce_info
 INSERT INTO Commerce (cnom, cpresentation, code_postal, rue_and_num, aid, cmdp, cemail, url_ext) 
-VALUES (:cnom, :cpresentation, :code_postal, :rue_and_num, :aid, :cmdp, :cemail, :url_ext) returning cid;
+VALUES (:cnom, :cpresentation, :code_postal, :rue_and_num, :aid, :cmdp, :cemail, :url_ext) RETURNING cid;
 
 --name: post_commerce_categorie!
 INSERT INTO CommerceCategorie (cid, catid) values (:cid, (select catid from Categorie where catnom=:catnom));
 
 --name: delete_commerce_categorie!
 DELETE from CommerceCategorie where cid=1;
+
+--name: fetch_login_commerce
+SELECT cid, cemail, cmdp FROM Commerce
+WHERE cemail = :cemail;
+
