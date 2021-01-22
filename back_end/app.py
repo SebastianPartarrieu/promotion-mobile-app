@@ -265,7 +265,7 @@ def post_client_info():
     except:
         return Response(status=400)
 
-@app.route('/login', methods=["GET"])
+@app.route('/login', methods=["GET, POST"])
 def check_client_get_clid():
     clemail, clmdp = PARAMS.get('clemail', None), PARAMS.get('clmdp', None)
     if (clemail is None) or (clmdp is None):
