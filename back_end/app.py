@@ -414,15 +414,19 @@ def validate_image(stream):
         return None
     return '.' + (format if format != 'jpeg' else 'jpg') 
 
-@app.route('/promotion/image/<int:pid>', methods=['POST'])
+@app.route('/promotion/<int:pid>/image', methods=['POST'])
 def upload_image(pid):
     ranks = PARAMS.get("ranks", None)
     uploaded_file = request.files['file']
-    filename=upload_picture
-    return filename
+    filename=upload_image(uploaded_file)
+    uploaded_file.save(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], filename))
+    #gen_thumbnail(filename, 'UPLOAD_PATH_PROMOTION')
+    res=db.post_promotion_image(imgname=filename, ranks= ranks, pid=pid)
+    db.commit()
+    return '', 204
 
-#to delete all images of a promotion for an update
-@app.route('/promotion/images/<int:pid>', methods=['DELETE'])
+#to delete all images of a promotion
+@app.route('/promotion/<int:pid>/images', methods=['DELETE'])
 def delete_images(pid):
     imgname = PARAMS.get("imgname", None)
     res=db.delete_promotion_images(pid=pid)
@@ -430,10 +434,10 @@ def delete_images(pid):
         os.remove(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], imgname[0]))
     return "",204
 
-
-@app.route('/promotion/image/<int:pid>', methods=['PUT','PATCH'])
-def change_image(pid):
+@app.route('/promotion/<int:pid>/image', methods=['PUT','PATCH'])
+def change_rank(pid):
     ranks = PARAMS.get("ranks", None)
+<<<<<<< HEAD
     uploaded_file = request.files['file']
     filename = upload_image(uploaded_file)
     uploaded_file.save(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], filename))
@@ -444,10 +448,19 @@ def change_image(pid):
 
 @app.route('/promotion/image/<int:pid>', methods=['GET'])
 def get_image(pid):
+=======
+    filname=PARAMS.get("filename",None)
+    res=db.change_promotion_filename_image(imgname=filename, ranks= ranks)
+    db.commit()
+    return '', 204
+
+@app.route('/promotion/<int:pid>/image', methods=['GET'])
+def get_images(pid):
+>>>>>>> petit changement
     res = db.get_promotion_image(pid=pid)
     return jsonify(res)
 
-@app.route('/promotion/image/<int:pid>', methods=['DELETE'])
+@app.route('/promotion/<int:pid>/image', methods=['DELETE'])
 def delete_image(pid):
     imgname = PARAMS.get("imgname", None)
     os.remove(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], imgname))
@@ -459,4 +472,3 @@ def verify():
     imgname = PARAMS.get("imgname", None)
     db.verify_image(imgname=imgname)
     return "", 204
-

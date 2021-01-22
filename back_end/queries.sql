@@ -102,7 +102,11 @@ Where cemail=:cemail;
 --name: post_promotion_image
 INSERT INTO ImagePromotion (imgname, ranks, verified, pid) VALUES (:imgname, :ranks, FALSE, :pid) returning imid;
 
+<<<<<<< HEAD
 --name: get_promotion_image
+=======
+--name: get_promotion_info
+>>>>>>> petit changement
 SELECT 'promotionImage/' || imgname, ranks FROM ImagePromotion where pid=:pid and verified=FALSE ORDER BY ranks asc; 
 
 
@@ -118,10 +122,10 @@ SELECT cid, cemail, cmdp FROM Commerce WHERE cemail =:cemail;
 --name: verify_image!
 UPDATE ImagePromotion SET verified=TRUE where imgname=:imgname;
 
---remove_image!
+--name: remove_image!
 DELETE FROM Commerce WHERE cid=:cid;
 
---post_commerce_image!
+--name: post_commerce_image!
 UPDATE Commerce SET imgname=:imgname where cid=:cid;
 
 --name: fetch_promotion_of_commerce
