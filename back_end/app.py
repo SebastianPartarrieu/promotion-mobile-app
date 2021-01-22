@@ -104,12 +104,20 @@ def encode_auth_token(user_id, user_type='client'):
     Given a user_id, return token
     '''
     try:
-        payload = {
-            'exp': dt.datetime.utcnow() + dt.timedelta(days=1, seconds=5),
-            'iat': dt.datetime.utcnow(),
-            'sub': user_id,
-            'ust': user_type
-        }
+        if user_type == 'client':
+            payload = {
+                'exp': dt.datetime.utcnow() + dt.timedelta(days=365, seconds=5), #or no expiration at all
+                'iat': dt.datetime.utcnow(),
+                'sub': user_id,
+                'ust': user_type
+            }
+        else:
+            payload = {
+                'exp': dt.datetime.utcnow() + dt.timedelta(days=7, seconds=5), #or no expiration at all
+                'iat': dt.datetime.utcnow(),
+                'sub': user_id,
+                'ust': user_type
+            }
         return jwt.encode(
             payload,
             SECRET_KEY,
@@ -264,7 +272,24 @@ def check_client_get_clid():
         else:
             return Response(status=401)
 
+<<<<<<< HEAD
 ### commerce interface
+=======
+# @app.route('/client/<int:clid>', methods=['DELETE']) #make sure to have pop up in FE asking if user is sure
+# def delete_client_account(clid):
+#     auth_token = PARAMS.get('token', '')
+#     if auth_token == '':
+#         return Response(status=401)
+#     elif is_authorized(auth_token, user_id=clid, user_type='client'):
+#         db.delete_client_info(clid=clid)
+#         payload = jwt.decode(auth_token, SECRET_KEY, algorithms="HS256")
+#         payload['exp'] = dt.datetime.utcnow()
+#         expired_token
+#         return Response(status=200)
+
+
+### COMMERCE INTERFACE
+>>>>>>> Minor changes
 
 #no real authentication and authorization needed here as clients will access this all the time
 @app.route('/commerce/<int:cid>', methods=["GET"])
@@ -341,7 +366,7 @@ def post_commerce_info():
             for x in catnom:
                 app.logger.debug(x)
                 db.post_commerce_categorie(catnom=x, cid=p)
-            return  jsonify(p), 201
+            return jsonify(p), 201
         else:
             return jsonify(p), 201
     except Exception as e:
@@ -363,6 +388,9 @@ def check_commerce_get_cid():
             return Response(status=401)
 
 
+### ADMIN INTERFACE
+
+# Perhaps only one initially created admin account?
 
 
 
