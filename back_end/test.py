@@ -140,30 +140,24 @@ def test_3():
 
 ### ACCOUNT RELATED QUERIES
 # Get client info, signup and patch client info
-def test_4():   
-    check_api('POST', '/signup', 201, data={"clnom": "Partarrieu", "clpnom": "Sebastian", "clemail": "s.a.partarrieu@gmail.com", "aid": 3, "clmdp": "pass"})
-    check_api('POST', '/signup', 400, data={"clnom": "Partarrieu", "clpnom": "Sebastian", "clemail": "s.a.partarrieu@gmail.com", "aid": 3, "clmdp": "pass"})
-
-
-
-def test_5():
-    check_api('GET', '/login', 200, data={"clemail": "s.a.partarrieu@gmail.com", "clmdp": "pass"})
-    check_api('GET', '/login', 401, data={"clemail": "s.a.partarrieu@gmail.com", "clmdp": "passworddd"})
-
 
 ### Authentication and authorization
 def test_AA_workflow_client():
+    clid = check_api('POST', '/signup', 201, data={"clnom": "Partarrieu", "clpnom": "Sebastian", "clemail": "s.a.partarrieu@gmail.com", "aid": 3, "clmdp": "pass"})
+    check_api('POST', '/signup', 400, data={"clnom": "Partarrieu", "clpnom": "Sebastian", "clemail": "s.a.partarrieu@gmail.com", "aid": 3, "clmdp": "pass"})
+
     auth_token = check_api('GET', '/login', 200, data={"clemail": "s.a.partarrieu@gmail.com", "clmdp": "pass"})
+    check_api('GET', '/login', 401, data={"clemail": "s.a.partarrieu@gmail.com", "clmdp": "passworddd"})
     #for some reason escape characters are added to the auth_token when we fetch text from response in check_api
-    check_api('GET', '/client/5', 200, data={'token': auth_token[1:-2]}) # 5 is relative, when s.a.partarrieu is created given current intialization id 5 is given. If not we need to keep id FE
-    check_api('GET', '/client/5', 401, data={'token': ''})
+    check_api('GET', '/client/'+str(clid), 200, data={'token': auth_token[1:-2]}) # 5 is relative, when s.a.partarrieu is created given current intialization id 5 is given. If not we need to keep id FE
+    check_api('GET', '/client/'+str(clid), 401, data={'token': ''})
     check_api('GET', '/client/3', 401, data={'token': auth_token[1:-2]})
-    check_api('GET', '/client/5', 401, data={'token': 'blalallvjhfqjksdfhql'})
-    check_api('PATCH', '/client/5', 201, data={'clpnom': 'Sebby', 'token': auth_token[1:-2]})
-    check_api('PUT', '/client/5', 201, data={"clnom": "PARTARRIEU", 'token': auth_token[1:-2]})
+    check_api('GET', '/client/'+str(clid), 401, data={'token': 'blalallvjhfqjksdfhql'})
+    check_api('PATCH', '/client/'+str(clid), 201, data={'clpnom': 'Sebby', 'token': auth_token[1:-2]})
+    check_api('PUT', '/client/'+str(clid), 201, data={"clnom": "PARTARRIEU", 'token': auth_token[1:-2]})
 
 def test_AA_workflow_commerce():
-    check_api('POST', '/signupcommerce', 201, data={'cnom': 'Fromager Saint Louis',
+    cid = check_api('POST', '/signupcommerce', 201, data={'cnom': 'Fromager Saint Louis',
                                                      'cpresentation': 'Vend du fromage de bonne qualité',
                                                      'cemail': 'fromager@fromage.com',
                                                      'code_postal': 75005,
@@ -184,8 +178,8 @@ def test_AA_workflow_commerce():
                                                     'aid': 1,
                                                     'cmdp': 'dubonfromage', 'catom': 'Restaurant,Textile'})      
     auth_token = check_api('GET', '/logincommerce', 200, data={'cemail': 'fromager@fromage.com', 'cmdp': 'dubonfromage'})
-    check_api('PATCH', '/commerce/5', 201, data={'cnom': 'Fromager Saint Jacques', 'token': auth_token[1:-2]})
-    check_api('PUT', '/commerce/5', 201, data={'cpresentation': 'Fromage frais', 'token': auth_token[1:-2]})
+    check_api('PATCH', '/commerce/'+str(cid), 201, data={'cnom': 'Fromager Saint Jacques', 'token': auth_token[1:-2]})
+    check_api('PUT', '/commerce/'+str(cid), 201, data={'cpresentation': 'Fromage frais', 'token': auth_token[1:-2]})
     
 # Login with email and password
 

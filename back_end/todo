@@ -1,6 +1,4 @@
-- tests for latest additions (/commerce)
 - for now we don't allow password changes: will need to be implemented
-- image in seperate folder and Image table in db with relevant names
 - 2FA? Third Party Auth?
 
 - add functionnality to delete your own account, for client and commerce
@@ -8,5 +6,5 @@
 - leverage refresh tokens to ask users to reidentify themselves before deleting their account
 - constraints on min amount of characters for passwords
 - add admin functionnalities (checking images but also deleting promotion and commerce)
-- aller chercher les promotions rattachées à un commerce
 - PIL
+- authentification autour des requêtes d'image

@@ -26,7 +26,8 @@ INSERT INTO CommerceCategorie(cid, catid) VALUES (1, 1), (2, 1), (3, 2), (3, 3);
 INSERT INTO Promotion(cid, pdescription, tdebut, tfin) VALUES (1, 'La Marguerite a 7€!!!', '14-01-2021'::DATE, NULL),
 (1, 'La Napolitaine a 8€', '15-01-2021', '28-01-2021'),
 (3, 'Tous les livres à moins de 10€', '10-12-2020', NULL),
-(2, 'Formule étudiante à 6 euros 50', '01-01-2021', '01-01-2021');
+(2, 'Formule étudiante à 6 euros 50', '01-01-2021', '01-01-2021'),
+(1, 'La Reine a 5 €', '20-01-2021', '28-02-2021');
 
 -- calvin loves food 
 INSERT INTO ClientCategorie(clid, catid) VALUES (4, 1), (1, 3);

@@ -8,3 +8,6 @@ automatic commits via hook
 added /promotion/pid
 commerce login and signup
 started work on authentication/authorization via JWTs - finished for client and commerce!
+test for commerce
+image seperate folders
+aller chercher les promotions rattachées à un commerce

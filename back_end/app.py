@@ -253,8 +253,9 @@ def post_client_info():
     clemail, aid = PARAMS.get("clemail", None), PARAMS.get("aid", None)
     clmdp = generate_password_hash(PARAMS.get("clmdp", None))
     try: #catch the exception if the client already exists in the database
-        db.post_client_info(clnom=clnom, clpnom=clpnom, clemail=clemail, aid=aid, clmdp=clmdp)
-        return Response(status=201)
+        res = db.post_client_info(clnom=clnom, clpnom=clpnom, clemail=clemail, aid=aid, clmdp=clmdp)
+        p = int(res[0][0])
+        return jsonify(p), 201
     except:
         return Response(status=400)
 
@@ -283,6 +284,12 @@ def check_client_get_clid():
 #         payload['exp'] = dt.datetime.utcnow()
 #         expired_token
 #         return Response(status=200)
+
+
+@app.route('/commerce/<int:cid>/promotion', methods=['GET'])
+def fetch_promotion_of_commerce(cid):
+    res = db.fetch_promotion_of_commerce(cid=cid)
+    return jsonify(res)
 
 
 ### COMMERCE INTERFACE
@@ -421,7 +428,6 @@ def delete_images(pid):
     res=db.delete_promotion_images(pid=pid)
     for imgname in res:
         os.remove(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], imgname[0]))
-    db.commit()
     return "",204
 
 
@@ -429,17 +435,16 @@ def delete_images(pid):
 def change_image(pid):
     ranks = PARAMS.get("ranks", None)
     uploaded_file = request.files['file']
-    upload_image(uploaded_file)
+    filename = upload_image(uploaded_file)
     uploaded_file.save(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], filename))
     #gen_thumbnail(filename, 'UPLOAD_PATH_PROMOTION')
     res=db.post_promotion_image(imgname=filename, ranks= ranks, pid=pid)
-    db.commit()
     return '', 204
-    return "Invalide image", 400
+
 
 @app.route('/promotion/image/<int:pid>', methods=['GET'])
 def get_image(pid):
-    res = db.get_promotion_info(pid=pid)
+    res = db.get_promotion_image(pid=pid)
     return jsonify(res)
 
 @app.route('/promotion/image/<int:pid>', methods=['DELETE'])
@@ -447,13 +452,11 @@ def delete_image(pid):
     imgname = PARAMS.get("imgname", None)
     os.remove(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], imgname))
     res=db.delete_promotion_image(pid=pid, imgname=imgname)
-    db.commit()
     return "",204
 
 @app.route('/commerce/verify', methods=["PATCH"])
 def verify():
     imgname = PARAMS.get("imgname", None)
     db.verify_image(imgname=imgname)
-    db.commit()
     return "", 204
 

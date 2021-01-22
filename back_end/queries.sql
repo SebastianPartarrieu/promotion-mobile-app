@@ -39,8 +39,8 @@ WHERE clid = :clid;
 SELECT clid, clemail, clmdp FROM Client
 WHERE clemail = :clemail;
 
---name: post_client_info!
-INSERT INTO Client(clnom, clpnom, clemail, aid, clmdp) VALUES (:clnom, :clpnom, :clemail, :aid, :clmdp);
+--name: post_client_info
+INSERT INTO Client(clnom, clpnom, clemail, aid, clmdp) VALUES (:clnom, :clpnom, :clemail, :aid, :clmdp) RETURNING clid;
 
 --name: patch_client_nom!
 UPDATE Client SET clnom = :clnom WHERE clid = :clid;
@@ -102,8 +102,8 @@ Where cemail=:cemail;
 --name: post_promotion_image
 INSERT INTO ImagePromotion (imgname, ranks, verified, pid) VALUES (:imgname, :ranks, FALSE, :pid) returning imid;
 
---name: get_promotion_info
-SELECT 'promotionImage/' || imgname, ranks FROM ImagePromotion where pid=:pid and verified=TRUE ORDER BY ranks asc; 
+--name: get_promotion_image
+SELECT 'promotionImage/' || imgname, ranks FROM ImagePromotion where pid=:pid and verified=FALSE ORDER BY ranks asc; 
 
 
 --name: delete_promotion_image!
@@ -123,3 +123,10 @@ DELETE FROM Commerce WHERE cid=:cid;
 
 --post_commerce_image!
 UPDATE Commerce SET imgname=:imgname where cid=:cid;
+
+--name: fetch_promotion_of_commerce
+SELECT DISTINCT p.pdescription, c.cnom, p.tdebut
+FROM Promotion AS p
+JOIN Commerce AS c USING (cid)
+WHERE c.cid = :cid
+ORDER BY p.tdebut DESC;
