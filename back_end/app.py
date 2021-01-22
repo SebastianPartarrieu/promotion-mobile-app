@@ -272,9 +272,6 @@ def check_client_get_clid():
         else:
             return Response(status=401)
 
-<<<<<<< HEAD
-### commerce interface
-=======
 # @app.route('/client/<int:clid>', methods=['DELETE']) #make sure to have pop up in FE asking if user is sure
 # def delete_client_account(clid):
 #     auth_token = PARAMS.get('token', '')
@@ -289,7 +286,6 @@ def check_client_get_clid():
 
 
 ### COMMERCE INTERFACE
->>>>>>> Minor changes
 
 #no real authentication and authorization needed here as clients will access this all the time
 @app.route('/commerce/<int:cid>', methods=["GET"])
