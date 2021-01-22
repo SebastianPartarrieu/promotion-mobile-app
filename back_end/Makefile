@@ -144,6 +144,6 @@ venv:
 	. env_promo/bin/activate
 	pip install wheel
 	pip install anosql anodb flask
-	pip install psycopg2
+	pip install psycopg2-binary
 	pip install pytest requests
 	pip install mypy flake8
