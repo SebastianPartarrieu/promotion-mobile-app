@@ -96,6 +96,18 @@ INSERT INTO CommerceCategorie (cid, catid) values (:cid, (select catid from Cate
 DELETE from CommerceCategorie where cid=1;
 
 --name: fetch_login_commerce
-SELECT cid, cemail, cmdp FROM Commerce
-WHERE cemail = :cemail;
+SELECT cid, cemail,cmdp FROM COmmerce 
+Where cemail=:cemail;
 
+--name: post_promotion_image
+INSERT INTO ImagePromotion (imgname, ranks, verified, pid) VALUES (:imgname, :ranks, FALSE, :pid) returning imid;
+
+--name: get_promotion_info
+SELECT 'promotionImage/' || imgname, ranks FROM ImagePromotion where pid=:pid ORDER BY ranks asc; 
+
+
+--name: delete_promotion_image!
+DELETE from ImagePromotion where pid=:pid;
+
+--name: fetch_login_commerce
+SELECT cid, cemail, cmdp FROM Commerce WHERE cemail =:cemail;

@@ -10,3 +10,4 @@
 - one person can only ask for so many tokens
 - constraints on min amount of characters for passwords
 - add admin functionnalities (checking images but also deleting promotion and commerce)
+- PIL

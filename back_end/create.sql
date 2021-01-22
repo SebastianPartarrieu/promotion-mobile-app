@@ -5,7 +5,7 @@ CREATE TABLE Agglomeration(aid SERIAL PRIMARY KEY,
 CREATE TABLE Categorie(catid SERIAL PRIMARY KEY,
                        catnom TEXT UNIQUE NOT NULL);
 
--- no authentification yet for clients
+
 CREATE TABLE Client(clid SERIAL PRIMARY KEY,
                     clnom VARCHAR(32) NOT NULL,
                     clpnom VARCHAR(32) NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE Client(clid SERIAL PRIMARY KEY,
 -- CREATE TABLE ImageClient(im_cl_id SPK, im_cl_nom TUNN,rank,  clid INNR Client );
 --CREATE TABLE ImagePromotion()
 
--- no authentification yet for commerce either 
+ 
 CREATE TABLE Commerce(cid SERIAL PRIMARY KEY,
                       cnom VARCHAR(32) NOT NULL,
                       cpresentation VARCHAR(400) NOT NULL,
@@ -56,7 +56,9 @@ CREATE TABLE ClientFavCommerce(clid INTEGER NOT NULL REFERENCES Client,
 
 CREATE TABLE Admins(adminid SERIAL PRIMARY KEY, 
                     adminemail VARCHAR(150) UNIQUE NOT NULL,
-                    adminmdp VARCHAR(100) NOT NULL)
+                    adminmdp VARCHAR(100) NOT NULL);
+
+CREATE TABLE ImagePromotion(imid SERIAL PRIMARY KEY,  imgname TEXT UNIQUE NOT NULL, ranks INTEGER NOT NULL, verified Boolean NOT NULL, pid INTEGER NOT NULL REFERENCES Promotion);
 
 --CREATE TABLE CarteFidelite(carteid SERIAL PRIMARY KEY,
 --                           clid INTEGER NOT NULL REFERENCES Client,

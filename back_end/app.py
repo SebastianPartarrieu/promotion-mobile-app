@@ -11,6 +11,11 @@ with open("VERSION") as VERSION:
 
 # start flask service
 from flask import Flask, jsonify, request, Response
+import imghdr
+#from PIL import Image
+from werkzeug.utils import secure_filename
+import os
+import secrets
 
 app = Flask("promotion")
 
@@ -154,6 +159,7 @@ def is_authorized(auth_token, user_id, user_type='client'):
 #
 # general information about the application
 #
+
 @app.route("/version", methods=["GET"])
 def get_version():
     # TODO check read permission
@@ -328,9 +334,9 @@ def post_commerce_info():
             for x in catnom:
                 app.logger.debug(x)
                 db.post_commerce_categorie(catnom=x, cid=p)
-            return Response(status=201)
+            return  jsonify(p), 201
         else:
-            return Response(status=201)
+            return jsonify(p), 201
     except Exception as e:
         #return str(e)
         return Response(status=400)
@@ -353,6 +359,51 @@ def check_commerce_get_cid():
 
 
 
+'''def gen_thumbnail(filename):
+    """ Generate thumbnail image
+    """
+    height = width = 200
+    original = Image.open(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], filename))
+    thumbnail = original.resize((width, height), Image.ANTIALIAS)
+    thumbnail.save(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], 'thumb_'+filename))'''
 
-    
+#validate that it is an image
+def validate_image(stream):
+    header = stream.read(512)
+    stream.seek(0)
+    format = imghdr.what(None, header)
+    if not format:
+        return None
+    return '.' + (format if format != 'jpeg' else 'jpg') 
 
+@app.route('/promotion/image/<int:pid>', methods=['POST'])
+def upload_image():
+    ranks = PARAMS.get("ranks", None)
+    uploaded_file = request.files['file']
+    filename = secure_filename(uploaded_file.filename)
+    if filename != '':
+        file_ext = os.path.splitext(filename)[1].lower()
+        if file_ext not in app.config['UPLOAD_EXTENSIONS'] or \
+            file_ext != validate_image(uploaded_file.stream):
+            return "Invalid image", 400
+            # Salt and hash the file contents
+        filename=secrets.token_hex(8) + file_ext
+        uploaded_file.save(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], filename))
+        ## add to the database with not verified
+        #gen_thumbnail(filename)
+        res=db.post_promotion_image(imgname=filename, ranks= ranks, pid=pid)
+        return '', 204
+    return "Invalide image", 400
+
+#@app.route('/commerce/verify', methods="PATCH")
+
+@app.route('/promotionimage/<int:pid>', methods=['GET'])
+def get_image(pid):
+    res = db.get_promotion_info(pid=pid)
+    return jsonify(res)
+
+@app.route('/promotionimage/<int:pid>', methods=['DELETE'])
+def delete_image(pid):
+    imgname = PARAMS.get("imgname", None)
+    db.delete_promotion_image(pid=pid, imgname=imgname)
+    return "",204

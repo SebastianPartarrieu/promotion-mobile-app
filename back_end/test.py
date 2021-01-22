@@ -79,8 +79,7 @@ def check_api(method: str, path: str, status: int, content: str = None,
                 kwargs['data'] = {'LOGIN': login}
     else:
         auth = None
-    r = requests.request(method, URL + path, auth=auth,
-                         **kwargs)  # type: ignore
+    r = requests.request(method, URL + path, auth=auth,**kwargs)  # type: ignore
     assert r.status_code == status
     if content is not None:
         assert re.search(content, r.text, re.DOTALL) is not None
@@ -197,3 +196,12 @@ def test_AA_workflow_commerce():
 ### SECOND PAGE - MAP - QUERIES
 
 ### THIRD PAGE - LISTS - QUERIES 
+
+### INTERFACE COMMERCE
+def test_6():
+    check_api('POST', '/signupcommerce', 201, data={"cnom": "ZARA1", "cpresentation":"voila zara" ,"cemail":"zara1@hotmail.com", "aid":1, "cmdp":"zarapassword", "rue_and_num":"270 rue saint jacques", "code_postal":75004 ,"url_ext":"xyz", "catnom":"Textile,Restaurant"})
+    check_api('POST', '/signupcommerce', 400, data={"cnom": "ZARA1", "cpresentation":"voila zara" ,"cemail":"zara1@hotmail.com", "aid":1, "cmdp":"zarapassword", "rue_and_num":"270 rue saint jacques", "code_postal":75004 ,"url_ext":"xyz", "catnom":"Textile,Restaurant"})
+
+def test_7():
+    check_api('GET', '/logincommerce', 200, data={"cemail": "zara1@hotmail.com", "cmdp": "zarapassword"})
+    check_api('GET', '/logincommerce', 401, data={"cemail": "zara1@hotmail.com", "cmdp": "passworddd"})
