@@ -437,18 +437,6 @@ def delete_images(pid):
 @app.route('/promotion/<int:pid>/image', methods=['PUT','PATCH'])
 def change_rank(pid):
     ranks = PARAMS.get("ranks", None)
-<<<<<<< HEAD
-    uploaded_file = request.files['file']
-    filename = upload_image(uploaded_file)
-    uploaded_file.save(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], filename))
-    #gen_thumbnail(filename, 'UPLOAD_PATH_PROMOTION')
-    res=db.post_promotion_image(imgname=filename, ranks= ranks, pid=pid)
-    return '', 204
-
-
-@app.route('/promotion/image/<int:pid>', methods=['GET'])
-def get_image(pid):
-=======
     filname=PARAMS.get("filename",None)
     res=db.change_promotion_filename_image(imgname=filename, ranks= ranks)
     db.commit()
@@ -456,7 +444,6 @@ def get_image(pid):
 
 @app.route('/promotion/<int:pid>/image', methods=['GET'])
 def get_images(pid):
->>>>>>> petit changement
     res = db.get_promotion_image(pid=pid)
     return jsonify(res)
 
