@@ -10,12 +10,15 @@ with open("VERSION") as VERSION:
     branch, commit, date = VERSION.readline().split(" ")
 
 # start flask service
-from flask import Flask, jsonify, request, Response
+from flask import Flask, jsonify, request, Response, session
+
 import imghdr
 #from PIL install Image
 from werkzeug.utils import secure_filename
 import os
 import secrets
+
+import uuid
 
 app = Flask("promotion")
 
@@ -38,6 +41,9 @@ import anodb  # type: ignore
 db = anodb.DB(
     CONF["DB_TYPE"], CONF["DB_CONN"], CONF["DB_SQL"], CONF["DB_OPTIONS"]
 )
+
+# init flask session
+app.secret_key = SECRET_KEY
 
 #
 # Request parameters as a dict, in json, form or args
@@ -269,9 +275,18 @@ def check_client_get_clid():
         if len(res) == 0:
             return Response(status=401)
         elif check_password_hash(res[0][2], clmdp):
-            return jsonify(encode_auth_token(res[0][0], user_type='client'))
+            session[clemail] = uuid.uuid4()
+            # TODO maybe redirect to a home page here?
+            return Response(status=200)
         else:
             return Response(status=401)
+
+@app.route('/logout')
+def logout():
+    # remove the username from the session if it's there
+    session.pop(PARAMS.get('clemail', None), None)
+    return redirect(url_for('login'))
+
 
 # @app.route('/client/<int:clid>', methods=['DELETE']) #make sure to have pop up in FE asking if user is sure
 # def delete_client_account(clid):
