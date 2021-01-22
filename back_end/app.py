@@ -1,6 +1,6 @@
-#! /usr/bin/env python3
-import logging as log
-log.basicConfig(level=log.INFO)
+#!/usr/bin/env python3
+
+
 
 import datetime as dt
 started = dt.datetime.now()

@@ -1,4 +1,4 @@
-#! /usr/bin/env python3
+#!/usr/bin/env python3
 #
 # Test against a running local kiva server, including expected failures.
 #
