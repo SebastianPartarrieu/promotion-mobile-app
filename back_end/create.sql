@@ -13,12 +13,6 @@ CREATE TABLE Client(clid SERIAL PRIMARY KEY,
                     clmdp VARCHAR(100) NOT NULL,
                     aid INTEGER NOT NULL REFERENCES Agglomeration,
                     UNIQUE(clemail, clmdp));
--- unique pour l'email?
-
---CREATE TABLE ImageCommerce(im_com_id SERIAL PRIMARY KEY,  imnom TUNN, rank, cid INNR Commerce);      
--- CREATE TABLE ImageClient(im_cl_id SPK, im_cl_nom TUNN,rank,  clid INNR Client );
---CREATE TABLE ImagePromotion()
-
  
 CREATE TABLE Commerce(cid SERIAL PRIMARY KEY,
                       cnom VARCHAR(32) NOT NULL,
@@ -29,7 +23,6 @@ CREATE TABLE Commerce(cid SERIAL PRIMARY KEY,
                       rue_and_num VARCHAR(100) NOT NULL,
                       aid INTEGER NOT NULL REFERENCES Agglomeration,
                       cmdp VARCHAR(100) NOT NULL,
-                      imgname TEXT UNIQUE,
                       UNIQUE(cnom, cpresentation, code_postal, rue_and_num),
                       UNIQUE(cemail, cmdp));
                       -- imid INTEGER NOT NULL REFERENCES Image,  
@@ -42,7 +35,6 @@ CREATE TABLE CommerceCategorie(cid INTEGER NOT NULL REFERENCES Commerce,
 
 CREATE TABLE Promotion(pid SERIAL PRIMARY KEY,
                        cid INTEGER NOT NULL REFERENCES Commerce,
-                       -- imid INTEGER NOT NULL REFERENCES Image,
                        pdescription VARCHAR(400) NOT NULL,
                        tdebut DATE,
                        tfin DATE);
@@ -59,7 +51,12 @@ CREATE TABLE Admins(adminid SERIAL PRIMARY KEY,
                     adminemail VARCHAR(150) UNIQUE NOT NULL,
                     adminmdp VARCHAR(100) NOT NULL);
 
-CREATE TABLE ImagePromotion(imid SERIAL PRIMARY KEY,  imgname TEXT UNIQUE NOT NULL, ranks INTEGER NOT NULL, verified Boolean NOT NULL, pid INTEGER NOT NULL REFERENCES Promotion);
+CREATE TABLE ImagePromotion(imid SERIAL PRIMARY KEY,  imgname TEXT UNIQUE NOT NULL,
+ ranks INTEGER NOT NULL, verified Boolean NOT NULL, pid INTEGER NOT NULL REFERENCES Promotion);
+
+CREATE TABLE ImageCommerce(imid SERIAL PRIMARY KEY,  imgname TEXT UNIQUE NOT NULL,
+ ranks INTEGER NOT NULL, verified Boolean NOT NULL, cid INTEGER NOT NULL REFERENCES Commerce);
+ 
 --CREATE TABLE CarteFidelite(carteid SERIAL PRIMARY KEY,
 --                           clid INTEGER NOT NULL REFERENCES Client,
 --                           QRCode UNIQUE BYTEARRAY);

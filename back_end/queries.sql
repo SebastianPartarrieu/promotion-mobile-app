@@ -102,11 +102,7 @@ Where cemail=:cemail;
 --name: post_promotion_image
 INSERT INTO ImagePromotion (imgname, ranks, verified, pid) VALUES (:imgname, :ranks, FALSE, :pid) returning imid;
 
-<<<<<<< HEAD
 --name: get_promotion_image
-=======
---name: get_promotion_info
->>>>>>> petit changement
 SELECT 'promotionImage/' || imgname, ranks FROM ImagePromotion where pid=:pid and verified=FALSE ORDER BY ranks asc; 
 
 
@@ -116,17 +112,14 @@ DELETE from ImagePromotion where pid=:pid  and imgname=:imgname;
 --name: delete_promotion_images
 DELETE from ImagePromotion where pid=:pid  returning imgname;
 
+--name: change_promotion_filename_image!
+UPDATE ImagePromotion SET ranks=:ranks WHERE imgname=:imgname;
+
 --name: fetch_login_commerce
 SELECT cid, cemail, cmdp FROM Commerce WHERE cemail =:cemail;
 
 --name: verify_image!
 UPDATE ImagePromotion SET verified=TRUE where imgname=:imgname;
-
---name: remove_image!
-DELETE FROM Commerce WHERE cid=:cid;
-
---name: post_commerce_image!
-UPDATE Commerce SET imgname=:imgname where cid=:cid;
 
 --name: fetch_promotion_of_commerce
 SELECT DISTINCT p.pdescription, c.cnom, p.tdebut
@@ -134,3 +127,18 @@ FROM Promotion AS p
 JOIN Commerce AS c USING (cid)
 WHERE c.cid = :cid
 ORDER BY p.tdebut DESC;
+
+--name: post_commerce_image
+INSERT INTO ImageCommerce (imgname, ranks, verified, cid) VALUES (:imgname, :ranks, FALSE, :cid) returning imid;
+
+--name: delete_commmerce_images
+DELETE from ImageCommerce where cid=:cid  returning imgname;
+
+--name: get_commerce_image
+SELECT 'commerceImage/' || imgname, ranks FROM ImageCommerce where cid=:cid and verified=FALSE ORDER BY ranks asc; 
+
+--name: delete_commerce_image!
+DELETE from ImageCommerce where cid=:cid  and imgname=:imgname;
+
+--name: change_commerce_filename_image!
+UPDATE ImageCommerce SET ranks=:ranks WHERE imgname=:imgname;

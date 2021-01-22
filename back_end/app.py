@@ -414,25 +414,30 @@ def validate_image(stream):
         return None
     return '.' + (format if format != 'jpeg' else 'jpg') 
 
+def f_update_image(nameFolder, id, databaseFunction, ranks, uploaded_file):
+    filename=upload_image(uploaded_file)
+    uploaded_file.save(os.path.join(app.config[nameFolder], filename))
+    #gen_thumbnail(filename, 'UPLOAD_PATH_PROMOTION')
+    res= databaseFunction(filename, ranks, id)
+    db.commit()
+    return '', 204
+
+def f_delete_images(nameFolder, id, databaseFunction):
+    res=databaseFunction(id)
+    for imgname in res:
+        os.remove(os.path.join(app.config[nameFolder], imgname[0]))
+    return "",204
+
 @app.route('/promotion/<int:pid>/image', methods=['POST'])
 def upload_image(pid):
     ranks = PARAMS.get("ranks", None)
     uploaded_file = request.files['file']
-    filename=upload_image(uploaded_file)
-    uploaded_file.save(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], filename))
-    #gen_thumbnail(filename, 'UPLOAD_PATH_PROMOTION')
-    res=db.post_promotion_image(imgname=filename, ranks= ranks, pid=pid)
-    db.commit()
-    return '', 204
+    f_update_image('UPLOAD_PATH_PROMOTION', pid, lambda x, y, z: db.post_promotion_image(filename=x, ranks=y, pid=z), ranks, uploaded_file)
 
 #to delete all images of a promotion
 @app.route('/promotion/<int:pid>/images', methods=['DELETE'])
 def delete_images(pid):
-    imgname = PARAMS.get("imgname", None)
-    res=db.delete_promotion_images(pid=pid)
-    for imgname in res:
-        os.remove(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], imgname[0]))
-    return "",204
+    f_delete_images('UPLOAD_PATH_PROMOTION', pid, lambda x: db.post_promotion_image(pid=x))
 
 @app.route('/promotion/<int:pid>/image', methods=['PUT','PATCH'])
 def change_rank(pid):
@@ -454,6 +459,38 @@ def delete_image(pid):
     res=db.delete_promotion_image(pid=pid, imgname=imgname)
     return "",204
 
+@app.route('/commerce/<int:cid>/image', methods=['POST'])
+def upload__commerce_image(cid):
+    ranks = PARAMS.get("ranks", None)
+    uploaded_file = request.files['file']
+    f_update_image('UPLOAD_PATH_COMMERCE', cid, lambda x, y, z: db.post_commerce_image(filename=x, ranks=y, cid=z), ranks, uploaded_file)
+
+
+#to delete all images of a commerce
+@app.route('/commerce/<int:cid>/images', methods=['DELETE'])
+def delete_commerce_images(cid):
+    f_delete_images('UPLOAD_PATH_COMMERCE', cid, lambda x: db.post_commerce_image(cid=x))
+
+@app.route('/commerce/<int:cid>/image', methods=['PUT','PATCH'])
+def change_rank_commerce(cid):
+    ranks = PARAMS.get("ranks", None)
+    filname=PARAMS.get("filename",None)
+    res=db.change_commerce_filename_image(imgname=filename, ranks= ranks)
+    db.commit()
+    return '', 204
+
+@app.route('/commerce/<int:cid>/image', methods=['GET'])
+def get_images_commerce(cid):
+    res = db.get_commerce_image(cid=cid)
+    return jsonify(res)
+
+@app.route('/commerce/<int:cid>/image', methods=['DELETE'])
+def delete_image_commerce(cid):
+    imgname = PARAMS.get("imgname", None)
+    os.remove(os.path.join(app.config['UPLOAD_PATH_COMMERCE'], imgname))
+    res=db.delete_commerce_image(cid=cid, imgname=imgname)
+    return "",204
+    
 @app.route('/commerce/verify', methods=["PATCH"])
 def verify():
     imgname = PARAMS.get("imgname", None)
