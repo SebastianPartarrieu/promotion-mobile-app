@@ -11,7 +11,7 @@ import secrets
 import os
 from werkzeug.utils import secure_filename
 import imghdr
-from flask import Flask, jsonify, request, Response, session
+from flask import Flask, jsonify, request, Response, session, redirect, url_for
 import datetime as dt
 started = dt.datetime.now()
 
@@ -19,30 +19,27 @@ started = dt.datetime.now()
 with open("VERSION") as VERSION:
     branch, commit, date = VERSION.readline().split(" ")
 
-# start flask service
-
-# from PIL install Image
-
-
+# init flask app
 app = Flask("promotion")
 
 # load configuration, fall back on environment
-
-# added imports - token based auth and hash for password storage
-
 if "APP_CONFIG" in ENV:
     app.config.from_envvar("APP_CONFIG")
     CONF = app.config  # type: ignore
 else:
     CONF = ENV  # type: ignore
 
+# init secrets
+if CONF.get("SECRET_KEY", False):
+    SECRET_KEY = CONF["SECRET_KEY"]
+    app.secret_key = SECRET_KEY
+else:
+    raise("you must specify a SECRET_KEY!")
+
 # create $database connection and load queries
 db = anodb.DB(
     CONF["DB_TYPE"], CONF["DB_CONN"], CONF["DB_SQL"], CONF["DB_OPTIONS"]
 )
-
-# init flask session
-app.secret_key = SECRET_KEY
 
 #
 # Request parameters as a dict, in json, form or args
@@ -100,12 +97,6 @@ else:
         LOGIN = request.remote_user
 
 app.before_request(set_login)
-
-# Tests for authentication based on JWT (Json Web tokens)
-
-if CONF.get("SECRET_KEY", False):
-    global SECRET_KEY
-    SECRET_KEY = CONF["SECRET_KEY"]  # for JWTs
 
 
 def encode_auth_token(user_id, user_type='client'):
