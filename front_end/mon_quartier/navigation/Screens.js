@@ -29,7 +29,7 @@ const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
-function ElementsStack(props) {
+function searchStack(props) {
   return (
     <Stack.Navigator mode="card" headerMode="screen">
       <Stack.Screen
@@ -37,26 +37,14 @@ function ElementsStack(props) {
         component={Elements}
         options={{
           header: ({ navigation, scene }) => (
-            <Header title="Elements" navigation={navigation} scene={scene} />
-          ),
-          cardStyle: { backgroundColor: "#F8F9FE" }
-        }}
-      />
-            <Stack.Screen
-        name="Pro"
-        component={Pro}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              title=""
-              back
-              white
-              transparent
-              navigation={navigation}
-              scene={scene}
+            <Header 
+              title="Recherche" 
+              navigation={navigation} 
+              scene={scene} 
+              search
             />
           ),
-          headerTransparent: true
+          cardStyle: { backgroundColor: "#F8F9FE" }
         }}
       />
     </Stack.Navigator>
@@ -105,6 +93,18 @@ function ProfileStack(props) {
     </Stack.Navigator>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 function HomeStack(props) {
   return (
@@ -180,7 +180,7 @@ function AppStack(props) {
       <Drawer.Screen name="Home" component={HomeStack} />
       <Drawer.Screen name="Profile" component={ProfileStack} />
       <Drawer.Screen name="Account" component={Register} />
-      <Drawer.Screen name="Elements" component={ElementsStack} />
+      <Drawer.Screen name="Elements" component={searchStack} />
     </Drawer.Navigator>
   );
 }

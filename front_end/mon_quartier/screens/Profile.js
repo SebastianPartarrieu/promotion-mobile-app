@@ -20,7 +20,6 @@ const thumbMeasure = (width - 48 - 32) / 3;
 
 function Profile(item) {
 
-
   return (
     <Block flex style={styles.profile}>
       <Block flex>

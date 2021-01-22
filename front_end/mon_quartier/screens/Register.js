@@ -10,8 +10,10 @@ import { Block, Checkbox, Text, theme } from "galio-framework";
 
 import { Button, Icon, Input } from "../components";
 import { Images, argonTheme } from "../constants";
+import { string } from "prop-types";
 
 const { width, height } = Dimensions.get("screen");
+
 
 class Register extends React.Component {
   render() {
@@ -114,6 +116,7 @@ class Register extends React.Component {
                     </Block>
                     <Block width={width * 0.8}>
                       <Input
+                        id='password'
                         password
                         borderless
                         placeholder="Mot de passe"
@@ -219,3 +222,9 @@ const styles = StyleSheet.create({
 });
 
 export default Register;
+
+function afficher() {
+  var saisie = document.getElementById('password').value;
+  document.getElementById('password').value=saisie
+
+}

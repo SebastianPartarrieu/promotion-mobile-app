@@ -4,32 +4,77 @@ import { ScrollView, StyleSheet, Dimensions, TouchableOpacity } from "react-nati
 import { Block, Text, Button as GaButton, theme } from "galio-framework";
 // Argon themed components
 import { argonTheme, tabs } from "../constants/";
-import { Button, Select, Icon, Input, Header, Switch } from "../components/";
+import { Button, Select, Icon, Input, Header } from "../components/";
 
 const { width } = Dimensions.get("screen");
 
-class Elements extends React.Component {
-  state = {
-    "switch-1": true,
-    "switch-2": false
-  };
 
-  toggleSwitch = switchId =>
-    this.setState({ [switchId]: !this.state[switchId] });
+
+<ul id="myUL">
+  <li><a href="#">Adele</a></li>
+  <li><a href="#">Agnes</a></li>
+  <li><a href="#">Billy</a></li>
+  <li><a href="#">Bob</a></li>
+  <li><a href="#">Calvin</a></li>
+  <li><a href="#">Christina</a></li>
+  <li><a href="#">Cindy</a></li>
+</ul>
+
+
+function myFunction() {
+  // Declare variables
+  var input, filter, ul, li, a, i, txtValue;
+  input = document.getElementById('myInput');
+  filter = input.value.toUpperCase();
+  ul = document.getElementById("myUL");
+  li = ul.getElementsByTagName('li');
+
+  // Loop through all list items, and hide those who don't match the search query
+  for (i = 0; i < li.length; i++) {
+    a = li[i].getElementsByTagName("a")[0];
+    txtValue = a.textContent || a.innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+class Elements extends React.Component {
 
   renderButtons = () => {
     return (
       <Block flex>
         <Text bold size={16} style={styles.title}>
-          Buttons
+          Resultats
         </Text>
         <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
           <Block center>
-            <Button color="default" style={styles.button}>
-              DEFAULT
+            <Button
+              color="secondary"
+              textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
+              style={styles.button}
+            >
+              Panda WOK
             </Button>
-          </Block>
-          <Block center>
+            <Button
+              color="secondary"
+              textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
+              style={styles.button}
+            >
+              Coiffure
+            </Button>
             <Button
               color="secondary"
               textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
@@ -37,47 +82,28 @@ class Elements extends React.Component {
             >
               SECONDARY
             </Button>
-          </Block>
-          <Block center>
-            <Button style={styles.button}>PRIMARY</Button>
-          </Block>
-          <Block center>
-            <Button color="info" style={styles.button}>
-              INFO
+            <Button
+              color="secondary"
+              textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
+              style={styles.button}
+            >
+              SECONDARY
             </Button>
-          </Block>
-          <Block center>
-            <Button color="success" style={styles.button}>
-              SUCCESS
+            <Button
+              color="secondary"
+              textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
+              style={styles.button}
+            >
+              SECONDARY
             </Button>
-          </Block>
-          <Block center>
-            <Button color="warning" style={styles.button}>
-              WARNING
+            <Button
+              color="secondary"
+              textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
+              style={styles.button}
+            >
+              SECONDARY
             </Button>
-          </Block>
-          <Block center>
-            <Button color="error" style={styles.button}>
-              ERROR
-            </Button>
-          </Block>
-          <Block row space="evenly">
-            <Block flex left style={{marginTop: 8}}>
-              <Select
-                defaultIndex={1}
-                options={["01", "02", "03", "04", "05"]}
-              />
-            </Block>
-            <Block flex center>
-              <Button small center color="default" style={styles.optionsButton}>
-                DELETE
-              </Button>
-            </Block>
-            <Block flex={1.25} right>
-              <Button center color="default" style={styles.optionsButton}>
-                SAVE FOR LATER
-              </Button>
-            </Block>
+          
           </Block>
         </Block>
       </Block>
@@ -139,139 +165,6 @@ class Elements extends React.Component {
     );
   };
 
-  renderInputs = () => {
-    return (
-      <Block flex style={styles.group}>
-        <Text bold size={16} style={styles.title}>
-          Inputs
-        </Text>
-        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-          <Input right placeholder="Regular" iconContent={<Block />} />
-        </Block>
-        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-          <Input
-            right
-            placeholder="Regular Custom"
-            style={{
-              borderColor: argonTheme.COLORS.INFO,
-              borderRadius: 4,
-              backgroundColor: "#fff"
-            }}
-            iconContent={<Block />}
-          />
-        </Block>
-        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-          <Input
-            placeholder="Icon left"
-            iconContent={
-              <Icon
-                size={11}
-                style={{ marginRight: 10 }}
-                color={argonTheme.COLORS.ICON}
-                name="search-zoom-in"
-                family="ArgonExtra"
-              />
-            }
-          />
-        </Block>
-        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-          <Input
-            right
-            placeholder="Icon Right"
-            iconContent={
-              <Icon
-                size={11}
-                color={argonTheme.COLORS.ICON}
-                name="search-zoom-in"
-                family="ArgonExtra"
-              />
-            }
-          />
-        </Block>
-        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-          <Input
-            success
-            right
-            placeholder="Success"
-            iconContent={
-              <Block
-                middle
-                style={{
-                  width: 20,
-                  height: 20,
-                  borderRadius: 10,
-                  backgroundColor: argonTheme.COLORS.INPUT_SUCCESS
-                }}
-              >
-                <Icon
-                  size={11}
-                  color={argonTheme.COLORS.ICON}
-                  name="g-check"
-                  family="ArgonExtra"
-                />
-              </Block>
-            }
-          />
-        </Block>
-        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-          <Input
-            error
-            right
-            placeholder="Error Input"
-            iconContent={
-              <Block
-                middle
-                style={{
-                  width: 20,
-                  height: 20,
-                  borderRadius: 10,
-                  backgroundColor: argonTheme.COLORS.INPUT_ERROR
-                }}
-              >
-                <Icon
-                  size={11}
-                  color={argonTheme.COLORS.ICON}
-                  name="support"
-                  family="ArgonExtra"
-                />
-              </Block>
-            }
-          />
-        </Block>
-      </Block>
-    );
-  };
-
-  renderSwitches = () => {
-    return (
-      <Block flex style={styles.group}>
-        <Text bold size={16} style={styles.title}>
-          Switches
-        </Text>
-        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-          <Block
-            row
-            middle
-            space="between"
-            style={{ marginBottom: theme.SIZES.BASE }}
-          >
-            <Text size={14}>Switch is ON</Text>
-            <Switch
-              value={this.state["switch-1"]}
-              onValueChange={() => this.toggleSwitch("switch-1")}
-            />
-          </Block>
-          <Block row middle space="between">
-            <Text size={14}>Switch is OFF</Text>
-            <Switch
-              value={this.state["switch-2"]}
-              onValueChange={() => this.toggleSwitch("switch-2")}
-            />
-          </Block>
-        </Block>
-      </Block>
-    );
-  };
 
   renderTableCell = () => {
     const { navigation } = this.props;
@@ -359,19 +252,17 @@ class Elements extends React.Component {
         </Text>
         <Block>
           <Block style={{ marginBottom: theme.SIZES.BASE }}>
-            <Header back title="Title" navigation={this.props.navigation} />
+            <Header 
+              back 
+                title="Title" navigation={this.props.navigation} />
           </Block>
 
           <Block style={{ marginBottom: theme.SIZES.BASE }}>
-            <Header white back title="Title" navigation={this.props.navigation} bgColor={argonTheme.COLORS.ACTIVE} titleColor="white" iconColor="white" />
-          </Block>
-
-          <Block style={{ marginBottom: theme.SIZES.BASE }}>
-            <Header search title="Title" navigation={this.props.navigation} />
-          </Block>
-
-          <Block style={{ marginBottom: theme.SIZES.BASE }}>
-            <Header tabs={tabs.categories} search title="Title" navigation={this.props.navigation} />
+            <Header 
+              tabs={tabs.categories} 
+              search 
+              title="Title" 
+              navigation={this.props.navigation} />
           </Block>
 
           <Block style={{ marginBottom: theme.SIZES.BASE }}>
@@ -394,12 +285,6 @@ class Elements extends React.Component {
       <Block flex center>
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 30, width }}>
           {this.renderButtons()}
-          {this.renderText()}
-          {this.renderInputs()}
-          {this.renderSocial()}
-          {this.renderSwitches()}
-          {this.renderNavigation()}
-          {this.renderTableCell()}
         </ScrollView>
       </Block>
     );
