@@ -10,6 +10,7 @@
 # use it against a deployed version and differing databases,
 # so keep it light.
 
+from requests import Session
 import re
 from os import environ as ENV
 from typing import Dict, Union, Tuple
@@ -35,7 +36,6 @@ else:
     real_auth = False
 
 # reuse connections…
-from requests import Session
 requests = Session()
 
 #
@@ -61,6 +61,8 @@ requests = Session()
 #    check_api("POST", "/store", 201, json={"key": "Roméo", "val": "Juliette"})
 #    check_api("DELETE", "/store", 204)
 #
+
+
 def check_api(method: str, path: str, status: int, content: str = None,
               login: str = ADMIN, **kwargs):
     # work around Werkzeug inability to handle authentication transparently
@@ -79,7 +81,8 @@ def check_api(method: str, path: str, status: int, content: str = None,
                 kwargs['data'] = {'LOGIN': login}
     else:
         auth = None
-    r = requests.request(method, URL + path, auth=auth,**kwargs)  # type: ignore
+    r = requests.request(method, URL + path, auth=auth,
+                         **kwargs)  # type: ignore
     assert r.status_code == status
     if content is not None:
         assert re.search(content, r.text, re.DOTALL) is not None
@@ -97,6 +100,8 @@ def test_sanity():
     assert NONE in AUTH
 
 # /whatever # BAD URI
+
+
 def test_whatever():
     check_api('GET', '/whatever', 404)
     check_api('POST', '/whatever', 404)
@@ -105,6 +110,8 @@ def test_whatever():
     check_api('PATCH', '/whatever', 404)
 
 # /version
+
+
 def test_version():
     # only GET is implemented
     check_api('GET', '/version', 200, '"promotion"', login=ADMIN)
@@ -117,53 +124,72 @@ def test_version():
     check_api('PATCH', '/version', 405)
 
 
-### FRONT PAGE QUERIES 
+# FRONT PAGE QUERIES
 
 # GET /promotion with filter for number of promotions returned and for agglomeration
 def test_1():
-    check_api('GET', '/promotion', 200, data={"nb": 3, "agglomeration": "Paris"})
+    check_api('GET', '/promotion', 200,
+              data={"nb": 3, "agglomeration": "Paris"})
     check_api('GET', '/promotion', 200, data={"agglomeration": "Paris"})
-    check_api('GET', '/promotion', 200, data={"nb": 3, "agglomeration": "Caen"})
+    check_api('GET', '/promotion', 200,
+              data={"nb": 3, "agglomeration": "Caen"})
     check_api('GET', '/promotion', 200, data={"nb": 3})
     check_api('GET', '/promotion', 200)
 
 # GET /commerce with filter for categories and agglomeration
+
+
 def test_2():
-   check_api('GET', '/commerce', 200, data={"categorie": "restaurant", "agglomeration": "Paris"})
-   check_api('GET', '/commerce', 200, data={"categorie": "restaurant"})
-   check_api('GET', '/commerce', 200, data={"agglomeration": "Paris"})
-   check_api('GET', '/commerce', 200)
+    check_api('GET', '/commerce', 200,
+              data={"categorie": "restaurant", "agglomeration": "Paris"})
+    check_api('GET', '/commerce', 200, data={"categorie": "restaurant"})
+    check_api('GET', '/commerce', 200, data={"agglomeration": "Paris"})
+    check_api('GET', '/commerce', 200)
 
 # GET /promotion/<pid>
+
+
 def test_3():
     check_api('GET', '/promotion/1', 200)
 
-### ACCOUNT RELATED QUERIES
+# ACCOUNT RELATED QUERIES
 # Get client info, signup and patch client info
 
 ### Authentication and authorization
-def test_AA_workflow_client():
-    clid = check_api('POST', '/signup', 201, data={"clnom": "Partarrieu", "clpnom": "Sebastian", "clemail": "s.a.partarrieu@gmail.com", "aid": 3, "clmdp": "pass"})
-    check_api('POST', '/signup', 400, data={"clnom": "Partarrieu", "clpnom": "Sebastian", "clemail": "s.a.partarrieu@gmail.com", "aid": 3, "clmdp": "pass"})
 
-    auth_token = check_api('GET', '/login', 200, data={"clemail": "s.a.partarrieu@gmail.com", "clmdp": "pass"})
-    check_api('GET', '/login', 401, data={"clemail": "s.a.partarrieu@gmail.com", "clmdp": "passworddd"})
-    #for some reason escape characters are added to the auth_token when we fetch text from response in check_api
-    check_api('GET', '/client/'+str(clid), 200, data={'token': auth_token[1:-2]}) # 5 is relative, when s.a.partarrieu is created given current intialization id 5 is given. If not we need to keep id FE
+
+def test_AA_workflow_client():
+    clid = check_api('POST', '/signup', 201, data={"clnom": "Partarrieu", "clpnom": "Sebastian",
+                                                   "clemail": "s.a.partarrieu@gmail.com", "aid": 3, "clmdp": "pass"})
+    check_api('POST', '/signup', 400, data={"clnom": "Partarrieu", "clpnom": "Sebastian",
+                                            "clemail": "s.a.partarrieu@gmail.com", "aid": 3, "clmdp": "pass"})
+
+    auth_token = check_api(
+        'GET', '/login', 200, data={"clemail": "s.a.partarrieu@gmail.com", "clmdp": "pass"})
+    check_api('GET', '/login', 401,
+              data={"clemail": "s.a.partarrieu@gmail.com", "clmdp": "passworddd"})
+    # for some reason escape characters are added to the auth_token when we fetch text from response in check_api
+    # 5 is relative, when s.a.partarrieu is created given current intialization id 5 is given. If not we need to keep id FE
+    check_api('GET', '/client/'+str(clid), 200,
+              data={'token': auth_token[1:-2]})
     check_api('GET', '/client/'+str(clid), 401, data={'token': ''})
     check_api('GET', '/client/3', 401, data={'token': auth_token[1:-2]})
-    check_api('GET', '/client/'+str(clid), 401, data={'token': 'blalallvjhfqjksdfhql'})
-    check_api('PATCH', '/client/'+str(clid), 201, data={'clpnom': 'Sebby', 'token': auth_token[1:-2]})
-    check_api('PUT', '/client/'+str(clid), 201, data={"clnom": "PARTARRIEU", 'token': auth_token[1:-2]})
+    check_api('GET', '/client/'+str(clid), 401,
+              data={'token': 'blalallvjhfqjksdfhql'})
+    check_api('PATCH', '/client/'+str(clid), 201,
+              data={'clpnom': 'Sebby', 'token': auth_token[1:-2]})
+    check_api('PUT', '/client/'+str(clid), 201,
+              data={"clnom": "PARTARRIEU", 'token': auth_token[1:-2]})
+
 
 def test_AA_workflow_commerce():
     cid = check_api('POST', '/signupcommerce', 201, data={'cnom': 'Fromager Saint Louis',
-                                                     'cpresentation': 'Vend du fromage de bonne qualité',
-                                                     'cemail': 'fromager@fromage.com',
-                                                     'code_postal': 75005,
-                                                     'rue_and_num': '80 Boulevard Saint-Michel',
-                                                     'aid': 1,
-                                                     'cmdp': 'dubonfromage', 'catom': 'Restaurant,Textile'})
+                                                          'cpresentation': 'Vend du fromage de bonne qualité',
+                                                          'cemail': 'fromager@fromage.com',
+                                                          'code_postal': 75005,
+                                                          'rue_and_num': '80 Boulevard Saint-Michel',
+                                                          'aid': 1,
+                                                          'cmdp': 'dubonfromage', 'catom': 'Restaurant,Textile'})
     check_api('POST', '/signupcommerce', 400, data={'cnom': 'Fromager Saint Louis',
                                                     'cpresentation': '',
                                                     'url_ext': 'fromager@fromage.com',
@@ -176,26 +202,33 @@ def test_AA_workflow_commerce():
                                                     'code_postal': 75005,
                                                     'rue_and_num': '80 Boulevard Saint-Michel',
                                                     'aid': 1,
-                                                    'cmdp': 'dubonfromage', 'catom': 'Restaurant,Textile'})      
-    auth_token = check_api('GET', '/logincommerce', 200, data={'cemail': 'fromager@fromage.com', 'cmdp': 'dubonfromage'})
-    check_api('PATCH', '/commerce/'+str(cid), 201, data={'cnom': 'Fromager Saint Jacques', 'token': auth_token[1:-2]})
-    check_api('PUT', '/commerce/'+str(cid), 201, data={'cpresentation': 'Fromage frais', 'token': auth_token[1:-2]})
-    
+                                                    'cmdp': 'dubonfromage', 'catom': 'Restaurant,Textile'})
+    auth_token = check_api('GET', '/logincommerce', 200,
+                           data={'cemail': 'fromager@fromage.com', 'cmdp': 'dubonfromage'})
+    check_api('PATCH', '/commerce/'+str(cid), 201,
+              data={'cnom': 'Fromager Saint Jacques', 'token': auth_token[1:-2]})
+    check_api('PUT', '/commerce/'+str(cid), 201,
+              data={'cpresentation': 'Fromage frais', 'token': auth_token[1:-2]})
+
 # Login with email and password
 
 
+# INTERACTION WITH FRONT PAGE
 
-### INTERACTION WITH FRONT PAGE
+# SECOND PAGE - MAP - QUERIES
 
-### SECOND PAGE - MAP - QUERIES
+# THIRD PAGE - LISTS - QUERIES
 
-### THIRD PAGE - LISTS - QUERIES 
-
-### INTERFACE COMMERCE
+# INTERFACE COMMERCE
 def test_6():
-    check_api('POST', '/signupcommerce', 201, data={"cnom": "ZARA1", "cpresentation":"voila zara" ,"cemail":"zara1@hotmail.com", "aid":1, "cmdp":"zarapassword", "rue_and_num":"270 rue saint jacques", "code_postal":75004 ,"url_ext":"xyz", "catnom":"Textile,Restaurant"})
-    check_api('POST', '/signupcommerce', 400, data={"cnom": "ZARA1", "cpresentation":"voila zara" ,"cemail":"zara1@hotmail.com", "aid":1, "cmdp":"zarapassword", "rue_and_num":"270 rue saint jacques", "code_postal":75004 ,"url_ext":"xyz", "catnom":"Textile,Restaurant"})
+    check_api('POST', '/signupcommerce', 201, data={"cnom": "ZARA1", "cpresentation": "voila zara", "cemail": "zara1@hotmail.com", "aid": 1,
+                                                    "cmdp": "zarapassword", "rue_and_num": "270 rue saint jacques", "code_postal": 75004, "url_ext": "xyz", "catnom": "Textile,Restaurant"})
+    check_api('POST', '/signupcommerce', 400, data={"cnom": "ZARA1", "cpresentation": "voila zara", "cemail": "zara1@hotmail.com", "aid": 1,
+                                                    "cmdp": "zarapassword", "rue_and_num": "270 rue saint jacques", "code_postal": 75004, "url_ext": "xyz", "catnom": "Textile,Restaurant"})
+
 
 def test_7():
-    check_api('GET', '/logincommerce', 200, data={"cemail": "zara1@hotmail.com", "cmdp": "zarapassword"})
-    check_api('GET', '/logincommerce', 401, data={"cemail": "zara1@hotmail.com", "cmdp": "passworddd"})
+    check_api('GET', '/logincommerce', 200,
+              data={"cemail": "zara1@hotmail.com", "cmdp": "zarapassword"})
+    check_api('GET', '/logincommerce', 401,
+              data={"cemail": "zara1@hotmail.com", "cmdp": "passworddd"})
