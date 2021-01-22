@@ -29,6 +29,7 @@ CREATE TABLE Commerce(cid SERIAL PRIMARY KEY,
                       rue_and_num VARCHAR(100) NOT NULL,
                       aid INTEGER NOT NULL REFERENCES Agglomeration,
                       cmdp VARCHAR(100) NOT NULL,
+                      imgname TEXT UNIQUE,
                       UNIQUE(cnom, cpresentation, code_postal, rue_and_num),
                       UNIQUE(cemail, cmdp));
                       -- imid INTEGER NOT NULL REFERENCES Image,  
@@ -59,7 +60,6 @@ CREATE TABLE Admins(adminid SERIAL PRIMARY KEY,
                     adminmdp VARCHAR(100) NOT NULL);
 
 CREATE TABLE ImagePromotion(imid SERIAL PRIMARY KEY,  imgname TEXT UNIQUE NOT NULL, ranks INTEGER NOT NULL, verified Boolean NOT NULL, pid INTEGER NOT NULL REFERENCES Promotion);
-
 --CREATE TABLE CarteFidelite(carteid SERIAL PRIMARY KEY,
 --                           clid INTEGER NOT NULL REFERENCES Client,
 --                           QRCode UNIQUE BYTEARRAY);

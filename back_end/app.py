@@ -12,7 +12,7 @@ with open("VERSION") as VERSION:
 # start flask service
 from flask import Flask, jsonify, request, Response
 import imghdr
-#from PIL import Image
+#from PIL install Image
 from werkzeug.utils import secure_filename
 import os
 import secrets
@@ -250,7 +250,6 @@ def post_client_info():
     except:
         return Response(status=400)
 
-
 @app.route('/login', methods=["GET"])
 def check_client_get_clid():
     clemail, clmdp = PARAMS.get('clemail', None), PARAMS.get('clmdp', None)
@@ -265,7 +264,6 @@ def check_client_get_clid():
         else:
             return Response(status=401)
 
-
 ### commerce interface
 
 #no real authentication and authorization needed here as clients will access this all the time
@@ -275,6 +273,15 @@ def get_commerce_info(cid):
     return jsonify(res)
 #curl -i -X GET http://0.0.0.0:5000/commerce/1
 
+def upload_picture(uploaded_file):
+    filename = secure_filename(uploaded_file.filename)
+    if filename != '':
+        file_ext = os.path.splitext(filename)[1].lower()
+        if file_ext not in app.config['UPLOAD_EXTENSIONS'] or \
+            file_ext != validate_image(uploaded_file.stream):
+            return "Invalid image", 400
+        filename=secrets.token_hex(8) + file_ext
+        return filename
 
 @app.route('/commerce/<int:cid>', methods=["PATCH", "PUT"])
 def patch_commerce_info(cid):
@@ -377,33 +384,52 @@ def validate_image(stream):
     return '.' + (format if format != 'jpeg' else 'jpg') 
 
 @app.route('/promotion/image/<int:pid>', methods=['POST'])
-def upload_image():
+def upload_image(pid):
     ranks = PARAMS.get("ranks", None)
     uploaded_file = request.files['file']
-    filename = secure_filename(uploaded_file.filename)
-    if filename != '':
-        file_ext = os.path.splitext(filename)[1].lower()
-        if file_ext not in app.config['UPLOAD_EXTENSIONS'] or \
-            file_ext != validate_image(uploaded_file.stream):
-            return "Invalid image", 400
-            # Salt and hash the file contents
-        filename=secrets.token_hex(8) + file_ext
-        uploaded_file.save(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], filename))
-        ## add to the database with not verified
-        #gen_thumbnail(filename)
-        res=db.post_promotion_image(imgname=filename, ranks= ranks, pid=pid)
-        return '', 204
+    filename=upload_picture
+    return filename
+
+#to delete all images of a promotion for an update
+@app.route('/promotion/images/<int:pid>', methods=['DELETE'])
+def delete_images(pid):
+    imgname = PARAMS.get("imgname", None)
+    res=db.delete_promotion_images(pid=pid)
+    for imgname in res:
+        os.remove(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], imgname[0]))
+    db.commit()
+    return "",204
+
+
+@app.route('/promotion/image/<int:pid>', methods=['PUT','PATCH'])
+def change_image(pid):
+    ranks = PARAMS.get("ranks", None)
+    uploaded_file = request.files['file']
+    upload_image(uploaded_file)
+    uploaded_file.save(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], filename))
+    #gen_thumbnail(filename, 'UPLOAD_PATH_PROMOTION')
+    res=db.post_promotion_image(imgname=filename, ranks= ranks, pid=pid)
+    db.commit()
+    return '', 204
     return "Invalide image", 400
 
-#@app.route('/commerce/verify', methods="PATCH")
-
-@app.route('/promotionimage/<int:pid>', methods=['GET'])
+@app.route('/promotion/image/<int:pid>', methods=['GET'])
 def get_image(pid):
     res = db.get_promotion_info(pid=pid)
     return jsonify(res)
 
-@app.route('/promotionimage/<int:pid>', methods=['DELETE'])
+@app.route('/promotion/image/<int:pid>', methods=['DELETE'])
 def delete_image(pid):
     imgname = PARAMS.get("imgname", None)
-    db.delete_promotion_image(pid=pid, imgname=imgname)
+    os.remove(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], imgname))
+    res=db.delete_promotion_image(pid=pid, imgname=imgname)
+    db.commit()
     return "",204
+
+@app.route('/commerce/verify', methods=["PATCH"])
+def verify():
+    imgname = PARAMS.get("imgname", None)
+    db.verify_image(imgname=imgname)
+    db.commit()
+    return "", 204
+

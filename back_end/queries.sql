@@ -103,11 +103,23 @@ Where cemail=:cemail;
 INSERT INTO ImagePromotion (imgname, ranks, verified, pid) VALUES (:imgname, :ranks, FALSE, :pid) returning imid;
 
 --name: get_promotion_info
-SELECT 'promotionImage/' || imgname, ranks FROM ImagePromotion where pid=:pid ORDER BY ranks asc; 
+SELECT 'promotionImage/' || imgname, ranks FROM ImagePromotion where pid=:pid and verified=TRUE ORDER BY ranks asc; 
 
 
 --name: delete_promotion_image!
-DELETE from ImagePromotion where pid=:pid;
+DELETE from ImagePromotion where pid=:pid  and imgname=:imgname;
+
+--name: delete_promotion_images
+DELETE from ImagePromotion where pid=:pid  returning imgname;
 
 --name: fetch_login_commerce
 SELECT cid, cemail, cmdp FROM Commerce WHERE cemail =:cemail;
+
+--name: verify_image!
+UPDATE ImagePromotion SET verified=TRUE where imgname=:imgname;
+
+--remove_image!
+DELETE FROM Commerce WHERE cid=:cid;
+
+--post_commerce_image!
+UPDATE Commerce SET imgname=:imgname where cid=:cid;
