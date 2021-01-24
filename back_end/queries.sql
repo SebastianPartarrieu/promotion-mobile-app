@@ -103,17 +103,17 @@ Where cemail=:cemail;
 INSERT INTO ImagePromotion (imgname, ranks, verified, pid) VALUES (:imgname, :ranks, FALSE, :pid) returning imid;
 
 --name: get_promotion_image
-SELECT 'promotionImage/' || imgname, ranks FROM ImagePromotion where pid=:pid and verified=FALSE ORDER BY ranks asc; 
+SELECT 'promotionImage/' || imgname, ranks,imid FROM ImagePromotion where pid=:pid and verified=FALSE ORDER BY ranks asc; 
 
 
---name: delete_promotion_image!
-DELETE from ImagePromotion where pid=:pid  and imgname=:imgname;
+--name: delete_promotion_image
+DELETE from ImagePromotion where pid=:pid  and imid=:imid returning imgname;
 
 --name: delete_promotion_images
 DELETE from ImagePromotion where pid=:pid  returning imgname;
 
 --name: change_promotion_filename_image!
-UPDATE ImagePromotion SET ranks=:ranks WHERE imgname=:imgname;
+UPDATE ImagePromotion SET ranks=:ranks WHERE imid=:imid and pid=:pid;
 
 --name: fetch_login_commerce
 SELECT cid, cemail, cmdp FROM Commerce WHERE cemail =:cemail;
@@ -135,10 +135,16 @@ INSERT INTO ImageCommerce (imgname, ranks, verified, cid) VALUES (:imgname, :ran
 DELETE from ImageCommerce where cid=:cid  returning imgname;
 
 --name: get_commerce_image
-SELECT 'commerceImage/' || imgname, ranks FROM ImageCommerce where cid=:cid and verified=FALSE ORDER BY ranks asc; 
+SELECT 'commerceImage/' || imgname, ranks, imid FROM ImageCommerce where cid=:cid and verified=FALSE ORDER BY ranks asc; 
 
---name: delete_commerce_image!
-DELETE from ImageCommerce where cid=:cid  and imgname=:imgname;
+--name: delete_commerce_image
+DELETE from ImageCommerce where cid=:cid  and imid=:imid returning imgname;
 
 --name: change_commerce_filename_image!
-UPDATE ImageCommerce SET ranks=:ranks WHERE imgname=:imgname;
+UPDATE ImageCommerce SET ranks=:ranks WHERE imid=:imid and cid=:cid;
+
+--name: get_rank_last_image_Promotion
+Select ranks from ImagePromotion Where pid=:pid order by desc limit 1;
+
+--name: get_rank_last_image_Commerce
+Select ranks from ImageCommerce Where cid=:cid order by desc limit 1;

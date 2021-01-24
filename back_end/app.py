@@ -20,8 +20,14 @@ with open("VERSION") as VERSION:
     branch, commit, date = VERSION.readline().split(" ")
 
 # start flask service
-
-# from PIL install Image
+from flask import Flask, jsonify, request, Response
+import imghdr
+#from PIL install Image
+from werkzeug.utils import secure_filename
+import os
+import secrets
+import hashlib 
+import time
 
 app = Flask("promotion")
 
@@ -337,7 +343,7 @@ def upload_picture(uploaded_file):
         if file_ext not in app.config['UPLOAD_EXTENSIONS'] or \
                 file_ext != validate_image(uploaded_file.stream):
             return "Invalid image", 400
-        filename = secrets.token_hex(8) + file_ext
+        filename=hashlib.md5((secrets.token_hex(8) + str(round(time.time() * 1000))).encode('utf-8')).hexdigest() + file_ext
         return filename
 
 
@@ -458,11 +464,12 @@ def validate_image(stream):
     return '.' + (format if format != 'jpeg' else 'jpg')
 
 
-def f_update_image(nameFolder, id, databaseFunction, ranks, uploaded_file):
-    filename = upload_image(uploaded_file)
+def f_update_image(nameFolder, id, databaseFunction, uploaded_file, ranksFunction):
+    filename=upload_image(uploaded_file)
     uploaded_file.save(os.path.join(app.config[nameFolder], filename))
     #gen_thumbnail(filename, 'UPLOAD_PATH_PROMOTION')
-    res = databaseFunction(filename, ranks, id)
+    res=ranksFunction(id)
+    res= databaseFunction(filename, int(res)+1, id)
     db.commit()
     return '', 204
 
@@ -476,22 +483,8 @@ def f_delete_images(nameFolder, id, databaseFunction):
 
 @app.route('/promotion/<int:pid>/image', methods=['POST'])
 def upload_image(pid):
-    ranks = PARAMS.get("ranks", None)
     uploaded_file = request.files['file']
-    f_update_image(
-        'UPLOAD_PATH_PROMOTION',
-        pid,
-        lambda x,
-        y,
-        z: db.post_promotion_image(
-            filename=x,
-            ranks=y,
-            pid=z),
-        ranks,
-        uploaded_file)
-
-# to delete all images of a promotion
-
+    f_update_image('UPLOAD_PATH_PROMOTION', pid, lambda x, y,z: db.post_promotion_image(filename=x, ranks=y, pid=z), ranks, uploaded_file, lambda x: db.get_rank_last_image_promotion(pid=x))
 
 @app.route('/promotion/<int:pid>/images', methods=['DELETE'])
 def delete_images(pid):
@@ -502,12 +495,23 @@ def delete_images(pid):
             pid=x))
 
 
-@app.route('/promotion/<int:pid>/image', methods=['PUT', 'PATCH'])
+def dupcheck(x):
+   for elem in x:
+      if x.count(elem) > 1:
+         return True
+      return False
+
+@app.route('/promotion/<int:pid>/image', methods=['PUT','PATCH'])
 def change_rank(pid):
-    ranks = PARAMS.get("ranks", None)
-    filname = PARAMS.get("filename", None)
-    res = db.change_promotion_filename_image(imgname=filename, ranks=ranks)
-    db.commit()
+    #imageRanks is a list containing image with its rank, i.e. [['image1',1],['image1',2]]
+    imageImid = (PARAMS.get('imageImid')).split(",")
+    imageRanks = (PARAMS.get('imageRanks')).split(",")
+    if dupcheck(imageImid) or dupcheck(imageRanks):
+        return Response(status=400)
+    ##imageRanks=list(PARAMS.get("imageRanks",None))
+    for i in range(len(imageRanks)):
+        res=db.change_promotion_filename_image(imid=imageImid[i], ranks=imageRanks[i],pid=pid)
+        db.commit()
     return '', 204
 
 
@@ -519,30 +523,18 @@ def get_images(pid):
 
 @app.route('/promotion/<int:pid>/image', methods=['DELETE'])
 def delete_image(pid):
-    imgname = PARAMS.get("imgname", None)
-    os.remove(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], imgname))
-    res = db.delete_promotion_image(pid=pid, imgname=imgname)
-    return "", 204
-
+    imageImid = PARAMS.get("imageImid", None)
+    res=db.delete_promotion_image(pid=pid, imid=imageImid)
+    os.remove(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], res))
+    return "",204
 
 @app.route('/commerce/<int:cid>/image', methods=['POST'])
 def upload__commerce_image(cid):
-    ranks = PARAMS.get("ranks", None)
     uploaded_file = request.files['file']
-    f_update_image(
-        'UPLOAD_PATH_COMMERCE',
-        cid,
-        lambda x,
-        y,
-        z: db.post_commerce_image(
-            filename=x,
-            ranks=y,
-            cid=z),
-        ranks,
-        uploaded_file)
+    f_update_image('UPLOAD_PATH_COMMERCE', cid, lambda x, y, z: db.post_commerce_image(filename=x, ranks=y, cid=z), ranks, uploaded_file , lambda x: db.get_rank_last_image_commerce(cid=x))
 
 
-# to delete all images of a commerce
+#to delete all images of a commerce
 @app.route('/commerce/<int:cid>/images', methods=['DELETE'])
 def delete_commerce_images(cid):
     f_delete_images(
@@ -554,10 +546,15 @@ def delete_commerce_images(cid):
 
 @app.route('/commerce/<int:cid>/image', methods=['PUT', 'PATCH'])
 def change_rank_commerce(cid):
-    ranks = PARAMS.get("ranks", None)
-    filname = PARAMS.get("filename", None)
-    res = db.change_commerce_filename_image(imgname=filename, ranks=ranks)
-    db.commit()
+    #imageRanks is a list containing image with its rank, i.e. [['image1',1],['image1',2]]
+    imageImid = (PARAMS.get('imageImid')).split(",")
+    imageRanks = (PARAMS.get('imageRanks')).split(",")
+    if dupcheck(imageImid) or dupcheck(imageRanks):
+        return Response(status=400)
+    ##imageRanks=list(PARAMS.get("imageRanks",None))
+    for i in range(len(imageRanks)):
+        res=db.change_commerce_filename_image(Imid=imageImid[i], ranks=imageRanks[i],cid=cid)
+        db.commit()
     return '', 204
 
 
@@ -569,14 +566,19 @@ def get_images_commerce(cid):
 
 @app.route('/commerce/<int:cid>/image', methods=['DELETE'])
 def delete_image_commerce(cid):
-    imgname = PARAMS.get("imgname", None)
-    os.remove(os.path.join(app.config['UPLOAD_PATH_COMMERCE'], imgname))
-    res = db.delete_commerce_image(cid=cid, imgname=imgname)
-    return "", 204
-
-
+    imageImid = PARAMS.get("imageImid", None)
+    res=db.delete_commerce_image(cid=cid, imid=imageImid)
+    os.remove(os.path.join(app.config['UPLOAD_PATH_COMMERCE'], res))
+    return "",204
+    
 @app.route('/commerce/verify', methods=["PATCH"])
 def verify():
     imgname = PARAMS.get("imgname", None)
     db.verify_image(imgname=imgname)
     return "", 204
+
+'''
+@app.route('/promotion', method=['POST'])
+def post_promotion():
+    # on prend le token du commerce et on la converte a cid puis on ajoute une promotion pour ce cid
+'''

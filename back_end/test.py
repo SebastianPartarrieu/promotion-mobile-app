@@ -304,17 +304,9 @@ def test_6():
 
 
 def test_7():
-    check_api(
-        'GET',
-        '/logincommerce',
-        200,
-        data={
-            "cemail": "zara1@hotmail.com",
-            "cmdp": "zarapassword"})
-    check_api(
-        'GET',
-        '/logincommerce',
-        401,
-        data={
-            "cemail": "zara1@hotmail.com",
-            "cmdp": "passworddd"})
+    check_api('GET', '/logincommerce', 200, data={"cemail": "zara1@hotmail.com", "cmdp": "zarapassword"})
+    check_api('GET', '/logincommerce', 401, data={"cemail": "zara1@hotmail.com", "cmdp": "passworddd"})
+
+def test_8():
+    check_api('PATCH','/promotion/1/image',204, data={"imageImid":'1,2', "imageRanks":'2,1'})
+    check_api('PATCH','/promotion/1/image',400, data={"imageImid":'1,2', "imageRanks":'1,1'})
