@@ -10,7 +10,8 @@ with open("VERSION") as VERSION:
     branch, commit, date = VERSION.readline().split(" ")
 
 # start flask service
-from flask import Flask, jsonify, request, Response
+from flask import Flask, jsonify, request, Response, session
+
 import imghdr
 #from PIL install Image
 from werkzeug.utils import secure_filename
@@ -39,13 +40,15 @@ db = anodb.DB(
     CONF["DB_TYPE"], CONF["DB_CONN"], CONF["DB_SQL"], CONF["DB_OPTIONS"]
 )
 
+
+
 #
 # Request parameters as a dict, in json, form or args
 #
 
 PARAMS = {}
 
-def set_params():
+def set_params():  
     global PARAMS
     PARAMS = request.values if request.json is None else request.json
 
@@ -269,7 +272,8 @@ def check_client_get_clid():
         if len(res) == 0:
             return Response(status=401)
         elif check_password_hash(res[0][2], clmdp):
-            return jsonify(encode_auth_token(res[0][0], user_type='client'))
+            session[key] = 'value'
+            #return jsonify(encode_auth_token(res[0][0], user_type='client'))
         else:
             return Response(status=401)
 

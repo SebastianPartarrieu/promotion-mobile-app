@@ -146,4 +146,5 @@ venv:
 	pip install anosql anodb flask
 	pip install psycopg2
 	pip install pytest requests
-	pip install mypy flake8
+	pip install mypy flake8 
+	pip install pyjwt
