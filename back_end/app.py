@@ -272,8 +272,7 @@ def check_client_get_clid():
         if len(res) == 0:
             return Response(status=401)
         elif check_password_hash(res[0][2], clmdp):
-            session[key] = 'value'
-            #return jsonify(encode_auth_token(res[0][0], user_type='client'))
+            return jsonify(encode_auth_token(res[0][0], user_type='client'))
         else:
             return Response(status=401)
 
@@ -446,8 +445,8 @@ def delete_images(pid):
 @app.route('/promotion/<int:pid>/image', methods=['PUT','PATCH'])
 def change_rank(pid):
     ranks = PARAMS.get("ranks", None)
-    filname=PARAMS.get("filename",None)
-    res=db.change_promotion_filename_image(imgname=filename, ranks= ranks)
+    filname = PARAMS.get("filename",None)
+    res = db.change_promotion_filename_image(imgname=filename, ranks= ranks)
     db.commit()
     return '', 204
 
@@ -460,7 +459,7 @@ def get_images(pid):
 def delete_image(pid):
     imgname = PARAMS.get("imgname", None)
     os.remove(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], imgname))
-    res=db.delete_promotion_image(pid=pid, imgname=imgname)
+    res = db.delete_promotion_image(pid=pid, imgname=imgname)
     return "",204
 
 @app.route('/commerce/<int:cid>/image', methods=['POST'])
