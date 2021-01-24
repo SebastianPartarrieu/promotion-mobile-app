@@ -1,8 +1,18 @@
 #! /usr/bin/env python3
+import re  # will be useful
+import anodb  # type: ignore
+import jwt
+from werkzeug.security import generate_password_hash, check_password_hash
+from os import environ as ENV
+import secrets
+import os
+from werkzeug.utils import secure_filename
+import imghdr
+from flask import Flask, jsonify, request, Response, session
+import datetime as dt
 import logging as log
 log.basicConfig(level=log.INFO)
 
-import datetime as dt
 started = dt.datetime.now()
 
 # get running version information
@@ -10,23 +20,14 @@ with open("VERSION") as VERSION:
     branch, commit, date = VERSION.readline().split(" ")
 
 # start flask service
-from flask import Flask, jsonify, request, Response, session
 
-import imghdr
-#from PIL install Image
-from werkzeug.utils import secure_filename
-import os
-import secrets
+# from PIL install Image
 
 app = Flask("promotion")
 
 # load configuration, fall back on environment
-from os import environ as ENV
 
 # added imports - token based auth and hash for password storage
-from werkzeug.security import generate_password_hash, check_password_hash
-import jwt
-import re #will be useful
 
 if "APP_CONFIG" in ENV:
     app.config.from_envvar("APP_CONFIG")
@@ -35,11 +36,9 @@ else:
     CONF = ENV  # type: ignore
 
 # create $database connection and load queries
-import anodb  # type: ignore
 db = anodb.DB(
     CONF["DB_TYPE"], CONF["DB_CONN"], CONF["DB_SQL"], CONF["DB_OPTIONS"]
 )
-
 
 
 #
@@ -48,16 +47,20 @@ db = anodb.DB(
 
 PARAMS = {}
 
-def set_params():  
+
+def set_params():
     global PARAMS
     PARAMS = request.values if request.json is None else request.json
 
+
 app.before_request(set_params)
+
 
 def do_commit(res: Response):
     global db
     db.commit()
     return res
+
 
 app.after_request(do_commit)
 
@@ -95,11 +98,12 @@ else:
 
 app.before_request(set_login)
 
-### Tests for authentication based on JWT (Json Web tokens)
+# Tests for authentication based on JWT (Json Web tokens)
 
 if CONF.get("SECRET_KEY", False):
     global SECRET_KEY
-    SECRET_KEY = CONF["SECRET_KEY"] #for JWTs
+    SECRET_KEY = CONF["SECRET_KEY"]  # for JWTs
+
 
 def encode_auth_token(user_id, user_type='client'):
     '''
@@ -109,14 +113,16 @@ def encode_auth_token(user_id, user_type='client'):
     try:
         if user_type == 'client':
             payload = {
-                'exp': dt.datetime.utcnow() + dt.timedelta(days=365, seconds=5), #or no expiration at all
+                # or no expiration at all
+                'exp': dt.datetime.utcnow() + dt.timedelta(days=365, seconds=5),
                 'iat': dt.datetime.utcnow(),
                 'sub': user_id,
                 'ust': user_type
             }
         else:
             payload = {
-                'exp': dt.datetime.utcnow() + dt.timedelta(days=7, seconds=5), #or no expiration at all
+                # or no expiration at all
+                'exp': dt.datetime.utcnow() + dt.timedelta(days=7, seconds=5),
                 'iat': dt.datetime.utcnow(),
                 'sub': user_id,
                 'ust': user_type
@@ -129,6 +135,7 @@ def encode_auth_token(user_id, user_type='client'):
     except Exception as e:
         return e
 
+
 def decode_auth_token(auth_token):
     '''
     Decodes an auth token which will be sent with http requests from FE
@@ -137,11 +144,13 @@ def decode_auth_token(auth_token):
     '''
     try:
         payload = jwt.decode(auth_token, SECRET_KEY, algorithms="HS256")
-        return payload['sub'], payload['ust'] #user_id and type (client, commerce, ...)
+        # user_id and type (client, commerce, ...)
+        return payload['sub'], payload['ust']
     except jwt.ExpiredSignatureError:
         return 'Signature Expired. Please log in again!'
     except jwt.InvalidTokenError:
         return 'Invalid token. Please log in again.'
+
 
 def is_authorized(auth_token, user_id, user_type='client'):
     '''
@@ -171,6 +180,7 @@ def is_authorized(auth_token, user_id, user_type='client'):
 # general information about the application
 #
 
+
 @app.route("/version", methods=["GET"])
 def get_version():
     # TODO check read permission
@@ -190,14 +200,16 @@ def get_version():
         }
     )
 
-### FRONT PAGE QUERIES 
+# FRONT PAGE QUERIES
 
 # GET /promotion with filter for number returned, agglomeration and categories
+
+
 @app.route("/promotion", methods=["GET"])
 def get_promotion():
     cat = PARAMS.get("categorie", '%')
     agglo = PARAMS.get("agglomeration", '%')
-    nb = PARAMS.get("nb", 100) #arbitraire
+    nb = PARAMS.get("nb", 100)  # arbitraire
     cat = cat.split(',')
     if len(cat) == 1:
         res = db.get_promotion(agg=agglo, nb=nb, cat=cat[0])
@@ -216,13 +228,17 @@ def get_commerce():
     res = db.get_commerce(agg=agglo, cat=cat)
     return jsonify(res)
 
-### INTERACTION WITH FRONT PAGE
+# INTERACTION WITH FRONT PAGE
+
+
 @app.route('/promotion/<int:pid>', methods=["GET"])
 def get_promotion_info(pid):
     res = db.get_promotion_info(pid=pid)
     return jsonify(res)
 
-### ACCOUNT RELATED QUERIES
+# ACCOUNT RELATED QUERIES
+
+
 @app.route('/client/<int:clid>', methods=["GET"])
 def get_client_info(clid):
     auth_token = PARAMS.get("token", '')
@@ -232,35 +248,43 @@ def get_client_info(clid):
     else:
         return Response(status=401)
 
+
 @app.route('/client/<int:clid>', methods=["PATCH", "PUT"])
 def patch_client_info(clid):
     auth_token = PARAMS.get("token", '')
     if is_authorized(auth_token, user_id=clid, user_type='client'):
         clnom, clpnom = PARAMS.get("clnom", None), PARAMS.get("clpnom", None)
         clemail, aid = PARAMS.get("clemail", None), PARAMS.get("aid", None)
-        if clnom != None:
+        if clnom is not None:
             db.patch_client_nom(clnom=clnom, clid=clid)
-        if clpnom != None:
+        if clpnom is not None:
             db.patch_client_pnom(clpnom=clpnom, clid=clid)
-        if clemail != None:
+        if clemail is not None:
             db.patch_client_clemail(clemail=clemail, clid=clid)
-        if aid != None:
+        if aid is not None:
             db.patch_client_aid(aid=aid, clid=clid)
         return Response(status=201)
     else:
         return Response(status=401)
 
+
 @app.route('/signup', methods=["POST"])
 def post_client_info():
-    clnom, clpnom = PARAMS.get("clnom", None), PARAMS.get("clpnom", None), 
+    clnom, clpnom = PARAMS.get("clnom", None), PARAMS.get("clpnom", None),
     clemail, aid = PARAMS.get("clemail", None), PARAMS.get("aid", None)
     clmdp = generate_password_hash(PARAMS.get("clmdp", None))
-    try: #catch the exception if the client already exists in the database
-        res = db.post_client_info(clnom=clnom, clpnom=clpnom, clemail=clemail, aid=aid, clmdp=clmdp)
+    try:  # catch the exception if the client already exists in the database
+        res = db.post_client_info(
+            clnom=clnom,
+            clpnom=clpnom,
+            clemail=clemail,
+            aid=aid,
+            clmdp=clmdp)
         p = int(res[0][0])
         return jsonify(p), 201
-    except:
+    except BaseException:
         return Response(status=400)
+
 
 @app.route('/login', methods=["GET"])
 def check_client_get_clid():
@@ -295,89 +319,104 @@ def fetch_promotion_of_commerce(cid):
     return jsonify(res)
 
 
-### COMMERCE INTERFACE
+# COMMERCE INTERFACE
 
-#no real authentication and authorization needed here as clients will access this all the time
+# no real authentication and authorization needed here as clients will
+# access this all the time
 @app.route('/commerce/<int:cid>', methods=["GET"])
 def get_commerce_info(cid):
     res = db.get_commerce_info(cid=cid)
     return jsonify(res)
-#curl -i -X GET http://0.0.0.0:5000/commerce/1
+# curl -i -X GET http://0.0.0.0:5000/commerce/1
+
 
 def upload_picture(uploaded_file):
     filename = secure_filename(uploaded_file.filename)
     if filename != '':
         file_ext = os.path.splitext(filename)[1].lower()
         if file_ext not in app.config['UPLOAD_EXTENSIONS'] or \
-            file_ext != validate_image(uploaded_file.stream):
+                file_ext != validate_image(uploaded_file.stream):
             return "Invalid image", 400
-        filename=secrets.token_hex(8) + file_ext
+        filename = secrets.token_hex(8) + file_ext
         return filename
+
 
 @app.route('/commerce/<int:cid>', methods=["PATCH", "PUT"])
 def patch_commerce_info(cid):
     auth_token = PARAMS.get("token", "")
     if is_authorized(auth_token, user_id=cid, user_type='commerce'):
-        cnom, cpresentation = PARAMS.get("cnom", None), PARAMS.get("cpresentation", None)
+        cnom, cpresentation = PARAMS.get(
+            "cnom", None), PARAMS.get(
+            "cpresentation", None)
         cemail, aid = PARAMS.get("cemail", None), PARAMS.get("aid", None)
-        url_ext, code_postal = PARAMS.get("url_ext", None), PARAMS.get("code_postal", None)
+        url_ext, code_postal = PARAMS.get(
+            "url_ext", None), PARAMS.get(
+            "code_postal", None)
         rue_and_num = PARAMS.get("rue_and_num", None)
-        catnom=PARAMS.get("catnom", None)
-        ## catnom=Restaurant,Textile
-        if cnom != None:
+        catnom = PARAMS.get("catnom", None)
+        # catnom=Restaurant,Textile
+        if cnom is not None:
             db.patch_commerce_nom(cnom=cnom, cid=cid)
-        if cpresentation != None:
-            db.patch_commerce_cpresentation(cpresentation=cpresentation, cid=cid)
-        if cemail != None:
+        if cpresentation is not None:
+            db.patch_commerce_cpresentation(
+                cpresentation=cpresentation, cid=cid)
+        if cemail is not None:
             db.patch_commerce_cemail(cemail=cemail, cid=cid)
-        if aid != None:
+        if aid is not None:
             db.patch_commerce_aid(aid=aid, cid=cid)
-        if url_ext != None:
+        if url_ext is not None:
             db.patch_commerce_url_ext(url_ext=url_ext, cid=cid)
-        if  code_postal != None:
+        if code_postal is not None:
             db.patch_commerce_code_postal(code_postal=code_postal, cid=cid)
-        if rue_and_num != None:
+        if rue_and_num is not None:
             db.patch_commerce_rue_and_num(rue_and_num=rue_and_num, cid=cid)
-        if catnom != None:
+        if catnom is not None:
             db.delete_commerce_categorie(cid=cid)
-            catnom=catnom.split(",")
+            catnom = catnom.split(",")
             for x in catnom:
                 db.post_commerce_categorie(catnom=x, cid=cid)
         return Response(status=201)
     else:
         return Response(status=401)
 
-#curl -i -X PATCH -d cnom=zara -d cpresentation=casual -d cemail=zara@hotmail.com -d aid=1 -d cmdp=zarapassword -d rue_and_num=270 rue saint jacques -d code_postal=75005 -d url_ext=xyz -d catnom=Textile,Restaurant http://0.0.0.0:5000/commerce/1
+# curl -i -X PATCH -d cnom=zara -d cpresentation=casual -d
+# cemail=zara@hotmail.com -d aid=1 -d cmdp=zarapassword -d rue_and_num=270
+# rue saint jacques -d code_postal=75005 -d url_ext=xyz -d
+# catnom=Textile,Restaurant http://0.0.0.0:5000/commerce/1
+
 
 @app.route('/signupcommerce', methods=["POST"])
 def post_commerce_info():
-    cnom, cpresentation = PARAMS.get("cnom", None), PARAMS.get("cpresentation", None)
+    cnom, cpresentation = PARAMS.get(
+        "cnom", None), PARAMS.get(
+        "cpresentation", None)
     cemail, aid = PARAMS.get("cemail", None), int(PARAMS.get("aid", None))
-    url_ext, code_postal = PARAMS.get("url_ext", None), int(PARAMS.get("code_postal", None))
+    url_ext, code_postal = PARAMS.get(
+        "url_ext", None), int(
+        PARAMS.get(
+            "code_postal", None))
     rue_and_num = PARAMS.get("rue_and_num", None)
     cmdp = generate_password_hash(PARAMS.get("cmdp", None))
-    catnom=PARAMS.get("catnom", None)
+    catnom = PARAMS.get("catnom", None)
 
-    try: #catch the exception if the commerce already exists in the database
+    try:  # catch the exception if the commerce already exists in the database
         res = db.post_commerce_info(cnom=cnom,
-                              cpresentation=cpresentation,
-                              cemail=cemail, aid=aid,
-                              cmdp=cmdp, rue_and_num=rue_and_num,
-                              code_postal=code_postal, url_ext=url_ext)
+                                    cpresentation=cpresentation,
+                                    cemail=cemail, aid=aid,
+                                    cmdp=cmdp, rue_and_num=rue_and_num,
+                                    code_postal=code_postal, url_ext=url_ext)
         p = int(res[0][0])
-        app.logger.debug(p)
         if catnom is not None:
-            catnom=catnom.split(",")
-            app.logger.debug(catnom)
+            catnom = catnom.split(",")
             for x in catnom:
-                app.logger.debug(x)
                 db.post_commerce_categorie(catnom=x, cid=p)
             return jsonify(p), 201
         else:
             return jsonify(p), 201
     except Exception as e:
-        #return str(e)
+        # return str(e)
         return Response(status=400)
+
 
 @app.route('/logincommerce', methods=["GET"])
 def check_commerce_get_cid():
@@ -394,10 +433,9 @@ def check_commerce_get_cid():
             return Response(status=401)
 
 
-### ADMIN INTERFACE
+# ADMIN INTERFACE
 
 # Perhaps only one initially created admin account?
-
 
 
 '''def gen_thumbnail(filename):
@@ -408,92 +446,135 @@ def check_commerce_get_cid():
     thumbnail = original.resize((width, height), Image.ANTIALIAS)
     thumbnail.save(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], 'thumb_'+filename))'''
 
-#validate that it is an image
+# validate that it is an image
+
+
 def validate_image(stream):
     header = stream.read(512)
     stream.seek(0)
     format = imghdr.what(None, header)
     if not format:
         return None
-    return '.' + (format if format != 'jpeg' else 'jpg') 
+    return '.' + (format if format != 'jpeg' else 'jpg')
+
 
 def f_update_image(nameFolder, id, databaseFunction, ranks, uploaded_file):
-    filename=upload_image(uploaded_file)
+    filename = upload_image(uploaded_file)
     uploaded_file.save(os.path.join(app.config[nameFolder], filename))
     #gen_thumbnail(filename, 'UPLOAD_PATH_PROMOTION')
-    res= databaseFunction(filename, ranks, id)
+    res = databaseFunction(filename, ranks, id)
     db.commit()
     return '', 204
 
+
 def f_delete_images(nameFolder, id, databaseFunction):
-    res=databaseFunction(id)
+    res = databaseFunction(id)
     for imgname in res:
         os.remove(os.path.join(app.config[nameFolder], imgname[0]))
-    return "",204
+    return "", 204
+
 
 @app.route('/promotion/<int:pid>/image', methods=['POST'])
 def upload_image(pid):
     ranks = PARAMS.get("ranks", None)
     uploaded_file = request.files['file']
-    f_update_image('UPLOAD_PATH_PROMOTION', pid, lambda x, y, z: db.post_promotion_image(filename=x, ranks=y, pid=z), ranks, uploaded_file)
+    f_update_image(
+        'UPLOAD_PATH_PROMOTION',
+        pid,
+        lambda x,
+        y,
+        z: db.post_promotion_image(
+            filename=x,
+            ranks=y,
+            pid=z),
+        ranks,
+        uploaded_file)
 
-#to delete all images of a promotion
+# to delete all images of a promotion
+
+
 @app.route('/promotion/<int:pid>/images', methods=['DELETE'])
 def delete_images(pid):
-    f_delete_images('UPLOAD_PATH_PROMOTION', pid, lambda x: db.post_promotion_image(pid=x))
+    f_delete_images(
+        'UPLOAD_PATH_PROMOTION',
+        pid,
+        lambda x: db.post_promotion_image(
+            pid=x))
 
-@app.route('/promotion/<int:pid>/image', methods=['PUT','PATCH'])
+
+@app.route('/promotion/<int:pid>/image', methods=['PUT', 'PATCH'])
 def change_rank(pid):
     ranks = PARAMS.get("ranks", None)
-    filname = PARAMS.get("filename",None)
-    res = db.change_promotion_filename_image(imgname=filename, ranks= ranks)
+    filname = PARAMS.get("filename", None)
+    res = db.change_promotion_filename_image(imgname=filename, ranks=ranks)
     db.commit()
     return '', 204
+
 
 @app.route('/promotion/<int:pid>/image', methods=['GET'])
 def get_images(pid):
     res = db.get_promotion_image(pid=pid)
     return jsonify(res)
 
+
 @app.route('/promotion/<int:pid>/image', methods=['DELETE'])
 def delete_image(pid):
     imgname = PARAMS.get("imgname", None)
     os.remove(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], imgname))
     res = db.delete_promotion_image(pid=pid, imgname=imgname)
-    return "",204
+    return "", 204
+
 
 @app.route('/commerce/<int:cid>/image', methods=['POST'])
 def upload__commerce_image(cid):
     ranks = PARAMS.get("ranks", None)
     uploaded_file = request.files['file']
-    f_update_image('UPLOAD_PATH_COMMERCE', cid, lambda x, y, z: db.post_commerce_image(filename=x, ranks=y, cid=z), ranks, uploaded_file)
+    f_update_image(
+        'UPLOAD_PATH_COMMERCE',
+        cid,
+        lambda x,
+        y,
+        z: db.post_commerce_image(
+            filename=x,
+            ranks=y,
+            cid=z),
+        ranks,
+        uploaded_file)
 
 
-#to delete all images of a commerce
+# to delete all images of a commerce
 @app.route('/commerce/<int:cid>/images', methods=['DELETE'])
 def delete_commerce_images(cid):
-    f_delete_images('UPLOAD_PATH_COMMERCE', cid, lambda x: db.post_commerce_image(cid=x))
+    f_delete_images(
+        'UPLOAD_PATH_COMMERCE',
+        cid,
+        lambda x: db.post_commerce_image(
+            cid=x))
 
-@app.route('/commerce/<int:cid>/image', methods=['PUT','PATCH'])
+
+@app.route('/commerce/<int:cid>/image', methods=['PUT', 'PATCH'])
 def change_rank_commerce(cid):
     ranks = PARAMS.get("ranks", None)
-    filname=PARAMS.get("filename",None)
-    res=db.change_commerce_filename_image(imgname=filename, ranks= ranks)
+    filname = PARAMS.get("filename", None)
+    res = db.change_commerce_filename_image(imgname=filename, ranks=ranks)
     db.commit()
     return '', 204
+
 
 @app.route('/commerce/<int:cid>/image', methods=['GET'])
 def get_images_commerce(cid):
     res = db.get_commerce_image(cid=cid)
     return jsonify(res)
 
+
 @app.route('/commerce/<int:cid>/image', methods=['DELETE'])
 def delete_image_commerce(cid):
     imgname = PARAMS.get("imgname", None)
     os.remove(os.path.join(app.config['UPLOAD_PATH_COMMERCE'], imgname))
-    res=db.delete_commerce_image(cid=cid, imgname=imgname)
-    return "",204
-    
+    res = db.delete_commerce_image(cid=cid, imgname=imgname)
+    return "", 204
+
+
 @app.route('/commerce/verify', methods=["PATCH"])
 def verify():
     imgname = PARAMS.get("imgname", None)
