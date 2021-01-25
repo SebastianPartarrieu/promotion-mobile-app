@@ -4,6 +4,10 @@ export default [
     nom: "Belam Coiffure",
     adresse: "5 rue Saint Jacques, 75005 Paris",
     description: "Les plus beaux cheveux de France",
+    coordinates:{
+      latitude: 48.856614,
+      longitude: 2.3522219
+    },
     image: "https://media-exp1.licdn.com/dms/image/C4E03AQFroYFYvlF38A/profile-displayphoto-shrink_200_200/0/1610810708446?e=1616630400&v=beta&t=m_uq9LSObMXgcroiV_65cvVshZ6rLSqyoMdETLGaXzA"
   },
   {

@@ -1,6 +1,0 @@
-module Pods_mon_quartier_mon_quartierTests {
-  umbrella header "Pods-mon_quartier-mon_quartierTests-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -15,8 +15,8 @@ import { string } from "prop-types";
 const { width, height } = Dimensions.get("screen");
 
 
-class Register extends React.Component {
-  render() {
+function Register()
+{
     return (
       <Block flex middle>
         <StatusBar hidden />
@@ -166,7 +166,7 @@ class Register extends React.Component {
       </Block>
     );
   }
-}
+
 
 const styles = StyleSheet.create({
   registerContainer: {
