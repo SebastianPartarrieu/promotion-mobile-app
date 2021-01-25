@@ -1,35 +1,57 @@
 export default [
   {
-    title: 'Belam coiffure',
-    image: 'https://images.unsplash.com/photo-1516559828984-fb3b99548b21?ixlib=rb-1.2.1&auto=format&fit=crop&w=2100&q=80',
-    cta: 'View article', 
-    horizontal: true
+    id: '1',
+    nom: "Belam Coiffure",
+    adresse: "5 rue Saint Jacques, 75005 Paris",
+    description: "Les plus beaux cheveux de France",
+    coordinates:{
+      latitude: 48.856614,
+      longitude: 2.3522219
+    },
+    image: "https://media-exp1.licdn.com/dms/image/C4E03AQFroYFYvlF38A/profile-displayphoto-shrink_200_200/0/1610810708446?e=1616630400&v=beta&t=m_uq9LSObMXgcroiV_65cvVshZ6rLSqyoMdETLGaXzA"
   },
   {
-    title: 'Is makeup one of your daily esse …',
-    image: 'https://images.unsplash.com/photo-1519368358672-25b03afee3bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2004&q=80',
-    cta: 'View article'
+    id: '2',
+    nom: "Sebbydaddy",
+    adresse: "270 rue saint jacques, 75005 Paris",
+    description: "Un BG",
+    coordinates:{
+      latitude: 48.056614,
+      longitude: 2.0522219
+    },
+    image: "https://media-exp1.licdn.com/dms/image/C4E03AQFroYFYvlF38A/profile-displayphoto-shrink_200_200/0/1610810708446?e=1616630400&v=beta&t=m_uq9LSObMXgcroiV_65cvVshZ6rLSqyoMdETLGaXzA"
   },
   {
-    title: 'Coffee is more than just a drink: It’s …',
-    image: 'https://images.unsplash.com/photo-1500522144261-ea64433bbe27?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2102&q=80',
-    cta: 'View article' 
+    id: '3',
+    nom: "Clement",
+    adresse: "150 avenue des champs elysees, 75000 Paris",
+    description: "zfkgqsdkhaeGQFDIYkhxyzfkqgdfsd",
+    coordinates:{
+      latitude: 48.356614,
+      longitude: 2.8522219
+    },
+    image: "https://media-exp1.licdn.com/dms/image/C4E03AQFroYFYvlF38A/profile-displayphoto-shrink_200_200/0/1610810708446?e=1616630400&v=beta&t=m_uq9LSObMXgcroiV_65cvVshZ6rLSqyoMdETLGaXzA"
   },
   {
-    title: 'Fashion is a popular style, especially in …',
-    image: 'https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1326&q=80',
-    cta: 'View article' 
+    id: '4',
+    nom: "Pierre S",
+    adresse: "220 rue saint jacques, 75005 Paris",
+    description: "fy ub gebfaeFBAEFGBEAFG",
+    coordinates:{
+      latitude: 49.856614,
+      longitude: 2.3522219
+    },
+    image: "https://media-exp1.licdn.com/dms/image/C4E03AQFroYFYvlF38A/profile-displayphoto-shrink_200_200/0/1610810708446?e=1616630400&v=beta&t=m_uq9LSObMXgcroiV_65cvVshZ6rLSqyoMdETLGaXzA"
   },
   {
-    title: 'Argon is a great free UI packag …',
-    image: 'https://images.unsplash.com/photo-1482686115713-0fbcaced6e28?fit=crop&w=1947&q=80',
-    cta: 'View article', 
-    horizontal: true
-  },
-  {
-    title: 'Argon is a great free UI packag …',
-    image: 'https://images.unsplash.com/photo-1482686115713-0fbcaced6e28?fit=crop&w=1947&q=80',
-    cta: 'View article', 
-    horizontal: true
-  },
+    id: '5',
+    nom: "Alex",
+    adresse: "300 rue saint jacques, 75005 Paris",
+    description: "qzurfgb azfbgazifybazoryfg",
+    coordinates:{
+      latitude: 48.156614,
+      longitude: 2.9522219
+    },
+    image: "https://media-exp1.licdn.com/dms/image/C4E03AQFroYFYvlF38A/profile-displayphoto-shrink_200_200/0/1610810708446?e=1616630400&v=beta&t=m_uq9LSObMXgcroiV_65cvVshZ6rLSqyoMdETLGaXzA"
+  }
 ];

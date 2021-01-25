@@ -1,16 +1,17 @@
 
 import React from "react";
 import {MapView, Marker} from 'react-native-maps';
+import PropTypes from 'prop-types';
 import csvjson from "../constants/csvjson";
 
-function MakeMap(item = csvjson[0]) 
-{
-         return (        
+class Map extends React.Component {
+    render(){
+         return (         
             <MapView   
              style={{flex: 1}}        
              region={{         
-                    latitude: item.coordinates.latitude,          
-                    longitude: item.coordinates.longitude,          
+                    latitude: 48.856614,          
+                    longitude: 2.3522219,          
                     latitudeDelta: 1,          
                     longitudeDelta: 1        
                   
@@ -21,15 +22,16 @@ function MakeMap(item = csvjson[0])
             >
                 <Marker
                     coordinate={{         
-                    latitude: item.coordinates.latitude,          
-                    longitude: item.coordinates.latitude}}
-                    title={item.nom}
-                    description={item.description}
+                    latitude: 48.856614,          
+                    longitude: 2.3522219}}
+                    title={"qbsfmvjgef"}
+                    description={"qjzvbiu"}
                 >
                 </Marker>
             </MapView>
     );  
-    }
+}
+}
 
 
-export default MakeMap;
+export default Map;

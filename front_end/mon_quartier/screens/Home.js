@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { Block, theme } from 'galio-framework';
-
+import Map from '../screens/Map';
 import { Card } from '../components';
 import articles from '../constants/articles';
 const { width } = Dimensions.get('screen');
@@ -17,6 +17,9 @@ class Accueil extends React.Component {
           <Block flex row>
             <Card item={articles[1]} style={{ marginRight: theme.SIZES.BASE }} />
             <Card item={articles[2]} />
+          </Block>
+          <Block>
+            <Map item = {csvjson[0].coordinates}/>
           </Block>
           <Card item={articles[3]} horizontal />
           <Card item={articles[4]} full />

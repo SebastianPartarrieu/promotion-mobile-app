@@ -3,14 +3,13 @@ import { withNavigation } from '@react-navigation/compat';
 import PropTypes from 'prop-types';
 import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback } from 'react-native';
 import { Block, Text, theme } from 'galio-framework';
-
+import Profile from '../screens/Profile';
 import { argonTheme } from '../constants';
-
+import { articles } from '../constants';
 
 class Card extends React.Component {
   render() {
     const { navigation, item, horizontal, full, style, ctaColor, imageStyle } = this.props;
-    
     const imageStyles = [
       full ? styles.fullImage : styles.horizontalImage,
       imageStyle
@@ -23,15 +22,15 @@ class Card extends React.Component {
 
     return (
       <Block row={horizontal} card flex style={cardContainer}>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Pro')}>
+        <TouchableWithoutFeedback onPress = {() => this.props.navigation.setParams({item: articles[1]})} onPress={() => {this.props.navigation.navigate('Profile', {item: item});}}>
           <Block flex style={imgContainer}>
             <Image source={{uri: item.image}} style={imageStyles} />
           </Block>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Pro')}>
+        <TouchableWithoutFeedback onPress = {() => this.props.navigation.setParams({item: articles[1]})} onPress={() => {this.props.navigation.navigate('Profile', {item: item});}}>
           <Block flex space="between" style={styles.cardDescription}>
-            <Text size={14} style={styles.cardTitle}>{item.title}</Text>
-            <Text size={12} muted={!ctaColor} color={ctaColor || argonTheme.COLORS.ACTIVE} bold>{item.cta}</Text>
+            <Text size={14} style={styles.cardTitle}>{item.nom}</Text>
+            <Text size={12} muted={!ctaColor} color={ctaColor || argonTheme.COLORS.ACTIVE} bold>View Article</Text>
           </Block>
         </TouchableWithoutFeedback>
       </Block>
@@ -40,7 +39,7 @@ class Card extends React.Component {
 }
 
 Card.propTypes = {
-  item: PropTypes.object,
+  item: PropTypes.any,
   horizontal: PropTypes.bool,
   full: PropTypes.bool,
   ctaColor: PropTypes.string,

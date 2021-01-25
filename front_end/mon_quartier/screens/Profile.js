@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   StyleSheet,
   Dimensions,
@@ -12,14 +12,16 @@ import { Button, ProfileCard } from "../components";
 import { Images, argonTheme} from "../constants";
 import { HeaderHeight } from "../constants/utils";
 import PropTypes from 'prop-types';
-import csvjson from "../constants/csvjson"
+import articles from "../constants/articles"
 
 const { width, height } = Dimensions.get("screen");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 
-function Profile(item) {
 
+class Profile extends React.Component{
+  render(){
+  const {item} = this.props.route.params;
   return (
     <Block flex style={styles.profile}>
       <Block flex>
@@ -118,125 +120,11 @@ function Profile(item) {
           </ScrollView>
         </ImageBackground>
       </Block>
-      {/* <ScrollView showsVerticalScrollIndicator={false} 
-                  contentContainerStyle={{ flex: 1, width, height, zIndex: 9000, backgroundColor: 'red' }}>
-      <Block flex style={styles.profileCard}>
-        <Block middle style={styles.avatarContainer}>
-          <Image
-            source={{ uri: Images.ProfilePicture }}
-            style={styles.avatar}
-          />
-        </Block>
-        <Block style={styles.info}>
-          <Block
-            middle
-            row
-            space="evenly"
-            style={{ marginTop: 20, paddingBottom: 24 }}
-          >
-            <Button small style={{ backgroundColor: argonTheme.COLORS.INFO }}>
-              CONNECT
-            </Button>
-            <Button
-              small
-              style={{ backgroundColor: argonTheme.COLORS.DEFAULT }}
-            >
-              MESSAGE
-            </Button>
-          </Block>
-
-          <Block row space="between">
-            <Block middle>
-              <Text
-                bold
-                size={12}
-                color="#525F7F"
-                style={{ marginBottom: 4 }}
-              >
-                2K
-              </Text>
-              <Text size={12}>Orders</Text>
-            </Block>
-            <Block middle>
-              <Text bold size={12} style={{ marginBottom: 4 }}>
-                10
-              </Text>
-              <Text size={12}>Photos</Text>
-            </Block>
-            <Block middle>
-              <Text bold size={12} style={{ marginBottom: 4 }}>
-                89
-              </Text>
-              <Text size={12}>Comments</Text>
-            </Block>
-          </Block>
-        </Block>
-        <Block flex>
-            <Block middle style={styles.nameInfo}>
-              <Text bold size={28} color="#32325D">
-                Jessica Jones, 27
-              </Text>
-              <Text size={16} color="#32325D" style={{ marginTop: 10 }}>
-                San Francisco, USA
-              </Text>
-            </Block>
-            <Block middle style={{ marginTop: 30, marginBottom: 16 }}>
-              <Block style={styles.divider} />
-            </Block>
-            <Block middle>
-              <Text size={16} color="#525F7F" style={{ textAlign: "center" }}>
-                An artist of considerable range, Jessica name taken by
-                Melbourne …
-              </Text>
-              <Button
-                color="transparent"
-                textStyle={{
-                  color: "#233DD2",
-                  fontWeight: "500",
-                  fontSize: 16
-                }}
-              >
-                Show more
-              </Button>
-            </Block>
-            <Block
-              row
-              style={{ paddingVertical: 14, alignItems: "baseline" }}
-            >
-              <Text bold size={16} color="#525F7F">
-                Album
-              </Text>
-            </Block>
-            <Block
-              row
-              style={{ paddingBottom: 20, justifyContent: "flex-end" }}
-            >
-              <Button
-                small
-                color="transparent"
-                textStyle={{ color: "#5E72E4", fontSize: 12 }}
-              >
-                View all
-              </Button>
-            </Block>
-            <Block style={{ paddingBottom: -HeaderHeight * 2 }}>
-              <Block row space="between" style={{ flexWrap: "wrap" }}>
-                {Images.Viewed.map((img, imgIndex) => (
-                  <Image
-                    source={{ uri: img }}
-                    key={`viewed-${img}`}
-                    resizeMode="cover"
-                    style={styles.thumb}
-                  />
-                ))}
-              </Block>
-            </Block>
-        </Block>
-      </Block>
-                </ScrollView>*/}
     </Block>
   );
 }
+}
+
 
 const styles = StyleSheet.create({
 profile: {

@@ -21,7 +21,7 @@ import CustomDrawerContent from "./Menu";
 
 // header for screens
 import { Icon, Header } from "../components";
-import { argonTheme, tabs } from "../constants";
+import { argonTheme, tabs, articles } from "../constants";
 import csvjson from '../constants/csvjson';
 
 const { width } = Dimensions.get("screen");
@@ -59,7 +59,8 @@ function ProfileStack(props) {
     <Stack.Navigator initialRouteName="Profile" mode="card" headerMode="screen">
       <Stack.Screen
         name="Profile"
-        component={Profile(item = csvjson[0])}
+        component={Profile}
+        initialParams={{ item: articles[0] }}
         options={{
           header: ({ navigation, scene }) => (
             <Header
@@ -101,7 +102,7 @@ function ProfileStack(props) {
 
 function MapStack(props) {
   return (
-    <Stack.Navigator mode="card" headerMode="screen">
+    <Stack.Navigator initialRouteName="Map" mode="card" headerMode="screen">
       <Stack.Screen
         name="Map"
         component={Map}
