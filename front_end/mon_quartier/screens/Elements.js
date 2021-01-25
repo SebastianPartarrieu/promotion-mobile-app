@@ -9,51 +9,11 @@ import { Button, Select, Icon, Input, Header } from "../components/";
 const { width } = Dimensions.get("screen");
 
 
-
-<ul id="myUL">
-  <li><a href="#">Adele</a></li>
-  <li><a href="#">Agnes</a></li>
-  <li><a href="#">Billy</a></li>
-  <li><a href="#">Bob</a></li>
-  <li><a href="#">Calvin</a></li>
-  <li><a href="#">Christina</a></li>
-  <li><a href="#">Cindy</a></li>
-</ul>
-
-
-function myFunction() {
-  // Declare variables
-  var input, filter, ul, li, a, i, txtValue;
-  input = document.getElementById('myInput');
-  filter = input.value.toUpperCase();
-  ul = document.getElementById("myUL");
-  li = ul.getElementsByTagName('li');
-
-  // Loop through all list items, and hide those who don't match the search query
-  for (i = 0; i < li.length; i++) {
-    a = li[i].getElementsByTagName("a")[0];
-    txtValue = a.textContent || a.innerText;
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      li[i].style.display = "";
-    } else {
-      li[i].style.display = "none";
-    }
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
 class Elements extends React.Component {
 
   renderButtons = () => {
+    const { navigation } = this.props;
+    var id;
     return (
       <Block flex>
         <Text bold size={16} style={styles.title}>
@@ -62,6 +22,8 @@ class Elements extends React.Component {
         <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
           <Block center>
             <Button
+              id = '1'
+              onPress = {() => navigation.navigate({name: 'Profile', key: id})}
               color="secondary"
               textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
               style={styles.button}
@@ -69,41 +31,41 @@ class Elements extends React.Component {
               Panda WOK
             </Button>
             <Button
+              id = '2'
+              onPress = {() => navigation.navigate({name: 'Profile', key: id})}
               color="secondary"
               textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
               style={styles.button}
             >
-              Coiffure
+              Belam Coiffure
             </Button>
             <Button
+              id = '3'
+              onPress = {() => navigation.navigate({name: 'Profile', key: id})}
               color="secondary"
               textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
               style={styles.button}
             >
-              SECONDARY
+              Boucherie Sanzot
             </Button>
             <Button
+              id = '4'
+              onPress = {() => navigation.navigate({name: 'Profile', key: id})}
               color="secondary"
               textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
               style={styles.button}
             >
-              SECONDARY
+              Monoprix
             </Button>
             <Button
+              id = '5'
+              onPress = {() => navigation.navigate({name: 'Profile', key: id})}
               color="secondary"
               textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
               style={styles.button}
             >
-              SECONDARY
+              A2pas
             </Button>
-            <Button
-              color="secondary"
-              textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
-              style={styles.button}
-            >
-              SECONDARY
-            </Button>
-          
           </Block>
         </Block>
       </Block>
