@@ -81,6 +81,19 @@ class Onboarding extends React.Component {
                       </Text>
                     </Button>
                   </Block>
+                  <Block middle>
+                  <Button
+                        color="transparent"
+                        textStyle={{
+                          color: argonTheme.COLORS.PRIMARY,
+                          fontSize: 14
+                          
+                        }}
+                        onPress={() => navigation.navigate("App")}>
+                      
+                        Créer son compte
+                      </Button>
+                  </Block>
                 </KeyboardAvoidingView>
               </Block>
             </Block>
