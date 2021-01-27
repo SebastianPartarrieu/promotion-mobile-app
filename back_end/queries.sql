@@ -5,7 +5,7 @@
 SELECT CURRENT_TIMESTAMP;
 
 --name: get_promotion
-SELECT DISTINCT p.pdescription, c.cnom, p.tdebut
+SELECT DISTINCT p.pid, p.pdescription, c.cnom, p.tdebut
 FROM Promotion AS p
 JOIN Commerce AS c USING (cid)
 JOIN Agglomeration AS a USING (aid)
@@ -16,13 +16,13 @@ ORDER BY p.tdebut DESC
 LIMIT :nb;
 
 --name: get_promotion_info
-SELECT p.pdescription, c.cnom, p.tdebut, p.tfin
+SELECT c.cid, p.pdescription, c.cnom, p.tdebut, p.tfin
 FROM Promotion AS p
 JOIN Commerce AS c USING (cid)
 WHERE p.pid = :pid;
 
 --name: get_commerce
-SELECT c.cnom, c.cpresentation, a.anom, c.code_postal, c.rue_and_num
+SELECT DISTINCT c.cid, c.cnom, c.cpresentation, a.anom, c.code_postal, c.rue_and_num
 FROM Commerce AS c
 JOIN CommerceCategorie AS cc USING (cid)
 JOIN Categorie AS ca USING (catid)
@@ -61,8 +61,8 @@ join CommerceCategorie using (cid)
 join Categorie using (catid)
 WHERE cid = :cid;
 
---name: post_promotion!
-INSERT INTO Promotion(cid, pdescription, tdebut, tfin) VALUES (:cid, :pdescription, :tdebut, :tfin);
+--name: post_promotion
+INSERT INTO Promotion(cid, pdescription, tdebut, tfin) VALUES (:cid, :pdescription, :tdebut, :tfin) RETURNING pid;
 
 --name: patch_commerce_cpresentation!
 UPDATE Commerce SET cpresentation = :cpresentation WHERE cid = :cid;
@@ -87,6 +87,15 @@ UPDATE Commerce SET aid = :aid WHERE cid = :cid;
 
 --name: patch_commerce_catnom!
 UPDATE CommerceCategorie SET catnom = :catnom WHERE cid = :cid;
+
+--name: patch_promotion_pdescription!
+UPDATE Promotion SET pdescription = :pdescription WHERE pid = :pid;
+
+--name: patch_promotion_tdebut!
+UPDATE Promotion SET tdebut = :tdebut WHERE pid = :pid;
+
+--name: patch_promotion_tfin!
+UPDATE Promotion SET tfin = :tfin WHERE pid = :pid;
 
 --name: post_commerce_info
 INSERT INTO Commerce (cnom, cpresentation, code_postal, rue_and_num, aid, cmdp, cemail, url_ext) 
@@ -145,10 +154,10 @@ DELETE from ImageCommerce where cid=:cid  and imid=:imid returning imgname;
 --name: change_commerce_filename_image!
 UPDATE ImageCommerce SET ranks=:ranks WHERE imid=:imid and cid=:cid;
 
---name: get_rank_last_image_Promotion
+--name: get_rank_last_image_promotion
 Select ranks from ImagePromotion Where pid=:pid order by desc limit 1;
 
---name: get_rank_last_image_Commerce
+--name: get_rank_last_image_commerce
 Select ranks from ImageCommerce Where cid=:cid order by desc limit 1;
 
 --name: fetch_cid_of_pid

@@ -459,20 +459,43 @@ def post_promotion():
     #Authorization check
     auth_token = PARAMS.get("token", '')
     cid_token = is_authorized_no_id(auth_token, user_type="commerce")
-    app.logger.debug(cid_token)
     if cid_token:
         try: #catch the exception if promotion info isn't adequate
-            db.post_promotion(pdescription=pdescription,
+            res = db.post_promotion(pdescription=pdescription,
                               tdebut=tdebut,
                               tfin=tfin,
                               cid=int(cid_token))
-            return Response(status=201)
+            p = int(res[0][0])
+            return jsonify(p), 201
         except Exception as e:
             return Reponse(status=400)
     else:
         return Response(status=401)
 
-
+@app.route('/promotion/<int:pid>', methods=['PATCH', 'PUT'])
+def patch_promotion(pid):
+    pdescription = PARAMS.get('pdescription', None)
+    tdebut = PARAMS.get('tdebut', None) #maybe check for right format and better default option
+    tfin = PARAMS.get('tfin', None)
+    #Authorization check
+    auth_token = PARAMS.get("token", '')
+    cid_token = is_authorized_no_id(auth_token, user_type="commerce")
+    cid_associated_to_pid = db.fetch_cid_of_pid(pid=pid)
+    #check if commerce token is valid
+    if cid_token:
+        #check if commerce is modifying its own promotion
+        if int(cid_associated_to_pid[0][0]) != int(cid_token):
+            return Response(status=401)
+        else:
+            if pdescription is not None:
+                db.patch_promotion_pdescription(pid=pid, pdescription=pdescription)
+            if tdebut is not None:
+                db.patch_promotion_tdebut(pid=pid, tdebut=tdebut)
+            if tfin is not None:
+                db.patch_promotion_tfin(pid=pid, tfin=tfin)
+            return Response(status=201)
+    else:
+        return Response(status=401)
 
 # ADMIN INTERFACE
 
@@ -505,7 +528,7 @@ def f_update_image(nameFolder, id, databaseFunction, uploaded_file, ranksFunctio
     res=ranksFunction(id)
     res= databaseFunction(filename, int(res)+1, id)
     db.commit()
-    return '', 204
+    return res
 
 
 def f_delete_images(nameFolder, id, databaseFunction):
@@ -525,20 +548,21 @@ def upload_image(pid):
     #check if commerce token is valid
     if cid_token:
         #check if commerce is modifying own image
-        if int(cid_associated_to_pid) != int(cid_token):
+        if int(cid_associated_to_pid[0][0]) != int(cid_token):
             return Response(status=401)
         else:
-            f_update_image(
-                'UPLOAD_PATH_PROMOTION',
-                pid,
-                lambda x,
-                y,
-                z: db.post_promotion_image(
-                    filename=x,
-                    ranks=y,
-                    pid=z),
-                ranks,
-                uploaded_file)        
+            try:
+                res = f_update_image(
+                    'UPLOAD_PATH_PROMOTION',
+                    pid,
+                    lambda x, y, z: db.post_promotion_image(filename=x,
+                                                            ranks=y,
+                                                            pid=z),
+                    uploaded_file,
+                    lambda x: db.get_rank_last_image_promotion(pid=x)) 
+                return jsonify(res)
+            except Exception as e:
+                return Response(status=400)       
     else:
         return Response(status=401)
 # to delete all images of a promotion
@@ -553,7 +577,7 @@ def delete_images(pid):
     #check if commerce token is valid
     if cid_token:
         #check if commerce is modifying own image
-        if int(cid_associated_to_pid) != int(cid_token):
+        if int(cid_associated_to_pid[0][0]) != int(cid_token):
             return Response(status=401)
         else:
             f_delete_images(
@@ -579,8 +603,7 @@ def change_rank(pid):
         return Response(status=400)
     ##imageRanks=list(PARAMS.get("imageRanks",None))
     for i in range(len(imageRanks)):
-        res=db.change_promotion_filename_image(imid=imageImid[i], ranks=imageRanks[i],pid=pid)
-        db.commit()
+        res = db.change_promotion_filename_image(imid=imageImid[i], ranks=imageRanks[i],pid=pid)
     return '', 204
 
 
@@ -599,7 +622,7 @@ def delete_image(pid):
     #check if commerce token is valid
     if cid_token:
         #check if commerce is modifying own image
-        if int(cid_associated_to_pid) != int(cid_token):
+        if int(cid_associated_to_pid[0][0]) != int(cid_token):
             return Response(status=401)
         else:
             imageImid = PARAMS.get("imageImid", None)
@@ -616,14 +639,18 @@ def upload__commerce_image(cid):
     #Authorization checks 
     auth_token = PARAMS.get("token", '')
     if is_authorized(auth_token, user_id=cid, user_type='commerce'):
-        f_update_image('UPLOAD_PATH_COMMERCE',
-                        cid,
-                        lambda x, y, z: db.post_commerce_image(filename=x,
-                                                               ranks=y,
-                                                               cid=z),
-                        ranks,
-                        uploaded_file ,
-                        lambda x: db.get_rank_last_image_commerce(cid=x))
+        try:
+            res = f_update_image('UPLOAD_PATH_COMMERCE',
+                            cid,
+                            lambda x, y, z: db.post_commerce_image(filename=x,
+                                                                ranks=y,
+                                                                cid=z),
+                            ranks,
+                            uploaded_file ,
+                            lambda x: db.get_rank_last_image_commerce(cid=x))
+            return jsonify(res)
+        except Exception as e:
+            return Response(status=400)
     else:
         return Response(status=401)
 

@@ -15,3 +15,4 @@ Random things to keep in mind:
 - ID will be received on signup and stored locally.
 - when you login, you receive token. Token to be sent with subsequent http requests 
 - token is truly best mechanism as HTTP Basic Authentication wouldn't work well with the web app for commerce.
+- Be cafeful for updating ranks for immages of commerce and promtion. Need to keep list of ranks and imid locally and wait for server response before updating.

@@ -259,7 +259,8 @@ def test_AA_workflow_commerce():
               data={'cnom': 'Fromager Saint Jacques', 'token': auth_token[1:-2]})
     check_api('PUT', '/commerce/' + str(cid), 201,
               data={'cpresentation': 'Fromage frais', 'token': auth_token[1:-2]})
-    check_api('POST', '/promotion', 201, data={'token': auth_token[1:-2], 'pdescription': 'Du fromage pas cher', 'tdebut': '2020-01-25', 'tfin': '2020-01-30'})
+    pid = check_api('POST', '/promotion', 201, data={'token': auth_token[1:-2], 'pdescription': 'Du fromage pas cher', 'tdebut': '2020-01-25', 'tfin': '2020-01-30'})
+    check_api('PATCH', '/promotion/'+ str(pid), 201, data={'token': auth_token[1:-2], 'pdescription':'Du bon fromage', 'tfin': '2020-04-16'})
 
 # Login with email and password
 
