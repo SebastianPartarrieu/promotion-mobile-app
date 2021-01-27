@@ -7,5 +7,3 @@
 - constraints on min amount of characters for passwords
 - add admin functionnalities (checking images but also deleting promotion and commerce)
 - PIL
-- authentification autour des requêtes d'image
--use token for every request to assure that user to which this token belongs can't update or delete or post for another user 

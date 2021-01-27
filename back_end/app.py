@@ -180,7 +180,7 @@ def is_authorized(auth_token, user_id, user_type='client'):
         else:
             return True
 
-def is_authorized_no_id(auth_token, user_type='client'):
+def is_authorized_no_id(auth_token, user_type='commerce'):
     '''
     Given an auth_token and user_type returns whether the token is valid
     and of a specific user_type. Returns user_id.
@@ -402,12 +402,6 @@ def patch_commerce_info(cid):
     else:
         return Response(status=401)
 
-# curl -i -X PATCH -d cnom=zara -d cpresentation=casual -d
-# cemail=zara@hotmail.com -d aid=1 -d cmdp=zarapassword -d rue_and_num=270
-# rue saint jacques -d code_postal=75005 -d url_ext=xyz -d
-# catnom=Textile,Restaurant http://0.0.0.0:5000/commerce/1
-
-
 @app.route('/signupcommerce', methods=["POST"])
 def post_commerce_info():
     cnom, cpresentation = PARAMS.get(
@@ -454,6 +448,30 @@ def check_commerce_get_cid():
             return jsonify(encode_auth_token(res[0][0], user_type='commerce'))
         else:
             return Response(status=401)
+
+
+@app.route('/promotion', methods=["POST"])
+def post_promotion():
+    #Getting info of promotion from HTTP request
+    pdescription = PARAMS.get('pdescription', None)
+    tdebut = PARAMS.get('tdebut', None) #maybe check for right format and better default option
+    tfin = PARAMS.get('tfin', None)
+    #Authorization check
+    auth_token = PARAMS.get("token", '')
+    cid_token = is_authorized_no_id(auth_token, user_type="commerce")
+    app.logger.debug(cid_token)
+    if cid_token:
+        try: #catch the exception if promotion info isn't adequate
+            db.post_promotion(pdescription=pdescription,
+                              tdebut=tdebut,
+                              tfin=tfin,
+                              cid=int(cid_token))
+            return Response(status=201)
+        except Exception as e:
+            return Reponse(status=400)
+    else:
+        return Response(status=401)
+
 
 
 # ADMIN INTERFACE
@@ -663,8 +681,3 @@ def verify():
     db.verify_image(imgname=imgname)
     return "", 204
 
-'''
-@app.route('/promotion', method=['POST'])
-def post_promotion():
-    # on prend le token du commerce et on la converte a cid puis on ajoute une promotion pour ce cid
-'''

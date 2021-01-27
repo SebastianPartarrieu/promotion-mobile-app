@@ -61,6 +61,9 @@ join CommerceCategorie using (cid)
 join Categorie using (catid)
 WHERE cid = :cid;
 
+--name: post_promotion!
+INSERT INTO Promotion(cid, pdescription, tdebut, tfin) VALUES (:cid, :pdescription, :tdebut, :tfin);
+
 --name: patch_commerce_cpresentation!
 UPDATE Commerce SET cpresentation = :cpresentation WHERE cid = :cid;
 
@@ -104,7 +107,6 @@ INSERT INTO ImagePromotion (imgname, ranks, verified, pid) VALUES (:imgname, :ra
 
 --name: get_promotion_image
 SELECT 'promotionImage/' || imgname, ranks,imid FROM ImagePromotion where pid=:pid and verified=FALSE ORDER BY ranks asc; 
-
 
 --name: delete_promotion_image
 DELETE from ImagePromotion where pid=:pid  and imid=:imid returning imgname;

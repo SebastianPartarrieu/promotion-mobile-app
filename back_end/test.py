@@ -215,8 +215,6 @@ def test_AA_workflow_client():
             "clmdp": "passworddd"})
     # for some reason escape characters are added to the auth_token when we
     # fetch text from response in check_api
-    # 5 is relative, when s.a.partarrieu is created given current
-    # intialization id 5 is given. If not we need to keep id FE
     check_api('GET', '/client/' + str(clid), 200,
               data={'token': auth_token[1:-2]})
     check_api('GET', '/client/' + str(clid), 401, data={'token': ''})
@@ -261,6 +259,7 @@ def test_AA_workflow_commerce():
               data={'cnom': 'Fromager Saint Jacques', 'token': auth_token[1:-2]})
     check_api('PUT', '/commerce/' + str(cid), 201,
               data={'cpresentation': 'Fromage frais', 'token': auth_token[1:-2]})
+    check_api('POST', '/promotion', 201, data={'token': auth_token[1:-2], 'pdescription': 'Du fromage pas cher', 'tdebut': '2020-01-25', 'tfin': '2020-01-30'})
 
 # Login with email and password
 

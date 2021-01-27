@@ -11,3 +11,8 @@ started work on authentication/authorization via JWTs - finished for client and 
 test for commerce
 image seperate folders
 aller chercher les promotions rattachées à un commerce
+
+Week 25/01-30/01:
+Finished image functions
+Authorization on images
+fork of project with seperate authentication (via flask sessions)
