@@ -3,10 +3,17 @@ import { ScrollView, StyleSheet, Dimensions, TouchableOpacity } from "react-nati
 // Galio components
 import { Block, Text, Button as GaButton, theme } from "galio-framework";
 // Argon themed components
-import { argonTheme, tabs } from "../constants/";
+import { argonTheme, tabs, articles } from "../constants/";
 import { Button, Select, Icon, Input, Header } from "../components/";
 
+
+//testytest
+import {syncHistoryWithStore, routerReducer} from 'react-router-redux'
+import { Router, Route, browserHistory, IndexRoute} from 'react-router'
+
+
 const { width } = Dimensions.get("screen");
+
 
 
 class Elements extends React.Component {
@@ -23,7 +30,8 @@ class Elements extends React.Component {
           <Block center>
             <Button
               id = '1'
-              onPress = {() => navigation.navigate({name: 'Profile', key: id})}
+              
+              onPress = {() => navigation.navigate('Profile', {text: 'coucou'})}
               color="secondary"
               textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
               style={styles.button}
@@ -32,7 +40,7 @@ class Elements extends React.Component {
             </Button>
             <Button
               id = '2'
-              onPress = {() => navigation.navigate({name: 'Profile', key: id})}
+              onPress = {() => navigation.navigate('Profile', {Òtext: 'hello'})}
               color="secondary"
               textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
               style={styles.button}
@@ -252,6 +260,9 @@ class Elements extends React.Component {
     );
   }
 }
+
+
+
 
 const styles = StyleSheet.create({
   title: {

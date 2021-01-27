@@ -5,7 +5,8 @@ import {
   ScrollView,
   Image,
   ImageBackground,
-  Platform
+  Platform,
+  View
 } from "react-native";
 import { Block, Text, theme } from "galio-framework";
 import { Button, ProfileCard } from "../components";
@@ -14,14 +15,21 @@ import { HeaderHeight } from "../constants/utils";
 import PropTypes from 'prop-types';
 import articles from "../constants/articles"
 
+
+
+
+
+
 const { width, height } = Dimensions.get("screen");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 
 
-class Profile extends React.Component{
-  render(){
-  const {item} = this.props.route.params;
+
+
+function Profile(props) {
+  //const {item} = this.props
+
   return (
     <Block flex style={styles.profile}>
       <Block flex>
@@ -123,8 +131,8 @@ class Profile extends React.Component{
     </Block>
   );
 }
-}
 
+export default Profile 
 
 const styles = StyleSheet.create({
 profile: {
@@ -186,4 +194,4 @@ thumb: {
 }
 });
 
-export default Profile;
+

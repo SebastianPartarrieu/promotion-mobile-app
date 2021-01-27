@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   StyleSheet,
   ImageBackground,
   Dimensions,
   StatusBar,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  TextInput
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
 
@@ -14,9 +15,37 @@ import { string } from "prop-types";
 
 const { width, height } = Dimensions.get("screen");
 
-class Onboarding extends React.Component {
-  render() {
-    const { navigation } = this.props;
+const { token } = 'None';
+
+
+function sendLoginRequest(username,password,updateFunction,route){
+  const url = new URL(route, 'http://localhost:5000/')
+  url.searchParams.append('clemail',username)
+  url.searchParams.append('clmdp',password)
+  fetch(url, {
+    method : 'GET'
+  }).then((response) => response.json()).then(updateFunction).catch(
+    (e) => {alert('Something went wrong' + e.message)}
+  )
+}
+
+
+
+
+function Onboarding({ navigation }){
+
+    function updateFunction(response){
+      {response = 401?
+      console.log(response):
+        navigation.navigate("App"),
+        token = {reponse} }
+    }
+
+
+    const [username, setUsername] = useState('email') ;
+    const [password, setPassword] = useState('mdp') ;
+    //console.log(password)
+
 
     return (
       <Block flex middle>
@@ -42,6 +71,9 @@ class Onboarding extends React.Component {
                   
                   <Block width={width * 0.8} style={{marginTop:35, marginBottom: 15 }}>
                     <Input
+                      onChangeText={(text) => setUsername(text)}
+                      username = { username }
+                      
                       borderless
                       placeholder="Email"
                       iconContent={
@@ -57,6 +89,8 @@ class Onboarding extends React.Component {
                   </Block>
                   <Block width={width * 0.8}>
                     <Input
+                      onChangeText={(text) => setPassword(text)}
+                      password = { password }
                       id='password'
                       password
                       borderless
@@ -75,7 +109,9 @@ class Onboarding extends React.Component {
                   
                   <Block middle>
                     <Button color="primary" style={styles.createButton}
-                    onPress={() => navigation.navigate("App")}>
+                    //onPress={() => navigation.navigate("App")}> 
+                    onPress={() => sendLoginRequest(username,password,updateFunction,'login')}>
+                    
                       <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                         CONNEXION
                       </Text>
@@ -103,7 +139,7 @@ class Onboarding extends React.Component {
     </Block>
   );
 }
-}
+
 
 
 const styles = StyleSheet.create({
