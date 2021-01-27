@@ -161,7 +161,7 @@ def decode_auth_token(auth_token):
 def is_authorized(auth_token, user_id, user_type='client'):
     '''
     Given an auth_token and a user_id tells whether the token is one of a
-    client and is valid.
+    specific user_type and is valid.
     param: auth_token and user_it(int)
     return: bool
     '''
@@ -180,6 +180,23 @@ def is_authorized(auth_token, user_id, user_type='client'):
         else:
             return True
 
+def is_authorized_no_id(auth_token, user_type='client'):
+    '''
+    Given an auth_token and user_type returns whether the token is valid
+    and of a specific user_type. Returns user_id.
+    '''
+    if auth_token == '':
+        False
+    elif decode_auth_token(auth_token) == 'Signature Expired. Please log in again!':
+        return False
+    elif decode_auth_token(auth_token) == 'Invalid token. Please log in again.':
+        return False
+    else:
+        user_id_received, user_type_received = decode_auth_token(auth_token)
+        if str(user_type_received) != user_type:
+            return False
+        else:
+            return user_id_received
 #
 # GET /version
 #
@@ -454,7 +471,6 @@ def check_commerce_get_cid():
 
 # validate that it is an image
 
-
 def validate_image(stream):
     header = stream.read(512)
     stream.seek(0)
@@ -484,16 +500,51 @@ def f_delete_images(nameFolder, id, databaseFunction):
 @app.route('/promotion/<int:pid>/image', methods=['POST'])
 def upload_image(pid):
     uploaded_file = request.files['file']
-    f_update_image('UPLOAD_PATH_PROMOTION', pid, lambda x, y,z: db.post_promotion_image(filename=x, ranks=y, pid=z), ranks, uploaded_file, lambda x: db.get_rank_last_image_promotion(pid=x))
+    # Authorization checks
+    auth_token = PARAMS.get("token", '')
+    cid_associated_to_pid = db.fetch_cid_of_pid(pid=pid)
+    cid_token = is_authorized_no_id(auth_token, user_type='commerce')
+    #check if commerce token is valid
+    if cid_token:
+        #check if commerce is modifying own image
+        if int(cid_associated_to_pid) != int(cid_token):
+            return Response(status=401)
+        else:
+            f_update_image(
+                'UPLOAD_PATH_PROMOTION',
+                pid,
+                lambda x,
+                y,
+                z: db.post_promotion_image(
+                    filename=x,
+                    ranks=y,
+                    pid=z),
+                ranks,
+                uploaded_file)        
+    else:
+        return Response(status=401)
+# to delete all images of a promotion
+
 
 @app.route('/promotion/<int:pid>/images', methods=['DELETE'])
 def delete_images(pid):
-    f_delete_images(
-        'UPLOAD_PATH_PROMOTION',
-        pid,
-        lambda x: db.post_promotion_image(
-            pid=x))
-
+    # Authorization checks
+    auth_token = PARAMS.get("token", '')
+    cid_associated_to_pid = db.fetch_cid_of_pid(pid=pid)
+    cid_token = is_authorized_no_id(auth_token, user_type='commerce')
+    #check if commerce token is valid
+    if cid_token:
+        #check if commerce is modifying own image
+        if int(cid_associated_to_pid) != int(cid_token):
+            return Response(status=401)
+        else:
+            f_delete_images(
+                'UPLOAD_PATH_PROMOTION',
+                pid,
+                lambda x: db.post_promotion_image(
+                    pid=x))
+    else:
+        return Response(status=401)
 
 def dupcheck(x):
    for elem in x:
@@ -523,26 +574,55 @@ def get_images(pid):
 
 @app.route('/promotion/<int:pid>/image', methods=['DELETE'])
 def delete_image(pid):
-    imageImid = PARAMS.get("imageImid", None)
-    res=db.delete_promotion_image(pid=pid, imid=imageImid)
-    os.remove(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], res))
-    return "",204
+    # Authorization checks
+    auth_token = PARAMS.get("token", '')
+    cid_associated_to_pid = db.fetch_cid_of_pid(pid=pid)
+    cid_token = is_authorized_no_id(auth_token, user_type='commerce')
+    #check if commerce token is valid
+    if cid_token:
+        #check if commerce is modifying own image
+        if int(cid_associated_to_pid) != int(cid_token):
+            return Response(status=401)
+        else:
+            imageImid = PARAMS.get("imageImid", None)
+            res=db.delete_promotion_image(pid=pid, imid=imageImid)
+            os.remove(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], res))
+            return "",204
+    else:
+        return Response(status=401)
+
 
 @app.route('/commerce/<int:cid>/image', methods=['POST'])
 def upload__commerce_image(cid):
     uploaded_file = request.files['file']
-    f_update_image('UPLOAD_PATH_COMMERCE', cid, lambda x, y, z: db.post_commerce_image(filename=x, ranks=y, cid=z), ranks, uploaded_file , lambda x: db.get_rank_last_image_commerce(cid=x))
+    #Authorization checks 
+    auth_token = PARAMS.get("token", '')
+    if is_authorized(auth_token, user_id=cid, user_type='commerce'):
+        f_update_image('UPLOAD_PATH_COMMERCE',
+                        cid,
+                        lambda x, y, z: db.post_commerce_image(filename=x,
+                                                               ranks=y,
+                                                               cid=z),
+                        ranks,
+                        uploaded_file ,
+                        lambda x: db.get_rank_last_image_commerce(cid=x))
+    else:
+        return Response(status=401)
 
 
 #to delete all images of a commerce
 @app.route('/commerce/<int:cid>/images', methods=['DELETE'])
 def delete_commerce_images(cid):
-    f_delete_images(
-        'UPLOAD_PATH_COMMERCE',
-        cid,
-        lambda x: db.post_commerce_image(
-            cid=x))
-
+    #Authorization checks 
+    auth_token = PARAMS.get("token", '')
+    if is_authorized(auth_token, user_id=cid, user_type='commerce'):
+        f_delete_images(
+            'UPLOAD_PATH_COMMERCE',
+            cid,
+            lambda x: db.post_commerce_image(
+                cid=x))
+    else:
+        return Response(status=401)
 
 @app.route('/commerce/<int:cid>/image', methods=['PUT', 'PATCH'])
 def change_rank_commerce(cid):
@@ -566,11 +646,17 @@ def get_images_commerce(cid):
 
 @app.route('/commerce/<int:cid>/image', methods=['DELETE'])
 def delete_image_commerce(cid):
-    imageImid = PARAMS.get("imageImid", None)
-    res=db.delete_commerce_image(cid=cid, imid=imageImid)
-    os.remove(os.path.join(app.config['UPLOAD_PATH_COMMERCE'], res))
-    return "",204
-    
+    #Authorization checks 
+    auth_token = PARAMS.get("token", '')
+    if is_authorized(auth_token, user_id=cid, user_type='commerce'):
+        imageImid = PARAMS.get("imageImid", None)
+        res=db.delete_commerce_image(cid=cid, imid=imageImid)
+        os.remove(os.path.join(app.config['UPLOAD_PATH_COMMERCE'], res))
+        return "",204
+    else:
+        return Response(status=401)
+
+
 @app.route('/commerce/verify', methods=["PATCH"])
 def verify():
     imgname = PARAMS.get("imgname", None)

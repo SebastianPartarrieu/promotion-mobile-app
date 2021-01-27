@@ -148,3 +148,8 @@ Select ranks from ImagePromotion Where pid=:pid order by desc limit 1;
 
 --name: get_rank_last_image_Commerce
 Select ranks from ImageCommerce Where cid=:cid order by desc limit 1;
+
+--name: fetch_cid_of_pid
+SELECT DISTINCT cid FROM Commerce AS c
+JOIN Promotion AS p USING (cid)
+WHERE p.pid = :pid;
