@@ -314,7 +314,7 @@ def post_client_info():
 def check_client_get_clid():
     clemail, clmdp = PARAMS.get('clemail', None), PARAMS.get('clmdp', None)
     if (clemail is None) or (clmdp is None):
-        return Response(status=401)
+        return jsonify({'is_logged_in' : False}), 401
     else:
         res = list(db.fetch_login_client(clemail=clemail))
         if len(res) == 0:
