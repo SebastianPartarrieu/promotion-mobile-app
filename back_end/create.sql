@@ -11,7 +11,7 @@ CREATE TABLE Client(clid SERIAL PRIMARY KEY,
                     clpnom VARCHAR(32) NOT NULL,
                     clemail VARCHAR(50) UNIQUE NOT NULL,
                     clmdp VARCHAR(100) NOT NULL,
-                    aid INTEGER NOT NULL REFERENCES Agglomeration,
+                    aid INTEGER REFERENCES Agglomeration,
                     UNIQUE(clemail, clmdp));
  
 CREATE TABLE Commerce(cid SERIAL PRIMARY KEY,

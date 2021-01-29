@@ -14,6 +14,7 @@ from requests import Session
 import re
 from os import environ as ENV
 from typing import Dict, Union, Tuple
+import json
 
 # local flask server test by default
 URL = ENV.get('APP_URL', 'http://0.0.0.0:5000')
@@ -178,7 +179,7 @@ def test_3():
 
 
 def test_AA_workflow_client():
-    clid = check_api(
+    check_api(
         'POST',
         '/signup',
         201,
@@ -199,13 +200,15 @@ def test_AA_workflow_client():
             "aid": 3,
             "clmdp": "pass"})
 
-    auth_token = check_api(
+    response = json.loads(check_api(
         'GET',
         '/login',
         200,
         data={
             "clemail": "s.a.partarrieu@gmail.com",
-            "clmdp": "pass"})
+            "clmdp": "pass"}))
+    auth_token = response['token']
+
     check_api(
         'GET',
         '/login',
@@ -215,20 +218,17 @@ def test_AA_workflow_client():
             "clmdp": "passworddd"})
     # for some reason escape characters are added to the auth_token when we
     # fetch text from response in check_api
-    check_api('GET', '/client/' + str(clid), 200,
-              data={'token': auth_token[1:-2]})
-    check_api('GET', '/client/' + str(clid), 401, data={'token': ''})
-    check_api('GET', '/client/3', 401, data={'token': auth_token[1:-2]})
-    check_api('GET', '/client/' + str(clid), 401,
-              data={'token': 'blalallvjhfqjksdfhql'})
-    check_api('PATCH', '/client/' + str(clid), 201,
-              data={'clpnom': 'Sebby', 'token': auth_token[1:-2]})
-    check_api('PUT', '/client/' + str(clid), 201,
-              data={"clnom": "PARTARRIEU", 'token': auth_token[1:-2]})
+    check_api('GET', '/myclient', 200,
+              data={'token': auth_token})
+    check_api('GET', '/myclient', 401, data={'token': ''})
+    check_api('PATCH', '/myclient', 201,
+              data={'clpnom': 'Sebby', 'token': auth_token})
+    check_api('PUT', '/myclient', 201,
+              data={"clnom": "PARTARRIEU", 'token': auth_token})
 
 
 def test_AA_workflow_commerce():
-    cid = check_api('POST', '/signupcommerce', 201, data={'cnom': 'Fromager Saint Louis',
+    check_api('POST', '/signupcommerce', 201, data={'cnom': 'Fromager Saint Louis',
                                                           'cpresentation': 'Vend du fromage de bonne qualité',
                                                           'cemail': 'fromager@fromage.com',
                                                           'code_postal': 75005,
@@ -248,19 +248,20 @@ def test_AA_workflow_commerce():
                                                     'rue_and_num': '80 Boulevard Saint-Michel',
                                                     'aid': 1,
                                                     'cmdp': 'dubonfromage', 'catom': 'Restaurant,Textile'})
-    auth_token = check_api(
+    response = json.loads(check_api(
         'GET',
         '/logincommerce',
         200,
         data={
             'cemail': 'fromager@fromage.com',
-            'cmdp': 'dubonfromage'})
-    check_api('PATCH', '/commerce/' + str(cid), 201,
-              data={'cnom': 'Fromager Saint Jacques', 'token': auth_token[1:-2]})
-    check_api('PUT', '/commerce/' + str(cid), 201,
-              data={'cpresentation': 'Fromage frais', 'token': auth_token[1:-2]})
-    pid = check_api('POST', '/promotion', 201, data={'token': auth_token[1:-2], 'pdescription': 'Du fromage pas cher', 'tdebut': '2020-01-25', 'tfin': '2020-01-30'})
-    check_api('PATCH', '/promotion/'+ str(pid), 201, data={'token': auth_token[1:-2], 'pdescription':'Du bon fromage', 'tfin': '2020-04-16'})
+            'cmdp': 'dubonfromage'}))
+    auth_token = response['token']
+    check_api('PATCH', '/mycommerce', 201,
+              data={'cnom': 'Fromager Saint Jacques', 'token': auth_token})
+    check_api('PUT', '/mycommerce/', 201,
+              data={'cpresentation': 'Fromage frais', 'token': auth_token})
+    pid = check_api('POST', '/promotion', 201, data={'token': auth_token, 'pdescription': 'Du fromage pas cher', 'tdebut': '2020-01-25', 'tfin': '2020-01-30'})
+    check_api('PATCH', '/promotion/'+ str(pid), 201, data={'token': auth_token, 'pdescription':'Du bon fromage', 'tfin': '2020-04-16'})
 
 # Login with email and password
 

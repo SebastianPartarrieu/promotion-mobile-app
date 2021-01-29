@@ -262,20 +262,22 @@ def get_promotion_info(pid):
 # ACCOUNT RELATED QUERIES
 
 
-@app.route('/client/<int:clid>', methods=["GET"])
-def get_client_info(clid):
+@app.route('/myclient', methods=["GET"])
+def get_client_info():
     auth_token = PARAMS.get("token", '')
-    if is_authorized(auth_token, user_id=clid, user_type='client'):
+    clid = is_authorized_no_id(auth_token, user_type='client')
+    if clid:
         res = db.get_client_info(clid=clid)
         return jsonify(res)
     else:
         return Response(status=401)
 
 
-@app.route('/client/<int:clid>', methods=["PATCH", "PUT"])
-def patch_client_info(clid):
+@app.route('/myclient', methods=["PATCH", "PUT"])
+def patch_client_info():
     auth_token = PARAMS.get("token", '')
-    if is_authorized(auth_token, user_id=clid, user_type='client'):
+    clid = is_authorized_no_id(auth_token, user_type='client')
+    if clid:
         clnom, clpnom = PARAMS.get("clnom", None), PARAMS.get("clpnom", None)
         clemail, aid = PARAMS.get("clemail", None), PARAMS.get("aid", None)
         if clnom is not None:
@@ -303,10 +305,9 @@ def post_client_info():
             clemail=clemail,
             aid=aid,
             clmdp=clmdp)
-        p = int(res[0][0])
-        return jsonify(p), 201
+        return jsonify({'is_registered': True}), 201
     except BaseException:
-        return Response(status=400)
+        return jsonify({'is_registered': False}), 400
 
 
 @app.route('/login', methods=["GET"])
@@ -317,11 +318,11 @@ def check_client_get_clid():
     else:
         res = list(db.fetch_login_client(clemail=clemail))
         if len(res) == 0:
-            return Response(status=401)
+            return jsonify({'is_logged_in': False}), 401
         elif check_password_hash(res[0][2], clmdp):
-            return jsonify(encode_auth_token(res[0][0], user_type='client'))
+            return jsonify({'is_logged_in': True, 'token': encode_auth_token(res[0][0], user_type='client')}), 200
         else:
-            return Response(status=401)
+            return jsonify({'is_logged_in': False}), 401
 
 # @app.route('/client/<int:clid>', methods=['DELETE']) #make sure to have pop up in FE asking if user is sure
 # def delete_client_account(clid):
@@ -364,10 +365,11 @@ def upload_picture(uploaded_file):
         return filename
 
 
-@app.route('/commerce/<int:cid>', methods=["PATCH", "PUT"])
+@app.route('/mycommerce', methods=["PATCH", "PUT"])
 def patch_commerce_info(cid):
     auth_token = PARAMS.get("token", "")
-    if is_authorized(auth_token, user_id=cid, user_type='commerce'):
+    cid = is_authorized_no_id(auth_token, user_type='commerce')
+    if cid:
         cnom, cpresentation = PARAMS.get(
             "cnom", None), PARAMS.get(
             "cpresentation", None)
@@ -422,17 +424,16 @@ def post_commerce_info():
                                     cemail=cemail, aid=aid,
                                     cmdp=cmdp, rue_and_num=rue_and_num,
                                     code_postal=code_postal, url_ext=url_ext)
-        p = int(res[0][0])
         if catnom is not None:
             catnom = catnom.split(",")
             for x in catnom:
                 db.post_commerce_categorie(catnom=x, cid=p)
-            return jsonify(p), 201
+            return jsonify({'is_registered': True}), 201
         else:
-            return jsonify(p), 201
+            return jsonify({'is_registered': True}), 201
     except Exception as e:
         # return str(e)
-        return Response(status=400)
+        return jsonify({'is_registered': False}), 400
 
 
 @app.route('/logincommerce', methods=["GET"])
@@ -445,9 +446,9 @@ def check_commerce_get_cid():
         if len(res) == 0:
             return Response(status=401)
         elif check_password_hash(res[0][2], cmdp):
-            return jsonify(encode_auth_token(res[0][0], user_type='commerce'))
+            return jsonify({'is_logged_in': True, 'token': encode_auth_token(res[0][0], user_type='commerce')}), 200
         else:
-            return Response(status=401)
+            return jsonify({'is_logged_in': False}), 400
 
 
 @app.route('/promotion', methods=["POST"])
