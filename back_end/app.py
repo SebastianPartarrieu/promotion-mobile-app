@@ -299,13 +299,16 @@ def post_client_info():
     clemail, aid = PARAMS.get("clemail", None), PARAMS.get("aid", None)
     clmdp = generate_password_hash(PARAMS.get("clmdp", None))
     try:  # catch the exception if the client already exists in the database
-        res = db.post_client_info(
-            clnom=clnom,
-            clpnom=clpnom,
-            clemail=clemail,
-            aid=aid,
-            clmdp=clmdp)
-        return jsonify({'is_registered': True}), 201
+        if not re.match("[^@]+@[^@]+\.[^@]+", clemail):
+            return jsonify({'is_registered': False, 'error': 'e-mail wrong format'}), 400
+        else: 
+            res = db.post_client_info(
+                clnom=clnom,
+                clpnom=clpnom,
+                clemail=clemail,
+                aid=aid,
+                clmdp=clmdp)
+            return jsonify({'is_registered': True}), 201
     except BaseException:
         return jsonify({'is_registered': False}), 400
 

@@ -199,6 +199,17 @@ def test_AA_workflow_client():
             "clemail": "s.a.partarrieu@gmail.com",
             "aid": 3,
             "clmdp": "pass"})
+    check_api(
+        'POST',
+        '/signup',
+        400,
+        data={
+            "clnom": "Partarrieu",
+            "clpnom": "Sebastian",
+            "clemail": "sdsfqsdhkjlqdh", #wrong e-mail format
+            "aid": 3,
+            "clmdp": "pass"})
+
 
     response = json.loads(check_api(
         'GET',
