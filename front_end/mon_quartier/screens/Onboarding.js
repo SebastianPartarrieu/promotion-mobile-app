@@ -15,13 +15,17 @@ import { string } from "prop-types";
 
 const { width, height } = Dimensions.get("screen");
 
-const { token } = 'None';
+var { token } = '';
+
+var error_text = '#0000';
+
 
 
 function sendLoginRequest(username,password,updateFunction,route){
   const url = new URL(route, 'http://localhost:5000/')
   url.searchParams.append('clemail',username)
   url.searchParams.append('clmdp',password)
+
   fetch(url, {
     method : 'GET'
   }).then((response) => response.json()).then(updateFunction).catch(
@@ -30,15 +34,26 @@ function sendLoginRequest(username,password,updateFunction,route){
 }
 
 
-
-
 function Onboarding({ navigation }){
+    var [error_text, setError_text] = useState('#0000') ; 
 
     function updateFunction(response){
-      {response = 401?
-      console.log(response):
-        navigation.navigate("App"),
-        token = {reponse} }
+      { console.log(response)
+        response['is_logged_in']?(
+          navigation.navigate("App"),
+          token = response['token'],
+          error_text = setError_text('#0000'),
+          console.log(token)
+
+        ):
+        (
+          error_text = setError_text('red'),
+          console.log(error_text),
+          navigation.navigate("Onboarding")
+        )
+          
+        
+        }
     }
 
 
@@ -106,6 +121,19 @@ function Onboarding({ navigation }){
                       }
                     />
                   </Block>
+
+                  <Block 
+                    middle 
+                    width={width * 0.8}>
+
+                    <Text 
+                      bold size={13} 
+                      //color={argonTheme.COLORS.RED}
+                      color = {error_text}>
+                      Mauvais email ou mot de passe
+                    </Text>
+
+                  </Block>
                   
                   <Block middle>
                     <Button color="primary" style={styles.createButton}
@@ -125,7 +153,7 @@ function Onboarding({ navigation }){
                           fontSize: 14
                           
                         }}
-                        onPress={() => navigation.navigate("App")}>
+                        onPress={() => navigation.navigate("Register")}>
                       
                         Créer son compte
                       </Button>
@@ -194,4 +222,8 @@ createButton: {
   marginTop: 25
 }
 });
+
+
+export { token };
 export default Onboarding;
+

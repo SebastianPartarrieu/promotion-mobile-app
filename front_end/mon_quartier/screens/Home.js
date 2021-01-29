@@ -4,10 +4,14 @@ import { Block, theme } from 'galio-framework';
 import Map from '../screens/Map';
 import { Card } from '../components';
 import articles from '../constants/articles';
+import { token } from './Onboarding';
+import Onboarding from './Onboarding';
 const { width } = Dimensions.get('screen');
 
 class Accueil extends React.Component {
+  
   renderArticles = () => {
+    
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}

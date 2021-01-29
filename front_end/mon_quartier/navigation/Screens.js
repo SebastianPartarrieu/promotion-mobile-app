@@ -10,6 +10,8 @@ import { Block, theme, Button as GaButton } from "galio-framework";
 // screens
 import Accueil from "../screens/Home";
 import Onboarding from "../screens/Onboarding";
+import Account from "../screens/Account";
+import { token } from "../screens/Onboarding";
 import Pro from "../screens/Pro";
 //import Profile from "../screens/Profile";
 import Map from "../screens/Map";
@@ -381,11 +383,9 @@ function MapStack(props) {
 
 
 
-
-
-
-
 function HomeStack(props) {
+  console.log(token);
+  console.log('couccou');
   return (
     <Stack.Navigator mode="card" headerMode="screen">
       <Stack.Screen
@@ -421,6 +421,7 @@ export default function OnboardingStack(props) {
         }}
       />
       <Stack.Screen name="App" component={AppStack} />
+      <Drawer.Screen name="Register" component={Register} />
     </Stack.Navigator>
   );
 }
@@ -458,8 +459,8 @@ function AppStack(props) {
     >
       <Drawer.Screen name="Home" component={HomeStack} />
       <Drawer.Screen name="Profile" component={ProfileStack} />
-      <Drawer.Screen name="Account" component={Register} />
       <Drawer.Screen name="Elements" component={searchStack} />
+      <Drawer.Screen name="Account" component={Account} />
       <Drawer.Screen name="Map" component={MapStack} />
     </Drawer.Navigator>
   );

@@ -7,27 +7,27 @@ import {
   KeyboardAvoidingView
 } from "react-native";
 import { Block, Checkbox, Text, theme } from "galio-framework";
-
+import { token } from "./Onboarding";
 import { Button, Icon, Input } from "../components";
 import { Images, argonTheme } from "../constants";
 import { string } from "prop-types";
+import Onboarding from "./Onboarding";
 
 const { width, height } = Dimensions.get("screen");
 
 
 
 
-function sendRegisterRequest(lastname,firstname,username,password,updateFunction,route){
+function getInfos(token,updateFunction,route){
+
   const url = new URL(route, 'http://localhost:5000/')
 
-  url.searchParams.append('clnom',lastname)
-  url.searchParams.append('clpnom',firstname)
-  url.searchParams.append('clemail',username)
-  url.searchParams.append('clmdp',password)
+  url.searchParams.append('token',token)
+
 
 
   fetch(url, {
-    method : 'POST'
+    method : 'GET'
   }).then((response) => response.json()).then(updateFunction).catch(
     (e) => {alert('Something went wrong' + e.message)}
   )
@@ -36,10 +36,12 @@ function sendRegisterRequest(lastname,firstname,username,password,updateFunction
 
 
 
-function Register({navigation}){
+function Account({navigation}){
 
   const [lastname, setLastname] = useState('nom') ;
   const [firstname, setFirstname] = useState('prenom') ;
+  const [city, setCity] = useState('');
+  
   const [username, setUsername] = useState('email') ;
   const [password, setPassword] = useState('mdp') ;
 
@@ -59,16 +61,12 @@ function Register({navigation}){
       <Block flex middle>
         <StatusBar hidden />
         <ImageBackground
-          source={Images.RegisterBackground}
+          //source={Images.Bacdkground}
           style={{ width, height, zIndex: 1 }}
         >
           <Block flex middle>
             <Block style={styles.registerContainer}>
-
               <Block flex>
-                <Block flex={0.17} middle>
-
-                </Block>
                 <Block flex center>
                   <KeyboardAvoidingView
                     style={{ flex: 1 }}
@@ -77,6 +75,7 @@ function Register({navigation}){
                   >
                     <Block width={width * 0.8} style={{ marginBottom: 15 }}>
                       <Input
+                      
                         onChangeText={(text) => setLastname(text)}
                         lastname = { lastname }
                         borderless
@@ -128,11 +127,11 @@ function Register({navigation}){
                     </Block>
                     <Block width={width * 0.8}>
                       <Input
-                        onChangeText={(text) => setPassword(text)}
-                        password = { password }
                         id='password'
                         password
                         borderless
+                        onChangeText={(text) => setPassword(text)}
+                        password = { password }
                         placeholder="Mot de passe"
                         iconContent={
                           <Icon
@@ -142,8 +141,8 @@ function Register({navigation}){
                             family="ArgonExtra"
                             style={styles.inputIcons}
                           />
-                      }
-                    />
+                        }
+                      />
                     </Block>
                     <Block row width={width * 0.75}>
                       <Checkbox
@@ -238,4 +237,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Register;
+export default Account;
