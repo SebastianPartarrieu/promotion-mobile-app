@@ -340,10 +340,15 @@ def check_client_get_clid():
 #         return Response(status=200)
 
 
-@app.route('/commerce/<int:cid>/promotion', methods=['GET'])
-def fetch_promotion_of_commerce(cid):
-    res = db.fetch_promotion_of_commerce(cid=cid)
-    return jsonify(res)
+@app.route('/mycommerce/promotion', methods=['GET'])
+def fetch_promotion_of_commerce():
+    auth_token = PARAMS.get('token', None)
+    cid = is_authorized_no_id(auth_token, user_type='commerce')
+    if cid:
+        res = db.fetch_promotion_of_commerce(cid=int(cid))
+        return jsonify(res)
+    else:
+        return Response(status=400)
 
 
 # COMMERCE INTERFACE
