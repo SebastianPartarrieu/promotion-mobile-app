@@ -8,7 +8,7 @@ import secrets
 import os
 from werkzeug.utils import secure_filename
 import imghdr
-from flask import Flask, jsonify, request, Response, session
+from flask import Flask, jsonify, request, Response, session, render_template
 import datetime as dt
 import logging as log
 import base64
@@ -237,7 +237,6 @@ def convert_address_to_geolocation(code_postal, rue_and_num, aid):
 #
 # general information about the application
 #
-
 @app.route('/')
 def index():
     return render_template('page_principale.html')
@@ -250,13 +249,9 @@ def logincommerce_html():
 def logoutcommerce_html():
     return render_template('logout.html')
 
-@app.route('/commercemon-compte')
+@app.route('/commerce/mon-compte')
 def mon_compte():
-    return render_template('comptetest.html')
-
-@app.route('/addPromotion')
-def add_promotion():
-    return render_template('addPromotion.html')
+    return render_template('compte.html')
 
 @app.route("/version", methods=["GET"])
 def get_version():
@@ -488,13 +483,11 @@ def post_commerce_info():
     cnom, cpresentation = PARAMS.get(
         "cnom", None), PARAMS.get(
         "cpresentation", None)
-    cemail, aid = PARAMS.get("cemail", None), int(PARAMS.get("aid", None))
-    url_ext, code_postal = PARAMS.get(
-        "url_ext", None), int(
-        PARAMS.get(
-            "code_postal", None))
+    cemail, aid = PARAMS.get("cemail", None), PARAMS.get("aid", None)
+    url_ext, code_postal = PARAMS.get("url_ext", None), PARAMS.get("code_postal", None)
     rue_and_num = PARAMS.get("rue_and_num", None)
     cmdp = generate_password_hash(PARAMS.get("cmdp", None))
+    #cmdp=PARAMS.get("cmdp", None)
     catnom = PARAMS.get("catnom", None)
 
     latitude, longitude = convert_address_to_geolocation(code_postal=code_postal,
@@ -504,7 +497,7 @@ def post_commerce_info():
     try:  # catch the exception if the commerce already exists in the database
         res = db.post_commerce_info(cnom=cnom,
                                     cpresentation=cpresentation,
-                                    cemail=cemail, aid=aid,
+                                    cemail=cemail, aid=int(aid),
                                     cmdp=cmdp, rue_and_num=rue_and_num,
                                     code_postal=code_postal, url_ext=url_ext,
                                     latitude=latitude,
@@ -524,11 +517,13 @@ def post_commerce_info():
 
 
 
-@app.route('/logincommerce', methods=["GET", "POST"])
+@app.route('/logincommerce', methods=["POST"])
 def check_commerce_get_cid():
     cemail, cmdp = PARAMS.get('cemail', None), PARAMS.get('cmdp', None)
     if (cemail is None) or (cmdp is None):
-        return Response(status=400)
+        return jsonify({"status" : "error", "message" : "Invalid email or password"})
+        #return jsonify(Response(status=400))
+        
     else:
         res = list(db.fetch_login_commerce(cemail=cemail))
         status = db.check_commerce_active(cid=res[0][0])
