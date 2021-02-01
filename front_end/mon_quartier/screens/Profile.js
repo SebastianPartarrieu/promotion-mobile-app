@@ -24,11 +24,16 @@ const { width, height } = Dimensions.get("screen");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 
+//const {item} = articles
 
+//console.log(articles[1])
 
+item = articles[1]
 
-function Profile(props) {
-  //const {item} = this.props
+function Profile(id) {
+  //id = {props}
+  console.log(id)
+  //item = articles[id]
 
   return (
     <Block flex style={styles.profile}>

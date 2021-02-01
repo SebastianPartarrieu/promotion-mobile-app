@@ -13,7 +13,7 @@ import Onboarding from "../screens/Onboarding";
 import Account from "../screens/Account";
 import { token } from "../screens/Onboarding";
 import Pro from "../screens/Pro";
-//import Profile from "../screens/Profile";
+import Profile from "../screens/Profile";
 import Map from "../screens/Map";
 import Register from "../screens/Register";
 //import Elements from "../screens/Elements";
@@ -307,7 +307,7 @@ const Elements = ({navigation}) => {
 }
 
 
-const Profile = ({text}) => {
+const Profile2 = ({text}) => {
   console.log(text)
   //console.log(route.params)
   //console.log(route.params.text)
@@ -333,9 +333,10 @@ function ProfileStack(props){
       <Stack.Screen
         name="Profile"
         component={Profile}
-        //item = {itemz}
+        //id = {this.props}
         //item = {this.props}
-        //initialParams={{ item: articles[2] }}
+        //initialParams={{id : articles[1]} }
+        
         options={{
           header: ({ navigation, scene }) => (
             <Header

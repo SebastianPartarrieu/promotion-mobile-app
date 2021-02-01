@@ -29,9 +29,9 @@ class Elements extends React.Component {
         <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
           <Block center>
             <Button
-              id = '1'
+              //id = '1'
               
-              onPress = {() => navigation.navigate('Profile', {text: 'coucou'})}
+              onPress = {() => navigation.navigate('Profile', {id: 1})}
               color="secondary"
               textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
               style={styles.button}
@@ -40,7 +40,7 @@ class Elements extends React.Component {
             </Button>
             <Button
               id = '2'
-              onPress = {() => navigation.navigate('Profile', {Òtext: 'hello'})}
+              onPress = {() => navigation.navigate('Profile', {id: 2})}
               color="secondary"
               textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
               style={styles.button}
@@ -49,7 +49,7 @@ class Elements extends React.Component {
             </Button>
             <Button
               id = '3'
-              onPress = {() => navigation.navigate({name: 'Profile', key: id})}
+              onPress = {() => navigation.navigate('Profile', {id: 3})}
               color="secondary"
               textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
               style={styles.button}
