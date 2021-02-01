@@ -12,6 +12,7 @@ CREATE TABLE Client(clid SERIAL PRIMARY KEY,
                     clemail VARCHAR(50) UNIQUE NOT NULL,
                     clmdp VARCHAR(100) NOT NULL,
                     aid INTEGER REFERENCES Agglomeration,
+                    active BOOLEAN DEFAULT True,
                     UNIQUE(clemail, clmdp));
  
 CREATE TABLE Commerce(cid SERIAL PRIMARY KEY,
@@ -23,6 +24,7 @@ CREATE TABLE Commerce(cid SERIAL PRIMARY KEY,
                       rue_and_num VARCHAR(100) NOT NULL,
                       aid INTEGER NOT NULL REFERENCES Agglomeration,
                       cmdp VARCHAR(100) NOT NULL,
+                      active BOOLEAN DEFAULT True,
                       UNIQUE(cnom, cpresentation, code_postal, rue_and_num),
                       UNIQUE(cemail, cmdp));
                       -- imid INTEGER NOT NULL REFERENCES Image,  
