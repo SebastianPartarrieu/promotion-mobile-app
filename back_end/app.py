@@ -299,13 +299,16 @@ def post_client_info():
     clemail, aid = PARAMS.get("clemail", None), PARAMS.get("aid", None)
     clmdp = generate_password_hash(PARAMS.get("clmdp", None))
     try:  # catch the exception if the client already exists in the database
-        res = db.post_client_info(
-            clnom=clnom,
-            clpnom=clpnom,
-            clemail=clemail,
-            aid=aid,
-            clmdp=clmdp)
-        return jsonify({'is_registered': True}), 201
+        if not re.match("[^@]+@[^@]+\.[^@]+", clemail):
+            return jsonify({'is_registered': False, 'error': 'e-mail wrong format'}), 400
+        else: 
+            res = db.post_client_info(
+                clnom=clnom,
+                clpnom=clpnom,
+                clemail=clemail,
+                aid=aid,
+                clmdp=clmdp)
+            return jsonify({'is_registered': True}), 201
     except BaseException:
         return jsonify({'is_registered': False}), 400
 
@@ -337,10 +340,15 @@ def check_client_get_clid():
 #         return Response(status=200)
 
 
-@app.route('/commerce/<int:cid>/promotion', methods=['GET'])
-def fetch_promotion_of_commerce(cid):
-    res = db.fetch_promotion_of_commerce(cid=cid)
-    return jsonify(res)
+@app.route('/mycommerce/promotion', methods=['GET'])
+def fetch_promotion_of_commerce():
+    auth_token = PARAMS.get('token', None)
+    cid = is_authorized_no_id(auth_token, user_type='commerce')
+    if cid:
+        res = db.fetch_promotion_of_commerce(cid=int(cid))
+        return jsonify(res)
+    else:
+        return Response(status=400)
 
 
 # COMMERCE INTERFACE
@@ -366,10 +374,11 @@ def upload_picture(uploaded_file):
 
 
 @app.route('/mycommerce', methods=["PATCH", "PUT"])
-def patch_commerce_info(cid):
+def patch_commerce_info():
     auth_token = PARAMS.get("token", "")
     cid = is_authorized_no_id(auth_token, user_type='commerce')
     if cid:
+        cid = int(cid)
         cnom, cpresentation = PARAMS.get(
             "cnom", None), PARAMS.get(
             "cpresentation", None)
@@ -424,6 +433,7 @@ def post_commerce_info():
                                     cemail=cemail, aid=aid,
                                     cmdp=cmdp, rue_and_num=rue_and_num,
                                     code_postal=code_postal, url_ext=url_ext)
+        p = int(res[0][0])
         if catnom is not None:
             catnom = catnom.split(",")
             for x in catnom:
@@ -448,7 +458,7 @@ def check_commerce_get_cid():
         elif check_password_hash(res[0][2], cmdp):
             return jsonify({'is_logged_in': True, 'token': encode_auth_token(res[0][0], user_type='commerce')}), 200
         else:
-            return jsonify({'is_logged_in': False}), 400
+            return jsonify({'is_logged_in': False}), 401
 
 
 @app.route('/promotion', methods=["POST"])

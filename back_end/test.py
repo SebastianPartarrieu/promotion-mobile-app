@@ -199,6 +199,17 @@ def test_AA_workflow_client():
             "clemail": "s.a.partarrieu@gmail.com",
             "aid": 3,
             "clmdp": "pass"})
+    check_api(
+        'POST',
+        '/signup',
+        400,
+        data={
+            "clnom": "Partarrieu",
+            "clpnom": "Sebastian",
+            "clemail": "sdsfqsdhkjlqdh", #wrong e-mail format
+            "aid": 3,
+            "clmdp": "pass"})
+
 
     response = json.loads(check_api(
         'GET',
@@ -234,20 +245,20 @@ def test_AA_workflow_commerce():
                                                           'code_postal': 75005,
                                                           'rue_and_num': '80 Boulevard Saint-Michel',
                                                           'aid': 1,
-                                                          'cmdp': 'dubonfromage', 'catom': 'Restaurant,Textile'})
+                                                          'cmdp': 'dubonfromage', 'catnom': 'Restaurant,Textile'})
     check_api('POST', '/signupcommerce', 400, data={'cnom': 'Fromager Saint Louis',
                                                     'cpresentation': '',
                                                     'url_ext': 'fromager@fromage.com',
                                                     'code_postal': 75005,
                                                     'rue_and_num': '80 Boulevard Saint-Michel',
                                                     'aid': 1,
-                                                    'cmdp': 'dubonfromage', 'catom': 'Restaurant,Textile'})
+                                                    'cmdp': 'dubonfromage', 'catnom': 'Restaurant,Textile'})
     check_api('POST', '/signupcommerce', 400, data={'cnom': 'Fromager Saint Louis',
                                                     'cpresentation': '',
                                                     'code_postal': 75005,
                                                     'rue_and_num': '80 Boulevard Saint-Michel',
                                                     'aid': 1,
-                                                    'cmdp': 'dubonfromage', 'catom': 'Restaurant,Textile'})
+                                                    'cmdp': 'dubonfromage', 'catnom': 'Restaurant,Textile'})
     response = json.loads(check_api(
         'GET',
         '/logincommerce',
@@ -258,7 +269,7 @@ def test_AA_workflow_commerce():
     auth_token = response['token']
     check_api('PATCH', '/mycommerce', 201,
               data={'cnom': 'Fromager Saint Jacques', 'token': auth_token})
-    check_api('PUT', '/mycommerce/', 201,
+    check_api('PUT', '/mycommerce', 201,
               data={'cpresentation': 'Fromage frais', 'token': auth_token})
     pid = check_api('POST', '/promotion', 201, data={'token': auth_token, 'pdescription': 'Du fromage pas cher', 'tdebut': '2020-01-25', 'tfin': '2020-01-30'})
     check_api('PATCH', '/promotion/'+ str(pid), 201, data={'token': auth_token, 'pdescription':'Du bon fromage', 'tfin': '2020-04-16'})

@@ -16,3 +16,5 @@ Week 25/01-30/01:
 Finished image functions
 Authorization on images
 fork of project with seperate authentication (via flask sessions)
+made back-end and front end client work on login, signup and first screen
+No longer return id when signup, automatically fetch the id from the token
