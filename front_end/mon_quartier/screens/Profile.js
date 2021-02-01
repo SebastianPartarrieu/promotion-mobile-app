@@ -28,7 +28,7 @@ const thumbMeasure = (width - 48 - 32) / 3;
 
 //console.log(articles[1])
 
-item = articles[1]
+item = articles[3]
 
 function Profile(id) {
   //id = {props}

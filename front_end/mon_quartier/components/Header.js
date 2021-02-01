@@ -105,11 +105,13 @@ class Header extends React.Component {
         break;
     }
   }
+
   renderSearch = () => {
     const { navigation } = this.props;
     return (
       <Input
         right
+        onChangeText={(text) => setSearch(text)}
         color="black"
         style={styles.search}
         placeholder="Que recherchez vous?"

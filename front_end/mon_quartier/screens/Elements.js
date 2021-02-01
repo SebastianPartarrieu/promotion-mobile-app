@@ -20,7 +20,6 @@ class Elements extends React.Component {
 
   renderButtons = () => {
     const { navigation } = this.props;
-    var id;
     return (
       <Block flex>
         <Text bold size={16} style={styles.title}>
@@ -57,8 +56,17 @@ class Elements extends React.Component {
               Boucherie Sanzot
             </Button>
             <Button
+              //id = '3'
+              onPress = {() => navigation.navigate('Elements')}
+              color="secondary"
+              textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
+              style={styles.button}
+            >
+              Boucherie sSanzot
+            </Button>
+            <Button
               id = '4'
-              onPress = {() => navigation.navigate({name: 'Profile', key: id})}
+              onPress = {() => navigation.navigate('Profile', {id: 4})}
               color="secondary"
               textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
               style={styles.button}
