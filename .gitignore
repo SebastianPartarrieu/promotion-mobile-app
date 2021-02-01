@@ -1,3 +1,4 @@
-.DS_Store
 back_end/env_promo/*
 front_end/mon_quartier/node_modules/
+front_end/mon_quartier/android/
+front_end/mon_quartier/ios/
