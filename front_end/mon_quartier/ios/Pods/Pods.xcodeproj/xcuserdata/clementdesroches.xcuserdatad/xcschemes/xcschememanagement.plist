@@ -129,6 +129,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Google-Maps-iOS-Utils.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>GoogleMaps.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>OpenSSL-Universal.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -350,6 +360,11 @@
 			<false/>
 		</dict>
 		<key>react-native-geolocation-service.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>react-native-google-maps.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

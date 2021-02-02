@@ -49,7 +49,7 @@ function Onboarding({ navigation }){
         (
           error_text = setError_text('red'),
           console.log(error_text),
-          navigation.navigate("Onboarding")
+          navigation.navigate("App")
         )
           
         

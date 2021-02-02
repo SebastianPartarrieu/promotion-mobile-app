@@ -1,57 +1,52 @@
 export default [
   {
-    id: '1',
-    nom: "Belam Coiffure",
-    adresse: "5 rue Saint Jacques, 75005 Paris",
-    description: "Les plus beaux cheveux de France",
+    nom: "Mines de Paris",
+    adresse: "60 Boulevard Saint-Michel, 75272 Paris",
+    description: "L'École nationale supérieure des mines de Paris, aussi connue sous les noms de École des mines de Paris ou simplement « les Mines », et plus récemment de MINES ParisTech, est l'une des 205 écoles d'ingénieurs françaises accréditées au 1ᵉʳ septembre 2019 à délivrer un diplôme d'ingénieur.",
     coordinates:{
-      latitude: 48.856614,
-      longitude: 2.3522219
+      latitude: 48.845770758284054,
+      longitude: 2.338596411379499
     },
-    image: "https://media-exp1.licdn.com/dms/image/C4E03AQFroYFYvlF38A/profile-displayphoto-shrink_200_200/0/1610810708446?e=1616630400&v=beta&t=m_uq9LSObMXgcroiV_65cvVshZ6rLSqyoMdETLGaXzA"
+    image: "https://dev.meilleures-licences.com/logo_ecole/minesparistechlogo-1479120893.png"
   },
   {
-    id: '2',
-    nom: "Sebbydaddy",
+    nom: "La maison des Mines",
     adresse: "270 rue saint jacques, 75005 Paris",
-    description: "Un BG",
+    description: "La Maison des Mines et des Ponts et Chaussées est une résidence d’étudiants de 200 chambres, située au Quartier Latin de Paris, entre le Panthéon et le Val de Grâce, et à 500 mètres du Jardin du Luxembourg. Ses 2 immeubles comprennent également plusieurs salles de conférence et réunion disponibles pour séminaires, formations, congrès médicaux et locations de gymnase.",
     coordinates:{
-      latitude: 48.056614,
-      longitude: 2.0522219
+      latitude: 48.841924881665165, 
+      longitude: 2.3411000804314797,
     },
-    image: "https://media-exp1.licdn.com/dms/image/C4E03AQFroYFYvlF38A/profile-displayphoto-shrink_200_200/0/1610810708446?e=1616630400&v=beta&t=m_uq9LSObMXgcroiV_65cvVshZ6rLSqyoMdETLGaXzA"
+    image: "https://lh3.googleusercontent.com/proxy/73f53ubyAQsCTSL_r3gUBt_Nwuvr0rbT3UNG_Mt0Nuca7yd_KiPbocz5dChPnOrV_KAmMgfCpHuUnwGRejdw_SyOU1opnwzJ_Tc6"
   },
   {
-    id: '3',
-    nom: "Clement",
-    adresse: "150 avenue des champs elysees, 75000 Paris",
-    description: "zfkgqsdkhaeGQFDIYkhxyzfkqgdfsd",
+    nom: "Panda Wok",
+    adresse: "208 rue saint jacques, 75005 Paris",
+    description: "Envie d’un repas agréable coréen, chinois, japonais ou asiatique ? Vous êtes à la bonne adresse. Bienvenue dans notre restaurant Panda Wok 01. Nous sommes impatients de vous accueillir avec des plats savoureux et de vous offrir une expérience inoubliable. Chez nous, vous pouvez également savourer des spécialités thaïlandaises. Quel que soit le temps, nos salles climatisées vous garantissent toujours des températures idéales.",
     coordinates:{
-      latitude: 48.356614,
-      longitude: 2.8522219
+      latitude: 48.84554822428966, 
+      longitude: 2.34254952705813
     },
-    image: "https://media-exp1.licdn.com/dms/image/C4E03AQFroYFYvlF38A/profile-displayphoto-shrink_200_200/0/1610810708446?e=1616630400&v=beta&t=m_uq9LSObMXgcroiV_65cvVshZ6rLSqyoMdETLGaXzA"
+    image: "https://cdn.website.dish.co/media/e0/f1/1437430/Panda-Wok-01-fullsizeoutput-10.jpg"
   },
   {
-    id: '4',
-    nom: "Pierre S",
-    adresse: "220 rue saint jacques, 75005 Paris",
-    description: "fy ub gebfaeFBAEFGBEAFG",
+    nom: "La Muraille du Phénix",
+    adresse: "179 rue saint jacques, 75005 Paris",
+    description: "Très bon restaurant Chinois avec un bon choix de mets raffinés. Très bon accueil et service. Le cadre est agréable",
     coordinates:{
-      latitude: 49.856614,
-      longitude: 2.3522219
+      latitude: 48.84561630864182, 
+      longitude: 2.34271995589359
     },
-    image: "https://media-exp1.licdn.com/dms/image/C4E03AQFroYFYvlF38A/profile-displayphoto-shrink_200_200/0/1610810708446?e=1616630400&v=beta&t=m_uq9LSObMXgcroiV_65cvVshZ6rLSqyoMdETLGaXzA"
+    image: "https://duphenix.fr/image/catalog/customer/duphenix_fr/duphenix-logo.png"
   },
   {
-    id: '5',
-    nom: "Alex",
-    adresse: "300 rue saint jacques, 75005 Paris",
-    description: "qzurfgb azfbgazifybazoryfg",
+    nom: "Mcdonalds",
+    adresse: "65 Boulevard Saint-Michel, 75005 Paris",
+    description: "Chaîne emblématique de restauration rapide proposant des menus de burgers-frites, des desserts et milk-shakes.",
     coordinates:{
-      latitude: 48.156614,
-      longitude: 2.9522219
+      latitude: 48.8471983255236, 
+      longitude: 2.341062113564534
     },
-    image: "https://media-exp1.licdn.com/dms/image/C4E03AQFroYFYvlF38A/profile-displayphoto-shrink_200_200/0/1610810708446?e=1616630400&v=beta&t=m_uq9LSObMXgcroiV_65cvVshZ6rLSqyoMdETLGaXzA"
+    image: "https://www.pagesjaunes.fr/media/vignette/AAATBEQH21MG-C10003.gif"
   }
 ];
