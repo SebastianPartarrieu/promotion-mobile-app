@@ -1,6 +1,6 @@
 To keep track of small tasks done (will help for Ceremonies at the end of the week)
-
 Week 18/01 - 22/01:
+
 finished implementing queries in REST
 hash for password storage
 added admin table, will be useful for admin interface
@@ -18,18 +18,3 @@ Authorization on images
 fork of project with seperate authentication (via flask sessions)
 made back-end and front end client work on login, signup and first screen
 No longer return id when signup, automatically fetch the id from the token
-Check for email
-Deletion of account
-
-
-For next week 01/02-05/02:
-- User story planification
-- Objectif de la semaine prochaine: terminer la première vue avec la liste des promotions et les commerce
-
-Week 01/02 - 05/02:
-- handling deletion of accounts via boolean in tables, both for client and commerce
-- Check on other functions if account it active or not
-- search for commerce by name
-
-
-

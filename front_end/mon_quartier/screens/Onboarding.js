@@ -37,10 +37,7 @@ function sendLoginRequest(username,password,updateFunction,route){
 function Onboarding({ navigation }){
     var [error_text, setError_text] = useState('#0000') ; 
 
-    navigation.navigate("App")
-
     function updateFunction(response){
-      
       { console.log(response)
         response['is_logged_in']?(
           navigation.navigate("App"),
@@ -54,7 +51,8 @@ function Onboarding({ navigation }){
           console.log(error_text),
           navigation.navigate("App")
         )
-  
+          
+        
         }
     }
 

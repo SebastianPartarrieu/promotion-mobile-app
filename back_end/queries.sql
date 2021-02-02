@@ -27,22 +27,13 @@ FROM Commerce AS c
 JOIN CommerceCategorie AS cc USING (cid)
 JOIN Categorie AS ca USING (catid)
 JOIN Agglomeration AS a USING (aid)
-WHERE a.anom LIKE :agg AND ca.catnom LIKE :cat AND c.cnom LIKE '%%' || :search || '%%' 
+WHERE a.anom LIKE :agg AND ca.catnom LIKE :cat
 ORDER BY 1;
 
 --name: get_client_info
 SELECT clnom, clpnom, clemail, aid
 FROM Client 
 WHERE clid = :clid;
-
---name: delete_client_info!
-DELETE FROM Client WHERE clid = :clid;
-
---name: invalidate_client_account!
-UPDATE Client SET active = False WHERE clid = :clid;
-
---name: check_client_active
-SELECT active FROM Client WHERE clid = :clid; 
 
 --name: fetch_login_client
 SELECT clid, clemail, clmdp FROM Client
@@ -69,15 +60,6 @@ FROM Commerce
 join CommerceCategorie using (cid)
 join Categorie using (catid)
 WHERE cid = :cid;
-
---name: check_commerce_active
-SELECT active FROM Commerce WHERE cid = :cid;
-
---name: delete_commerce_info!
-DELETE FROM Commerce WHERE cid = :cid;
-
---name: invalidate_commerce_account!
-UPDATE Commerce SET active = False WHERE cid = :cid;
 
 --name: post_promotion
 INSERT INTO Promotion(cid, pdescription, tdebut, tfin) VALUES (:cid, :pdescription, :tdebut, :tfin) RETURNING pid;
@@ -123,7 +105,7 @@ VALUES (:cnom, :cpresentation, :code_postal, :rue_and_num, :aid, :cmdp, :cemail,
 INSERT INTO CommerceCategorie (cid, catid) values (:cid, (select catid from Categorie where catnom=:catnom));
 
 --name: delete_commerce_categorie!
-DELETE from CommerceCategorie where cid=:cid;
+DELETE from CommerceCategorie where cid=1;
 
 --name: fetch_login_commerce
 SELECT cid, cemail,cmdp FROM COmmerce 

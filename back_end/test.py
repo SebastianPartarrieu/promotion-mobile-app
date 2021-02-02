@@ -179,12 +179,6 @@ def test_3():
 
 
 def test_AA_workflow_client():
-    '''
-    An extended worklow of what a client might to and not be able to do.
-    Sign up then login, then try out different actions, patch his information, and finally
-    delete his own account
-    '''
-    #Client signs up
     check_api(
         'POST',
         '/signup',
@@ -195,7 +189,6 @@ def test_AA_workflow_client():
             "clemail": "s.a.partarrieu@gmail.com",
             "aid": 3,
             "clmdp": "pass"})
-    #Tries to sign up again with the same information
     check_api(
         'POST',
         '/signup',
@@ -206,7 +199,6 @@ def test_AA_workflow_client():
             "clemail": "s.a.partarrieu@gmail.com",
             "aid": 3,
             "clmdp": "pass"})
-    #Tries to sign up with the wrong e-mail format
     check_api(
         'POST',
         '/signup',
@@ -218,7 +210,7 @@ def test_AA_workflow_client():
             "aid": 3,
             "clmdp": "pass"})
 
-    #Login time
+
     response = json.loads(check_api(
         'GET',
         '/login',
@@ -226,10 +218,8 @@ def test_AA_workflow_client():
         data={
             "clemail": "s.a.partarrieu@gmail.com",
             "clmdp": "pass"}))
-
     auth_token = response['token']
 
-    #Tries to login with wrong password
     check_api(
         'GET',
         '/login',
@@ -237,35 +227,18 @@ def test_AA_workflow_client():
         data={
             "clemail": "s.a.partarrieu@gmail.com",
             "clmdp": "passworddd"})
-
-    #Checks his account info
+    # for some reason escape characters are added to the auth_token when we
+    # fetch text from response in check_api
     check_api('GET', '/myclient', 200,
               data={'token': auth_token})
-
-    #Checks account info without token
     check_api('GET', '/myclient', 401, data={'token': ''})
-
-    #Modifies account info with valid token
     check_api('PATCH', '/myclient', 201,
               data={'clpnom': 'Sebby', 'token': auth_token})
-    
-    #Modifies account info with valid account but different HTTP request
     check_api('PUT', '/myclient', 201,
               data={"clnom": "PARTARRIEU", 'token': auth_token})
 
-    #Deletes his account
-    check_api('DELETE', '/myclient', 200, data={'token': auth_token})
-
-    #Tries to login after he's deleted the account
-    check_api('GET', '/login',  401, data={"clemail": "s.a.partarrieu@gmail.com", "clmdp": "pass"})
-
-    #Tries to modify account info after he's deleted the account
-    check_api('PATCH', '/myclient', 401, data={"clpnom": 'Sebbbbb', 'token': auth_token})
-    check_api('PUT', '/myclient', 401, data={"clnom": 'pp', 'token': auth_token})
-
 
 def test_AA_workflow_commerce():
-    #Commerce signs up
     check_api('POST', '/signupcommerce', 201, data={'cnom': 'Fromager Saint Louis',
                                                           'cpresentation': 'Vend du fromage de bonne qualité',
                                                           'cemail': 'fromager@fromage.com',
@@ -273,7 +246,6 @@ def test_AA_workflow_commerce():
                                                           'rue_and_num': '80 Boulevard Saint-Michel',
                                                           'aid': 1,
                                                           'cmdp': 'dubonfromage', 'catnom': 'Restaurant,Textile'})
-    #Tries to sign up again
     check_api('POST', '/signupcommerce', 400, data={'cnom': 'Fromager Saint Louis',
                                                     'cpresentation': '',
                                                     'url_ext': 'fromager@fromage.com',
@@ -281,14 +253,12 @@ def test_AA_workflow_commerce():
                                                     'rue_and_num': '80 Boulevard Saint-Michel',
                                                     'aid': 1,
                                                     'cmdp': 'dubonfromage', 'catnom': 'Restaurant,Textile'})
-    #Tries to sign up with missing info
     check_api('POST', '/signupcommerce', 400, data={'cnom': 'Fromager Saint Louis',
                                                     'cpresentation': '',
                                                     'code_postal': 75005,
                                                     'rue_and_num': '80 Boulevard Saint-Michel',
                                                     'aid': 1,
                                                     'cmdp': 'dubonfromage', 'catnom': 'Restaurant,Textile'})
-    #Login time
     response = json.loads(check_api(
         'GET',
         '/logincommerce',
@@ -296,39 +266,22 @@ def test_AA_workflow_commerce():
         data={
             'cemail': 'fromager@fromage.com',
             'cmdp': 'dubonfromage'}))
-    #Sweet token
     auth_token = response['token']
-
-    #Patches his info
     check_api('PATCH', '/mycommerce', 201,
               data={'cnom': 'Fromager Saint Jacques', 'token': auth_token})
-    
     check_api('PUT', '/mycommerce', 201,
               data={'cpresentation': 'Fromage frais', 'token': auth_token})
-    
-    #Changes categories linked to his commerce without token
-    check_api('PATCH', '/mycommerce', 401, data={'catnom': 'Librairie'})
-
-    #And now with token
-    check_api('PATCH', '/mycommerce', 201, data={'catnom': 'Librairie', 'token':auth_token})
-
-    #Posts a juicy new offer
     pid = check_api('POST', '/promotion', 201, data={'token': auth_token, 'pdescription': 'Du fromage pas cher', 'tdebut': '2020-01-25', 'tfin': '2020-01-30'})
-
-    #Changes it
     check_api('PATCH', '/promotion/'+ str(pid), 201, data={'token': auth_token, 'pdescription':'Du bon fromage', 'tfin': '2020-04-16'})
 
-    #Deletes his account
-    check_api('DELETE', '/mycommerce', 200, data={'token': auth_token})
+# Login with email and password
 
-    #Tries to login again
-    check_api(
-        'GET',
-        '/logincommerce',
-        401,
-        data={
-            'cemail': 'fromager@fromage.com',
-            'cmdp': 'dubonfromage'})
+
+# INTERACTION WITH FRONT PAGE
+
+# SECOND PAGE - MAP - QUERIES
+
+# THIRD PAGE - LISTS - QUERIES
 
 # INTERFACE COMMERCE
 def test_6():
@@ -369,4 +322,3 @@ def test_7():
 def test_8():
     check_api('PATCH','/promotion/1/image',204, data={"imageImid":'1,2', "imageRanks":'2,1'})
     check_api('PATCH','/promotion/1/image',400, data={"imageImid":'1,2', "imageRanks":'1,1'})
-

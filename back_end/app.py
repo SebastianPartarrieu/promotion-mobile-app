@@ -180,11 +180,10 @@ def is_authorized(auth_token, user_id, user_type='client'):
         else:
             return True
 
-def is_authorized_no_id(auth_token, user_type='commerce', check_active=True):
+def is_authorized_no_id(auth_token, user_type='commerce'):
     '''
     Given an auth_token and user_type returns whether the token is valid
     and of a specific user_type. Returns user_id.
-    If check_active True then function checks if user account is active. If not returns false.
     '''
     if auth_token == '':
         False
@@ -197,20 +196,7 @@ def is_authorized_no_id(auth_token, user_type='commerce', check_active=True):
         if str(user_type_received) != user_type:
             return False
         else:
-            if check_active: #only useful to check if all other tests pass
-                if user_type == 'commerce':
-                    status = db.check_commerce_active(cid=user_id_received)
-                    db.commit()
-                elif user_type == 'client':
-                    status = db.check_client_active(clid=user_id_received)
-                    db.commit()
-                if status[0][0]:
-                    return user_id_received
-                else:
-                    return False
-            else:
-                return user_id_received
-
+            return user_id_received
 #
 # GET /version
 #
@@ -262,8 +248,7 @@ def get_promotion():
 def get_commerce():
     cat = PARAMS.get("categorie", '%')
     agglo = PARAMS.get("agglomeration", '%')
-    search = PARAMS.get("search", '%')
-    res = db.get_commerce(agg=agglo, cat=cat, search=search)
+    res = db.get_commerce(agg=agglo, cat=cat)
     return jsonify(res)
 
 # INTERACTION WITH FRONT PAGE
@@ -335,27 +320,24 @@ def check_client_get_clid():
         return jsonify({'is_logged_in' : False}), 401
     else:
         res = list(db.fetch_login_client(clemail=clemail))
-        status = db.check_client_active(clid=res[0][0]) #active check with clid
         if len(res) == 0:
             return jsonify({'is_logged_in': False}), 401
         elif check_password_hash(res[0][2], clmdp):
-            if status[0][0]:
-                return jsonify({'is_logged_in': True, 'token': encode_auth_token(res[0][0], user_type='client')}), 200
-            else:
-                return jsonify({'is_logged_in': False}), 401
+            return jsonify({'is_logged_in': True, 'token': encode_auth_token(res[0][0], user_type='client')}), 200
         else:
             return jsonify({'is_logged_in': False}), 401
 
-@app.route('/myclient', methods=['DELETE'])
-def delete_client_info():
-    auth_token = PARAMS.get('token', None)
-    clid = is_authorized_no_id(auth_token, user_type='client')
-    if clid:
-        db.invalidate_client_account(clid=int(clid))
-        # something to invalidate tokens perhaps? No need. Check if user account valid on queries
-        return Response(status=200)
-    else:
-        return Response(status=401)
+# @app.route('/client/<int:clid>', methods=['DELETE']) #make sure to have pop up in FE asking if user is sure
+# def delete_client_account(clid):
+#     auth_token = PARAMS.get('token', '')
+#     if auth_token == '':
+#         return Response(status=401)
+#     elif is_authorized(auth_token, user_id=clid, user_type='client'):
+#         db.delete_client_info(clid=clid)
+#         payload = jwt.decode(auth_token, SECRET_KEY, algorithms="HS256")
+#         payload['exp'] = dt.datetime.utcnow()
+#         expired_token
+#         return Response(status=200)
 
 
 @app.route('/mycommerce/promotion', methods=['GET'])
@@ -464,35 +446,20 @@ def post_commerce_info():
         return jsonify({'is_registered': False}), 400
 
 
-@app.route('/logincommerce', methods=["GET", "POST"])
+@app.route('/logincommerce', methods=["GET"])
 def check_commerce_get_cid():
     cemail, cmdp = PARAMS.get('cemail', None), PARAMS.get('cmdp', None)
     if (cemail is None) or (cmdp is None):
         return Response(status=400)
     else:
         res = list(db.fetch_login_commerce(cemail=cemail))
-        status = db.check_commerce_active(cid=res[0][0])
         if len(res) == 0:
             return Response(status=401)
         elif check_password_hash(res[0][2], cmdp):
-            if status[0][0]:
-                return jsonify({'is_logged_in': True, 'token': encode_auth_token(res[0][0], user_type='commerce')}), 200
-            else:
-                return jsonify({'is_logged_in': False}), 401
+            return jsonify({'is_logged_in': True, 'token': encode_auth_token(res[0][0], user_type='commerce')}), 200
         else:
             return jsonify({'is_logged_in': False}), 401
 
-@app.route('/mycommerce', methods=['DELETE'])
-def delete_commerce_info():
-    auth_token = PARAMS.get('token', None)
-    cid = is_authorized_no_id(auth_token, user_type='commerce')
-    if cid:
-        db.invalidate_commerce_account(cid=int(cid))
-        #Expire token somehow
-        #We also have to handle cascading deletions on other tables of the db
-        return Response(status=200)
-    else:
-        return Response(status=401)
 
 @app.route('/promotion', methods=["POST"])
 def post_promotion():
