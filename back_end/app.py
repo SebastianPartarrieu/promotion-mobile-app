@@ -248,8 +248,9 @@ def get_promotion():
 def get_commerce():
     cat = PARAMS.get("categorie", '%')
     agglo = PARAMS.get("agglomeration", '%')
-    res = db.get_commerce(agg=agglo, cat=cat)
-    return jsonify(res)
+    search = PARAMS.get("search", '%')
+    res = db.get_commerce(agg=agglo, cat=cat, search=search)
+    return jsonify({'resultat' : res})
 
 # INTERACTION WITH FRONT PAGE
 

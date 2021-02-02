@@ -13,7 +13,7 @@ import { Button, ProfileCard } from "../components";
 import { Images, argonTheme} from "../constants";
 import { HeaderHeight } from "../constants/utils";
 import PropTypes from 'prop-types';
-import articles from "../constants/articles"
+//import articles from "../constants/articles"
 
 
 
@@ -26,9 +26,12 @@ const thumbMeasure = (width - 48 - 32) / 3;
 
 
 
+//item = articles[3]
 
-function Profile(props) {
-  //const {item} = this.props
+function Profilez(id) {
+  //id = {props}
+  console.log(id)
+  //item = articles[id]
 
   return (
     <Block flex style={styles.profile}>
@@ -132,9 +135,8 @@ function Profile(props) {
   );
 }
 
-export default Profile 
 
-const styles = StyleSheet.create({
+const ProfileStyles = StyleSheet.create({
 profile: {
   marginTop: Platform.OS === "android" ? -HeaderHeight : 0,
   // marginBottom: -HeaderHeight * 2,
@@ -194,4 +196,5 @@ thumb: {
 }
 });
 
+export {ProfileStyles}
 
