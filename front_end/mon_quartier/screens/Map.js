@@ -33,7 +33,7 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
     articles,
     categories: [
       { 
-        name: 'Fastfood Center', 
+        name: 'Fastfood', 
         icon: <MaterialCommunityIcons style={styles.chipsIcon} name="food-fork-drink" size={18} />,
       },
       {
@@ -41,11 +41,11 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
         icon: <Ionicons name="ios-restaurant" style={styles.chipsIcon} size={18} />,
       },
       {
-        name: 'Dineouts',
+        name: 'Coiffeurs',
         icon: <Ionicons name="md-restaurant" style={styles.chipsIcon} size={18} />,
       },
       {
-        name: 'Snacks Corner',
+        name: 'Magasin',
         icon: <MaterialCommunityIcons name="food" style={styles.chipsIcon} size={18} />,
       },
       {

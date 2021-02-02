@@ -15,7 +15,6 @@ function CustomDrawerContent({ drawerPosition, navigation, profile, focused, sta
   const screens = [
     "Accueil", 
     "Profile",
-    "Account",
     "Elements",
     "Map",
   ];

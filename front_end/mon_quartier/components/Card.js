@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.COLORS.WHITE,
     marginVertical: theme.SIZES.BASE,
     borderWidth: 0,
-    minHeight: 114,
+    minHeight: 100,
     marginBottom: 16,
     borderRadius: 10,
   },
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 0
   },
   fullImage: {
-    height: 215
+    height: 150
   },
   shadow: {
     shadowColor: theme.COLORS.BLACK,
