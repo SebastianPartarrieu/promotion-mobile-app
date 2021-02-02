@@ -90,7 +90,7 @@ function ProfileCard (item) {
                     space="between"
                   >
                     <Text bold size={16} color="#525F7F" style={{marginTop: 12}}>
-                      Album
+                      Albuuuuum
                     </Text>
                     <Button
                       small

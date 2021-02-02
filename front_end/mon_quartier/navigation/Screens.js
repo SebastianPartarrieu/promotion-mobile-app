@@ -1,11 +1,20 @@
 import React, { Component, useState } from "react";
-import { Easing, Animated, Dimensions, View, Text, ScrollView, StyleSheet } from "react-native";
+import { Easing,
+         Animated, 
+         Dimensions, 
+         View, 
+         Text, 
+         ScrollView, 
+         StyleSheet, 
+         ImageBackground, 
+         Image,
+         } from "react-native";
 
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { Block, theme, Button as GaButton } from "galio-framework";
+import { Block, theme, Button as GaButton, DeckSwiper } from "galio-framework";
 
 // screens
 import Accueil from "../screens/Home";
@@ -13,7 +22,7 @@ import Onboarding from "../screens/Onboarding";
 import Account from "../screens/Account";
 import { token } from "../screens/Onboarding";
 import Pro from "../screens/Pro";
-import Profile from "../screens/Profile";
+import {ProfileStyles} from "../screens/Profile";
 import Map from "../screens/Map";
 import Register from "../screens/Register";
 //import Elements from "../screens/Elements";
@@ -24,7 +33,9 @@ import CustomDrawerContent from "./Menu";
 
 // header for screens
 import { Icon, Header, Button } from "../components";
-import { argonTheme, tabs, articles } from "../constants";
+import { Images, argonTheme, tabs } from "../constants";
+import { HeaderHeight } from "../constants/utils";
+
 import csvjson from '../constants/csvjson';
 
 const { width } = Dimensions.get("screen");
@@ -33,195 +44,6 @@ const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
-
-class Elementss extends React.Component {
-
-  renderButtons = () => {
-    const { navigation } = this.props;
-    var id;
-
-  };
-
-  renderText = () => {
-    return (
-      <Block flex style={styles.group}>
-        <Text bold size={16} style={styles.title}>
-          Typography
-        </Text>
-        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-          <Text
-            h1
-            style={{ marginBottom: theme.SIZES.BASE / 2 }}
-            color={argonTheme.COLORS.DEFAULT}
-          >
-            Heading 1
-          </Text>
-          <Text
-            h2
-            style={{ marginBottom: theme.SIZES.BASE / 2 }}
-            color={argonTheme.COLORS.DEFAULT}
-          >
-            Heading 2
-          </Text>
-          <Text
-            h3
-            style={{ marginBottom: theme.SIZES.BASE / 2 }}
-            color={argonTheme.COLORS.DEFAULT}
-          >
-            Heading 3
-          </Text>
-          <Text
-            h4
-            style={{ marginBottom: theme.SIZES.BASE / 2 }}
-            color={argonTheme.COLORS.DEFAULT}
-          >
-            Heading 4
-          </Text>
-          <Text
-            h5
-            style={{ marginBottom: theme.SIZES.BASE / 2 }}
-            color={argonTheme.COLORS.DEFAULT}
-          >
-            Heading 5
-          </Text>
-          <Text
-            p
-            style={{ marginBottom: theme.SIZES.BASE / 2 }}
-            color={argonTheme.COLORS.DEFAULT}
-          >
-            Paragraph
-          </Text>
-          <Text muted>This is a muted paragraph.</Text>
-        </Block>
-      </Block>
-    );
-  };
-
-
-  renderTableCell = () => {
-    const { navigation } = this.props;
-    return (
-      <Block flex style={styles.group}>
-        <Text bold size={16} style={styles.title}>
-          Table Cell
-        </Text>
-        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-          <Block style={styles.rows}>
-            <TouchableOpacity onPress={() => navigation.navigate("Pro")}>
-              <Block row middle space="between" style={{ paddingTop: 7 }}>
-                <Text size={14}>Manage Options</Text>
-                <Icon
-                  name="chevron-right"
-                  family="entypo"
-                  style={{ paddingRight: 5 }}
-                />
-              </Block>
-            </TouchableOpacity>
-          </Block>
-        </Block>
-      </Block>
-    );
-  };
-
-  renderSocial = () => {
-    return (
-      <Block flex style={styles.group}>
-        <Text bold size={16} style={styles.title}>
-          Social
-        </Text>
-        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-          <Block row center space="between">
-            <Block flex middle right>
-              <GaButton
-                round
-                onlyIcon
-                shadowless
-                icon="facebook"
-                iconFamily="Font-Awesome"
-                iconColor={theme.COLORS.WHITE}
-                iconSize={theme.SIZES.BASE * 1.625}
-                color={theme.COLORS.FACEBOOK}
-                style={[styles.social, styles.shadow]}
-              />
-            </Block>
-            <Block flex middle center>
-              <GaButton
-                round
-                onlyIcon
-                shadowless
-                icon="twitter"
-                iconFamily="Font-Awesome"
-                iconColor={theme.COLORS.WHITE}
-                iconSize={theme.SIZES.BASE * 1.625}
-                color={theme.COLORS.TWITTER}
-                style={[styles.social, styles.shadow]}
-              />
-            </Block>
-            <Block flex middle left>
-              <GaButton
-                round
-                onlyIcon
-                shadowless
-                icon="dribbble"
-                iconFamily="Font-Awesome"
-                iconColor={theme.COLORS.WHITE}
-                iconSize={theme.SIZES.BASE * 1.625}
-                color={theme.COLORS.DRIBBBLE}
-                style={[styles.social, styles.shadow]}
-              />
-            </Block>
-          </Block>
-        </Block>
-      </Block>
-    );
-  };
-
-  renderNavigation = () => {
-    return (
-      <Block flex style={styles.group}>
-        <Text bold size={16} style={styles.title}>
-          Navigation
-        </Text>
-        <Block>
-          <Block style={{ marginBottom: theme.SIZES.BASE }}>
-            <Header 
-              back 
-                title="Title" navigation={this.props.navigation} />
-          </Block>
-
-          <Block style={{ marginBottom: theme.SIZES.BASE }}>
-            <Header 
-              tabs={tabs.categories} 
-              search 
-              title="Title" 
-              navigation={this.props.navigation} />
-          </Block>
-
-          <Block style={{ marginBottom: theme.SIZES.BASE }}>
-            <Header
-              options
-              search
-              title="Title"
-              optionLeft="Option 1"
-              optionRight="Option 2"
-              navigation={this.props.navigation}
-            />
-          </Block>
-        </Block>
-      </Block>
-    );
-  };
-
-  render() {
-    return (
-      <Block flex center>
-        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 30, width }}>
-          {this.renderButtons()}
-        </ScrollView>
-      </Block>
-    );
-  }
-}
 
 
 function searchStack(props) {
@@ -247,48 +69,50 @@ function searchStack(props) {
 }
 
 
-function SearchResults() {
-var ABC = <Button onPress = {() => navigation.navigate('Profile')} color="secondary" textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }} style={styles.button}> Panda WOK </Button>
 
-for (let i = 0; i < 5; i++){  
-  ABC = ABC + large
-  }
-return(ABC)
-}
-
-
-function sendSearchRequest(search,route){
+function sendSearchRequest(search,updateFunction,route){
   const url = new URL(route, 'http://localhost:5000/')
   url.searchParams.append('search',search)
 
   fetch(url, {
     method : 'GET'
-  }).then((response) => response.json()).catch(
+  }).then((response) => response.json()).then(updateFunction).catch(
     (e) => {alert('Something went wrong' + e.message)}
   )
 }
 
 
 function Elements ({navigation}){
-  var [search, setSearch] = useState('') ;
-  var resultat='' ;
 
+  var [resultat, setResultat] = useState([])
+  function SearchResults(){
+    var buffer = [];
+    var n = resultat.length;
+    //var com = 'xxx'
+    for(var iter = 0; iter < n; iter++){
+
+      const id = iter;
+      buffer.push(<Button onPress = {() => navigation.navigate('Profile', {comm : resultat[id]})} color="secondary" textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }} style={styles.button}>{resultat[iter][1]}</Button>);
+
+    }
+    
+    return(buffer)
+  } 
+
+  function updateFunction(response){
+    { //console.log(response),
+      resultat = setResultat(response['resultat'])
+      }
+  }
   return (
     <Block>
       <Input
         right
-        onChangeText={(text) => setSearch(text)}
-        search = {search}
 
-        resultat = {sendSearchRequest(search,"commerce")}
-        //onChangeText={
-        //  (text) => setSearch(text),}
-        //text = {text}
-        //onChangeText={() => console.log('gg')}
-        
+        onChangeText = {(text) => (sendSearchRequest(text,updateFunction,"commerce"))}        
         color="black"
         style={styles.search}
-        placeholder="Que recherchezzzz vous?"
+        placeholder="Que recherchez vous?"
         placeholderTextColor={'#8898AA'}
         //onFocus={() => navigation.navigate('Pro')}
         iconContent={<Icon size={16} color={theme.COLORS.MUTED} name="search-zoom-in" family="ArgonExtra" />}
@@ -301,113 +125,152 @@ function Elements ({navigation}){
       </Text>
       <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
         <Block center>
-          <Button
-            id = '1'
-            //onPress ={() => }
-            onPress = {() => navigation.navigate('Profile')}
-            color="secondary"
-            textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
-            style={styles.button}
-          >
-            Panda
-          </Button>
-
-          
-
-          <Button
-            id = '2'
-            onPress = {() => navigation.navigate('Profile', {text: 'hello'})}
-            color="secondary"
-            textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
-            style={styles.button}
-          >
-            Belam Coiffure
-          </Button>
-          <Button
-            id = '3'
-            onPress = {() => navigation.navigate({name: 'Profile', key: id})}
-            color="secondary"
-            textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
-            style={styles.button}
-          >
-            Boucherie Sanzot
-          </Button>
-          <Button
-            id = '4'
-            onPress = {() => navigation.navigate({name: 'Profile', key: id})}
-            color="secondary"
-            textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
-            style={styles.button}
-          >
-            Monoprix
-          </Button>
-          <Button
-            id = '5'
-            onPress = {() => navigation.navigate({name: 'Profile', key: id})}
-            color="secondary"
-            textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
-            style={styles.button}
-          >
-            A2pas
-          </Button>
-          <Button
-            id = '5'
-            onPress = {() => navigation.navigate({name: 'Profile', key: id})}
-            color="secondary"
-            textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
-            style={styles.button}
-          >
-            A2pas
-          </Button>
-          <Button
-            id = '5'
-            onPress = {() => navigation.navigate({name: 'Profile', key: id})}
-            color="secondary"
-            textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
-            style={styles.button}
-          >
-            A2pas
-          </Button>
+          <SearchResults/>
         </Block>
       </Block>
     </Block>
     </ScrollView>
     </Block>
   );
-
 }
 
 
-const Profile2 = ({text}) => {
-  console.log(text)
-  //console.log(route.params)
-  //console.log(route.params.text)
+function Profile(props) {
+
+  COMMERCE = props.KOM;
+  const ID = COMMERCE[0];
+  const NOM = COMMERCE[1]
+  const DESC = COMMERCE[2];
+  const CITY = COMMERCE[3];
+  const ZIP = COMMERCE[4];
+  const ADDRESS = COMMERCE[5];
+
+
 
   return (
-    <View>
-      <Text> First Screen </Text>
-      <Text> First Screen </Text>
-      <Text> First Screen </Text>
-
-      <Text> First Screen </Text>
-    </View>
-  )
+    <Block flex style={ProfileStyles.profile}>
+      <Block flex>
+        <ImageBackground
+          source={Images.ProfileBackground}
+          style={ProfileStyles.profileContainer}
+          imageStyle={ProfileStyles.profileBackground}
+        >
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={{ width, marginTop: '25%' }}
+          >
+            <Block flex style={ProfileStyles.profileCard}>
+              <Block middle style={ProfileStyles.avatarContainer}>
+                <Image
+                  //source={{ uri: item.image }}
+                  style={ProfileStyles.avatar}
+                />
+              </Block>
+              <Block style={ProfileStyles.info}>
+                <Block
+                  middle
+                  row
+                  space="evenly"
+                  style={{ marginTop: 10, paddingBottom: 0}}
+                >
+                  <Button
+                    small
+                    style={{ backgroundColor: argonTheme.COLORS.INFO }}
+                  >
+                    SITE WEB
+                  </Button>
+                </Block>
+                
+              </Block>
+              <Block flex>
+                <Block middle style={ProfileStyles.nameInfo}>
+                  <Text bold size={28} color="#32325D">
+                    {NOM}
+                  </Text>
+                  <Text size={16} color="#32325D" style={{ marginTop: 0 }}>
+                    {ADDRESS}, {ZIP}, {CITY}
+                  </Text>
+                </Block>
+                <Block middle style={{ marginTop: 20, marginBottom: 16 }}>
+                  <Block style={ProfileStyles.divider} />
+                </Block>
+                <Block middle>
+                  <Text
+                    bold
+                    size={16}
+                    color="#525F7F"
+                    style={{ textAlign: "center" }}
+                  >
+                  
+                    {DESC}
+                  </Text>
+                  <Button
+                    color="transparent"
+                    textStyle={{
+                      color: "#233DD2",
+                      fontWeight: "500",
+                      fontSize: 16
+                    }}
+                  >
+                    Show more
+                  </Button>
+                </Block>
+                <Block
+                  row
+                  space="between"
+                >
+                  <Text bold size={16} color="#525F7F" style={{marginTop: 12}}>
+                    Album
+                  </Text>
+                  <Button
+                    small
+                    color="transparent"
+                    textStyle={{ color: "#5E72E4", fontSize: 12, marginLeft: 24 }}
+                  >
+                    View all
+                  </Button>
+                </Block>
+                <Block style={{ paddingBottom: -HeaderHeight * 2 }}>
+                  <Block row space="between" style={{ flexWrap: "wrap" }}>
+                    {Images.Viewed.map((img, imgIndex) => (
+                      <Image
+                        source={{ uri: img }}
+                        key={`viewed-${img}`}
+                        resizeMode="cover"
+                        style={ProfileStyles.thumb}
+                      />
+                    ))}
+                  </Block>
+                </Block>
+              </Block>
+            </Block>
+          </ScrollView>
+        </ImageBackground>
+      </Block>
+    </Block>
+  );
 }
 
 function ProfileStack(props){
-    //console.log(props.route)
-    //console.log(props.route.params)
-    //console.log(props.route.params.item)
-    //const {item} = props.route.params.item;
+    //console.log("======================== ")
+    //console.log()
+    //console.log("======================== ")
+    
+    const COMMERCE = props.route.params['comm']
+
+
+
     return(
-      <Stack.Navigator initialRouteName="Profile" mode="card" headerMode="screen">
+      <Stack.Navigator 
+      initialRouteName="Profile" 
+      mode="card" 
+      headerMode="screen" 
+      params= 'Joe' >
+      
       <Stack.Screen
         name="Profile"
-        component={Profile}
-        id = {this.props}
+        //component={Profile}
         
-        //item = {this.props}
-        initialParams={{id : articles[1]} }
         options={{
           header: ({ navigation, scene }) => (
             <Header
@@ -421,7 +284,10 @@ function ProfileStack(props){
           cardStyle: { backgroundColor: "#FFFFFF" },
           headerTransparent: true
         }}
-      />
+      >
+        {props => <Profile {...{KOM: COMMERCE}} />}
+      </Stack.Screen>
+
     </Stack.Navigator>
     );
     }
@@ -456,8 +322,8 @@ function MapStack(props) {
 
 
 function HomeStack(props) {
-  console.log(token);
-  console.log('couccou');
+  //console.log(token);
+  //console.log('couccou');
   return (
     <Stack.Navigator mode="card" headerMode="screen">
       <Stack.Screen

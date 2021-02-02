@@ -264,7 +264,7 @@ def get_commerce():
     agglo = PARAMS.get("agglomeration", '%')
     search = PARAMS.get("search", '%')
     res = db.get_commerce(agg=agglo, cat=cat, search=search)
-    return jsonify(res)
+    return jsonify({'resultat' : res})
 
 # INTERACTION WITH FRONT PAGE
 

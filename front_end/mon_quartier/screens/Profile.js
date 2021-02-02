@@ -13,7 +13,7 @@ import { Button, ProfileCard } from "../components";
 import { Images, argonTheme} from "../constants";
 import { HeaderHeight } from "../constants/utils";
 import PropTypes from 'prop-types';
-import articles from "../constants/articles"
+//import articles from "../constants/articles"
 
 
 
@@ -28,9 +28,9 @@ const thumbMeasure = (width - 48 - 32) / 3;
 
 //console.log(articles[1])
 
-item = articles[3]
+//item = articles[3]
 
-function Profile(id) {
+function Profilez(id) {
   //id = {props}
   console.log(id)
   //item = articles[id]
@@ -137,9 +137,8 @@ function Profile(id) {
   );
 }
 
-export default Profile 
 
-const styles = StyleSheet.create({
+const ProfileStyles = StyleSheet.create({
 profile: {
   marginTop: Platform.OS === "android" ? -HeaderHeight : 0,
   // marginBottom: -HeaderHeight * 2,
@@ -199,4 +198,5 @@ thumb: {
 }
 });
 
+export {ProfileStyles}
 
