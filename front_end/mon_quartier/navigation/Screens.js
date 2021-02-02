@@ -7,7 +7,7 @@ import { Easing,
          ScrollView, 
          StyleSheet, 
          ImageBackground, 
-         Image,
+         Image
          } from "react-native";
 
 import { createStackNavigator } from "@react-navigation/stack";
@@ -34,6 +34,7 @@ import CustomDrawerContent from "./Menu";
 import { Icon, Header, Button } from "../components";
 import { Images, argonTheme, tabs } from "../constants";
 import { HeaderHeight } from "../constants/utils";
+import Input from '../components/Input';
 
 import csvjson from '../constants/csvjson';
 
@@ -57,7 +58,7 @@ function searchStack(props) {
               title="Recherche" 
               navigation={navigation} 
               scene={scene} 
-              search
+              //search
             />
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
@@ -105,9 +106,9 @@ function Elements ({navigation}){
   }
   return (
     <Block>
+
       <Input
         right
-
         onChangeText = {(text) => (sendSearchRequest(text,updateFunction,"commerce"))}        
         color="black"
         style={styles.search}
@@ -142,7 +143,11 @@ function Profile(props) {
   const CITY = COMMERCE[3];
   const ZIP = COMMERCE[4];
   const ADDRESS = COMMERCE[5];
+  const LATITUDE = COMMERCE[6];
+  const LONGITUDE = COMMERCE[7];
+  const IMAGE = COMMERCE[8];
 
+  console.log(COMMERCE)
 
 
   return (
@@ -160,7 +165,7 @@ function Profile(props) {
             <Block flex style={ProfileStyles.profileCard}>
               <Block middle style={ProfileStyles.avatarContainer}>
                 <Image
-                  //source={{ uri: item.image }}
+                  source={{ uri: IMAGE }}
                   style={ProfileStyles.avatar}
                 />
               </Block>
@@ -272,6 +277,7 @@ function ProfileStack(props){
         options={{
           header: ({ navigation, scene }) => (
             <Header
+            back
               transparent
               white
               title="Profile"

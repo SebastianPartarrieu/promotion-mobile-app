@@ -13,14 +13,16 @@ INSERT INTO Client(clnom, clpnom, clemail, aid, clmdp) VALUES
 ('Gray', 'James', 'jgray@turing.org', 2, 'Password'), 
 ('GenericName', 'Calvin', 'calvin.hobbes@me.com', 3, 'PaSSword');
 
-INSERT INTO Commerce(cnom, cpresentation, code_postal, rue_and_num, aid, cmdp, cemail) VALUES
-('Pizza Mario', 'Pizza italienne au feu de bois', 75005, '208 Rue Saint Jacques', 1, 'password', 'pizzamario@shop.com'),
-('Pizza Luigi', 'Pizza italienne au feu de bois', 14000, '2 Rue Caen', 2, 'Password', 'pizzaluigi@pizza.fr'),
-('Fashion & books Nice', 'Devenez les stars de la promenade des Anglais', 06100, '5 Avenue Jean Medecin', 3, 'PASSword', 'fashion_books@nice.fr'),
-('Pizza Mario', 'Pizza italienne au feu de bois', 06100, '19 Av Jean Medecin', 3, 'Password!', 'pizzanice@mario.fr');
+INSERT INTO Commerce(cnom, cpresentation, code_postal, rue_and_num, aid, cmdp, cemail,latitude,longitude,picture) VALUES
+('Mines de Paris','L ecole nationale supérieure des mines de Paris',75272, '60 Boulevard Saint-Michel',1,'password5','matmaz@mines-paristech.fr',48.845770758284054,2.338596411379499,'https://dev.meilleures-licences.com/logo_ecole/minesparistechlogo-1479120893.png'),
+('La maison des Mines', 'La Maison des Mines et des Ponts',75005,'270 rue saint jacques',1,'password4','matmaz4@mines-paristech.fr',48.841924881665165, 2.3411000804314797,'https://lh3.googleusercontent.com/proxy/73f53ubyAQsCTSL_r3gUBt_Nwuvr0rbT3UNG_Mt0Nuca7yd_KiPbocz5dChPnOrV_KAmMgfCpHuUnwGRejdw_SyOU1opnwzJ_Tc6'),
+('Panda Wok','Envie d’un repas agréable asiatique ?',75015,'208 rue saint jacques',1,'password3','matmaz3@mines-paristech.fr',48.84554822428966,2.34254952705813,'https://cdn.website.dish.co/media/e0/f1/1437430/Panda-Wok-01-fullsizeoutput-10.jpg'),
+('La Muraille du Phénix','Un bon choix de mets raffinés',75030,'179 rue saint jacques',1,'password2','matmaz2@mines-paristech.fr',48.84561630864182, 2.34271995589359,'https://duphenix.fr/image/catalog/customer/duphenix_fr/duphenix-logo.png'),
+('Mcdonalds','haîne emblématique de restauration rapide',75405,'65 Boulevard Saint-Michel',1,'password1','matmaz1@mines-paristech.fr',48.8471983255236, 2.341062113564534,'https://www.pagesjaunes.fr/media/vignette/AAATBEQH21MG-C10003.gif');
+
 
 -- linking stores with their categories
-INSERT INTO CommerceCategorie(cid, catid) VALUES (1, 1), (2, 1), (3, 2), (3, 3);
+INSERT INTO CommerceCategorie(cid, catid) VALUES (1, 1), (2, 1), (3, 2), (4, 3),(5, 3);
 
 -- one or two promotions
 INSERT INTO Promotion(cid, pdescription, tdebut, tfin) VALUES (1, 'La Marguerite a 7€!!!', '2021-01-14'::DATE, NULL),
