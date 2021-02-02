@@ -24,13 +24,13 @@ class Card extends React.Component {
       <Block row={horizontal} card flex style={cardContainer}>
         <TouchableWithoutFeedback onPress = {() => this.props.navigation.setParams({item: articles[1]})} onPress={() => {this.props.navigation.navigate('Profile', {item: item});}}>
           <Block flex style={imgContainer}>
-            <Image source={{uri: item.image}} style={imageStyles} />
+            <Image source={{uri: item.image}} style={imageStyles} resizeMode="contain"/>
           </Block>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress = {() => this.props.navigation.setParams({item: articles[1]})} onPress={() => {this.props.navigation.navigate('Profile', {item: item});}}>
           <Block flex space="between" style={styles.cardDescription}>
-            <Text size={14} style={styles.cardTitle}>{item.nom}</Text>
-            <Text size={12} muted={!ctaColor} color={ctaColor || argonTheme.COLORS.ACTIVE} bold>View Article</Text>
+            <Text bold center size={15} style={styles.cardTitle}>{item.nom}</Text>
+            <Text numberOfLines={1} style={styles.cardDescription}>{item.description}</Text>
           </Block>
         </TouchableWithoutFeedback>
       </Block>
@@ -52,27 +52,30 @@ const styles = StyleSheet.create({
     marginVertical: theme.SIZES.BASE,
     borderWidth: 0,
     minHeight: 114,
-    marginBottom: 16
+    marginBottom: 16,
+    borderRadius: 10,
   },
   cardTitle: {
     flex: 1,
     flexWrap: 'wrap',
-    paddingBottom: 6
-  },
-  cardDescription: {
-    padding: theme.SIZES.BASE / 2
+    marginTop:5
+
   },
   imageContainer: {
-    borderRadius: 3,
+    borderRadius: 10,
     elevation: 1,
     overflow: 'hidden',
+    margin: 10
+    
   },
   image: {
     // borderRadius: 3,
+    margin: 10
   },
   horizontalImage: {
     height: 122,
     width: 'auto',
+    
   },
   horizontalStyles: {
     borderTopRightRadius: 0,
@@ -92,6 +95,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     elevation: 2,
   },
+  cardDescription: {
+    fontSize: 8,
+    color: "#444",
+    margin:5
+  }
 });
 
 export default withNavigation(Card);

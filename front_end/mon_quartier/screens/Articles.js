@@ -5,13 +5,17 @@ import {
   Image,
   TouchableWithoutFeedback,
   ImageBackground,
-  Dimensions
+  Dimensions,
+  View
 } from "react-native";
 //galio
 import { Block, Text, theme } from "galio-framework";
 //argon
 import { articles, Images, argonTheme } from "../constants/";
 import { Card } from "../components/";
+import MapView, {Marker, PROVIDER_GOOGLE} from "react-native-maps";
+import {RetroStyle} from "../constants/MapData";
+
 
 const { width } = Dimensions.get("screen");
 
@@ -44,6 +48,10 @@ const categories = [
   }
 ];
 
+var i = 0;
+var suggestions = [];
+while(i<3){suggestions.push(articles[i]), i+=1};
+
 class Articles extends React.Component {
   renderSearch = () => {
     const { navigation } = this.props;
@@ -65,12 +73,12 @@ class Articles extends React.Component {
     return (
       <TouchableWithoutFeedback
         style={{ zIndex: 3 }}
-        key={"product-${item.title}"}
+        key={"product-${item.nom}"}
         onPress={() => navigation.navigate("Profile", { item: item })}
       >
         <Block center style={styles.productItem}>
           <Image
-            resizeMode="cover"
+            resizeMode="contain"
             style={styles.productImage}
             source={{ uri: item.image }}
           />
@@ -81,10 +89,10 @@ class Articles extends React.Component {
               color={theme.COLORS.MUTED}
               style={styles.productPrice}
             >
-              {item.price}
+              {item.adresse}
             </Text>
             <Text center size={34}>
-              {item.title}
+              {item.nom}
             </Text>
             <Text
               center
@@ -101,10 +109,67 @@ class Articles extends React.Component {
   };
 
   renderCards = () => {
+    const { navigation } = this.props;
     return (
       <Block flex style={styles.group}>
         <Text bold size={16} style={styles.title}>
-          Cards
+          Suggestions
+        </Text>
+        <Block flex >
+            <ScrollView
+              horizontal={true}
+              pagingEnabled={true}
+              decelerationRate={0}
+              scrollEventThrottle={16}
+              snapToAlignment="center"
+              showsHorizontalScrollIndicator={true}
+              snapToInterval={cardWidth + theme.SIZES.BASE * 0.375}
+              contentContainerStyle={{
+              paddingHorizontal: theme.SIZES.BASE / 2
+              }}
+            >
+              {categories &&
+                suggestions.map((item, index) =>
+                <Block style={styles.productItem}>
+                  <Card item={item} full/>
+                </Block>
+                )}
+            </ScrollView>
+          </Block>
+          <Text bold size={16} style={styles.title}>
+          Autour de vous
+        </Text>
+          <Block flex center>
+            <MapView
+              initialRegion={{
+                latitude: articles[0].coordinates.latitude,
+                longitude: articles[0].coordinates.longitude,
+                latitudeDelta: 0.02864195044303443,
+                longitudeDelta: 0.020142817690068,
+              }}
+              provider={PROVIDER_GOOGLE}
+              customMapStyle={RetroStyle}
+              style={styles.productMap}
+              onPress={() => navigation.navigate('Map')}
+              showsUserLocation={true}
+              followsUserLocation={true}
+            >
+              {articles.map((marker, index) => {
+            
+                return (
+                  <MapView.Marker key={index} coordinate={{latitude: marker.coordinates.latitude, longitude: marker.coordinates.longitude}}>
+                    <Image
+                      source={require('../assets/imgs/pin.png')}
+                      style={styles.marker}
+                      resizeMode="contain"
+                    />
+                </MapView.Marker>
+                );
+              })}
+            </MapView>
+            </Block>
+            <Text bold size={26} style={styles.title}>
+          Catégories
         </Text>
         <Block flex>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
@@ -117,45 +182,9 @@ class Articles extends React.Component {
               <Card item={articles[2]} />
             </Block>
             <Card item={articles[4]} full />
-            <Block flex card shadow style={styles.category}>
-              <ImageBackground
-                source={{ uri: Images.Products["View article"] }}
-                style={[
-                  styles.imageBlock,
-                  { width: width - theme.SIZES.BASE * 2, height: 252 }
-                ]}
-                imageStyle={{
-                  width: width - theme.SIZES.BASE * 2,
-                  height: 252
-                }}
-              >
-                <Block style={styles.categoryTitle}>
-                  <Text size={18} bold color={theme.COLORS.WHITE}>
-                    View article
-                  </Text>
-                </Block>
-              </ImageBackground>
-            </Block>
+           
           </Block>
-          <Block flex style={{ marginTop: theme.SIZES.BASE / 2 }}>
-            <ScrollView
-              horizontal={true}
-              pagingEnabled={true}
-              decelerationRate={0}
-              scrollEventThrottle={16}
-              snapToAlignment="center"
-              showsHorizontalScrollIndicator={false}
-              snapToInterval={cardWidth + theme.SIZES.BASE * 0.375}
-              contentContainerStyle={{
-                paddingHorizontal: theme.SIZES.BASE / 2
-              }}
-            >
-              {categories &&
-                categories.map((item, index) =>
-                  this.renderProduct(item, index)
-                )}
-            </ScrollView>
-          </Block>
+          
         </Block>
       </Block>
     );
@@ -235,6 +264,12 @@ const styles = StyleSheet.create({
     height: cardWidth - theme.SIZES.BASE,
     borderRadius: 3
   },
+  productMap: {
+    width: cardWidth - theme.SIZES.BASE,
+    height: 200,
+    borderRadius: 10
+
+  },
   productPrice: {
     paddingTop: theme.SIZES.BASE,
     paddingBottom: theme.SIZES.BASE / 2
@@ -242,7 +277,11 @@ const styles = StyleSheet.create({
   productDescription: {
     paddingTop: theme.SIZES.BASE
     // paddingBottom: theme.SIZES.BASE * 2,
-  }
+  },
+  marker: {
+    width: 50,
+    height: 50,},
+
 });
 
 export default Articles;

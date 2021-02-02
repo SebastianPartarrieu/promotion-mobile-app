@@ -20,6 +20,7 @@ class Elements extends React.Component {
 
   renderButtons = () => {
     const { navigation } = this.props;
+    var id;
     return (
       <Block flex>
         <Text bold size={16} style={styles.title}>
@@ -28,9 +29,9 @@ class Elements extends React.Component {
         <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
           <Block center>
             <Button
-              //id = '1'
+              id = '1'
               
-              onPress = {() => navigation.navigate('Profile', {id: 1})}
+              onPress = {() => navigation.navigate('Profile', {text: 'coucou'})}
               color="secondary"
               textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
               style={styles.button}
@@ -39,7 +40,7 @@ class Elements extends React.Component {
             </Button>
             <Button
               id = '2'
-              onPress = {() => navigation.navigate('Profile', {id: 2})}
+              onPress = {() => navigation.navigate('Profile', {Òtext: 'hello'})}
               color="secondary"
               textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
               style={styles.button}
@@ -48,7 +49,7 @@ class Elements extends React.Component {
             </Button>
             <Button
               id = '3'
-              onPress = {() => navigation.navigate('Profile', {id: 3})}
+              onPress = {() => navigation.navigate({name: 'Profile', key: id})}
               color="secondary"
               textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
               style={styles.button}
@@ -56,17 +57,8 @@ class Elements extends React.Component {
               Boucherie Sanzot
             </Button>
             <Button
-              //id = '3'
-              onPress = {() => navigation.navigate('Elements')}
-              color="secondary"
-              textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
-              style={styles.button}
-            >
-              Boucherie sSanzot
-            </Button>
-            <Button
               id = '4'
-              onPress = {() => navigation.navigate('Profile', {id: 4})}
+              onPress = {() => navigation.navigate({name: 'Profile', key: id})}
               color="secondary"
               textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
               style={styles.button}

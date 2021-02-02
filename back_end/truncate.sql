@@ -8,5 +8,3 @@ TRUNCATE Promotion;
 TRUNCATE ClientCategorie;
 TRUNCATE ClientFavCommerce;
 TRUNCATE Admins;
-TRUNCATE ImagePromotion;
-TRUNCATE ImageCommerce;

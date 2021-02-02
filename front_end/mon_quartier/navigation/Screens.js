@@ -27,7 +27,6 @@ import Map from "../screens/Map";
 import Register from "../screens/Register";
 //import Elements from "../screens/Elements";
 import Articles from "../screens/Articles";
-import Input from '../components/Input';
 // drawer
 import CustomDrawerContent from "./Menu";
 
@@ -58,7 +57,7 @@ function searchStack(props) {
               title="Recherche" 
               navigation={navigation} 
               scene={scene} 
-              back
+              search
             />
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
@@ -117,7 +116,6 @@ function Elements ({navigation}){
         //onFocus={() => navigation.navigate('Pro')}
         iconContent={<Icon size={16} color={theme.COLORS.MUTED} name="search-zoom-in" family="ArgonExtra" />}
       />
-    
     <ScrollView>
     <Block flex>
       <Text bold size={16} style={styles.title}>

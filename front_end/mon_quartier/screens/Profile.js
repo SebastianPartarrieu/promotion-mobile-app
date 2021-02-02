@@ -24,9 +24,7 @@ const { width, height } = Dimensions.get("screen");
 
 const thumbMeasure = (width - 48 - 32) / 3;
 
-//const {item} = articles
 
-//console.log(articles[1])
 
 //item = articles[3]
 
