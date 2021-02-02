@@ -80,181 +80,195 @@
 34    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 34-->[:expo-location] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:14:5-77
 34-->[:expo-location] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:14:22-74
-35    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-35-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:15:5-98
-35-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:15:22-95
-36    <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
-36-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:16:5-94
-36-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:16:22-91
-37
-38    <application
-38-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:24:3-43:17
-39        android:name="com.minesparis.monquartier.MainApplication"
-39-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:24:16-47
-40        android:allowBackup="true"
-40-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:24:162-188
-41        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-41-->[androidx.core:core:1.1.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/57a7755ec7f8569f8e81b10deb53e9cc/core-1.1.0/AndroidManifest.xml:24:18-86
-42        android:debuggable="true"
-43        android:icon="@mipmap/ic_launcher"
-43-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:24:81-115
-44        android:label="@string/app_name"
-44-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:24:48-80
-45        android:roundIcon="@mipmap/ic_launcher_round"
-45-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:24:116-161
-46        android:theme="@style/AppTheme"
-46-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:24:189-220
-47        android:usesCleartextTraffic="true" >
-47-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/debug/AndroidManifest.xml:6:18-53
-48        <meta-data
-48-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:25:5-132
-49            android:name="expo.modules.updates.EXPO_UPDATE_URL"
-49-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:25:16-67
-50            android:value="https://exp.host/@rxzh/mines-paris-monsquartie" />
-50-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:25:68-130
-51        <meta-data
-51-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:26:5-93
-52            android:name="expo.modules.updates.EXPO_SDK_VERSION"
-52-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:26:16-68
-53            android:value="39.0.0" />
-53-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:26:69-91
-54        <meta-data
-54-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:27:5-82
-55            android:name="expo.modules.updates.ENABLED"
-55-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:27:16-59
-56            android:value="true" />
-56-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:27:60-80
-57        <meta-data
-57-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:28:5-105
-58            android:name="expo.modules.updates.EXPO_UPDATES_CHECK_ON_LAUNCH"
-58-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:28:16-80
-59            android:value="ALWAYS" />
-59-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:28:81-103
-60        <meta-data
-60-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:29:5-99
-61            android:name="expo.modules.updates.EXPO_UPDATES_LAUNCH_WAIT_MS"
-61-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:29:16-79
-62            android:value="0" />
-62-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:29:80-97
-63
-64        <activity
-64-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:30:5-41:16
-65            android:name="com.minesparis.monquartier.MainActivity"
-65-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:30:15-43
-66            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
-66-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:30:77-154
-67            android:label="@string/app_name"
-67-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:30:44-76
-68            android:launchMode="singleTask"
-68-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:30:155-186
-69            android:theme="@style/Theme.App.SplashScreen"
-69-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:30:230-275
-70            android:windowSoftInputMode="adjustResize" >
-70-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:30:187-229
-71            <intent-filter>
-71-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:31:7-34:23
-72                <action android:name="android.intent.action.MAIN" />
-72-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:32:9-60
-72-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:32:17-58
-73
-74                <category android:name="android.intent.category.LAUNCHER" />
-74-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:33:9-68
-74-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:33:19-66
-75            </intent-filter>
+35
+36    <uses-feature
+36-->[com.google.android.gms:play-services-maps:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/bbd3920e8e641058dd93142d0269a455/play-services-maps-17.0.0/AndroidManifest.xml:26:5-28:35
+37        android:glEsVersion="0x00020000"
+37-->[com.google.android.gms:play-services-maps:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/bbd3920e8e641058dd93142d0269a455/play-services-maps-17.0.0/AndroidManifest.xml:27:9-41
+38        android:required="true" />
+38-->[com.google.android.gms:play-services-maps:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/bbd3920e8e641058dd93142d0269a455/play-services-maps-17.0.0/AndroidManifest.xml:28:9-32
+39
+40    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+40-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:15:5-98
+40-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:15:22-95
+41    <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
+41-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:16:5-94
+41-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:16:22-91
+42
+43    <application
+43-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:24:3-43:17
+44        android:name="com.minesparis.monquartier.MainApplication"
+44-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:24:16-47
+45        android:allowBackup="true"
+45-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:24:162-188
+46        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+46-->[androidx.core:core:1.1.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/57a7755ec7f8569f8e81b10deb53e9cc/core-1.1.0/AndroidManifest.xml:24:18-86
+47        android:debuggable="true"
+48        android:icon="@mipmap/ic_launcher"
+48-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:24:81-115
+49        android:label="@string/app_name"
+49-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:24:48-80
+50        android:roundIcon="@mipmap/ic_launcher_round"
+50-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:24:116-161
+51        android:theme="@style/AppTheme"
+51-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:24:189-220
+52        android:usesCleartextTraffic="true" >
+52-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/debug/AndroidManifest.xml:6:18-53
+53        <meta-data
+53-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:25:5-132
+54            android:name="expo.modules.updates.EXPO_UPDATE_URL"
+54-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:25:16-67
+55            android:value="https://exp.host/@rxzh/mines-paris-monsquartie" />
+55-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:25:68-130
+56        <meta-data
+56-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:26:5-93
+57            android:name="expo.modules.updates.EXPO_SDK_VERSION"
+57-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:26:16-68
+58            android:value="39.0.0" />
+58-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:26:69-91
+59        <meta-data
+59-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:27:5-82
+60            android:name="expo.modules.updates.ENABLED"
+60-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:27:16-59
+61            android:value="true" />
+61-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:27:60-80
+62        <meta-data
+62-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:28:5-105
+63            android:name="expo.modules.updates.EXPO_UPDATES_CHECK_ON_LAUNCH"
+63-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:28:16-80
+64            android:value="ALWAYS" />
+64-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:28:81-103
+65        <meta-data
+65-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:29:5-99
+66            android:name="expo.modules.updates.EXPO_UPDATES_LAUNCH_WAIT_MS"
+66-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:29:16-79
+67            android:value="0" />
+67-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:29:80-97
+68
+69        <activity
+69-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:30:5-41:16
+70            android:name="com.minesparis.monquartier.MainActivity"
+70-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:30:15-43
+71            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
+71-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:30:77-154
+72            android:label="@string/app_name"
+72-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:30:44-76
+73            android:launchMode="singleTask"
+73-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:30:155-186
+74            android:theme="@style/Theme.App.SplashScreen"
+74-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:30:230-275
+75            android:windowSoftInputMode="adjustResize" >
+75-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:30:187-229
 76            <intent-filter>
-76-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:35:7-40:23
-77                <action android:name="android.intent.action.VIEW" />
-77-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:36:9-60
-77-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:36:17-58
+76-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:31:7-34:23
+77                <action android:name="android.intent.action.MAIN" />
+77-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:32:9-60
+77-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:32:17-58
 78
-79                <category android:name="android.intent.category.DEFAULT" />
-79-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:37:9-67
-79-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:37:19-65
-80                <category android:name="android.intent.category.BROWSABLE" />
-80-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:38:9-69
-80-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:38:19-67
-81
-82                <data android:scheme="com.minesparis.monquartier" />
-82-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:39:9-60
-82-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:39:15-58
-83            </intent-filter>
-84        </activity>
-85        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
-85-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:42:5-81
-85-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:42:15-79
+79                <category android:name="android.intent.category.LAUNCHER" />
+79-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:33:9-68
+79-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:33:19-66
+80            </intent-filter>
+81            <intent-filter>
+81-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:35:7-40:23
+82                <action android:name="android.intent.action.VIEW" />
+82-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:36:9-60
+82-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:36:17-58
+83
+84                <category android:name="android.intent.category.DEFAULT" />
+84-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:37:9-67
+84-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:37:19-65
+85                <category android:name="android.intent.category.BROWSABLE" />
+85-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:38:9-69
+85-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:38:19-67
 86
-87        <meta-data
-87-->[:unimodules-react-native-adapter] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/@unimodules/react-native-adapter/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:9-14:91
-88            android:name="org.unimodules.core.AppLoader#react-native-headless"
-88-->[:unimodules-react-native-adapter] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/@unimodules/react-native-adapter/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:13:13-79
-89            android:value="org.unimodules.adapters.react.apploader.RNHeadlessAppLoader" />
-89-->[:unimodules-react-native-adapter] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/@unimodules/react-native-adapter/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:14:13-88
-90
-91        <provider
-91-->[:expo-file-system] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:17:9-26:20
-92            android:name="expo.modules.filesystem.FileSystemFileProvider"
-92-->[:expo-file-system] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:18:13-74
-93            android:authorities="com.minesparis.monquartier.FileSystemFileProvider"
-93-->[:expo-file-system] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:19:13-74
-94            android:exported="false"
-94-->[:expo-file-system] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:20:13-37
-95            android:grantUriPermissions="true" >
-95-->[:expo-file-system] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:21:13-47
-96            <meta-data
-96-->[:expo-file-system] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:23:13-25:70
-97                android:name="android.support.FILE_PROVIDER_PATHS"
-97-->[:expo-file-system] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:24:17-67
-98                android:resource="@xml/file_system_provider_paths" />
-98-->[:expo-file-system] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:25:17-67
-99        </provider>
-100
-101        <service
-101-->[:expo-location] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:17:9-19:40
-102            android:name="expo.modules.location.services.LocationTaskService"
-102-->[:expo-location] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:18:13-78
-103            android:exported="false" />
-103-->[:expo-location] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:19:13-37
-104
-105        <activity
-105-->[com.google.android.gms:play-services-base:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/59363ba60aca482adb6e37d6feb5c05d/jetified-play-services-base-16.0.1/AndroidManifest.xml:23:9-26:75
-106            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-106-->[com.google.android.gms:play-services-base:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/59363ba60aca482adb6e37d6feb5c05d/jetified-play-services-base-16.0.1/AndroidManifest.xml:24:13-79
-107            android:exported="false"
-107-->[com.google.android.gms:play-services-base:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/59363ba60aca482adb6e37d6feb5c05d/jetified-play-services-base-16.0.1/AndroidManifest.xml:25:13-37
-108            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-108-->[com.google.android.gms:play-services-base:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/59363ba60aca482adb6e37d6feb5c05d/jetified-play-services-base-16.0.1/AndroidManifest.xml:26:13-72
-109
-110        <meta-data
-110-->[com.google.android.gms:play-services-basement:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/cf65b4220b0e26f519b7650acac7fb71/jetified-play-services-basement-16.0.1/AndroidManifest.xml:23:9-25:69
-111            android:name="com.google.android.gms.version"
-111-->[com.google.android.gms:play-services-basement:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/cf65b4220b0e26f519b7650acac7fb71/jetified-play-services-basement-16.0.1/AndroidManifest.xml:24:13-58
-112            android:value="@integer/google_play_services_version" />
-112-->[com.google.android.gms:play-services-basement:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/cf65b4220b0e26f519b7650acac7fb71/jetified-play-services-basement-16.0.1/AndroidManifest.xml:25:13-66
-113
-114        <service
-114-->[androidx.room:room-runtime:2.1.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/1f9600edb87ec7249ed2f749439da712/room-runtime-2.1.0/AndroidManifest.xml:25:9-27:40
-115            android:name="androidx.room.MultiInstanceInvalidationService"
-115-->[androidx.room:room-runtime:2.1.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/1f9600edb87ec7249ed2f749439da712/room-runtime-2.1.0/AndroidManifest.xml:26:13-74
-116            android:exported="false" />
-116-->[androidx.room:room-runtime:2.1.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/1f9600edb87ec7249ed2f749439da712/room-runtime-2.1.0/AndroidManifest.xml:27:13-37
-117        <service
-117-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:19:9-21:40
-118            android:name="io.nlopez.smartlocation.activity.providers.ActivityGooglePlayServicesProvider$ActivityRecognitionService"
-118-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:20:13-132
-119            android:exported="false" />
-119-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:21:13-37
-120        <service
-120-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:22:9-24:40
-121            android:name="io.nlopez.smartlocation.geofencing.providers.GeofencingGooglePlayServicesProvider$GeofencingService"
-121-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:23:13-127
-122            android:exported="false" />
-122-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:24:13-37
-123        <service
-123-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:25:9-27:40
-124            android:name="io.nlopez.smartlocation.geocoding.providers.AndroidGeocodingProvider$AndroidGeocodingService"
-124-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:26:13-120
-125            android:exported="false" />
-125-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:27:13-37
-126    </application>
-127
-128</manifest>
+87                <data android:scheme="com.minesparis.monquartier" />
+87-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:39:9-60
+87-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:39:15-58
+88            </intent-filter>
+89        </activity>
+90        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+90-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:42:5-81
+90-->/Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:42:15-79
+91
+92        <meta-data
+92-->[:unimodules-react-native-adapter] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/@unimodules/react-native-adapter/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:9-14:91
+93            android:name="org.unimodules.core.AppLoader#react-native-headless"
+93-->[:unimodules-react-native-adapter] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/@unimodules/react-native-adapter/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:13:13-79
+94            android:value="org.unimodules.adapters.react.apploader.RNHeadlessAppLoader" />
+94-->[:unimodules-react-native-adapter] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/@unimodules/react-native-adapter/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:14:13-88
+95
+96        <provider
+96-->[:expo-file-system] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:17:9-26:20
+97            android:name="expo.modules.filesystem.FileSystemFileProvider"
+97-->[:expo-file-system] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:18:13-74
+98            android:authorities="com.minesparis.monquartier.FileSystemFileProvider"
+98-->[:expo-file-system] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:19:13-74
+99            android:exported="false"
+99-->[:expo-file-system] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:20:13-37
+100            android:grantUriPermissions="true" >
+100-->[:expo-file-system] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:21:13-47
+101            <meta-data
+101-->[:expo-file-system] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:23:13-25:70
+102                android:name="android.support.FILE_PROVIDER_PATHS"
+102-->[:expo-file-system] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:24:17-67
+103                android:resource="@xml/file_system_provider_paths" />
+103-->[:expo-file-system] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:25:17-67
+104        </provider>
+105
+106        <service
+106-->[:expo-location] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:17:9-19:40
+107            android:name="expo.modules.location.services.LocationTaskService"
+107-->[:expo-location] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:18:13-78
+108            android:exported="false" /> <!-- Needs to be explicitly declared on P+ -->
+108-->[:expo-location] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:19:13-37
+109        <uses-library
+109-->[com.google.android.gms:play-services-maps:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/bbd3920e8e641058dd93142d0269a455/play-services-maps-17.0.0/AndroidManifest.xml:33:9-35:40
+110            android:name="org.apache.http.legacy"
+110-->[com.google.android.gms:play-services-maps:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/bbd3920e8e641058dd93142d0269a455/play-services-maps-17.0.0/AndroidManifest.xml:34:13-50
+111            android:required="false" />
+111-->[com.google.android.gms:play-services-maps:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/bbd3920e8e641058dd93142d0269a455/play-services-maps-17.0.0/AndroidManifest.xml:35:13-37
+112
+113        <activity
+113-->[com.google.android.gms:play-services-base:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/ab9598a8ca8aa96512c99999c7acad33/play-services-base-17.0.0/AndroidManifest.xml:23:9-26:75
+114            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+114-->[com.google.android.gms:play-services-base:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/ab9598a8ca8aa96512c99999c7acad33/play-services-base-17.0.0/AndroidManifest.xml:24:13-79
+115            android:exported="false"
+115-->[com.google.android.gms:play-services-base:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/ab9598a8ca8aa96512c99999c7acad33/play-services-base-17.0.0/AndroidManifest.xml:25:13-37
+116            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+116-->[com.google.android.gms:play-services-base:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/ab9598a8ca8aa96512c99999c7acad33/play-services-base-17.0.0/AndroidManifest.xml:26:13-72
+117
+118        <meta-data
+118-->[com.google.android.gms:play-services-basement:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/4c41306e18b2e9f01d7d525c191a75d6/jetified-play-services-basement-17.0.0/AndroidManifest.xml:23:9-25:69
+119            android:name="com.google.android.gms.version"
+119-->[com.google.android.gms:play-services-basement:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/4c41306e18b2e9f01d7d525c191a75d6/jetified-play-services-basement-17.0.0/AndroidManifest.xml:24:13-58
+120            android:value="@integer/google_play_services_version" />
+120-->[com.google.android.gms:play-services-basement:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/4c41306e18b2e9f01d7d525c191a75d6/jetified-play-services-basement-17.0.0/AndroidManifest.xml:25:13-66
+121
+122        <service
+122-->[androidx.room:room-runtime:2.1.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/1f9600edb87ec7249ed2f749439da712/room-runtime-2.1.0/AndroidManifest.xml:25:9-27:40
+123            android:name="androidx.room.MultiInstanceInvalidationService"
+123-->[androidx.room:room-runtime:2.1.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/1f9600edb87ec7249ed2f749439da712/room-runtime-2.1.0/AndroidManifest.xml:26:13-74
+124            android:exported="false" />
+124-->[androidx.room:room-runtime:2.1.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/1f9600edb87ec7249ed2f749439da712/room-runtime-2.1.0/AndroidManifest.xml:27:13-37
+125        <service
+125-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:19:9-21:40
+126            android:name="io.nlopez.smartlocation.activity.providers.ActivityGooglePlayServicesProvider$ActivityRecognitionService"
+126-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:20:13-132
+127            android:exported="false" />
+127-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:21:13-37
+128        <service
+128-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:22:9-24:40
+129            android:name="io.nlopez.smartlocation.geofencing.providers.GeofencingGooglePlayServicesProvider$GeofencingService"
+129-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:23:13-127
+130            android:exported="false" />
+130-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:24:13-37
+131        <service
+131-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:25:9-27:40
+132            android:name="io.nlopez.smartlocation.geocoding.providers.AndroidGeocodingProvider$AndroidGeocodingService"
+132-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:26:13-120
+133            android:exported="false" />
+133-->[io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:27:13-37
+134    </application>
+135
+136</manifest>

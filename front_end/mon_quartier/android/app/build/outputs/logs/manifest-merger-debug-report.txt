@@ -11,19 +11,15 @@ MERGED from [com.facebook.flipper:flipper-fresco-plugin:0.54.0] /Users/pierrebel
 MERGED from [:unimodules-react-native-adapter] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/@unimodules/react-native-adapter/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-17:12
 MERGED from [:expo-splash-screen] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-splash-screen/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [:expo-updates] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-updates/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-13:12
-MERGED from [:react-native-gesture-handler] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-gesture-handler/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
-MERGED from [:react-native-reanimated] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-reanimated/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
-MERGED from [:react-native-screens] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-screens/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-community_masked-view] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/@react-native-community/masked-view/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-9:12
+MERGED from [:react-native-geolocation-service] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-geolocation-service/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-9:12
+MERGED from [:react-native-gesture-handler] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-gesture-handler/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:react-native-maps] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-maps/lib/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-12:12
+MERGED from [:react-native-reanimated] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-reanimated/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-safe-area-context] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-safe-area-context/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-9:12
+MERGED from [:react-native-screens] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-screens/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [com.facebook.react:react-native:0.63.4] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/46b6f2f69ae56c92e3105f21a396c13a/jetified-react-native-0.63.4/AndroidManifest.xml:2:1-13:12
 MERGED from [:expo-file-system] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-29:12
-MERGED from [:expo-location] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-22:12
-MERGED from [com.google.android.gms:play-services-location:16.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/aaa96c6b0e277a053020a2b62e02fd78/jetified-play-services-location-16.0.0/AndroidManifest.xml:2:1-9:12
-MERGED from [com.google.android.gms:play-services-base:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/59363ba60aca482adb6e37d6feb5c05d/jetified-play-services-base-16.0.1/AndroidManifest.xml:17:1-29:12
-MERGED from [com.google.android.gms:play-services-places-placereport:16.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/44611c34dc456e3e51126f8943f358b5/play-services-places-placereport-16.0.0/AndroidManifest.xml:17:1-24:12
-MERGED from [com.google.android.gms:play-services-tasks:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/78e275a9500819a9e96a3fc7e58f9696/jetified-play-services-tasks-16.0.1/AndroidManifest.xml:2:1-9:12
-MERGED from [com.google.android.gms:play-services-basement:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/cf65b4220b0e26f519b7650acac7fb71/jetified-play-services-basement-16.0.1/AndroidManifest.xml:17:1-28:12
 MERGED from [androidx.legacy:legacy-support-v4:1.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/be56b5d129279b63ab3e0158c5c77eec/legacy-support-v4-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/268f572d75795aa2cb7ea6d4b36d4269/legacy-support-core-ui-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/81ff1fa454edf8ca554f30a203178e7e/swiperefreshlayout-1.0.0/AndroidManifest.xml:17:1-22:12
@@ -33,6 +29,7 @@ MERGED from [:expo-font] /Users/pierrebelamri/Documents/GitHub/Promotion/front_e
 MERGED from [:expo-image-loader] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-image-loader/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [:expo-keep-awake] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-keep-awake/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [:expo-linear-gradient] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-linear-gradient/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:expo-location] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-22:12
 MERGED from [:expo-permissions] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-permissions/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [:expo-sqlite] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-sqlite/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [:unimodules-app-loader] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/unimodules-app-loader/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
@@ -69,6 +66,12 @@ MERGED from [com.github.bumptech.glide:glide:4.9.0] /Users/pierrebelamri/.gradle
 MERGED from [androidx.appcompat:appcompat-resources:1.1.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/dccd40edb2e077826853cddde5b4e22c/appcompat-resources-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/ddd30b16d30af545fd3654c9a7e3e1c2/vectordrawable-animated-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/191a2a70a59b7d2da080245a3be467f4/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.android.gms:play-services-location:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/7ff124cdf2182aa66d94f962aa6b5cad/play-services-location-17.0.0/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-maps:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/bbd3920e8e641058dd93142d0269a455/play-services-maps-17.0.0/AndroidManifest.xml:17:1-38:12
+MERGED from [com.google.android.gms:play-services-base:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/ab9598a8ca8aa96512c99999c7acad33/play-services-base-17.0.0/AndroidManifest.xml:17:1-29:12
+MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/b091fb2ed1a984fd0f6cdd8797ce7fdc/play-services-places-placereport-17.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.gms:play-services-tasks:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/e118c82c950f6caf418a6a16a22a21aa/play-services-tasks-17.0.0/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-basement:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/4c41306e18b2e9f01d7d525c191a75d6/jetified-play-services-basement-17.0.0/AndroidManifest.xml:17:1-28:12
 MERGED from [androidx.viewpager2:viewpager2:1.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/5fc6f3f591c7e2de151573672c34bbdd/viewpager2-1.0.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.fragment:fragment:1.2.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/d2ed4c1f2d22e4d2b3166b95583ff78f/fragment-1.2.1/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/6e480f47207a81e5da9fafeeb92a6b55/coordinatorlayout-1.1.0/AndroidManifest.xml:17:1-24:12
@@ -103,6 +106,7 @@ MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/pierrebelamri/.
 MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.2.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/5989e88180b6bb166f367b6f165dcf44/lifecycle-livedata-core-2.2.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.arch.core:core-runtime:2.1.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/9241caa57a4aba913a7bdf412b2b7ab5/core-runtime-2.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:2:1-30:12
+MERGED from [com.google.maps.android:android-maps-utils:0.5] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/9ebccdcb93da641377e24a865a0d2b10/jetified-android-maps-utils-0.5/AndroidManifest.xml:2:1-13:12
 MERGED from [com.facebook.fresco:fbcore:2.2.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/202c963beaa7267514efd9a400ef3cbb/jetified-fbcore-2.2.0/AndroidManifest.xml:2:1-9:12
 MERGED from [com.facebook.fresco:ui-common:2.2.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/08c199096a1dde6865f04c38322cc469/ui-common-2.2.0/AndroidManifest.xml:2:1-9:12
 INJECTED from /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/debug/AndroidManifest.xml:1:1-7:12
@@ -129,8 +133,12 @@ uses-permission#android.permission.INTERNET
 ADDED from /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:2:3-64
 MERGED from [com.facebook.flipper:flipper:0.54.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/75238863e6b45aca4b9c498f6fefb9f4/flipper-0.54.0/AndroidManifest.xml:15:5-67
 MERGED from [com.facebook.flipper:flipper:0.54.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/75238863e6b45aca4b9c498f6fefb9f4/flipper-0.54.0/AndroidManifest.xml:15:5-67
+MERGED from [:react-native-maps] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-maps/lib/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:9:5-67
+MERGED from [:react-native-maps] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-maps/lib/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:9:5-67
 MERGED from [:expo-file-system] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:5-67
 MERGED from [:expo-file-system] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:5-67
+MERGED from [com.google.android.gms:play-services-maps:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/bbd3920e8e641058dd93142d0269a455/play-services-maps-17.0.0/AndroidManifest.xml:24:5-67
+MERGED from [com.google.android.gms:play-services-maps:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/bbd3920e8e641058dd93142d0269a455/play-services-maps-17.0.0/AndroidManifest.xml:24:5-67
 	android:name
 		ADDED from /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:2:20-62
 uses-permission#android.permission.SYSTEM_ALERT_WINDOW
@@ -161,6 +169,8 @@ ADDED from /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartie
 		ADDED from /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:8:20-75
 uses-permission#android.permission.ACCESS_COARSE_LOCATION
 ADDED from /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:9:3-78
+MERGED from [:react-native-maps] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-maps/lib/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:10:5-81
+MERGED from [:react-native-maps] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-maps/lib/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:10:5-81
 MERGED from [:expo-location] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-81
 MERGED from [:expo-location] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-81
 MERGED from [io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:12:5-81
@@ -225,6 +235,8 @@ uses-permission#android.permission.ACCESS_NETWORK_STATE
 ADDED from /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/android/app/src/main/AndroidManifest.xml:21:3-76
 MERGED from [:expo-updates] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-updates/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-79
 MERGED from [:expo-updates] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-updates/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-79
+MERGED from [com.google.android.gms:play-services-maps:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/bbd3920e8e641058dd93142d0269a455/play-services-maps-17.0.0/AndroidManifest.xml:23:5-79
+MERGED from [com.google.android.gms:play-services-maps:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/bbd3920e8e641058dd93142d0269a455/play-services-maps-17.0.0/AndroidManifest.xml:23:5-79
 MERGED from [io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:13:5-79
 MERGED from [io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:13:5-79
 	android:name
@@ -249,22 +261,24 @@ MERGED from [:expo-file-system] /Users/pierrebelamri/Documents/GitHub/Promotion/
 MERGED from [:expo-file-system] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:5-27:19
 MERGED from [:expo-location] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:5-20:19
 MERGED from [:expo-location] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:5-20:19
-MERGED from [com.google.android.gms:play-services-location:16.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/aaa96c6b0e277a053020a2b62e02fd78/jetified-play-services-location-16.0.0/AndroidManifest.xml:7:5-20
-MERGED from [com.google.android.gms:play-services-location:16.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/aaa96c6b0e277a053020a2b62e02fd78/jetified-play-services-location-16.0.0/AndroidManifest.xml:7:5-20
-MERGED from [com.google.android.gms:play-services-base:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/59363ba60aca482adb6e37d6feb5c05d/jetified-play-services-base-16.0.1/AndroidManifest.xml:22:5-27:19
-MERGED from [com.google.android.gms:play-services-base:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/59363ba60aca482adb6e37d6feb5c05d/jetified-play-services-base-16.0.1/AndroidManifest.xml:22:5-27:19
-MERGED from [com.google.android.gms:play-services-places-placereport:16.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/44611c34dc456e3e51126f8943f358b5/play-services-places-placereport-16.0.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-places-placereport:16.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/44611c34dc456e3e51126f8943f358b5/play-services-places-placereport-16.0.0/AndroidManifest.xml:22:5-20
-MERGED from [com.google.android.gms:play-services-tasks:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/78e275a9500819a9e96a3fc7e58f9696/jetified-play-services-tasks-16.0.1/AndroidManifest.xml:7:5-20
-MERGED from [com.google.android.gms:play-services-tasks:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/78e275a9500819a9e96a3fc7e58f9696/jetified-play-services-tasks-16.0.1/AndroidManifest.xml:7:5-20
-MERGED from [com.google.android.gms:play-services-basement:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/cf65b4220b0e26f519b7650acac7fb71/jetified-play-services-basement-16.0.1/AndroidManifest.xml:22:5-26:19
-MERGED from [com.google.android.gms:play-services-basement:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/cf65b4220b0e26f519b7650acac7fb71/jetified-play-services-basement-16.0.1/AndroidManifest.xml:22:5-26:19
 MERGED from [com.facebook.soloader:soloader:0.9.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/d28ac9a2ea57e720758a69b4dbacf807/soloader-0.9.0/AndroidManifest.xml:11:5-20
 MERGED from [com.facebook.soloader:soloader:0.9.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/d28ac9a2ea57e720758a69b4dbacf807/soloader-0.9.0/AndroidManifest.xml:11:5-20
 MERGED from [com.google.android.material:material:1.1.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/268be37c762c3f1e21922779bb4297e4/material-1.1.0/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.1.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/268be37c762c3f1e21922779bb4297e4/material-1.1.0/AndroidManifest.xml:22:5-20
 MERGED from [com.github.bumptech.glide:glide:4.9.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/92c819a4ae035ee9d7c94c1ada4c5ce3/jetified-glide-4.9.0/AndroidManifest.xml:10:5-20
 MERGED from [com.github.bumptech.glide:glide:4.9.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/92c819a4ae035ee9d7c94c1ada4c5ce3/jetified-glide-4.9.0/AndroidManifest.xml:10:5-20
+MERGED from [com.google.android.gms:play-services-location:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/7ff124cdf2182aa66d94f962aa6b5cad/play-services-location-17.0.0/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-location:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/7ff124cdf2182aa66d94f962aa6b5cad/play-services-location-17.0.0/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-maps:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/bbd3920e8e641058dd93142d0269a455/play-services-maps-17.0.0/AndroidManifest.xml:30:5-36:19
+MERGED from [com.google.android.gms:play-services-maps:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/bbd3920e8e641058dd93142d0269a455/play-services-maps-17.0.0/AndroidManifest.xml:30:5-36:19
+MERGED from [com.google.android.gms:play-services-base:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/ab9598a8ca8aa96512c99999c7acad33/play-services-base-17.0.0/AndroidManifest.xml:22:5-27:19
+MERGED from [com.google.android.gms:play-services-base:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/ab9598a8ca8aa96512c99999c7acad33/play-services-base-17.0.0/AndroidManifest.xml:22:5-27:19
+MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/b091fb2ed1a984fd0f6cdd8797ce7fdc/play-services-places-placereport-17.0.0/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/b091fb2ed1a984fd0f6cdd8797ce7fdc/play-services-places-placereport-17.0.0/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-tasks:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/e118c82c950f6caf418a6a16a22a21aa/play-services-tasks-17.0.0/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-tasks:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/e118c82c950f6caf418a6a16a22a21aa/play-services-tasks-17.0.0/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-basement:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/4c41306e18b2e9f01d7d525c191a75d6/jetified-play-services-basement-17.0.0/AndroidManifest.xml:22:5-26:19
+MERGED from [com.google.android.gms:play-services-basement:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/4c41306e18b2e9f01d7d525c191a75d6/jetified-play-services-basement-17.0.0/AndroidManifest.xml:22:5-26:19
 MERGED from [androidx.room:room-runtime:2.1.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/1f9600edb87ec7249ed2f749439da712/room-runtime-2.1.0/AndroidManifest.xml:24:5-28:19
 MERGED from [androidx.room:room-runtime:2.1.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/1f9600edb87ec7249ed2f749439da712/room-runtime-2.1.0/AndroidManifest.xml:24:5-28:19
 MERGED from [androidx.core:core:1.1.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/57a7755ec7f8569f8e81b10deb53e9cc/core-1.1.0/AndroidManifest.xml:24:5-89
@@ -275,6 +289,8 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/pier
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/cf966c3591d0a3475bdaa62765d46ce5/versionedparcelable-1.1.0/AndroidManifest.xml:24:5-25:19
 MERGED from [io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:18:5-28:19
 MERGED from [io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:18:5-28:19
+MERGED from [com.google.maps.android:android-maps-utils:0.5] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/9ebccdcb93da641377e24a865a0d2b10/jetified-android-maps-utils-0.5/AndroidManifest.xml:7:5-11:19
+MERGED from [com.google.maps.android:android-maps-utils:0.5] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/9ebccdcb93da641377e24a865a0d2b10/jetified-android-maps-utils-0.5/AndroidManifest.xml:7:5-11:19
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.1.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/57a7755ec7f8569f8e81b10deb53e9cc/core-1.1.0/AndroidManifest.xml:24:18-86
 	android:label
@@ -393,32 +409,24 @@ MERGED from [:expo-splash-screen] /Users/pierrebelamri/Documents/GitHub/Promotio
 MERGED from [:expo-splash-screen] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-splash-screen/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:expo-updates] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-updates/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:expo-updates] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-updates/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
-MERGED from [:react-native-gesture-handler] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-gesture-handler/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
-MERGED from [:react-native-gesture-handler] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-gesture-handler/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
-MERGED from [:react-native-reanimated] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-reanimated/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
-MERGED from [:react-native-reanimated] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-reanimated/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
-MERGED from [:react-native-screens] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-screens/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
-MERGED from [:react-native-screens] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-screens/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-community_masked-view] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/@react-native-community/masked-view/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-community_masked-view] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/@react-native-community/masked-view/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-geolocation-service] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-geolocation-service/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-geolocation-service] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-geolocation-service/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-gesture-handler] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-gesture-handler/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-gesture-handler] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-gesture-handler/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-maps] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-maps/lib/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-maps] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-maps/lib/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-reanimated] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-reanimated/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-reanimated] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-reanimated/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-safe-area-context] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-safe-area-context/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-safe-area-context] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-safe-area-context/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-screens] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-screens/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-screens] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/react-native-screens/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [com.facebook.react:react-native:0.63.4] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/46b6f2f69ae56c92e3105f21a396c13a/jetified-react-native-0.63.4/AndroidManifest.xml:7:5-9:41
 MERGED from [com.facebook.react:react-native:0.63.4] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/46b6f2f69ae56c92e3105f21a396c13a/jetified-react-native-0.63.4/AndroidManifest.xml:7:5-9:41
 MERGED from [:expo-file-system] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:8:5-10:41
 MERGED from [:expo-file-system] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-file-system/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:8:5-10:41
-MERGED from [:expo-location] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
-MERGED from [:expo-location] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
-MERGED from [com.google.android.gms:play-services-location:16.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/aaa96c6b0e277a053020a2b62e02fd78/jetified-play-services-location-16.0.0/AndroidManifest.xml:5:5-44
-MERGED from [com.google.android.gms:play-services-location:16.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/aaa96c6b0e277a053020a2b62e02fd78/jetified-play-services-location-16.0.0/AndroidManifest.xml:5:5-44
-MERGED from [com.google.android.gms:play-services-base:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/59363ba60aca482adb6e37d6feb5c05d/jetified-play-services-base-16.0.1/AndroidManifest.xml:20:5-44
-MERGED from [com.google.android.gms:play-services-base:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/59363ba60aca482adb6e37d6feb5c05d/jetified-play-services-base-16.0.1/AndroidManifest.xml:20:5-44
-MERGED from [com.google.android.gms:play-services-places-placereport:16.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/44611c34dc456e3e51126f8943f358b5/play-services-places-placereport-16.0.0/AndroidManifest.xml:20:5-44
-MERGED from [com.google.android.gms:play-services-places-placereport:16.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/44611c34dc456e3e51126f8943f358b5/play-services-places-placereport-16.0.0/AndroidManifest.xml:20:5-44
-MERGED from [com.google.android.gms:play-services-tasks:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/78e275a9500819a9e96a3fc7e58f9696/jetified-play-services-tasks-16.0.1/AndroidManifest.xml:5:5-44
-MERGED from [com.google.android.gms:play-services-tasks:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/78e275a9500819a9e96a3fc7e58f9696/jetified-play-services-tasks-16.0.1/AndroidManifest.xml:5:5-44
-MERGED from [com.google.android.gms:play-services-basement:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/cf65b4220b0e26f519b7650acac7fb71/jetified-play-services-basement-16.0.1/AndroidManifest.xml:20:5-44
-MERGED from [com.google.android.gms:play-services-basement:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/cf65b4220b0e26f519b7650acac7fb71/jetified-play-services-basement-16.0.1/AndroidManifest.xml:20:5-44
 MERGED from [androidx.legacy:legacy-support-v4:1.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/be56b5d129279b63ab3e0158c5c77eec/legacy-support-v4-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.legacy:legacy-support-v4:1.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/be56b5d129279b63ab3e0158c5c77eec/legacy-support-v4-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/268f572d75795aa2cb7ea6d4b36d4269/legacy-support-core-ui-1.0.0/AndroidManifest.xml:20:5-44
@@ -437,6 +445,8 @@ MERGED from [:expo-keep-awake] /Users/pierrebelamri/Documents/GitHub/Promotion/f
 MERGED from [:expo-keep-awake] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-keep-awake/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:expo-linear-gradient] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-linear-gradient/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:expo-linear-gradient] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-linear-gradient/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:expo-location] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:expo-location] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:expo-permissions] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-permissions/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:expo-permissions] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-permissions/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:expo-sqlite] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-sqlite/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
@@ -509,6 +519,18 @@ MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/pierr
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/ddd30b16d30af545fd3654c9a7e3e1c2/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/191a2a70a59b7d2da080245a3be467f4/interpolator-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/191a2a70a59b7d2da080245a3be467f4/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-location:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/7ff124cdf2182aa66d94f962aa6b5cad/play-services-location-17.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-location:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/7ff124cdf2182aa66d94f962aa6b5cad/play-services-location-17.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-maps:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/bbd3920e8e641058dd93142d0269a455/play-services-maps-17.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-maps:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/bbd3920e8e641058dd93142d0269a455/play-services-maps-17.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-base:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/ab9598a8ca8aa96512c99999c7acad33/play-services-base-17.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-base:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/ab9598a8ca8aa96512c99999c7acad33/play-services-base-17.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/b091fb2ed1a984fd0f6cdd8797ce7fdc/play-services-places-placereport-17.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/b091fb2ed1a984fd0f6cdd8797ce7fdc/play-services-places-placereport-17.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-tasks:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/e118c82c950f6caf418a6a16a22a21aa/play-services-tasks-17.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-tasks:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/e118c82c950f6caf418a6a16a22a21aa/play-services-tasks-17.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-basement:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/4c41306e18b2e9f01d7d525c191a75d6/jetified-play-services-basement-17.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-basement:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/4c41306e18b2e9f01d7d525c191a75d6/jetified-play-services-basement-17.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.viewpager2:viewpager2:1.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/5fc6f3f591c7e2de151573672c34bbdd/viewpager2-1.0.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.viewpager2:viewpager2:1.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/5fc6f3f591c7e2de151573672c34bbdd/viewpager2-1.0.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.fragment:fragment:1.2.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/d2ed4c1f2d22e4d2b3166b95583ff78f/fragment-1.2.1/AndroidManifest.xml:20:5-22:41
@@ -577,6 +599,8 @@ MERGED from [androidx.arch.core:core-runtime:2.1.0] /Users/pierrebelamri/.gradle
 MERGED from [androidx.arch.core:core-runtime:2.1.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/9241caa57a4aba913a7bdf412b2b7ab5/core-runtime-2.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:8:5-10:41
 MERGED from [io.nlopez.smartlocation:library:3.2.11] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/3c819ce2bc65225e23ae17615cdfd137/jetified-library-3.2.11/AndroidManifest.xml:8:5-10:41
+MERGED from [com.google.maps.android:android-maps-utils:0.5] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/9ebccdcb93da641377e24a865a0d2b10/jetified-android-maps-utils-0.5/AndroidManifest.xml:5:5-43
+MERGED from [com.google.maps.android:android-maps-utils:0.5] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/9ebccdcb93da641377e24a865a0d2b10/jetified-android-maps-utils-0.5/AndroidManifest.xml:5:5-43
 MERGED from [com.facebook.fresco:fbcore:2.2.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/202c963beaa7267514efd9a400ef3cbb/jetified-fbcore-2.2.0/AndroidManifest.xml:5:5-7:41
 MERGED from [com.facebook.fresco:fbcore:2.2.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/202c963beaa7267514efd9a400ef3cbb/jetified-fbcore-2.2.0/AndroidManifest.xml:5:5-7:41
 MERGED from [com.facebook.fresco:ui-common:2.2.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/08c199096a1dde6865f04c38322cc469/ui-common-2.2.0/AndroidManifest.xml:5:5-7:41
@@ -627,20 +651,34 @@ ADDED from [:expo-location] /Users/pierrebelamri/Documents/GitHub/Promotion/fron
 		ADDED from [:expo-location] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:19:13-37
 	android:name
 		ADDED from [:expo-location] /Users/pierrebelamri/Documents/GitHub/Promotion/front_end/mon_quartier/node_modules/expo-location/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:18:13-78
+uses-feature#0x00020000
+ADDED from [com.google.android.gms:play-services-maps:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/bbd3920e8e641058dd93142d0269a455/play-services-maps-17.0.0/AndroidManifest.xml:26:5-28:35
+	android:glEsVersion
+		ADDED from [com.google.android.gms:play-services-maps:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/bbd3920e8e641058dd93142d0269a455/play-services-maps-17.0.0/AndroidManifest.xml:27:9-41
+	android:required
+		ADDED from [com.google.android.gms:play-services-maps:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/bbd3920e8e641058dd93142d0269a455/play-services-maps-17.0.0/AndroidManifest.xml:28:9-32
+uses-library#org.apache.http.legacy
+ADDED from [com.google.android.gms:play-services-maps:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/bbd3920e8e641058dd93142d0269a455/play-services-maps-17.0.0/AndroidManifest.xml:33:9-35:40
+	android:required
+		ADDED from [com.google.android.gms:play-services-maps:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/bbd3920e8e641058dd93142d0269a455/play-services-maps-17.0.0/AndroidManifest.xml:35:13-37
+	android:name
+		ADDED from [com.google.android.gms:play-services-maps:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/bbd3920e8e641058dd93142d0269a455/play-services-maps-17.0.0/AndroidManifest.xml:34:13-50
 activity#com.google.android.gms.common.api.GoogleApiActivity
-ADDED from [com.google.android.gms:play-services-base:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/59363ba60aca482adb6e37d6feb5c05d/jetified-play-services-base-16.0.1/AndroidManifest.xml:23:9-26:75
+ADDED from [com.google.android.gms:play-services-base:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/ab9598a8ca8aa96512c99999c7acad33/play-services-base-17.0.0/AndroidManifest.xml:23:9-26:75
 	android:exported
-		ADDED from [com.google.android.gms:play-services-base:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/59363ba60aca482adb6e37d6feb5c05d/jetified-play-services-base-16.0.1/AndroidManifest.xml:25:13-37
+		ADDED from [com.google.android.gms:play-services-base:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/ab9598a8ca8aa96512c99999c7acad33/play-services-base-17.0.0/AndroidManifest.xml:25:13-37
 	android:theme
-		ADDED from [com.google.android.gms:play-services-base:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/59363ba60aca482adb6e37d6feb5c05d/jetified-play-services-base-16.0.1/AndroidManifest.xml:26:13-72
+		ADDED from [com.google.android.gms:play-services-base:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/ab9598a8ca8aa96512c99999c7acad33/play-services-base-17.0.0/AndroidManifest.xml:26:13-72
 	android:name
-		ADDED from [com.google.android.gms:play-services-base:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/59363ba60aca482adb6e37d6feb5c05d/jetified-play-services-base-16.0.1/AndroidManifest.xml:24:13-79
+		ADDED from [com.google.android.gms:play-services-base:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/ab9598a8ca8aa96512c99999c7acad33/play-services-base-17.0.0/AndroidManifest.xml:24:13-79
 meta-data#com.google.android.gms.version
-ADDED from [com.google.android.gms:play-services-basement:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/cf65b4220b0e26f519b7650acac7fb71/jetified-play-services-basement-16.0.1/AndroidManifest.xml:23:9-25:69
+ADDED from [com.google.android.gms:play-services-basement:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/4c41306e18b2e9f01d7d525c191a75d6/jetified-play-services-basement-17.0.0/AndroidManifest.xml:23:9-25:69
+MERGED from [com.google.maps.android:android-maps-utils:0.5] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/9ebccdcb93da641377e24a865a0d2b10/jetified-android-maps-utils-0.5/AndroidManifest.xml:8:9-10:69
+MERGED from [com.google.maps.android:android-maps-utils:0.5] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/9ebccdcb93da641377e24a865a0d2b10/jetified-android-maps-utils-0.5/AndroidManifest.xml:8:9-10:69
 	android:value
-		ADDED from [com.google.android.gms:play-services-basement:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/cf65b4220b0e26f519b7650acac7fb71/jetified-play-services-basement-16.0.1/AndroidManifest.xml:25:13-66
+		ADDED from [com.google.android.gms:play-services-basement:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/4c41306e18b2e9f01d7d525c191a75d6/jetified-play-services-basement-17.0.0/AndroidManifest.xml:25:13-66
 	android:name
-		ADDED from [com.google.android.gms:play-services-basement:16.0.1] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/cf65b4220b0e26f519b7650acac7fb71/jetified-play-services-basement-16.0.1/AndroidManifest.xml:24:13-58
+		ADDED from [com.google.android.gms:play-services-basement:17.0.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/4c41306e18b2e9f01d7d525c191a75d6/jetified-play-services-basement-17.0.0/AndroidManifest.xml:24:13-58
 service#androidx.room.MultiInstanceInvalidationService
 ADDED from [androidx.room:room-runtime:2.1.0] /Users/pierrebelamri/.gradle/caches/transforms-2/files-2.1/1f9600edb87ec7249ed2f749439da712/room-runtime-2.1.0/AndroidManifest.xml:25:9-27:40
 	android:exported

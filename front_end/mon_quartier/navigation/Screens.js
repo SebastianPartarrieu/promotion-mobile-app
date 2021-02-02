@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Easing, Animated, Dimensions, View, Text, ScrollView, StyleSheet } from "react-native";
 
 import { createStackNavigator } from "@react-navigation/stack";
@@ -13,11 +13,12 @@ import Onboarding from "../screens/Onboarding";
 import Account from "../screens/Account";
 import { token } from "../screens/Onboarding";
 import Pro from "../screens/Pro";
-//import Profile from "../screens/Profile";
+import Profile from "../screens/Profile";
 import Map from "../screens/Map";
 import Register from "../screens/Register";
 //import Elements from "../screens/Elements";
 import Articles from "../screens/Articles";
+import Input from '../components/Input';
 // drawer
 import CustomDrawerContent from "./Menu";
 
@@ -235,7 +236,7 @@ function searchStack(props) {
               title="Recherche" 
               navigation={navigation} 
               scene={scene} 
-              search
+              back
             />
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
@@ -245,8 +246,55 @@ function searchStack(props) {
   );
 }
 
-const Elements = ({navigation}) => {
+
+function SearchResults() {
+var ABC = <Button onPress = {() => navigation.navigate('Profile')} color="secondary" textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }} style={styles.button}> Panda WOK </Button>
+
+for (let i = 0; i < 5; i++){  
+  ABC = ABC + large
+  }
+return(ABC)
+}
+
+
+function sendSearchRequest(search,route){
+  const url = new URL(route, 'http://localhost:5000/')
+  url.searchParams.append('search',search)
+
+  fetch(url, {
+    method : 'GET'
+  }).then((response) => response.json()).catch(
+    (e) => {alert('Something went wrong' + e.message)}
+  )
+}
+
+
+function Elements ({navigation}){
+  var [search, setSearch] = useState('') ;
+  var resultat='' ;
+
   return (
+    <Block>
+      <Input
+        right
+        onChangeText={(text) => setSearch(text)}
+        search = {search}
+
+        resultat = {sendSearchRequest(search,"commerce")}
+        //onChangeText={
+        //  (text) => setSearch(text),}
+        //text = {text}
+        //onChangeText={() => console.log('gg')}
+        
+        color="black"
+        style={styles.search}
+        placeholder="Que recherchezzzz vous?"
+        placeholderTextColor={'#8898AA'}
+        //onFocus={() => navigation.navigate('Pro')}
+        iconContent={<Icon size={16} color={theme.COLORS.MUTED} name="search-zoom-in" family="ArgonExtra" />}
+      />
+    
+    <ScrollView>
     <Block flex>
       <Text bold size={16} style={styles.title}>
         Resultats
@@ -256,13 +304,16 @@ const Elements = ({navigation}) => {
           <Button
             id = '1'
             //onPress ={() => }
-            onPress = {() => navigation.navigate('Profile', {text: 'coucou'})}
+            onPress = {() => navigation.navigate('Profile')}
             color="secondary"
             textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
             style={styles.button}
           >
-            Panda WOK
+            Panda
           </Button>
+
+          
+
           <Button
             id = '2'
             onPress = {() => navigation.navigate('Profile', {text: 'hello'})}
@@ -299,15 +350,35 @@ const Elements = ({navigation}) => {
           >
             A2pas
           </Button>
+          <Button
+            id = '5'
+            onPress = {() => navigation.navigate({name: 'Profile', key: id})}
+            color="secondary"
+            textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
+            style={styles.button}
+          >
+            A2pas
+          </Button>
+          <Button
+            id = '5'
+            onPress = {() => navigation.navigate({name: 'Profile', key: id})}
+            color="secondary"
+            textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }}
+            style={styles.button}
+          >
+            A2pas
+          </Button>
         </Block>
       </Block>
+    </Block>
+    </ScrollView>
     </Block>
   );
 
 }
 
 
-const Profile = ({text}) => {
+const Profile2 = ({text}) => {
   console.log(text)
   //console.log(route.params)
   //console.log(route.params.text)
@@ -333,9 +404,10 @@ function ProfileStack(props){
       <Stack.Screen
         name="Profile"
         component={Profile}
-        //item = {itemz}
+        id = {this.props}
+        
         //item = {this.props}
-        //initialParams={{ item: articles[2] }}
+        initialParams={{id : articles[1]} }
         options={{
           header: ({ navigation, scene }) => (
             <Header
