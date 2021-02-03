@@ -7,4 +7,9 @@
 - constraints on min amount of characters for passwords
 - add admin functionnalities (checking images but also deleting promotion and commerce)
 
-- Add check for email
+
+- convert address when inputed to latitude and longitude
+- change way images are sent to FE client
+- think about what actions a user might be able to do once account is deleted?
+- think about full list of categories we want to allow
+
