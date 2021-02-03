@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component, useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -7,18 +7,20 @@ import {
   ImageBackground,
   Dimensions,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  Button
 } from "react-native";
 //galio
 import { Block, Text, theme } from "galio-framework";
 //argon
-import { articles, Images, argonTheme } from "../constants/";
+import { Images, argonTheme, articles } from "../constants/";
 import { Card } from "../components/";
 import MapView, {Marker, PROVIDER_GOOGLE} from "react-native-maps";
 import {RetroStyle} from "../constants/MapData";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto'
+import { useEffect } from "react";
 
 const { width } = Dimensions.get("screen");
 
@@ -26,68 +28,46 @@ const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
 
 
-var i = 0;
-var suggestions = [];
-while(i<3){suggestions.push(articles[i]), i+=1};
 
-class Articles extends React.Component {
-  renderSearch = () => {
-    const { navigation } = this.props;
-    return (
-      <Input
-        right
-        color="black"
-        style={styles.search}
-        placeholder="What are you looking for?"
-        placeholderTextColor={'#8898AA'}
-        onFocus={() => navigation.navigate('Pro')}
-        iconContent={<Icon size={16} color={theme.COLORS.MUTED} name="search-zoom-in" family="ArgonExtra" />}
-      />
-    );
-  }
-  renderProduct = (item, index) => {
-    const { navigation } = this.props;
+function sendArticlesRequest(updateFunction,route){
+  const url = new URL(route, 'http://0.0.0.0:5000/')
 
-    return (
-      <TouchableWithoutFeedback
-        style={{ zIndex: 3 }}
-        key={"product-${item.nom}"}
-        onPress={() => navigation.navigate("Profile", { item: item })}
-      >
-        <Block center style={styles.productItem}>
-          <Image
-            resizeMode="contain"
-            style={styles.productImage}
-            source={{ uri: item.image }}
-          />
-          <Block center style={{ paddingHorizontal: theme.SIZES.BASE }}>
-            <Text
-              center
-              size={16}
-              color={theme.COLORS.MUTED}
-              style={styles.productPrice}
-            >
-              {item.adresse}
-            </Text>
-            <Text center size={34}>
-              {item.nom}
-            </Text>
-            <Text
-              center
-              size={16}
-              color={theme.COLORS.MUTED}
-              style={styles.productDescription}
-            >
-              {item.description}
-            </Text>
-          </Block>
-        </Block>
-      </TouchableWithoutFeedback>
-    );
-  };
 
-  renderCards = () => {
-    const { navigation } = this.props;
+  fetch(url, {
+    method : 'GET'
+  }).then((response) => response.json()).then(updateFunction).catch(
+    (e) => {alert('Something went wrong' + e.message)}
+  )
+}
+
+var k=0;
+
+
+function Articles(props) {
+
+    var [articles, setArticles] = React.useState([])
+    function updateFunction(response){
+      { 
+        articles = setArticles(response['resultat'])
+        
+        }
+    }
+    k=1;
+ 
+    useEffect( ()=>{sendArticlesRequest(updateFunction, "commerce");}, []);
+ if (articles.length == 0 ) {return(
+      <Block center>
+        <Text>pas d'articles</Text>
+      </Block>
+        )}
+
+    console.log(articles)
+    var i = 0;
+    var suggestions = [];
+    while(i<3){suggestions.push(articles[i]), i+=1};
+
+
+    const { navigation } = props;
     const categories= [
       { 
         name: 'Fastfood', 
@@ -110,8 +90,14 @@ class Articles extends React.Component {
         icon: <Fontisto name="hotel" style={styles.chipsIcon} size={15} />,
       },
     ]
+
     return (
-      <Block flex style={styles.group}>
+      <Block flex center>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+        >
+        <Block flex style={styles.group}>
+        
         <Text bold size={16} style={styles.title}>
           Suggestions
         </Text>
@@ -130,8 +116,8 @@ class Articles extends React.Component {
             >
               {categories &&
                 suggestions.map((item, index) =>
-                <Block style={styles.productItem}>
-                  <Card item={item} full/>
+                <Block style={styles.productItem} >
+                  <Card item={item} full />
                 </Block>
                 )}
             </ScrollView>
@@ -142,22 +128,22 @@ class Articles extends React.Component {
           <Block flex center>
             <MapView
               initialRegion={{
-                latitude: articles[0].coordinates.latitude,
-                longitude: articles[0].coordinates.longitude,
+                latitude: articles[0][6],
+                longitude: articles[0][7],
                 latitudeDelta: 0.02864195044303443,
                 longitudeDelta: 0.020142817690068,
               }}
               provider={PROVIDER_GOOGLE}
               customMapStyle={RetroStyle}
               style={styles.productMap}
-              onPress={() => navigation.navigate('Map')}
+              onPress={() => navigation.navigate('Map', {comm : articles})}
               showsUserLocation={true}
               followsUserLocation={true}
             >
               {articles.map((marker, index) => {
             
                 return (
-                  <MapView.Marker key={index} coordinate={{latitude: marker.coordinates.latitude, longitude: marker.coordinates.longitude}}>
+                  <MapView.Marker key={index} coordinate={{latitude: marker[6], longitude: marker[7]}}>
                     <Image
                       source={require('../assets/imgs/pin.png')}
                       style={styles.marker}
@@ -236,36 +222,11 @@ class Articles extends React.Component {
           
         </Block>
       </Block>
+      </ScrollView>
+      </Block>
     );
   };
 
-
-  renderHeader = () => {
-    const { search, options, tabs } = this.props;
-    if (search || tabs || options) {
-      return (
-        <Block center>
-          {search ? this.renderSearch() : null}
-          {options ? this.renderOptions() : null}
-          {tabs ? this.renderTabs() : null}
-        </Block>
-      );
-    }
-  }
-
-  render() {
-    return (
-      <Block flex center>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-        >
-          {this.renderCards()}
-    
-        </ScrollView>
-      </Block>
-    );
-  }
-}
 
 const styles = StyleSheet.create({
   title: {

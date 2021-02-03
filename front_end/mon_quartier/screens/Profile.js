@@ -45,11 +45,13 @@ function Profilez(id) {
             showsVerticalScrollIndicator={false}
             style={{ width, marginTop: '25%' }}
           >
+
             <Block flex style={styles.profileCard}>
               <Block middle style={styles.avatarContainer}>
                 <Image
                   source={{ uri: item.image }}
                   style={styles.avatar}
+                  resizeMode="contain"
                 />
               </Block>
               <Block style={styles.info}>
@@ -153,10 +155,10 @@ profileBackground: {
   height: height / 2
 },
 profileCard: {
-  // position: "relative",
+  //position: "relative",
   padding: theme.SIZES.BASE,
-  marginHorizontal: theme.SIZES.BASE,
-  marginTop: 165,
+  //marginHorizontal: theme.SIZES.BASE,
+  marginTop: 0,
   borderTopLeftRadius: 6,
   borderTopRightRadius: 6,
   backgroundColor: theme.COLORS.WHITE,
@@ -171,13 +173,21 @@ info: {
 },
 avatarContainer: {
   position: "relative",
-  marginTop: -80
+  marginTop: -80,
+  shadowColor: "black",
+  shadowOffset: { width: 0, height: 0 },
+  shadowRadius: 30,
+  shadowOpacity: 0.2,
+
 },
 avatar: {
-  width: 124,
-  height: 124,
-  borderRadius: 62,
-  borderWidth: 0
+  width: 200,
+  height: 150,
+  borderRadius: 50,
+  
+  backgroundColor: "white",
+  margin:10,
+
 },
 nameInfo: {
   marginTop: 5

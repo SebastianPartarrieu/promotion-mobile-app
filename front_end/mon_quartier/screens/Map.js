@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Platform,
-  Callout
+  Callout, Button, Block
 } from "react-native";
 import MapView, {Marker, PROVIDER_GOOGLE} from "react-native-maps";
 
@@ -27,8 +27,13 @@ const CARD_HEIGHT = 220;
 const CARD_WIDTH = width * 0.8;
 const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 
+
+
+
  
- export default () => {
+ export default (props) => {
+  const articles = props.KOM;
+  console.log(articles)
   const initialMapState = {
     articles,
     categories: [
@@ -54,8 +59,8 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
       },
   ],
     region: {
-      latitude: articles[0].coordinates.latitude,
-      longitude: articles[0].coordinates.longitude,
+      latitude: articles[0][6],
+      longitude: articles[0][7],
       latitudeDelta: 0.02864195044303443,
       longitudeDelta: 0.020142817690068,
     },
@@ -83,8 +88,8 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
           mapIndex = index;
           _map.current.animateToRegion(
             {
-              latitude: state.articles[index].coordinates.latitude,
-              longitude: state.articles[index].coordinates.longitude,
+              latitude: state.articles[index][6],
+              longitude: state.articles[index][7],
               latitudeDelta: state.region.latitudeDelta,
               longitudeDelta: state.region.longitudeDelta,
             },
@@ -124,7 +129,7 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 
   const _map = React.useRef(null);
   const _scrollView = React.useRef(null);
-
+  const { navigation } = props;
   return (
     <View style={styles.container}>
       <MapView
@@ -145,7 +150,7 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
         ],
       };
           return (
-            <MapView.Marker key={index} coordinate={{latitude: marker.coordinates.latitude, longitude: marker.coordinates.longitude}} onPress={(e)=>onMarkerPress(e)}>
+            <MapView.Marker key={index} coordinate={{latitude: marker[6], longitude: marker[7]}} onPress={(e)=>onMarkerPress(e)}>
             <Animated.View style={[styles.markerWrap]}>
               <Animated.Image
                 source={require('../assets/imgs/pin.png')}
@@ -221,16 +226,24 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
         )}
       >
         {state.articles.map((marker, index) =>(
-          <View style={styles.card} key={index}>
+          <View style={styles.card} key={index} >
             <Image 
-              source={{uri: marker.image}}
+              source={{uri: marker[8]}}
               style={styles.cardImage}
               resizeMode="contain"
+              
             />
             <View style={styles.textContent}>
-              <Text numberOfLines={1} style={styles.cardtitle}>{marker.nom}</Text>
-              <Text numberOfLines={1} style={styles.cardDescription}>{marker.description}</Text>
+              <Text numberOfLines={1} style={styles.cardtitle}>{marker[1]}</Text>
+              <Text numberOfLines={1} style={styles.cardDescription}>{marker[2]}</Text>
             </View>
+            <View style={styles.button}>
+                <TouchableOpacity
+                  onPress = {() => navigation.navigate('Profile', {comm : marker})}
+                >
+                  <Text style={[styles.textSign]}>Détails >>></Text>
+                </TouchableOpacity>
+              </View>
           </View>
         ))}
       </Animated.ScrollView>
@@ -336,18 +349,20 @@ const styles = StyleSheet.create({
     height: 50,
   },
   button: {
-    alignItems: 'center',
-    marginTop: 5
+    alignItems: 'flex-end',
+    marginBottom: 10,
+    marginRight: 5
   },
   signIn: {
       width: '100%',
       padding:5,
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: 3
+      borderRadius: 3,
+      marginBottom: 5
   },
   textSign: {
-      fontSize: 14,
-      fontWeight: 'bold'
+      fontSize: 15,
+
   }
 });

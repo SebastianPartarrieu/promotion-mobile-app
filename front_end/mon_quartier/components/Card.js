@@ -22,15 +22,15 @@ class Card extends React.Component {
 
     return (
       <Block row={horizontal} card flex style={cardContainer}>
-        <TouchableWithoutFeedback onPress = {() => this.props.navigation.setParams({item: articles[1]})} onPress={() => {this.props.navigation.navigate('Profile', {item: item});}}>
+        <TouchableWithoutFeedback onPress = {() => this.props.navigation.setParams({item: articles[1]})} onPress = {() => navigation.navigate('Profile', {comm : item})}>
           <Block flex style={imgContainer}>
-            <Image source={{uri: item.image}} style={imageStyles} resizeMode="contain"/>
+            <Image source={{uri: item[8]}} style={imageStyles} resizeMode="contain"/>
           </Block>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress = {() => this.props.navigation.setParams({item: articles[1]})} onPress={() => {this.props.navigation.navigate('Profile', {item: item});}}>
+        <TouchableWithoutFeedback onPress = {() => this.props.navigation.setParams({item: articles[1]})} onPress = {() => navigation.navigate('Profile', {comm : item})}>
           <Block flex space="between" style={styles.cardDescription}>
-            <Text bold center size={15} style={styles.cardTitle}>{item.nom}</Text>
-            <Text numberOfLines={1} style={styles.cardDescription}>{item.description}</Text>
+            <Text bold center size={15} style={styles.cardTitle}>{item[1]}</Text>
+            <Text numberOfLines={1} style={styles.cardDescription}>{item[2]}</Text>
           </Block>
         </TouchableWithoutFeedback>
       </Block>

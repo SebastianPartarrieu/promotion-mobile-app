@@ -35,8 +35,10 @@ import { Icon, Header, Button } from "../components";
 import { Images, argonTheme, tabs } from "../constants";
 import { HeaderHeight } from "../constants/utils";
 import Input from '../components/Input';
+//MAP
+import MapView, {Marker, PROVIDER_GOOGLE} from "react-native-maps";
+import {RetroStyle} from "../constants/MapData";
 
-import csvjson from '../constants/csvjson';
 
 const { width } = Dimensions.get("screen");
 
@@ -163,13 +165,50 @@ function Profile(props) {
             style={{ width, marginTop: '25%' }}
           >
             <Block flex style={ProfileStyles.profileCard}>
+              <Block flex center>
+              <MapView
+                initialRegion={{
+                  latitude: LATITUDE,
+                  longitude: LONGITUDE,
+                  latitudeDelta: 0.02864195044303443,
+                  longitudeDelta: 0.020142817690068,
+                }}
+                provider={PROVIDER_GOOGLE}
+                customMapStyle={RetroStyle}
+                style={styles.productMap}
+                showsUserLocation={true}
+                followsUserLocation={true}
+              >
+                
+                    <MapView.Marker coordinate={{latitude: LATITUDE, longitude: LONGITUDE}}>
+                      <Image
+                        source={require('../assets/imgs/pin.png')}
+                        style={styles.marker}
+                        resizeMode="contain"
+                      />
+                  </MapView.Marker>
+                 
+              </MapView>
+            </Block>
               <Block middle style={ProfileStyles.avatarContainer}>
+                <Block style={ProfileStyles.avatar}>
                 <Image
                   source={{ uri: IMAGE }}
-                  style={ProfileStyles.avatar}
+                  flex
+                  style={{margin:10}}
+                  resizeMode="contain"
                 />
+                </Block>
               </Block>
               <Block style={ProfileStyles.info}>
+                <Block center>
+                  <Text size={50} color="#32325D">
+                    {NOM}
+                  </Text>
+                  <Text size={16} color="#32325D" style={{ marginTop: 0 }}>
+                    {ADDRESS}, {ZIP}, {CITY}
+                  </Text>
+                </Block>
                 <Block
                   middle
                   row
@@ -186,14 +225,7 @@ function Profile(props) {
                 
               </Block>
               <Block flex>
-                <Block middle style={ProfileStyles.nameInfo}>
-                  <Text bold size={28} color="#32325D">
-                    {NOM}
-                  </Text>
-                  <Text size={16} color="#32325D" style={{ marginTop: 0 }}>
-                    {ADDRESS}, {ZIP}, {CITY}
-                  </Text>
-                </Block>
+                
                 <Block middle style={{ marginTop: 20, marginBottom: 16 }}>
                   <Block style={ProfileStyles.divider} />
                 </Block>
@@ -301,11 +333,12 @@ function ProfileStack(props){
 
 
 function MapStack(props) {
+  const articles = props.route.params['comm']
   return (
-    <Stack.Navigator initialRouteName="Map" mode="card" headerMode="screen">
+    <Stack.Navigator initialRouteName="Map" mode="card" headerMode="screen" params='Joe'>
       <Stack.Screen
         name="Map"
-        component={Map}
+       // component={Map}
         options={{
           header: ({ navigation, scene }) => (
             <Header
@@ -317,7 +350,9 @@ function MapStack(props) {
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
-      />
+      >
+        {props => <Map {...{KOM: articles}} />}
+      </Stack.Screen>
 
     </Stack.Navigator>
   );
@@ -424,6 +459,17 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     shadowOpacity: 0.2,
     elevation: 2
+  },
+  productMap: {
+    width: width,
+    height: 200,
+    borderRadius: 10,
+    marginTop:-20
+
+  },
+  marker: {
+    width: 50,
+    height: 50,
   },
   button: {
     marginBottom: theme.SIZES.BASE,
