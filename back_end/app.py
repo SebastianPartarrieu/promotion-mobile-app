@@ -240,7 +240,7 @@ def get_promotion():
         res = []
         for x in cat:
             res.append(db.get_promotion(agg=agglo, nb=nb, cat=x))
-    return jsonify(res)
+    return jsonify({'resultat': res}), 200
 
 
 # GET /commerce with filter for categorie and agglomeration
