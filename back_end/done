@@ -30,3 +30,5 @@ Week 01/02 - 05/02:
 - handling deletion of accounts via boolean in tables, both for client and commerce
 - Check on other functions if account it active or not
 - search for commerce by name
+- when info for commerce is added, automatically append geolocation to commerce db: this will allow FE client to fetch latitude and longitude for new clients
+- 

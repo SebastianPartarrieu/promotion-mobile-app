@@ -13,6 +13,7 @@ import datetime as dt
 import logging as log
 log.basicConfig(level=log.INFO)
 
+from geopy import Nominatim
 started = dt.datetime.now()
 
 # get running version information
@@ -210,6 +211,24 @@ def is_authorized_no_id(auth_token, user_type='commerce', check_active=True):
                     return False
             else:
                 return user_id_received
+
+
+def convert_address_to_geolocation(code_postal, rue_and_num, aid):
+    '''
+    code_postal: int
+    rue_and_num: str
+    aid: int, id of agglomeration
+
+    Returns
+    location.latitude:float
+    location.longitude:float
+    '''
+    agglo = db.fetch_agglo_from_aid(aid=aid)
+    db.commit()
+    locator = Nominatim(user_agent ="myGeocoder")
+    complete_address = rue_and_num + ',' + str(agglo[0][0]) + ',' + str(code_postal)
+    location = locator.geocode(complete_address)
+    return location.latitude, location.longitude
 
 #
 # GET /version
@@ -445,12 +464,19 @@ def post_commerce_info():
     cmdp = generate_password_hash(PARAMS.get("cmdp", None))
     catnom = PARAMS.get("catnom", None)
 
+    latitude, longitude = convert_address_to_geolocation(code_postal=code_postal,
+                                                        rue_and_num=rue_and_num,
+                                                        aid=aid)
+
     try:  # catch the exception if the commerce already exists in the database
         res = db.post_commerce_info(cnom=cnom,
                                     cpresentation=cpresentation,
                                     cemail=cemail, aid=aid,
                                     cmdp=cmdp, rue_and_num=rue_and_num,
-                                    code_postal=code_postal, url_ext=url_ext)
+                                    code_postal=code_postal, url_ext=url_ext,
+                                    latitude=latitude,
+                                    longitude=longitude)
+
         p = int(res[0][0])
         if catnom is not None:
             catnom = catnom.split(",")

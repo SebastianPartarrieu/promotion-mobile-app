@@ -116,8 +116,8 @@ UPDATE Promotion SET tdebut = :tdebut WHERE pid = :pid;
 UPDATE Promotion SET tfin = :tfin WHERE pid = :pid;
 
 --name: post_commerce_info
-INSERT INTO Commerce (cnom, cpresentation, code_postal, rue_and_num, aid, cmdp, cemail, url_ext) 
-VALUES (:cnom, :cpresentation, :code_postal, :rue_and_num, :aid, :cmdp, :cemail, :url_ext) RETURNING cid;
+INSERT INTO Commerce (cnom, cpresentation, code_postal, rue_and_num, aid, cmdp, cemail, url_ext, latitude, longitude) 
+VALUES (:cnom, :cpresentation, :code_postal, :rue_and_num, :aid, :cmdp, :cemail, :url_ext, :latitude, :longitude) RETURNING cid;
 
 --name: post_commerce_categorie!
 INSERT INTO CommerceCategorie (cid, catid) values (:cid, (select catid from Categorie where catnom=:catnom));
@@ -182,3 +182,6 @@ Select ranks from ImageCommerce Where cid=:cid order by desc limit 1;
 SELECT DISTINCT cid FROM Commerce AS c
 JOIN Promotion AS p USING (cid)
 WHERE p.pid = :pid;
+
+--name: fetch_agglo_from_aid
+SELECT anom FROM Agglomeration WHERE aid = :aid;
