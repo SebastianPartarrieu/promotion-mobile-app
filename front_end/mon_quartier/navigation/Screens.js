@@ -22,7 +22,7 @@ import Onboarding from "../screens/Onboarding";
 import Account from "../screens/Account";
 import { token } from "../screens/Onboarding";
 import Pro from "../screens/Pro";
-import {ProfileStyles} from "../screens/Profile";
+import Profile from "../screens/Profile";
 import Map from "../screens/Map";
 import Register from "../screens/Register";
 //import Elements from "../screens/Elements";
@@ -31,13 +31,11 @@ import Articles from "../screens/Articles";
 import CustomDrawerContent from "./Menu";
 
 // header for screens
-import { Icon, Header, Button } from "../components";
+import { Icon, Header, Button, List } from "../components";
 import { Images, argonTheme, tabs } from "../constants";
 import { HeaderHeight } from "../constants/utils";
 import Input from '../components/Input';
-//MAP
-import MapView, {Marker, PROVIDER_GOOGLE} from "react-native-maps";
-import {RetroStyle} from "../constants/MapData";
+
 
 
 const { width } = Dimensions.get("screen");
@@ -136,155 +134,7 @@ function Elements ({navigation}){
 }
 
 
-function Profile(props) {
 
-  COMMERCE = props.KOM;
-  const ID = COMMERCE[0];
-  const NOM = COMMERCE[1]
-  const DESC = COMMERCE[2];
-  const CITY = COMMERCE[3];
-  const ZIP = COMMERCE[4];
-  const ADDRESS = COMMERCE[5];
-  const LATITUDE = COMMERCE[6];
-  const LONGITUDE = COMMERCE[7];
-  const IMAGE = COMMERCE[8];
-
-  console.log(COMMERCE)
-
-
-  return (
-    <Block flex style={ProfileStyles.profile}>
-      <Block flex>
-        <ImageBackground
-          source={Images.ProfileBackground}
-          style={ProfileStyles.profileContainer}
-          imageStyle={ProfileStyles.profileBackground}
-        >
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            style={{ width, marginTop: '25%' }}
-          >
-            <Block flex style={ProfileStyles.profileCard}>
-              <Block flex center>
-              <MapView
-                initialRegion={{
-                  latitude: LATITUDE,
-                  longitude: LONGITUDE,
-                  latitudeDelta: 0.02864195044303443,
-                  longitudeDelta: 0.020142817690068,
-                }}
-                provider={PROVIDER_GOOGLE}
-                customMapStyle={RetroStyle}
-                style={styles.productMap}
-                showsUserLocation={true}
-                followsUserLocation={true}
-              >
-                
-                    <MapView.Marker coordinate={{latitude: LATITUDE, longitude: LONGITUDE}}>
-                      <Image
-                        source={require('../assets/imgs/pin.png')}
-                        style={styles.marker}
-                        resizeMode="contain"
-                      />
-                  </MapView.Marker>
-                 
-              </MapView>
-            </Block>
-              <Block middle style={ProfileStyles.avatarContainer}>
-                <Block style={ProfileStyles.avatar}>
-                <Image
-                  source={{ uri: IMAGE }}
-                  flex
-                  style={{margin:10}}
-                  resizeMode="contain"
-                />
-                </Block>
-              </Block>
-              <Block style={ProfileStyles.info}>
-                <Block center>
-                  <Text size={50} color="#32325D">
-                    {NOM}
-                  </Text>
-                  <Text size={16} color="#32325D" style={{ marginTop: 0 }}>
-                    {ADDRESS}, {ZIP}, {CITY}
-                  </Text>
-                </Block>
-                <Block
-                  middle
-                  row
-                  space="evenly"
-                  style={{ marginTop: 10, paddingBottom: 0}}
-                >
-                  <Button
-                    small
-                    style={{ backgroundColor: argonTheme.COLORS.INFO }}
-                  >
-                    SITE WEB
-                  </Button>
-                </Block>
-                
-              </Block>
-              <Block flex>
-                
-                <Block middle style={{ marginTop: 20, marginBottom: 16 }}>
-                  <Block style={ProfileStyles.divider} />
-                </Block>
-                <Block middle>
-                  <Text
-                    bold
-                    size={16}
-                    color="#525F7F"
-                    style={{ textAlign: "center" }}
-                  >
-                  
-                    {DESC}
-                  </Text>
-                  <Button
-                    color="transparent"
-                    textStyle={{
-                      color: "#233DD2",
-                      fontWeight: "500",
-                      fontSize: 16
-                    }}
-                  >
-                    Show more
-                  </Button>
-                </Block>
-                <Block
-                  row
-                  space="between"
-                >
-                  <Text bold size={16} color="#525F7F" style={{marginTop: 12}}>
-                    Album
-                  </Text>
-                  <Button
-                    small
-                    color="transparent"
-                    textStyle={{ color: "#5E72E4", fontSize: 12, marginLeft: 24 }}
-                  >
-                    View all
-                  </Button>
-                </Block>
-                <Block style={{ paddingBottom: -HeaderHeight * 2 }}>
-                  <Block row space="between" style={{ flexWrap: "wrap" }}>
-                    {Images.Viewed.map((img, imgIndex) => (
-                      <Image
-                        source={{ uri: img }}
-                        key={`viewed-${img}`}
-                        resizeMode="cover"
-                        style={ProfileStyles.thumb}
-                      />
-                    ))}
-                  </Block>
-                </Block>
-              </Block>
-            </Block>
-          </ScrollView>
-        </ImageBackground>
-      </Block>
-    </Block>
-  );
-}
 
 function ProfileStack(props){
     //console.log("======================== ")
@@ -460,17 +310,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     elevation: 2
   },
-  productMap: {
-    width: width,
-    height: 200,
-    borderRadius: 10,
-    marginTop:-20
-
-  },
-  marker: {
-    width: 50,
-    height: 50,
-  },
+  
   button: {
     marginBottom: theme.SIZES.BASE,
     width: width - theme.SIZES.BASE * 2
@@ -508,4 +348,5 @@ const styles = StyleSheet.create({
     borderRadius: theme.SIZES.BASE * 1.75,
     justifyContent: "center"
   },
+ 
 });

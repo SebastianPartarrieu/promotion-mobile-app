@@ -9,13 +9,15 @@ import {
   View
 } from "react-native";
 import { Block, Text, theme } from "galio-framework";
-import { Button, ProfileCard } from "../components";
+import { Button, ProfileCard, List , Card} from "../components";
 import { Images, argonTheme} from "../constants";
 import { HeaderHeight } from "../constants/utils";
 import PropTypes from 'prop-types';
 //import articles from "../constants/articles"
 
-
+//MAP
+import MapView, {Marker, PROVIDER_GOOGLE} from "react-native-maps";
+import {RetroStyle} from "../constants/MapData";
 
 
 
@@ -26,35 +28,79 @@ const thumbMeasure = (width - 48 - 32) / 3;
 
 
 
-//item = articles[3]
+export default function Profile(props) {
 
-function Profilez(id) {
-  //id = {props}
-  console.log(id)
-  //item = articles[id]
+  COMMERCE = props.KOM;
+  const ID = COMMERCE[0];
+  const NOM = COMMERCE[1]
+  const DESC = COMMERCE[2];
+  const CITY = COMMERCE[3];
+  const ZIP = COMMERCE[4];
+  const ADDRESS = COMMERCE[5];
+  const LATITUDE = COMMERCE[6];
+  const LONGITUDE = COMMERCE[7];
+  const IMAGE = COMMERCE[8];
+
+  console.log(COMMERCE)
+
 
   return (
-    <Block flex style={styles.profile}>
+    <Block flex style={ProfileStyles.profile}>
       <Block flex>
         <ImageBackground
           source={Images.ProfileBackground}
-          style={styles.profileContainer}
-          imageStyle={styles.profileBackground}
+          style={ProfileStyles.profileContainer}
+          imageStyle={ProfileStyles.profileBackground}
         >
           <ScrollView
             showsVerticalScrollIndicator={false}
             style={{ width, marginTop: '25%' }}
           >
-
-            <Block flex style={styles.profileCard}>
-              <Block middle style={styles.avatarContainer}>
+            <Block flex style={ProfileStyles.profileCard}>
+              <Block flex center>
+              <MapView
+                initialRegion={{
+                  latitude: LATITUDE,
+                  longitude: LONGITUDE,
+                  latitudeDelta: 0.02864195044303443,
+                  longitudeDelta: 0.020142817690068,
+                }}
+                provider={PROVIDER_GOOGLE}
+                customMapStyle={RetroStyle}
+                style={ProfileStyles.productMap}
+                showsUserLocation={true}
+                followsUserLocation={true}
+              >
+                
+                    <MapView.Marker coordinate={{latitude: LATITUDE, longitude: LONGITUDE}}>
+                      <Image
+                        source={require('../assets/imgs/pin.png')}
+                        style={ProfileStyles.marker}
+                        resizeMode="contain"
+                      />
+                  </MapView.Marker>
+                 
+              </MapView>
+            </Block>
+              <Block middle style={ProfileStyles.avatarContainer}>
+                <Block style={ProfileStyles.avatar}>
                 <Image
-                  source={{ uri: item.image }}
-                  style={styles.avatar}
+                  source={{ uri: IMAGE }}
+                  flex
+                  style={{margin:10}}
                   resizeMode="contain"
                 />
+                </Block>
               </Block>
-              <Block style={styles.info}>
+              <Block >
+                <Block center>
+                  <Text style={ProfileStyles.title}>
+                    {NOM}
+                  </Text>
+                  <Text  style={ProfileStyles.description}>
+                    {ADDRESS}, {ZIP}, {CITY}
+                  </Text>
+                </Block>
                 <Block
                   middle
                   row
@@ -71,24 +117,19 @@ function Profilez(id) {
                 
               </Block>
               <Block flex>
-                <Block middle style={styles.nameInfo}>
-                  <Text bold size={28} color="#32325D">
-                    {item.nom}
-                  </Text>
-                  <Text size={16} color="#32325D" style={{ marginTop: 0 }}>
-                    {item.adresse}
-                  </Text>
-                </Block>
+                
                 <Block middle style={{ marginTop: 20, marginBottom: 16 }}>
-                  <Block style={styles.divider} />
+                  <Block style={ProfileStyles.divider} />
                 </Block>
                 <Block middle>
                   <Text
+                    bold
                     size={16}
                     color="#525F7F"
                     style={{ textAlign: "center" }}
                   >
-                    {item.description}
+                  
+                    {DESC}
                   </Text>
                   <Button
                     color="transparent"
@@ -101,33 +142,23 @@ function Profilez(id) {
                     Show more
                   </Button>
                 </Block>
-                <Block
-                  row
-                  space="between"
-                >
-                  <Text bold size={16} color="#525F7F" style={{marginTop: 12}}>
-                    Album
-                  </Text>
-                  <Button
-                    small
-                    color="transparent"
-                    textStyle={{ color: "#5E72E4", fontSize: 12, marginLeft: 24 }}
-                  >
-                    View all
-                  </Button>
+                <Block middle style={{ marginTop: 20, marginBottom: 16 }}>
+                  <Block style={ProfileStyles.divider} />
                 </Block>
-                <Block style={{ paddingBottom: -HeaderHeight * 2 }}>
-                  <Block row space="between" style={{ flexWrap: "wrap" }}>
-                    {Images.Viewed.map((img, imgIndex) => (
-                      <Image
-                        source={{ uri: img }}
-                        key={`viewed-${img}`}
-                        resizeMode="cover"
-                        style={styles.thumb}
-                      />
-                    ))}
-                  </Block>
+               <Block>
+                <Text style={ProfileStyles.promotionTitle}>
+                  Promotions
+                </Text>
+                <Block>
+                  <Card item={COMMERCE} horizontal/>
+                  <Card item={COMMERCE} horizontal/>
+                  <Card item={COMMERCE} horizontal/>
+                  <Card item={COMMERCE} horizontal/>
+                  
                 </Block>
+
+             
+               </Block>
               </Block>
             </Block>
           </ScrollView>
@@ -157,8 +188,8 @@ profileBackground: {
 profileCard: {
   //position: "relative",
   padding: theme.SIZES.BASE,
-  //marginHorizontal: theme.SIZES.BASE,
-  marginTop: 0,
+  marginHorizontal: theme.SIZES.BASE,
+  marginTop: 100,
   borderTopLeftRadius: 6,
   borderTopRightRadius: 6,
   backgroundColor: theme.COLORS.WHITE,
@@ -203,6 +234,31 @@ thumb: {
   alignSelf: "center",
   width: thumbMeasure,
   height: thumbMeasure
+}, 
+title:{
+  fontSize: 30,
+  color:"#32325D"
+},
+description:{
+  fontSize: 10,
+  marginTop: 5, 
+},
+productMap: {
+  width: width-30,
+  height: 200,
+  borderRadius: 10,
+  marginTop:-20,
+  marginHorizontal:10
+
+},
+marker: {
+  width: 50,
+  height: 50,
+},
+promotionTitle:{
+  fontSize:20,
+  fontWeight: "500",
+  marginLeft:theme.SIZES.BASE
 }
 });
 

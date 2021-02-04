@@ -22,12 +22,12 @@ class Card extends React.Component {
 
     return (
       <Block row={horizontal} card flex style={cardContainer}>
-        <TouchableWithoutFeedback onPress = {() => this.props.navigation.setParams({item: articles[1]})} onPress = {() => navigation.navigate('Profile', {comm : item})}>
+        <TouchableWithoutFeedback o onPress = {() => navigation.navigate('Profile', {comm : item})}>
           <Block flex style={imgContainer}>
             <Image source={{uri: item[8]}} style={imageStyles} resizeMode="contain"/>
           </Block>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress = {() => this.props.navigation.setParams({item: articles[1]})} onPress = {() => navigation.navigate('Profile', {comm : item})}>
+        <TouchableWithoutFeedback  onPress = {() => navigation.navigate('Profile', {comm : item})}>
           <Block flex space="between" style={styles.cardDescription}>
             <Text bold center size={15} style={styles.cardTitle}>{item[1]}</Text>
             <Text numberOfLines={1} style={styles.cardDescription}>{item[2]}</Text>
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.COLORS.WHITE,
     marginVertical: theme.SIZES.BASE,
     borderWidth: 0,
-    minHeight: 100,
+    minHeight: 50,
     marginBottom: 16,
     borderRadius: 10,
   },
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     margin: 10
   },
   horizontalImage: {
-    height: 122,
+    height: 50,
     width: 'auto',
     
   },
