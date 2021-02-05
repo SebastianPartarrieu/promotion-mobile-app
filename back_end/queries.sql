@@ -70,6 +70,15 @@ join CommerceCategorie using (cid)
 join Categorie using (catid)
 WHERE cid = :cid;
 
+--name: fetch_code_postal_from_cid
+SELECT code_postal FROM Commerce WHERE cid = :cid;
+
+--name: fetch_rue_and_num_from_cid
+SELECT rue_and_num FROM Commerce WHERE cid = :cid;
+
+--name: fetch_aid_from_commerce
+SELECT aid FROM Commerce WHERE cid = :cid;
+
 --name: check_commerce_active
 SELECT active FROM Commerce WHERE cid = :cid;
 
@@ -106,6 +115,10 @@ UPDATE Commerce SET aid = :aid WHERE cid = :cid;
 --name: patch_commerce_catnom!
 UPDATE CommerceCategorie SET catnom = :catnom WHERE cid = :cid;
 
+--name: patch_commerce_lat_long!
+UPDATE Commerce SET latitude = :latitude, longitude = :longitude WHERE cid = :cid;
+
+
 --name: patch_promotion_pdescription!
 UPDATE Promotion SET pdescription = :pdescription WHERE pid = :pid;
 
@@ -114,6 +127,7 @@ UPDATE Promotion SET tdebut = :tdebut WHERE pid = :pid;
 
 --name: patch_promotion_tfin!
 UPDATE Promotion SET tfin = :tfin WHERE pid = :pid;
+
 
 --name: post_commerce_info
 INSERT INTO Commerce (cnom, cpresentation, code_postal, rue_and_num, aid, cmdp, cemail, url_ext, latitude, longitude) 
@@ -126,7 +140,7 @@ INSERT INTO CommerceCategorie (cid, catid) values (:cid, (select catid from Cate
 DELETE from CommerceCategorie where cid=:cid;
 
 --name: fetch_login_commerce
-SELECT cid, cemail,cmdp FROM COmmerce 
+SELECT cid, cemail,cmdp FROM Commerce 
 Where cemail=:cemail;
 
 --name: post_promotion_image
@@ -144,8 +158,6 @@ DELETE from ImagePromotion where pid=:pid  returning imgname;
 --name: change_promotion_filename_image!
 UPDATE ImagePromotion SET ranks=:ranks WHERE imid=:imid and pid=:pid;
 
---name: fetch_login_commerce
-SELECT cid, cemail, cmdp FROM Commerce WHERE cemail =:cemail;
 
 --name: verify_image!
 UPDATE ImagePromotion SET verified=TRUE where imgname=:imgname;
@@ -173,10 +185,10 @@ DELETE from ImageCommerce where cid=:cid  and imid=:imid returning imgname;
 UPDATE ImageCommerce SET ranks=:ranks WHERE imid=:imid and cid=:cid;
 
 --name: get_rank_last_image_promotion
-Select ranks from ImagePromotion Where pid=:pid order by desc limit 1;
+Select ranks from ImagePromotion Where pid=:pid order by ranks desc limit 1;
 
 --name: get_rank_last_image_commerce
-Select ranks from ImageCommerce Where cid=:cid order by desc limit 1;
+Select ranks + 1 from ImageCommerce Where cid=:cid order by ranks desc limit 1;
 
 --name: fetch_cid_of_pid
 SELECT DISTINCT cid FROM Commerce AS c
