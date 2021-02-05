@@ -511,22 +511,25 @@ def post_commerce_info():
                                                         aid=aid)
 
     try:  # catch the exception if the commerce already exists in the database
-        res = db.post_commerce_info(cnom=cnom,
-                                    cpresentation=cpresentation,
-                                    cemail=cemail, aid=int(aid),
-                                    cmdp=cmdp, rue_and_num=rue_and_num,
-                                    code_postal=code_postal, url_ext=url_ext,
-                                    latitude=latitude,
-                                    longitude=longitude)
-
-        p = int(res[0][0])
-        if catnom is not None:
-            catnom = catnom.split(",")
-            for x in catnom:
-                db.post_commerce_categorie(catnom=x, cid=p)
-            return jsonify({'status': 'ok'}), 201
+        if not re.match("[^@]+@[^@]+\.[^@]+", cemail):
+            return jsonify({'status': 'error 400', 'message': 'E-mail is wrong format!'}), 400
         else:
-            return jsonify({'status': 'ok'}), 201
+            res = db.post_commerce_info(cnom=cnom,
+                                        cpresentation=cpresentation,
+                                        cemail=cemail, aid=int(aid),
+                                        cmdp=cmdp, rue_and_num=rue_and_num,
+                                        code_postal=code_postal, url_ext=url_ext,
+                                        latitude=latitude,
+                                        longitude=longitude)
+
+            p = int(res[0][0])
+            if catnom is not None:  #to input different categories for commerce in the db
+                catnom = catnom.split(",")
+                for x in catnom:
+                    db.post_commerce_categorie(catnom=x, cid=p)
+                return jsonify({'status': 'ok'}), 201
+            else:
+                return jsonify({'status': 'ok'}), 201
     except Exception as e:
         # return str(e)
         return jsonify({'status': 'error 400', 'message': 'something went wrong!'}), 400

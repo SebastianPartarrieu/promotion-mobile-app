@@ -1,5 +1,4 @@
 - for now we don't allow password changes: will need to be implemented
-- 2FA? Third Party Auth?
 
 - refresh tokens
 - leverage refresh tokens to ask users to reidentify themselves before deleting their account
@@ -8,9 +7,15 @@
 
 - think about what actions a user might be able to do once account is deleted?
 
-- change way images are sent to FE client
+
+
 
 - QR codes for client fidelity : génerer a la volée, pas stocker l'image!
 - blueprint to split flask app.py into multiple files 
+- bien fournir la base de données en exemple préalables 
+- essayer de tout intégrer  
 
 MARDI dernier délai pour déployer l'application sur le serveur.
+
+FE:
+need to add the filtering function on map view
