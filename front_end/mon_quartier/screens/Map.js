@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -19,6 +19,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto'
 
+//import articles from "../constants/articles";
+import {sendSearchRequest} from "../navigation/Screens";
 import {RetroStyle} from "../constants/MapData";
 const { width, height } = Dimensions.get("window");
 const CARD_HEIGHT = 220;
@@ -28,10 +30,69 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 
 
 
+
  
- export default (props) => {
-  const articles = props.KOM;
+
+ 
+ function Map (props){
+
+
+
+
+
+  function MapUpdateFunction(response){
+    { //console.log(response),
+      articles = setArticles(response['resultat'])
+      }
+  }
+
+  
+  //var articles = props.KOM;
+
+  var [articles, setArticles] = useState(props.KOM);
+
   console.log(articles)
+
+  function SearchResults(){
+    
+    //const scaleStyle = {transform: [{scale: interpolations[index].scale,},],}; pour rescale
+
+
+    var buffer = [];
+    var n = articles.length;
+    //var com = 'xxx'
+    for(var iter = 0; iter < n; iter++){
+
+      const id = iter;
+      //buffer.push(<Button onPress = {() => navigation.navigate('Profile', {comm : resultat[id]})} color="secondary" textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }} style={styles.button}>{resultat[iter][1]}</Button>);
+
+      buffer.push(<MapView.Marker key={id} coordinate={{latitude: articles[id][6], longitude: articles[id][7]}} onPress={(e)=>onMarkerPress(e)}><Animated.View style={[styles.markerWrap]}><Animated.Image source={require('../assets/imgs/pin.png')} style={[styles.marker, /* scaleStyle */]} resizeMode="contain"/></Animated.View></MapView.Marker>)
+
+
+    }
+    
+    return(buffer)
+  } 
+
+
+  function SetEtiquettes({navigation}){
+    var buffer = [];
+    var n = articles.length;
+
+    //var com = 'xxx'
+    for(var iter = 0; iter < n; iter++){
+      const id = iter;
+      buffer.push(<View style={styles.card} key={id} ><Image source={{uri: articles[id][8]}} style={styles.cardImage} resizeMode="contain"/><View style={styles.textContent}><Text numberOfLines={1} style={styles.cardtitle}>{articles[id][1]}</Text><Text numberOfLines={1} style={styles.cardDescription}>{articles[id][2]}</Text></View><View style={styles.button}><TouchableOpacity onPress = {() => navigation.navigate('Profile', {comm : articles[id]})}><Text style={[styles.textSign]}>Détails >>></Text></TouchableOpacity></View></View>)
+      
+    }
+    return(buffer)
+
+  }
+
+
+
+  
+
   const initialMapState = {
     articles,
     categories: [
@@ -139,29 +200,16 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
         showsUserLocation={true}
         followsUserLocation={true}
       >
-        {state.articles.map((marker, index) => {
-      const scaleStyle = {
-        transform: [
-          {
-            scale: interpolations[index].scale,
-          },
-        ],
-      };
-          return (
-            <MapView.Marker key={index} coordinate={{latitude: marker[6], longitude: marker[7]}} onPress={(e)=>onMarkerPress(e)}>
-            <Animated.View style={[styles.markerWrap]}>
-              <Animated.Image
-                source={require('../assets/imgs/pin.png')}
-                style={[styles.marker, scaleStyle]}
-                resizeMode="contain"
-              />
-            </Animated.View>
-          </MapView.Marker>
-          );
-        })}
+      
+        
+        
+      <SearchResults/>
+
       </MapView>
       <View style={styles.searchBox}>
-        <TextInput 
+        <TextInput
+          onChangeText = {(text) => (sendSearchRequest(text,MapUpdateFunction,"commerce"))}
+
           placeholder="Search here"
           placeholderTextColor="#000"
           autoCapitalize="none"
@@ -223,27 +271,8 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
           {useNativeDriver: true}
         )}
       >
-        {state.articles.map((marker, index) =>(
-          <View style={styles.card} key={index} >
-            <Image 
-              source={{uri: marker[8]}}
-              style={styles.cardImage}
-              resizeMode="contain"
-              
-            />
-            <View style={styles.textContent}>
-              <Text numberOfLines={1} style={styles.cardtitle}>{marker[1]}</Text>
-              <Text numberOfLines={1} style={styles.cardDescription}>{marker[2]}</Text>
-            </View>
-            <View style={styles.button}>
-                <TouchableOpacity
-                  onPress = {() => navigation.navigate('Profile', {comm : marker})}
-                >
-                  <Text style={[styles.textSign]}>Détails >>></Text>
-                </TouchableOpacity>
-              </View>
-          </View>
-        ))}
+
+      <SetEtiquettes/>
       </Animated.ScrollView>
     </View>
   );
@@ -364,3 +393,5 @@ const styles = StyleSheet.create({
 
   }
 });
+
+export default Map;

@@ -1,16 +1,52 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { useSafeArea } from "react-native-safe-area-context";
 import {
   ScrollView,
   StyleSheet,
-  Image
+  Image,
+  Button
 } from "react-native";
 import { Block, Text, theme } from "galio-framework";
 
 import Images from "../constants/Images";
 import { DrawerItem as DrawerCustomItem } from '../components';
 
+
+
+
+function sendArticlesRequest(updateFunction,route){
+  const url = new URL(route, 'http://0.0.0.0:5000/')
+
+
+  fetch(url, {
+    method : 'GET'
+  }).then((response) => response.json()).then(updateFunction).catch(
+    (e) => {alert('Something went wrong' + e.message)}
+  )
+}
+
+
+
 function CustomDrawerContent({ drawerPosition, navigation, profile, focused, state, ...rest }) {
+  
+  
+  
+  
+  var [articles, setArticles] = React.useState([])
+  function updateFunction(response){
+    { 
+      articles = setArticles(response['resultat'])
+      
+      }
+  }
+  
+  useEffect( ()=>{sendArticlesRequest(updateFunction, "commerce");}, []);
+
+
+
+
+    
+
   const insets = useSafeArea();
   const screens = [
     "Accueil", 
@@ -30,12 +66,18 @@ function CustomDrawerContent({ drawerPosition, navigation, profile, focused, sta
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
           {screens.map((item, index) => {
               return (
+                <Block>
                 <DrawerCustomItem
                   title={item}
                   key={index}
                   navigation={navigation}
                   focused={state.index === index ? true : false}
                 />
+                <Button 
+                  title='hey'
+                  onPress={() => navigation.navigate('Map', {comm : articles})}>
+                </Button>
+                </Block>
               );
             })}
             <Block flex style={{ marginTop: 24, marginVertical: 8, paddingHorizontal: 8 }}>
