@@ -235,23 +235,6 @@ def is_authorized_no_id(auth_token, user_type='commerce', check_active=True):
                 return user_id_received
 
 
-def convert_address_to_geolocation(code_postal, rue_and_num, aid):
-    '''
-    code_postal: int
-    rue_and_num: str
-    aid: int, id of agglomeration
-
-    Returns
-    location.latitude:float
-    location.longitude:float
-    '''
-    agglo = db.fetch_agglo_from_aid(aid=aid)
-    db.commit()
-    locator = Nominatim(user_agent ="myGeocoder")
-    complete_address = rue_and_num + ',' + str(agglo[0][0]) + ',' + str(code_postal)
-    location = locator.geocode(complete_address)
-    return location.latitude, location.longitude
-
 #
 # GET /version
 #
@@ -328,7 +311,7 @@ def get_commerce():
         img_paths = db.get_commerce_image(cid=current_id) #path, rank, imid
         element = list(element)
         element.append(list(img_paths))
-        res[i] = element
+        res[i] = element    
     return jsonify({'resultat': res})
 
 # INTERACTION WITH FRONT PAGE
@@ -432,9 +415,6 @@ def fetch_promotion_of_commerce():
         return jsonify(res)
     else:
         return jsonify({'status': 'error 400', 'message': 'Something went wrong!'})
-
-
-
 
 
 # COMMERCE INTERFACE
@@ -558,10 +538,10 @@ def check_commerce_get_cid():
         
     else:
         res = list(db.fetch_login_commerce(cemail=cemail))
-        status = db.check_commerce_active(cid=res[0][0])
         if len(res) == 0:
             return jsonify({"status" : "error", "message" : "Invalid email or password"}), 401
         elif check_password_hash(res[0][2], cmdp):
+            status = db.check_commerce_active(cid=res[0][0])
         #elif cmdp==res[0][2]:
             if status[0][0]:
                 dict_new = {
@@ -845,6 +825,9 @@ def delete_image_commerce(cid):
 def send_pic(path):
     return send_from_directory('templates/commerceImage', path)
 
+@app.route('/commerceImage/<path:path>')
+def send_pic(path):
+    return send_from_directory('commerceImage', path)
 
 @app.route('/commerce/verify', methods=["PATCH"])
 def verify():
