@@ -44,7 +44,6 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
       articles = setArticles(response['resultat'])
       }
   }
-
   
   //var articles = props.KOM;
 
@@ -82,9 +81,8 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
       buffer.push(
       <View style={styles.card} key={id} >
 
-
-        <Image source={{uri: articles[id][8]}} style={styles.cardImage} resizeMode="contain"/>
-        
+        <Image source={{uri: articles[id][8][0]}} style={styles.cardImage} resizeMode="contain"/>
+    
         <View style={styles.textContent}>
         <TouchableOpacity
           onPress = {() => navigation.navigate('Profile', {comm : articles[id]})}

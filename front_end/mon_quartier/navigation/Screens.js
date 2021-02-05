@@ -68,6 +68,20 @@ function searchStack(props) {
   );
 }
 
+function sendImageRequest(id,route){
+
+  const url = new URL(route, 'http://localhost:5000/')
+  url.searchParams.append('search',search)
+
+  fetch(url, {
+    method : 'GET',
+    
+  }).then((response) => response.json()).then(updateFunction).catch(
+    (e) => {alert('Something went wrong' + e.message)}
+  )
+}
+
+
 
 
 function sendSearchRequest(search,updateFunction,route){

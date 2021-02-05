@@ -29,9 +29,9 @@ function sendLoginRequest(username,password,updateFunction,route){
   fetch(url, {
     method : 'GET'
   }).then((response) => response.json()).then(updateFunction).catch(
-    (e) => {alert('Something went wrong' + e.message)}
+    (e) => {alert('Ce compte n\'existe pas' )}
   )
-}
+  }
 
 
 function Onboarding({ navigation }){
@@ -39,7 +39,7 @@ function Onboarding({ navigation }){
     navigation.navigate('App')
     
     function updateFunction(response){
-      { console.log(response)
+      {
         response['is_logged_in']?(
           navigation.navigate("App"),
           token = response['token'],
