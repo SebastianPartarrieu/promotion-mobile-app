@@ -13,7 +13,7 @@ INSERT INTO Client(clnom, clpnom, clemail, aid, clmdp) VALUES
 ('Gray', 'James', 'jgray@turing.org', 2, 'Password'), 
 ('GenericName', 'Calvin', 'calvin.hobbes@me.com', 3, 'PaSSword');
 
-INSERT INTO Commerce(cnom, cpresentation, code_postal, rue_and_num, aid, cmdp, cemail) VALUES
+INSERT INTO Commerce(cnom, cpresentation, code_postal, rue_and_num, aid, cmdp, cemail, latitude, longitude) VALUES
 ('Mines de Paris','L ecole nationale supérieure des mines de Paris',75272, '60 Boulevard Saint-Michel',1,'password5','matmaz@mines-paristech.fr',48.845770758284054,2.338596411379499),
 ('La maison des Mines', 'La Maison des Mines et des Ponts',75005,'270 rue saint jacques',1,'password4','matmaz4@mines-paristech.fr',48.841924881665165, 2.3411000804314797),
 ('Panda Wok','Envie d’un repas agréable asiatique ?',75015,'208 rue saint jacques',1,'password3','matmaz3@mines-paristech.fr',48.84554822428966,2.34254952705813),
