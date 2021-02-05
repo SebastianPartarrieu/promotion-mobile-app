@@ -59,7 +59,7 @@ CREATE TABLE ImagePromotion(imid SERIAL PRIMARY KEY,  imgname TEXT UNIQUE NOT NU
  ranks INTEGER NOT NULL, verified Boolean NOT NULL, pid INTEGER NOT NULL REFERENCES Promotion);
 
 CREATE TABLE ImageCommerce(imid SERIAL PRIMARY KEY,  imgname TEXT UNIQUE NOT NULL,
- ranks INTEGER NOT NULL, verified Boolean NOT NULL, cid INTEGER NOT NULL REFERENCES Commerce);
+ ranks INTEGER NOT NULL, verified Boolean, cid INTEGER NOT NULL REFERENCES Commerce);
  
 --CREATE TABLE CarteFidelite(carteid SERIAL PRIMARY KEY,
 --                           clid INTEGER NOT NULL REFERENCES Client,
