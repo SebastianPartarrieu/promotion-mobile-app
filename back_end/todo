@@ -10,5 +10,7 @@
 
 - change way images are sent to FE client
 
-- QR codes for client fidelity
+- QR codes for client fidelity : génerer a la volée, pas stocker l'image!
+- blueprint to split flask app.py into multiple files 
 
+MARDI dernier délai pour déployer l'application sur le serveur.
