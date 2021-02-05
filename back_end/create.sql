@@ -63,7 +63,8 @@ CREATE TABLE ImageCommerce(imid SERIAL PRIMARY KEY,  imgname TEXT UNIQUE NOT NUL
  
 --CREATE TABLE CarteFidelite(carteid SERIAL PRIMARY KEY,
 --                           clid INTEGER NOT NULL REFERENCES Client,
---                           QRCode UNIQUE BYTEARRAY);
+--                           qr_code_ref TEXT NOT NULL);
+
 
 --CREATE TABLE CommerceScanCarte(cscancarteid SERIAL PRIMARY KEY,
 --                               cid INTEGER NOT NULL REFERENCES Commerce,

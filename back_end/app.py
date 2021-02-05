@@ -323,6 +323,12 @@ def get_commerce():
     agglo = PARAMS.get("agglomeration", '%')
     search = PARAMS.get("search", '%')
     res = db.get_commerce(agg=agglo, cat=cat, search=search)
+    for i, element in enumerate(res):
+        current_id = element[0]
+        img_paths = db.get_commerce_image(cid=current_id) #path, rank, imid
+        element = list(element)
+        element.append(list(img_paths))
+        res[i] = element
     return jsonify({'resultat': res})
 
 # INTERACTION WITH FRONT PAGE
@@ -426,6 +432,8 @@ def fetch_promotion_of_commerce():
         return jsonify(res)
     else:
         return jsonify({'status': 'error 400', 'message': 'Something went wrong!'})
+
+
 
 
 
@@ -757,13 +765,13 @@ def delete_image(pid):
             imageImid = PARAMS.get("imageImid", None)
             res=db.delete_promotion_image(pid=pid, imid=imageImid)
             os.remove(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], res))
-            return "",204
+            return "", 204
     else:
         return Response(status=401)
 
 
 @app.route('/commerce/image', methods=['POST'])
-def upload__commerce_image():
+def upload_commerce_image():
     uploaded_file = request.files['inpFile']
     auth_token = PARAMS.get("token", None)
     #return repr(uploaded_file.read())
@@ -813,12 +821,11 @@ def change_rank_commerce(cid):
     return '', 204
 
 
-@app.route('/get/commerce/image', methods=['POST'])
+@app.route('/get/commerce/image', methods=['POST', 'GET'])
 def get_images_commerce():
     auth_token = PARAMS.get("token", None)
     cid = is_authorized_no_id(auth_token, user_type='commerce')
     res = db.get_commerce_image(cid=cid)
-    #image_string = base64.b64encode(image.read())
     return jsonify(res)
 
 
