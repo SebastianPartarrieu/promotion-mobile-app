@@ -704,7 +704,8 @@ def delete_image(pid):
 
 
 @app.route('/commerce/<int:cid>/image', methods=['POST'])
-def upload__commerce_image(cid):
+def upload_
+_commerce_image(cid):
     uploaded_file = request.files['file']
     #Authorization checks 
     auth_token = PARAMS.get("token", '')

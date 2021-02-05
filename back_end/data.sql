@@ -4,7 +4,7 @@
 INSERT INTO Agglomeration(anom) VALUES ('Paris'), ('Caen'), ('Nice');
 
 -- initial categories
-INSERT INTO Categorie(catnom) VALUES ('Restaurant'), ('Textile'), ('Librairie');
+INSERT INTO Categorie(catnom) VALUES ('Restaurant'), ('Textile'), ('Librairie'), ('Coiffeur'), ('Hotel'), ('Magasin');
 
 -- fictional clients and stores
 INSERT INTO Client(clnom, clpnom, clemail, aid, clmdp) VALUES
