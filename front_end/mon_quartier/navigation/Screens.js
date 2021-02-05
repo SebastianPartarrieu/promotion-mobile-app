@@ -82,6 +82,7 @@ function sendSearchRequest(search,updateFunction,route){
 }
 
 
+
 function Elements ({navigation}){
 
   var [resultat, setResultat] = useState([])
@@ -348,5 +349,7 @@ const styles = StyleSheet.create({
     borderRadius: theme.SIZES.BASE * 1.75,
     justifyContent: "center"
   },
- 
 });
+
+
+export {sendSearchRequest};
