@@ -12,6 +12,8 @@ from flask import Flask, jsonify, request, Response, session, render_template, s
 import datetime as dt
 import logging as log
 import base64
+from geopy import Nominatim
+
 
 log.basicConfig(level=log.INFO)
 
@@ -182,6 +184,24 @@ def is_authorized(auth_token, user_id, user_type='client'):
             return False
         else:
             return True
+
+def convert_address_to_geolocation(code_postal, rue_and_num, aid):
+    '''
+    code_postal: int
+    rue_and_num: str
+    aid: int, id of agglomeration
+
+    Returns
+    location.latitude:float
+    location.longitude:float
+    '''
+    agglo = db.fetch_agglo_from_aid(aid=aid)
+    db.commit()
+    locator = Nominatim(user_agent ="myGeocoder")
+    complete_address = rue_and_num + ',' + str(agglo[0][0]) + ',' + str(code_postal)
+    location = locator.geocode(complete_address)
+    return location.latitude, location.longitude
+    
 
 def is_authorized_no_id(auth_token, user_type='commerce', check_active=True):
     '''
