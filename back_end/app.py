@@ -417,7 +417,7 @@ def delete_client_info():
         return Response(status=401)
 
 
-@app.route('/mycommerce/promotions', methods=['GET'])
+@app.route('/mycommerce/promotions', methods=['POST'])
 def fetch_promotion_of_commerce():
     auth_token = PARAMS.get("token", None)
     cid = is_authorized_no_id(auth_token, user_type='commerce')
