@@ -8,7 +8,7 @@ import secrets
 import os
 from werkzeug.utils import secure_filename
 import imghdr
-from flask import Flask, jsonify, request, Response, session, render_template
+from flask import Flask, jsonify, request, Response, session, render_template, send_from_directory
 import datetime as dt
 import logging as log
 import base64
@@ -249,9 +249,13 @@ def logincommerce_html():
 def logoutcommerce_html():
     return render_template('logout.html')
 
-@app.route('/commerce/mon-compte')
+@app.route('/commercemon-compte')
 def mon_compte():
-    return render_template('compte.html')
+    return render_template('comptetest.html')
+
+@app.route('/addPromotion')
+def add_promotion():
+    return render_template('addPromotion.html')
 
 @app.route("/version", methods=["GET"])
 def get_version():
@@ -395,7 +399,7 @@ def delete_client_info():
 
 @app.route('/mycommerce/promotions', methods=['GET'])
 def fetch_promotion_of_commerce():
-    auth_token = PARAMS.get('token', None)
+    auth_token = PARAMS.get("token", None)
     cid = is_authorized_no_id(auth_token, user_type='commerce')
     if cid:
         res = db.fetch_promotion_of_commerce(cid=int(cid))
@@ -738,24 +742,23 @@ def delete_image(pid):
         return Response(status=401)
 
 
-@app.route('/commerce/<int:cid>/image', methods=['POST'])
-def upload__commerce_image(cid):
+@app.route('/commerce/image', methods=['POST'])
+def upload__commerce_image():
     uploaded_file = request.files['inpFile']
-    #Authorization checks 
-    auth_token = PARAMS.get("token", '')
+    auth_token = PARAMS.get("token", None)
+    #return repr(uploaded_file.read())
+    #return jsonify(upload_file.filename)
+    #return uploaded_file.filename
+    
     cid = is_authorized_no_id(auth_token, user_type='commerce')
     if cid:
         try:
-            res = f_update_image('UPLOAD_PATH_COMMERCE',
-                            cid,
-                            lambda x, y, z: db.post_commerce_image(filename=x,
-                                                                ranks=y,
-                                                                cid=z),
-                            ranks,
+            res = f_update_image('UPLOAD_PATH_COMMERCE', cid, lambda x, y, z: db.post_commerce_image(imgname=x,ranks=y,cid=z),
                             uploaded_file ,
-                            lambda x: db.get_rank_last_image_commerce(cid=x))
+                            lambda x: db.get_rank_last_image_commerce(cid=x) )         
             return jsonify(res)
         except Exception as e:
+            return jsonify("Dfkjn")
             return Response(status=400)
     else:
         return Response(status=401)
@@ -790,18 +793,14 @@ def change_rank_commerce(cid):
     return '', 204
 
 
-@app.route('/commerce/<int:cid>/image', methods=['GET'])
-def get_images_commerce(cid):
-    res = db.get_commerce_image(cid=cid)
-    return jsonify(res)
-
 @app.route('/get/commerce/image', methods=['POST'])
-def get_images_mycommerce():
+def get_images_commerce():
     auth_token = PARAMS.get("token", None)
     cid = is_authorized_no_id(auth_token, user_type='commerce')
     res = db.get_commerce_image(cid=cid)
     #image_string = base64.b64encode(image.read())
     return jsonify(res)
+
 
 @app.route('/commerce/<int:cid>/image', methods=['DELETE'])
 def delete_image_commerce(cid):

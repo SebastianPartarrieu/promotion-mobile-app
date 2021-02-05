@@ -170,7 +170,8 @@ WHERE c.cid = :cid
 ORDER BY p.tdebut DESC;
 
 --name: post_commerce_image
-INSERT INTO ImageCommerce (imgname, ranks, verified, cid) VALUES (:imgname, :ranks, FALSE, :cid) returning imid;
+INSERT INTO ImageCommerce (imgname, ranks, cid, verified) VALUES (:imgname, :ranks, :cid, FALSE) returning imid;
+
 
 --name: delete_commmerce_images
 DELETE from ImageCommerce where cid=:cid  returning imgname;
