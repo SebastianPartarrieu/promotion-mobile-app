@@ -306,15 +306,17 @@ def get_commerce():
     agglo = PARAMS.get("agglomeration", '%')
     search = PARAMS.get("search", '%')
     res = db.get_commerce(agg=agglo, cat=cat, search=search)
+    images = []
     for i, element in enumerate(res):
         current_id = element[0]
         img_paths = db.get_commerce_image(cid=current_id) #path, rank, imid
         ordered_paths_by_rank = sorted([tup for tup in img_paths], key=lambda x: x[1])
         ordered_paths_by_rank = [tup[0] for tup in ordered_paths_by_rank]
         element = list(element)
-        element.append(ordered_paths_by_rank)
+        #element.append(ordered_paths_by_rank)
+        images.append(ordered_paths_by_rank)
         res[i] = element
-    return jsonify({'resultat': res})
+    return jsonify({'resultat': res, 'images': images})
 
 # INTERACTION WITH FRONT PAGE
 

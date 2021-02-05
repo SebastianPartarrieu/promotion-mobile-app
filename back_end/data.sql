@@ -41,4 +41,11 @@ INSERT INTO Admins(adminemail, adminmdp) VALUES ('sebastian.partarrieu@mines-par
 
 INSERT INTO ImagePromotion (imid, imgname,ranks, verified, pid) VALUES (1, 'a' , 1 ,FALSE, 1);
 
-INSERT INTO ImageCommerce (imid, imgname,ranks, verified, cid) VALUES (1, 'mc_do.png' , 1 ,FALSE, 5), (2, 'mines_1.jpeg' , 1 ,FALSE, 1), (3, 'panda_wok.jpeg', 1, FALSE, 3);
+INSERT INTO ImageCommerce (imid, imgname,ranks, verified, cid) VALUES
+(1, 'mc_do.png' , 1 ,FALSE, 5),
+(2, 'mines_1.jpeg' , 1 ,FALSE, 1),
+(3, 'panda_wok.jpeg', 1, FALSE, 3),
+(4, 'mc_do_2.jpeg', 2, FALSE, 5),
+(5, 'mines_2.jpeg', 2, FALSE, 1),
+(6, 'maison_mines.jpeg', 1, FALSE, 2),
+(7, 'muraille_phoenix.jpeg', 1, FALSE, 4);
