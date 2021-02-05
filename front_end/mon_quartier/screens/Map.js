@@ -81,7 +81,7 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
       buffer.push(
       <View style={styles.card} key={id} >
 
-        <Image source={{uri: articles[id][8][0]}} style={styles.cardImage} resizeMode="contain"/>
+        <Image source={{uri: ''}} style={styles.cardImage} resizeMode="contain"/>
     
         <View style={styles.textContent}>
         <TouchableOpacity

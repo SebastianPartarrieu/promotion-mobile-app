@@ -39,7 +39,8 @@ export default function Profile(props) {
   const ADDRESS = COMMERCE[5];
   const LATITUDE = COMMERCE[6];
   const LONGITUDE = COMMERCE[7];
-  const IMAGES = COMMERCE[8];
+  //const IMAGES = COMMERCE[8];
+  
 
   console.log(COMMERCE)
 
@@ -93,7 +94,8 @@ export default function Profile(props) {
                   showsHorizontalScrollIndicator={true}
                   > 
                   <Image
-                    source={{ uri: IMAGES[0] }}
+
+                    source={{ uri: '' }}
                     flex
                     style={{margin:10}}
                     resizeMode="contain"
