@@ -1,6 +1,0 @@
-module Pods_monquartier {
-  umbrella header "Pods-monquartier-umbrella.h"
-
-  export *
-  module * { export * }
-}
