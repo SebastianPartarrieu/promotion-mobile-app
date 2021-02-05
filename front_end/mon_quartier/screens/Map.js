@@ -19,8 +19,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto'
 
-import articles from "../constants/articles";
-
 import {RetroStyle} from "../constants/MapData";
 const { width, height } = Dimensions.get("window");
 const CARD_HEIGHT = 220;

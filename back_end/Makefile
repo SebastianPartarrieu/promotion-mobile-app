@@ -148,3 +148,4 @@ venv:
 	pip install pytest requests
 	pip install mypy flake8 
 	pip install pyjwt
+	pip install geopy

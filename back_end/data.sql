@@ -41,4 +41,4 @@ INSERT INTO Admins(adminemail, adminmdp) VALUES ('sebastian.partarrieu@mines-par
 
 INSERT INTO ImagePromotion (imid, imgname,ranks, verified, pid) VALUES (1, 'a' , 1 ,FALSE, 1), (2, 'b' , 2 ,FALSE, 1);
 
-INSERT INTO ImageCommerce (imid, imgname,ranks, verified, cid) VALUES (1, 'a' , 1 ,FALSE, 1), (2, 'b' , 2 ,FALSE, 1);
+INSERT INTO ImageCommerce (imid, imgname,ranks, verified, cid) VALUES (1, 'mc_do.png' , 1 ,FALSE, 5), (2, 'mines_1.jpeg' , 1 ,FALSE, 1), (3, 'panda_wok.jpeg', 1, FALSE, 3);
