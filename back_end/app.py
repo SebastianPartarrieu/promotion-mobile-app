@@ -825,6 +825,9 @@ def delete_image_commerce(cid):
 def send_pic(path):
     return send_from_directory('templates/commerceImage', path)
 
+@app.route('/commerceImage/<path:path>')
+def send_pic(path):
+    return send_from_directory('commerceImage', path)
 
 @app.route('/commerce/verify', methods=["PATCH"])
 def verify():
