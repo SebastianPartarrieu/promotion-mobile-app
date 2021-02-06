@@ -90,7 +90,7 @@ function Articles(props) {
         icon: <Fontisto name="hotel" style={styles.chipsIcon} size={15} />,
       },
     ]
-
+    
     return (
       <Block flex center>
         <ScrollView

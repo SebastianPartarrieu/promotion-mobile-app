@@ -4,7 +4,7 @@
 INSERT INTO Agglomeration(anom) VALUES ('Paris'), ('Caen'), ('Nice');
 
 -- initial categories
-INSERT INTO Categorie(catnom) VALUES ('Restaurant'), ('Textile'), ('Librairie');
+INSERT INTO Categorie(catnom) VALUES ('Restaurant'), ('Textile'), ('Librairie'), ('Coiffeur'), ('Hotel'), ('Magasin');
 
 -- fictional clients and stores
 INSERT INTO Client(clnom, clpnom, clemail, aid, clmdp) VALUES
@@ -39,6 +39,13 @@ INSERT INTO ClientFavCommerce(clid, cid) VALUES (4, 4), (2, 1), (3, 2);
 
 INSERT INTO Admins(adminemail, adminmdp) VALUES ('sebastian.partarrieu@mines-paristech.fr', 'amazingpassword');
 
-INSERT INTO ImagePromotion (imid, imgname,ranks, verified, pid) VALUES (1, 'a' , 1 ,FALSE, 1), (2, 'b' , 2 ,FALSE, 1);
+INSERT INTO ImagePromotion (imid, imgname,ranks, verified, pid) VALUES (1, 'a' , 1 ,FALSE, 1);
 
-INSERT INTO ImageCommerce (imid, imgname,ranks, verified, cid) VALUES (1, 'mc_do.png' , 1 ,FALSE, 5), (2, 'mines_1.jpeg' , 1 ,FALSE, 1), (3, 'panda_wok.jpeg', 1, FALSE, 3);
+INSERT INTO ImageCommerce (imid, imgname,ranks, verified, cid) VALUES
+(1, 'mc_do.png' , 1 ,FALSE, 5),
+(2, 'mines_1.jpeg' , 1 ,FALSE, 1),
+(3, 'panda_wok.jpeg', 1, FALSE, 3),
+(4, 'mc_do_2.jpeg', 2, FALSE, 5),
+(5, 'mines_2.jpeg', 2, FALSE, 1),
+(6, 'maison_mines.jpeg', 1, FALSE, 2),
+(7, 'muraille_phoenix.jpeg', 1, FALSE, 4);

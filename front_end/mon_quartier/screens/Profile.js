@@ -39,7 +39,8 @@ export default function Profile(props) {
   const ADDRESS = COMMERCE[5];
   const LATITUDE = COMMERCE[6];
   const LONGITUDE = COMMERCE[7];
-  const IMAGE = COMMERCE[8];
+  //const IMAGES = COMMERCE[8];
+  
 
   console.log(COMMERCE)
 
@@ -84,12 +85,22 @@ export default function Profile(props) {
             </Block>
               <Block middle style={ProfileStyles.avatarContainer}>
                 <Block style={ProfileStyles.avatar}>
-                <Image
-                  source={{ uri: IMAGE }}
-                  flex
-                  style={{margin:10}}
-                  resizeMode="contain"
-                />
+                <ScrollView
+                  horizontal={true}
+                  pagingEnabled={true}
+                  decelerationRate={0}
+                  scrollEventThrottle={16}
+                  snapToAlignment="center"
+                  showsHorizontalScrollIndicator={true}
+                  > 
+                  <Image
+
+                    source={{ uri: '' }}
+                    flex
+                    style={{margin:10}}
+                    resizeMode="contain"
+                  />
+                </ScrollView>
                 </Block>
               </Block>
               <Block >

@@ -68,6 +68,20 @@ function searchStack(props) {
   );
 }
 
+function sendImageRequest(id,route){
+
+  const url = new URL(route, 'http://localhost:5000/')
+  url.searchParams.append('search',search)
+
+  fetch(url, {
+    method : 'GET',
+    
+  }).then((response) => response.json()).then(updateFunction).catch(
+    (e) => {alert('Something went wrong' + e.message)}
+  )
+}
+
+
 
 
 function sendSearchRequest(search,updateFunction,route){
@@ -75,7 +89,10 @@ function sendSearchRequest(search,updateFunction,route){
   url.searchParams.append('search',search)
 
   fetch(url, {
-    method : 'GET'
+    method : 'GET',
+    headers: {
+      Accept: 'application/json',
+    }
   }).then((response) => response.json()).then(updateFunction).catch(
     (e) => {alert('Something went wrong' + e.message)}
   )
@@ -86,6 +103,7 @@ function sendSearchRequest(search,updateFunction,route){
 function Elements ({navigation}){
 
   var [resultat, setResultat] = useState([])
+
   function SearchResults(){
     var buffer = [];
     var n = resultat.length;
@@ -189,7 +207,7 @@ function MapStack(props) {
     <Stack.Navigator initialRouteName="Map" mode="card" headerMode="screen" params='Joe'>
       <Stack.Screen
         name="Map"
-       // component={Map}
+        component={Map}
         options={{
           header: ({ navigation, scene }) => (
             <Header
@@ -202,7 +220,7 @@ function MapStack(props) {
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
       >
-        {props => <Map {...{KOM: articles}} />}
+       
       </Stack.Screen>
 
     </Stack.Navigator>

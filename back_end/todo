@@ -1,15 +1,16 @@
 - for now we don't allow password changes: will need to be implemented
 - 2FA? Third Party Auth?
 
-- add functionnality to delete your own account, for client and commerce
 - refresh tokens
 - leverage refresh tokens to ask users to reidentify themselves before deleting their account
 - constraints on min amount of characters for passwords
 - add admin functionnalities (checking images but also deleting promotion and commerce)
 
+- think about what actions a user might be able to do once account is deleted?
 
 - change way images are sent to FE client
-- think about what actions a user might be able to do once account is deleted?
-- think about full list of categories we want to allow
-- QR codes for client fidelity
 
+- QR codes for client fidelity : génerer a la volée, pas stocker l'image!
+- blueprint to split flask app.py into multiple files 
+
+MARDI dernier délai pour déployer l'application sur le serveur.

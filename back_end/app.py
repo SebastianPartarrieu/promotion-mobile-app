@@ -8,9 +8,13 @@ import secrets
 import os
 from werkzeug.utils import secure_filename
 import imghdr
-from flask import Flask, jsonify, request, Response, session
+from flask import Flask, jsonify, request, Response, session, render_template, send_from_directory
 import datetime as dt
 import logging as log
+import base64
+from geopy import Nominatim
+
+
 log.basicConfig(level=log.INFO)
 
 from geopy import Nominatim
@@ -181,6 +185,24 @@ def is_authorized(auth_token, user_id, user_type='client'):
         else:
             return True
 
+def convert_address_to_geolocation(code_postal, rue_and_num, aid):
+    '''
+    code_postal: int
+    rue_and_num: str
+    aid: int, id of agglomeration
+
+    Returns
+    location.latitude:float
+    location.longitude:float
+    '''
+    agglo = db.fetch_agglo_from_aid(aid=aid)
+    db.commit()
+    locator = Nominatim(user_agent ="myGeocoder")
+    complete_address = rue_and_num + ',' + str(agglo[0][0]) + ',' + str(code_postal)
+    location = locator.geocode(complete_address)
+    return location.latitude, location.longitude
+    
+
 def is_authorized_no_id(auth_token, user_type='commerce', check_active=True):
     '''
     Given an auth_token and user_type returns whether the token is valid
@@ -213,29 +235,30 @@ def is_authorized_no_id(auth_token, user_type='commerce', check_active=True):
                 return user_id_received
 
 
-def convert_address_to_geolocation(code_postal, rue_and_num, aid):
-    '''
-    code_postal: int
-    rue_and_num: str
-    aid: int, id of agglomeration
-
-    Returns
-    location.latitude:float
-    location.longitude:float
-    '''
-    agglo = db.fetch_agglo_from_aid(aid=aid)
-    db.commit()
-    locator = Nominatim(user_agent ="myGeocoder")
-    complete_address = rue_and_num + ',' + str(agglo[0][0]) + ',' + str(code_postal)
-    location = locator.geocode(complete_address)
-    return location.latitude, location.longitude
-
 #
 # GET /version
 #
 # general information about the application
 #
+@app.route('/')
+def index():
+    return render_template('page_principale.html')
 
+@app.route('/login/commerce')
+def logincommerce_html():
+    return render_template('login.html')
+
+@app.route('/logout/commerce')
+def logoutcommerce_html():
+    return render_template('logout.html')
+
+@app.route('/commercemon-compte')
+def mon_compte():
+    return render_template('comptetest.html')
+
+@app.route('/addPromotion')
+def add_promotion():
+    return render_template('addPromotion.html')
 
 @app.route("/version", methods=["GET"])
 def get_version():
@@ -283,7 +306,17 @@ def get_commerce():
     agglo = PARAMS.get("agglomeration", '%')
     search = PARAMS.get("search", '%')
     res = db.get_commerce(agg=agglo, cat=cat, search=search)
-    return jsonify({'resultat': res})
+    images = []
+    for i, element in enumerate(res):
+        current_id = element[0]
+        img_paths = db.get_commerce_image(cid=current_id) #path, rank, imid
+        ordered_paths_by_rank = sorted([tup for tup in img_paths], key=lambda x: x[1])
+        ordered_paths_by_rank = [tup[0] for tup in ordered_paths_by_rank]
+        element = list(element)
+        #element.append(ordered_paths_by_rank)
+        images.append(ordered_paths_by_rank)
+        res[i] = element
+    return jsonify({'resultat': res, 'images': images})
 
 # INTERACTION WITH FRONT PAGE
 
@@ -377,15 +410,15 @@ def delete_client_info():
         return Response(status=401)
 
 
-@app.route('/mycommerce/promotion', methods=['GET'])
+@app.route('/mycommerce/promotions', methods=['POST'])
 def fetch_promotion_of_commerce():
-    auth_token = PARAMS.get('token', None)
+    auth_token = PARAMS.get("token", None)
     cid = is_authorized_no_id(auth_token, user_type='commerce')
     if cid:
         res = db.fetch_promotion_of_commerce(cid=int(cid))
         return jsonify(res)
     else:
-        return Response(status=400)
+        return jsonify({'status': 'error 400', 'message': 'Something went wrong!'})
 
 
 # COMMERCE INTERFACE
@@ -426,6 +459,7 @@ def patch_commerce_info():
         rue_and_num = PARAMS.get("rue_and_num", None)
         catnom = PARAMS.get("catnom", None)
         # catnom=Restaurant,Textile
+        temp_aid = db.fetch_aid_from_commerce(cid=cid)
         if cnom is not None:
             db.patch_commerce_nom(cnom=cnom, cid=cid)
         if cpresentation is not None:
@@ -435,12 +469,22 @@ def patch_commerce_info():
             db.patch_commerce_cemail(cemail=cemail, cid=cid)
         if aid is not None:
             db.patch_commerce_aid(aid=aid, cid=cid)
+            temp_aid = aid
         if url_ext is not None:
             db.patch_commerce_url_ext(url_ext=url_ext, cid=cid)
-        if code_postal is not None:
-            db.patch_commerce_code_postal(code_postal=code_postal, cid=cid)
-        if rue_and_num is not None:
-            db.patch_commerce_rue_and_num(rue_and_num=rue_and_num, cid=cid)
+        if (code_postal is not None) or (rue_and_num is not None):
+            prev_code_postal = db.fetch_code_postal_from_cid(cid=cid)[0][0]
+            prev_rue_and_num = db.fetch_rue_and_num_from_cid(cid=cid)[0][0]
+            if code_postal is not None:
+                prev_code_postal = code_postal
+                db.patch_commerce_code_postal(code_postal=code_postal, cid=cid)
+            if rue_and_num is not None:
+                prev_rue_and_num = rue_and_num
+                db.patch_commerce_rue_and_num(rue_and_num=rue_and_num, cid=cid)
+            latitude, longitude = convert_address_to_geolocation(code_postal=prev_code_postal,
+                                                        rue_and_num=prev_rue_and_num,
+                                                        aid=temp_aid)
+            db.patch_commerce_lat_long(cid=cid, latitude=latitude, longitude=longitude)
         if catnom is not None:
             db.delete_commerce_categorie(cid=cid)
             catnom = catnom.split(",")
@@ -455,13 +499,11 @@ def post_commerce_info():
     cnom, cpresentation = PARAMS.get(
         "cnom", None), PARAMS.get(
         "cpresentation", None)
-    cemail, aid = PARAMS.get("cemail", None), int(PARAMS.get("aid", None))
-    url_ext, code_postal = PARAMS.get(
-        "url_ext", None), int(
-        PARAMS.get(
-            "code_postal", None))
+    cemail, aid = PARAMS.get("cemail", None), PARAMS.get("aid", None)
+    url_ext, code_postal = PARAMS.get("url_ext", None), PARAMS.get("code_postal", None)
     rue_and_num = PARAMS.get("rue_and_num", None)
     cmdp = generate_password_hash(PARAMS.get("cmdp", None))
+    #cmdp=PARAMS.get("cmdp", None)
     catnom = PARAMS.get("catnom", None)
 
     latitude, longitude = convert_address_to_geolocation(code_postal=code_postal,
@@ -471,7 +513,7 @@ def post_commerce_info():
     try:  # catch the exception if the commerce already exists in the database
         res = db.post_commerce_info(cnom=cnom,
                                     cpresentation=cpresentation,
-                                    cemail=cemail, aid=aid,
+                                    cemail=cemail, aid=int(aid),
                                     cmdp=cmdp, rue_and_num=rue_and_num,
                                     code_postal=code_postal, url_ext=url_ext,
                                     latitude=latitude,
@@ -482,31 +524,40 @@ def post_commerce_info():
             catnom = catnom.split(",")
             for x in catnom:
                 db.post_commerce_categorie(catnom=x, cid=p)
-            return jsonify({'is_registered': True}), 201
+            return jsonify({'status': 'ok'}), 201
         else:
-            return jsonify({'is_registered': True}), 201
+            return jsonify({'status': 'ok'}), 201
     except Exception as e:
         # return str(e)
-        return jsonify({'is_registered': False}), 400
+        return jsonify({'status': 'error 400', 'message': 'something went wrong!'}), 400
 
 
-@app.route('/logincommerce', methods=["GET", "POST"])
+
+@app.route('/logincommerce', methods=["POST"])
 def check_commerce_get_cid():
     cemail, cmdp = PARAMS.get('cemail', None), PARAMS.get('cmdp', None)
     if (cemail is None) or (cmdp is None):
-        return Response(status=400)
+        return jsonify({"status" : "error", "message" : "Invalid email or password"})
+        #return jsonify(Response(status=400))
+        
     else:
         res = list(db.fetch_login_commerce(cemail=cemail))
-        status = db.check_commerce_active(cid=res[0][0])
         if len(res) == 0:
-            return Response(status=401)
+            return jsonify({"status" : "error", "message" : "Invalid email or password"}), 401
         elif check_password_hash(res[0][2], cmdp):
+            status = db.check_commerce_active(cid=res[0][0])
+        #elif cmdp==res[0][2]:
             if status[0][0]:
-                return jsonify({'is_logged_in': True, 'token': encode_auth_token(res[0][0], user_type='commerce')}), 200
+                dict_new = {
+                    "status" : "ok",
+                    "token" : encode_auth_token(res[0][0], user_type='commerce')
+                }
+                return jsonify(dict_new), 200
             else:
-                return jsonify({'is_logged_in': False}), 401
+                return jsonify({"status" : "error", "message" : "Invalid email or password"}), 401
         else:
-            return jsonify({'is_logged_in': False}), 401
+            return jsonify({"status" : "error", "message" : "Invalid email or password"}), 401
+        
 
 @app.route('/mycommerce', methods=['DELETE'])
 def delete_commerce_info():
@@ -592,11 +643,11 @@ def validate_image(stream):
 
 
 def f_update_image(nameFolder, id, databaseFunction, uploaded_file, ranksFunction):
-    filename=upload_image(uploaded_file)
+    filename=upload_picture(uploaded_file)
     uploaded_file.save(os.path.join(app.config[nameFolder], filename))
     #gen_thumbnail(filename, 'UPLOAD_PATH_PROMOTION')
     res=ranksFunction(id)
-    res= databaseFunction(filename, int(res)+1, id)
+    res= databaseFunction(filename, str(res[0][0]), id)
     db.commit()
     return res
 
@@ -698,39 +749,40 @@ def delete_image(pid):
             imageImid = PARAMS.get("imageImid", None)
             res=db.delete_promotion_image(pid=pid, imid=imageImid)
             os.remove(os.path.join(app.config['UPLOAD_PATH_PROMOTION'], res))
-            return "",204
+            return "", 204
     else:
         return Response(status=401)
 
 
-@app.route('/commerce/<int:cid>/image', methods=['POST'])
-def upload__commerce_image(cid):
-    uploaded_file = request.files['file']
-    #Authorization checks 
-    auth_token = PARAMS.get("token", '')
-    if is_authorized(auth_token, user_id=cid, user_type='commerce'):
+@app.route('/commerce/image', methods=['POST'])
+def upload_commerce_image():
+    uploaded_file = request.files['inpFile']
+    auth_token = PARAMS.get("token", None)
+    #return repr(uploaded_file.read())
+    #return jsonify(upload_file.filename)
+    #return uploaded_file.filename
+    
+    cid = is_authorized_no_id(auth_token, user_type='commerce')
+    if cid:
         try:
-            res = f_update_image('UPLOAD_PATH_COMMERCE',
-                            cid,
-                            lambda x, y, z: db.post_commerce_image(filename=x,
-                                                                ranks=y,
-                                                                cid=z),
-                            ranks,
+            res = f_update_image('UPLOAD_PATH_COMMERCE', cid, lambda x, y, z: db.post_commerce_image(imgname=x,ranks=y,cid=z),
                             uploaded_file ,
-                            lambda x: db.get_rank_last_image_commerce(cid=x))
+                            lambda x: db.get_rank_last_image_commerce(cid=x) )         
             return jsonify(res)
         except Exception as e:
+            return jsonify("Dfkjn")
             return Response(status=400)
     else:
         return Response(status=401)
 
 
 #to delete all images of a commerce
-@app.route('/commerce/<int:cid>/images', methods=['DELETE'])
+@app.route('/commerce/image', methods=['DELETE'])
 def delete_commerce_images(cid):
     #Authorization checks 
     auth_token = PARAMS.get("token", '')
-    if is_authorized(auth_token, user_id=cid, user_type='commerce'):
+    cid = is_authorized_no_id(auth_token, user_type='commerce')
+    if cid:
         f_delete_images(
             'UPLOAD_PATH_COMMERCE',
             cid,
@@ -753,8 +805,10 @@ def change_rank_commerce(cid):
     return '', 204
 
 
-@app.route('/commerce/<int:cid>/image', methods=['GET'])
-def get_images_commerce(cid):
+@app.route('/get/commerce/image', methods=['POST', 'GET'])
+def get_images_commerce():
+    auth_token = PARAMS.get("token", None)
+    cid = is_authorized_no_id(auth_token, user_type='commerce')
     res = db.get_commerce_image(cid=cid)
     return jsonify(res)
 
@@ -771,6 +825,13 @@ def delete_image_commerce(cid):
     else:
         return Response(status=401)
 
+@app.route('/template/commerceImage/<path:path>')
+def send_pic(path):
+    return send_from_directory('templates/commerceImage', path)
+
+@app.route('/commerceImage/<path:path>')
+def send_pic_commerce(path):
+    return send_from_directory('commerceImage', path)
 
 @app.route('/commerce/verify', methods=["PATCH"])
 def verify():
