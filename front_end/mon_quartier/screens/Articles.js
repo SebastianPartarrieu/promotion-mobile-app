@@ -22,6 +22,10 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Fontisto from 'react-native-vector-icons/Fontisto'
 import { useEffect } from "react";
 
+import server from "../constants/Server";
+
+
+
 const { width } = Dimensions.get("screen");
 
 const thumbMeasure = (width - 48 - 32) / 3;
@@ -30,8 +34,7 @@ const cardWidth = width - theme.SIZES.BASE * 2;
 
 
 function sendArticlesRequest(updateFunction,route){
-  const url = new URL(route, 'http://0.0.0.0:5000/')
-
+  const url = new URL(route, server.server)
 
   fetch(url, {
     method : 'GET'
@@ -46,25 +49,67 @@ var k=0;
 function Articles(props) {
 
     var [articles, setArticles] = React.useState([])
+    var [images, setImages] = useState([])
+    
+
     function updateFunction(response){
       { 
         articles = setArticles(response['resultat'])
+        images = setImages(response['images'])
         
         }
     }
     k=1;
  
+    
     useEffect( ()=>{sendArticlesRequest(updateFunction, "commerce");}, []);
- if (articles.length == 0 ) {return(
+
+ if (articles.length == 0 ) {
+  
+  return(
       <Block center>
         <Text>pas d'articles</Text>
       </Block>
         )}
 
-    console.log(articles)
+    //console.log(articles)
     var i = 0;
     var suggestions = [];
-    while(i<3){suggestions.push(articles[i]), i+=1};
+    //while(i<6){suggestions.push(articles[i]), i+=1};
+
+    function Suggest(){
+      var buffer = [];
+      //var n = resultat.length;
+      var n = 3;
+
+      for(var iter = 0; iter < n; iter++){
+  
+        const id = iter;
+        buffer.push(
+          <Block style={styles.productItem} >     
+            <Card item={articles[id]} im ={images[id]} full />
+          </Block>
+        )
+      }
+      return(buffer)
+    }
+
+    function SmallSlide(){
+      var buffer = [];
+      var n = articles.length;
+  
+      for(var iter = 0; iter < n; iter++){
+
+      const id = iter;
+      buffer.push(
+      <Block style={styles.productScroll}>
+        <Card 
+          item={articles[id]}
+          im = {images[id]}/>
+      </Block>)
+      }
+      return(buffer)
+    }
 
 
     const { navigation } = props;
@@ -114,12 +159,7 @@ function Articles(props) {
               paddingHorizontal: theme.SIZES.BASE / 2
               }}
             >
-              {categories &&
-                suggestions.map((item, index) =>
-                <Block style={styles.productItem} >
-                  <Card item={item} full />
-                </Block>
-                )}
+            <Suggest/>
             </ScrollView>
           </Block>
           <Text bold size={16} style={styles.title}>
@@ -199,27 +239,14 @@ function Articles(props) {
               paddingRight: Platform.OS === 'android' ? 20 : 0
             }}
           >
-            {articles.map((article, index) => (
-            <Block style={styles.productScroll}>
-              <Card item={article}/>
-            </Block>
-            ))}
+            <SmallSlide/>
           </ScrollView>
         </Block>
         <Block flex>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-            <Card item={articles[0]} horizontal />
             <Block flex row>
-              <Card
-                item={articles[1]}
-                style={{ marginRight: theme.SIZES.BASE }}
-              />
-              <Card item={articles[2]} />
-            </Block>
-            <Card item={articles[4]} full />
-           
-          </Block>
-          
+            </Block>           
+          </Block>          
         </Block>
       </Block>
       </ScrollView>

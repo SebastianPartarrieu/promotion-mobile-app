@@ -92,7 +92,7 @@ class DrawerItem extends React.Component {
         onPress={() =>
           title == "Getting Started"
             ? Linking.openURL(
-                "https://demos.creative-tim.com/argon-pro-react-native/docs/"
+                "http://httpbin.org/ip"
               ).catch(err => console.error("An error occurred", err))
             : navigation.navigate(title)
         }

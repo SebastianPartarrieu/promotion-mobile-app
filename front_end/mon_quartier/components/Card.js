@@ -7,9 +7,13 @@ import Profile from '../screens/Profile';
 import { argonTheme } from '../constants';
 import { articles } from '../constants';
 
+import server from "../constants/Server";
+
 class Card extends React.Component {
   render() {
-    const { navigation, item, horizontal, full, style, ctaColor, imageStyle } = this.props;
+    const { navigation, item,im, horizontal, full, style, ctaColor, imageStyle } = this.props;
+
+
     const imageStyles = [
       full ? styles.fullImage : styles.horizontalImage,
       imageStyle
@@ -19,22 +23,25 @@ class Card extends React.Component {
       horizontal ? styles.horizontalStyles : styles.verticalStyles,
       styles.shadow
     ];
-
+    if (im != undefined){
     return (
       <Block row={horizontal} card flex style={cardContainer}>
-        <TouchableWithoutFeedback o onPress = {() => navigation.navigate('Profile', {comm : item})}>
+        <TouchableWithoutFeedback o onPress = {() => navigation.navigate('Profile', {comm : item, imm:im})}>
           <Block flex style={imgContainer}>
-            <Image source={{uri: item[8]}} style={imageStyles} resizeMode="contain"/>
+            <Image source={{uri: server.server + im[0] }} style={imageStyles} resizeMode="contain"/>
           </Block>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback  onPress = {() => navigation.navigate('Profile', {comm : item})}>
+        <TouchableWithoutFeedback  onPress = {() => navigation.navigate('Profile', {comm : item, imm:im})}>
           <Block flex space="between" style={styles.cardDescription}>
             <Text bold center size={15} style={styles.cardTitle}>{item[1]}</Text>
             <Text numberOfLines={1} style={styles.cardDescription}>{item[2]}</Text>
           </Block>
         </TouchableWithoutFeedback>
       </Block>
-    );
+    )}
+    else {
+    return(<Block></Block>);
+  }
   }
 }
 

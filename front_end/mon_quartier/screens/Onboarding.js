@@ -13,6 +13,8 @@ import { Button, Icon, Input } from "../components";
 import { Images, argonTheme } from "../constants";
 import { string } from "prop-types";
 
+import server from "../constants/Server";
+
 const { width, height } = Dimensions.get("screen");
 
 var { token } = '';
@@ -22,7 +24,8 @@ var error_text = '#0000';
 
 
 function sendLoginRequest(username,password,updateFunction,route){
-  const url = new URL(route, 'http://localhost:5000/')
+  //console.log(server.server)
+  const url = new URL(route, server.server)
   url.searchParams.append('clemail',username)
   url.searchParams.append('clmdp',password)
 
@@ -36,7 +39,7 @@ function sendLoginRequest(username,password,updateFunction,route){
 
 function Onboarding({ navigation }){
     var [error_text, setError_text] = useState('#0000') ; 
-    navigation.navigate('App')
+    //navigation.navigate('App')
     
     function updateFunction(response){
       {

@@ -1,6 +1,6 @@
 export default [
   {
-    nom: "Mines de Paris",
+    nom: "Mines de Pariis",
     adresse: "60 Boulevard Saint-Michel, 75272 Paris",
     description: "L'École nationale supérieure des mines de Paris, aussi connue sous les noms de École des mines de Paris ou simplement « les Mines », et plus récemment de MINES ParisTech, est l'une des 205 écoles d'ingénieurs françaises accréditées au 1ᵉʳ septembre 2019 à délivrer un diplôme d'ingénieur.",
     coordinates:{
