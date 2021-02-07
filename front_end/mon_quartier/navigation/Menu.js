@@ -28,9 +28,7 @@ function sendArticlesRequest(updateFunction,route){
 
 
 function CustomDrawerContent({ drawerPosition, navigation, profile, focused, state, ...rest }) {
-  
-  
-  
+
   
   var [articles, setArticles] = React.useState([])
   function updateFunction(response){
@@ -54,6 +52,31 @@ function CustomDrawerContent({ drawerPosition, navigation, profile, focused, sta
     "Elements",
     "Map",
   ];
+
+  function MenuMaker(){
+
+    var buffer = [];
+    const n = 4;
+
+    for(var iter = 0; iter < n; iter++){
+
+      const id = iter;
+      buffer.push(
+        <Block>
+        <DrawerCustomItem
+          title={screens[id]}
+          key={id}
+          navigation={navigation}
+          //focused={state.index === index ? true : false}
+        />
+        </Block>
+
+      )
+    }
+    return(buffer)
+
+  } 
+  
   return (
     <Block
       style={styles.container}
@@ -64,22 +87,8 @@ function CustomDrawerContent({ drawerPosition, navigation, profile, focused, sta
       </Block>
       <Block flex style={{ paddingLeft: 8, paddingRight: 14 }}>
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-          {screens.map((item, index) => {
-              return (
-                <Block>
-                <DrawerCustomItem
-                  title={item}
-                  key={index}
-                  navigation={navigation}
-                  focused={state.index === index ? true : false}
-                />
-                <Button 
-                  title='hey'
-                  onPress={() => navigation.navigate('Map', {comm : articles})}>
-                </Button>
-                </Block>
-              );
-            })}
+
+            <MenuMaker/>
             <Block flex style={{ marginTop: 24, marginVertical: 8, paddingHorizontal: 8 }}>
               <Block style={{ borderColor: "rgba(0,0,0,0.2)", width: '100%', borderWidth: StyleSheet.hairlineWidth }}/>
               <Text color="#8898AA" style={{ marginTop: 16, marginLeft: 8 }}>DOCUMENTATION</Text>

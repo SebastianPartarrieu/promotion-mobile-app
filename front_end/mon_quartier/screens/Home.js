@@ -8,11 +8,12 @@ import { token } from './Onboarding';
 import Onboarding from './Onboarding';
 const { width } = Dimensions.get('screen');
 
-class Accueil extends React.Component {
-  
-  renderArticles = () => {
-    
+function Accueil () {
+
     return (
+      <Block flex center style={styles.home}>
+        <Text>W
+        </Text>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.articles}>
@@ -29,17 +30,10 @@ class Accueil extends React.Component {
           <Card item={articles[4]} full />
         </Block>
       </ScrollView>
+      </Block>
     )
   }
 
-  render() {
-    return (
-      <Block flex center style={styles.home}>
-        {this.renderArticles()}
-      </Block>
-    );
-  }
-}
 
 const styles = StyleSheet.create({
   home: {

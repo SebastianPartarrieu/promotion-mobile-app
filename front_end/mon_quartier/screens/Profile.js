@@ -31,6 +31,8 @@ const thumbMeasure = (width - 48 - 32) / 3;
 export default function Profile(props) {
 
   COMMERCE = props.KOM;
+  IMAGES = props.IMAGES;
+
   const ID = COMMERCE[0];
   const NOM = COMMERCE[1]
   const DESC = COMMERCE[2];
@@ -42,7 +44,7 @@ export default function Profile(props) {
   //const IMAGES = COMMERCE[8];
   
 
-  console.log(COMMERCE)
+  console.log(IMAGES[0])
 
 
   return (
@@ -84,23 +86,16 @@ export default function Profile(props) {
               </MapView>
             </Block>
               <Block middle style={ProfileStyles.avatarContainer}>
+
                 <Block style={ProfileStyles.avatar}>
-                <ScrollView
-                  horizontal={true}
-                  pagingEnabled={true}
-                  decelerationRate={0}
-                  scrollEventThrottle={16}
-                  snapToAlignment="center"
-                  showsHorizontalScrollIndicator={true}
-                  > 
                   <Image
 
-                    source={{ uri: '' }}
+                    source={{ uri: 'http://localhost:5000/' + IMAGES[0] }}
                     flex
                     style={{margin:10}}
                     resizeMode="contain"
                   />
-                </ScrollView>
+
                 </Block>
               </Block>
               <Block >

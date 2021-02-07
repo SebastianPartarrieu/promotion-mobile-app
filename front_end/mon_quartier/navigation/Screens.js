@@ -1,13 +1,15 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect, useRef, useCallback } from "react";
 import { Easing,
          Animated, 
          Dimensions, 
          View, 
-         Text, 
+         Text,
+         TextInput,
          ScrollView, 
          StyleSheet, 
          ImageBackground, 
-         Image
+         Image,
+         SegmentedControlIOSComponent
          } from "react-native";
 
 import { createStackNavigator } from "@react-navigation/stack";
@@ -32,7 +34,7 @@ import CustomDrawerContent from "./Menu";
 
 // header for screens
 import { Icon, Header, Button, List } from "../components";
-import { Images, argonTheme, tabs } from "../constants";
+import { Images, argonTheme, tabs, articles } from "../constants";
 import { HeaderHeight } from "../constants/utils";
 import Input from '../components/Input';
 
@@ -47,11 +49,23 @@ const Tab = createBottomTabNavigator();
 
 
 function searchStack(props) {
+
+  const navigation = props.navigation
+
+  var first_input = ''
+
+  if (props.route.params == undefined) {
+    first_input = ''
+
+  } else {
+    first_input = props.route.params.first_input
+  }
+
   return (
     <Stack.Navigator mode="card" headerMode="screen">
       <Stack.Screen
         name="Elements"
-        component={Elements}
+        //component={Elements}
         options={{
           header: ({ navigation, scene }) => (
             <Header 
@@ -63,7 +77,10 @@ function searchStack(props) {
           ),
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
-      />
+      >
+        {props => <Elements {...{f_input : first_input,navigation : navigation}} />}
+        
+      </Stack.Screen>
     </Stack.Navigator>
   );
 }
@@ -100,9 +117,17 @@ function sendSearchRequest(search,updateFunction,route){
 
 
 
-function Elements ({navigation}){
+
+function Elements (props){
+
+
+  const first_input = props.f_input;
+  const navigation = props.navigation;
+
+
 
   var [resultat, setResultat] = useState([])
+  var [images, setImages] = useState([])
 
   function SearchResults(){
     var buffer = [];
@@ -111,7 +136,7 @@ function Elements ({navigation}){
     for(var iter = 0; iter < n; iter++){
 
       const id = iter;
-      buffer.push(<Button onPress = {() => navigation.navigate('Profile', {comm : resultat[id]})} color="secondary" textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }} style={styles.button}>{resultat[iter][1]}</Button>);
+      buffer.push(<Button onPress = {() => navigation.navigate('Profile', {comm : resultat[id],imm : images[id]})} color="secondary" textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }} style={styles.button}>{resultat[iter][1]}</Button>);
 
     }
     
@@ -121,21 +146,47 @@ function Elements ({navigation}){
   function updateFunction(response){
     { //console.log(response),
       resultat = setResultat(response['resultat'])
-      }
+      images = setImages(response['images'])
+    }
   }
+
+  useEffect( ()=>{sendSearchRequest(first_input,updateFunction, "commerce");}, []);
+
+  const inputElement = useRef(null);
+
+
+  
+  //useEffect(() =>{if (inputElement.current){inputElement.current.focus();}},[]);
+
   return (
     <Block>
+      <TextInput
+        ref = {inputElement => {if (inputElement) {
+          inputElement.focus();
+        }}}
 
-      <Input
         right
+        defaultValue={first_input}
+        autoFocus
+        maxLength = {30}
         onChangeText = {(text) => (sendSearchRequest(text,updateFunction,"commerce"))}        
         color="black"
-        style={styles.search}
+        style = {{
+              height: 50,
+              width: width - 32,
+              marginHorizontal: 16,
+              marginVertical: 10,
+              borderWidth: 1,
+              borderRadius: 5,
+              backgroundColor: 'white',
+              borderColor: argonTheme.COLORS.BORDER}}
         placeholder="Que recherchez vous?"
         placeholderTextColor={'#8898AA'}
         //onFocus={() => navigation.navigate('Pro')}
         iconContent={<Icon size={16} color={theme.COLORS.MUTED} name="search-zoom-in" family="ArgonExtra" />}
-      />
+
+        />
+
     <ScrollView>
     <Block flex>
       <Text bold size={16} style={styles.title}>
@@ -161,6 +212,9 @@ function ProfileStack(props){
     //console.log("======================== ")
     
     const COMMERCE = props.route.params['comm']
+    const IMAGES = props.route.params['imm']
+    
+    
 
 
 
@@ -190,7 +244,7 @@ function ProfileStack(props){
           headerTransparent: true
         }}
       >
-        {props => <Profile {...{KOM: COMMERCE}} />}
+        {props => <Profile {...{KOM: COMMERCE, IMAGES:IMAGES}} />}
       </Stack.Screen>
 
     </Stack.Navigator>
@@ -202,7 +256,7 @@ function ProfileStack(props){
 
 
 function MapStack(props) {
-  const articles = props.route.params['comm']
+  //const articles = props.route.params['comm']
   return (
     <Stack.Navigator initialRouteName="Map" mode="card" headerMode="screen" params='Joe'>
       <Stack.Screen

@@ -32,16 +32,17 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 
 
 
-
-
-
  
  function Map ({navigation}){
   
 
+
+
+
   function MapUpdateFunction(response){
     { //console.log(response),
       articles = setArticles(response['resultat'])
+      images = setImages(response['images'])
       }
   }
   
@@ -49,6 +50,8 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 
   //var [articles, setArticles] = useState(props.KOM);
   var [articles, setArticles] = useState([]);
+  var [images, setImages] = useState([]);
+
 
   console.log(articles)
 
@@ -81,11 +84,11 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
       buffer.push(
       <View style={styles.card} key={id} >
 
-        <Image source={{uri: ''}} style={styles.cardImage} resizeMode="contain"/>
+        <Image source={{uri: 'http://localhost:5000/' + images[id]}} style={styles.cardImage} resizeMode="contain"/>
     
         <View style={styles.textContent}>
         <TouchableOpacity
-          onPress = {() => navigation.navigate('Profile', {comm : articles[id]})}
+          onPress = {() => navigation.navigate('Profile', {comm : articles[id],imm : images[id]})}
           >
           <Text numberOfLines={1} style={styles.cardtitle}>{articles[id][1]}
           </Text>
