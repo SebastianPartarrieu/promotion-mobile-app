@@ -64,7 +64,11 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
     for(var iter = 0; iter < n; iter++){
 
       const id = iter;
-      buffer.push(<MapView.Marker key={id} coordinate={{latitude: articles[id][6], longitude: articles[id][7]}} onPress={(e)=>onMarkerPress(e)}><Animated.View style={[styles.markerWrap]}><Animated.Image source={require('../assets/imgs/pin.png')} style={[styles.marker, /* scaleStyle */]} resizeMode="contain"/></Animated.View></MapView.Marker>)
+      buffer.push(<MapView.Marker key={id} coordinate={{latitude: articles[id][6], longitude: articles[id][7]}} onPress={(e)=>onMarkerPress(e)}>
+                    <Animated.View style={[styles.markerWrap]}>
+                      <Animated.Image source={require('../assets/imgs/pin.png')} style={[styles.marker, /* scaleStyle */]} resizeMode="contain"/>
+                    </Animated.View>
+                  </MapView.Marker>)
     }
     return(buffer)
   } 
@@ -283,7 +287,7 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
         )}
       >
 
-      <SetEtiquettes/>
+        <SetEtiquettes/>
       </Animated.ScrollView>
     </View>
   );
