@@ -12,13 +12,15 @@ import { Button, Icon, Input } from "../components";
 import { Images, argonTheme } from "../constants";
 import { string } from "prop-types";
 
+import server from "../constants/Server";
+
 const { width, height } = Dimensions.get("screen");
 
 
 
 
 function sendRegisterRequest(lastname,firstname,username,password,updateFunction,route){
-  const url = new URL(route, 'http://localhost:5000/')
+  const url = new URL(route, server.server)
 
   url.searchParams.append('clnom',lastname)
   url.searchParams.append('clpnom',firstname)

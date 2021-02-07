@@ -38,6 +38,8 @@ import { Images, argonTheme, tabs, articles } from "../constants";
 import { HeaderHeight } from "../constants/utils";
 import Input from '../components/Input';
 
+import server from "../constants/Server";
+
 
 
 const { width } = Dimensions.get("screen");
@@ -87,7 +89,7 @@ function searchStack(props) {
 
 function sendImageRequest(id,route){
 
-  const url = new URL(route, 'http://localhost:5000/')
+  const url = new URL(route, server.server)
   url.searchParams.append('search',search)
 
   fetch(url, {
@@ -102,7 +104,7 @@ function sendImageRequest(id,route){
 
 
 function sendSearchRequest(search,updateFunction,route){
-  const url = new URL(route, 'http://localhost:5000/')
+  const url = new URL(route, server.server)
   url.searchParams.append('search',search)
 
   fetch(url, {

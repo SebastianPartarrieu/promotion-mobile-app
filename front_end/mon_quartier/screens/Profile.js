@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {
   StyleSheet,
   Dimensions,
-  ScrollView,
+  ScrollView, 
   Image,
   ImageBackground,
   Platform,

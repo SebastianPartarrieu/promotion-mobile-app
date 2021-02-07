@@ -7,6 +7,8 @@ import Profile from '../screens/Profile';
 import { argonTheme } from '../constants';
 import { articles } from '../constants';
 
+import server from "../constants/Server";
+
 class Card extends React.Component {
   render() {
     const { navigation, item,im, horizontal, full, style, ctaColor, imageStyle } = this.props;
@@ -26,7 +28,7 @@ class Card extends React.Component {
       <Block row={horizontal} card flex style={cardContainer}>
         <TouchableWithoutFeedback o onPress = {() => navigation.navigate('Profile', {comm : item, imm:im})}>
           <Block flex style={imgContainer}>
-            <Image source={{uri: 'http://localhost:5000/' + im[0] }} style={imageStyles} resizeMode="contain"/>
+            <Image source={{uri: server.server + im[0] }} style={imageStyles} resizeMode="contain"/>
           </Block>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback  onPress = {() => navigation.navigate('Profile', {comm : item, imm:im})}>

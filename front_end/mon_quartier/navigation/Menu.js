@@ -11,11 +11,13 @@ import { Block, Text, theme } from "galio-framework";
 import Images from "../constants/Images";
 import { DrawerItem as DrawerCustomItem } from '../components';
 
+import server from "../constants/Server";
+
 
 
 
 function sendArticlesRequest(updateFunction,route){
-  const url = new URL(route, 'http://0.0.0.0:5000/')
+  const url = new URL(route, server.server)
 
 
   fetch(url, {

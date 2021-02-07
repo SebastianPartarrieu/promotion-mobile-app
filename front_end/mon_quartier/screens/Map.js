@@ -24,6 +24,11 @@ import Fontisto from 'react-native-vector-icons/Fontisto'
 //import articles from "../constants/articles";
 import {sendSearchRequest} from "../navigation/Screens";
 import {RetroStyle} from "../constants/MapData";
+
+import server from "../constants/Server";
+
+
+
 const { width, height } = Dimensions.get("window");
 const CARD_HEIGHT = 220;
 const CARD_WIDTH = width * 0.8;
@@ -84,7 +89,7 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
       buffer.push(
       <View style={styles.card} key={id} >
 
-        <Image source={{uri: 'http://localhost:5000/' + images[id]}} style={styles.cardImage} resizeMode="contain"/>
+        <Image source={{uri: server.server + images[id]}} style={styles.cardImage} resizeMode="contain"/>
     
         <View style={styles.textContent}>
         <TouchableOpacity

@@ -13,6 +13,8 @@ import { Images, argonTheme } from "../constants";
 import { string } from "prop-types";
 import Onboarding from "./Onboarding";
 
+import server from "../constants/Server";
+
 const { width, height } = Dimensions.get("screen");
 
 
@@ -20,7 +22,7 @@ const { width, height } = Dimensions.get("screen");
 
 function getInfos(token,updateFunction,route){
 
-  const url = new URL(route, 'http://localhost:5000/')
+  const url = new URL(route, server)
 
   url.searchParams.append('token',token)
 

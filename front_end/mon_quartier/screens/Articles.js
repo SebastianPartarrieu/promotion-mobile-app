@@ -22,6 +22,10 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Fontisto from 'react-native-vector-icons/Fontisto'
 import { useEffect } from "react";
 
+import server from "../constants/Server";
+
+
+
 const { width } = Dimensions.get("screen");
 
 const thumbMeasure = (width - 48 - 32) / 3;
@@ -30,7 +34,7 @@ const cardWidth = width - theme.SIZES.BASE * 2;
 
 
 function sendArticlesRequest(updateFunction,route){
-  const url = new URL(route, 'http://0.0.0.0:5000/')
+  const url = new URL(route, server.server)
 
   fetch(url, {
     method : 'GET'
