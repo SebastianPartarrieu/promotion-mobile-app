@@ -240,25 +240,26 @@ def is_authorized_no_id(auth_token, user_type='commerce', check_active=True):
 #
 # general information about the application
 #
-@app.route('/')
-def index():
-    return render_template('page_principale.html')
 
-@app.route('/login/commerce')
-def logincommerce_html():
-    return render_template('login.html')
+# @app.route('/')
+# def index():
+#     return render_template('page_principale.html')
 
-@app.route('/logout/commerce')
-def logoutcommerce_html():
-    return render_template('logout.html')
+# @app.route('/login/commerce')
+# def logincommerce_html():
+#     return render_template('login.html')
 
-@app.route('/commercemon-compte')
-def mon_compte():
-    return render_template('comptetest.html')
+# @app.route('/logout/commerce')
+# def logoutcommerce_html():
+#     return render_template('logout.html')
 
-@app.route('/addPromotion')
-def add_promotion():
-    return render_template('addPromotion.html')
+# @app.route('/commercemon-compte')
+# def mon_compte():
+#     return render_template('comptetest.html')
+
+# @app.route('/addPromotion')
+# def add_promotion():
+#     return render_template('addPromotion.html')
 
 @app.route('/modifierPromotion')
 def modifier_promotion():
@@ -314,10 +315,8 @@ def get_commerce():
     for i, element in enumerate(res):
         current_id = element[0]
         img_paths = db.get_commerce_image(cid=current_id) #path, rank, imid
-        app.logger.debug(img_paths)
         ordered_paths_by_rank = sorted([tup for tup in img_paths], key=lambda x: x[1]) #sort by ranks
         ordered_paths_by_rank = [tup[0] for tup in ordered_paths_by_rank]
-        app.logger.debug(ordered_paths_by_rank)
         element = list(element)
         #element.append(ordered_paths_by_rank)
         images.append(ordered_paths_by_rank)
@@ -434,7 +433,7 @@ def fetch_promotion_of_commerce():
     else:
         return jsonify({'status': 'error 400', 'message': 'Something went wrong!'})
 
-@app.route('/commerce/<int:cid>/promotion', methods=['GET'])
+@app.route('/commerce/<int:cid>/promotion', methods=['GET', 'POST'])
 def fetch_promotion_of_commerce_no_id(cid):
     res = db.fetch_promotion_of_commerce(cid=int(cid))
     images = []
@@ -572,9 +571,9 @@ def check_commerce_get_cid():
         res = list(db.fetch_login_commerce(cemail=cemail))
         if len(res) == 0:
             return jsonify({"status" : "error", "message" : "Invalid email or password"}), 401
-        #elif check_password_hash(res[0][2], cmdp):
         
-        elif cmdp==res[0][2]:
+        #elif cmdp==res[0][2]:
+        elif check_password_hash(res[0][2], cmdp):
             status = db.check_commerce_active(cid=res[0][0])
             if status[0][0]:
                 dict_new = {

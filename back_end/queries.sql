@@ -32,7 +32,7 @@ FROM Commerce AS c
 JOIN CommerceCategorie AS cc USING (cid)
 JOIN Categorie AS ca USING (catid)
 JOIN Agglomeration AS a USING (aid)
-WHERE a.anom LIKE :agg AND ca.catnom LIKE :cat AND c.cnom LIKE '%%' || :search || '%%' 
+WHERE a.anom LIKE :agg AND ca.catnom LIKE '%%'||:cat||'%%' AND c.cnom LIKE '%%' || :search || '%%' 
 ORDER BY 1;
 
 --name: get_client_info

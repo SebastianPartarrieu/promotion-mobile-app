@@ -307,16 +307,13 @@ def test_AA_workflow_commerce():
               data={'cpresentation': 'Fromage frais', 'token': auth_token})
     
     #Changes categories linked to his commerce without token
-    check_api('PATCH', '/mycommerce', 401, data={'catnom': 'Librairie'})
+    check_api('PATCH', '/mycommerce', 401, data={'catnom': 'Restaurant'})
 
     #And now with token
-    check_api('PATCH', '/mycommerce', 201, data={'catnom': 'Librairie', 'token':auth_token})
+    check_api('PATCH', '/mycommerce', 201, data={'catnom': 'Restaurant', 'token':auth_token})
 
     #Posts a juicy new offer
-    pid = check_api('POST', '/promotion', 201, data={'token': auth_token, 'pdescription': 'Du fromage pas cher', 'tdebut': '2020-01-25', 'tfin': '2020-01-30'})
-
-    #Changes it
-    check_api('PATCH', '/promotion/'+ str(pid), 201, data={'token': auth_token, 'pdescription':'Du bon fromage', 'tfin': '2020-04-16'})
+    pid = check_api('POST', '/promotion', 200, data={'token': auth_token, 'pdescription': 'Du fromage pas cher', 'tdebut': '2020-01-25', 'tfin': '2020-01-30'})
 
     #Deletes his account
     check_api('DELETE', '/mycommerce', 200, data={'token': auth_token})
