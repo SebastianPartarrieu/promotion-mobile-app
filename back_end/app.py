@@ -544,9 +544,10 @@ def check_commerce_get_cid():
         res = list(db.fetch_login_commerce(cemail=cemail))
         if len(res) == 0:
             return jsonify({"status" : "error", "message" : "Invalid email or password"}), 401
-        elif check_password_hash(res[0][2], cmdp):
+        #elif check_password_hash(res[0][2], cmdp):
+        
+        elif cmdp==res[0][2]:
             status = db.check_commerce_active(cid=res[0][0])
-        #elif cmdp==res[0][2]:
             if status[0][0]:
                 dict_new = {
                     "status" : "ok",
@@ -573,11 +574,11 @@ def delete_commerce_info():
 
 @app.route('/promotion', methods=["POST"])
 def post_promotion():
+    
     #Getting info of promotion from HTTP request
     pdescription = PARAMS.get('pdescription', None)
     tdebut = PARAMS.get('tdebut', None) #maybe check for right format and better default option
     tfin = PARAMS.get('tfin', None)
-    #Authorization check
     auth_token = PARAMS.get("token", '')
     cid_token = is_authorized_no_id(auth_token, user_type="commerce")
     if cid_token:
@@ -587,11 +588,13 @@ def post_promotion():
                               tfin=tfin,
                               cid=int(cid_token))
             p = int(res[0][0])
-            return jsonify(p), 201
+            
+            return jsonify({"status" : "ok", "pid" :p}), 200
+                   
         except Exception as e:
-            return Reponse(status=400)
+            return jsonify({"status" : "error", "message" : "Invalid email or password"}), 400
     else:
-        return Response(status=401)
+        return jsonify({"status" : "error", "message" : "Invalid email or password"}), 401
 
 @app.route('/promotion/<int:pid>', methods=['PATCH', 'PUT'])
 def patch_promotion(pid):
@@ -647,7 +650,7 @@ def f_update_image(nameFolder, id, databaseFunction, uploaded_file, ranksFunctio
     uploaded_file.save(os.path.join(app.config[nameFolder], filename))
     #gen_thumbnail(filename, 'UPLOAD_PATH_PROMOTION')
     res=ranksFunction(id)
-    res= databaseFunction(filename, str(res[0][0]), id)
+    res= databaseFunction(filename, 1, id)
     db.commit()
     return res
 
@@ -661,28 +664,27 @@ def f_delete_images(nameFolder, id, databaseFunction):
 
 @app.route('/promotion/<int:pid>/image', methods=['POST'])
 def upload_image(pid):
-    uploaded_file = request.files['file']
-    # Authorization checks
-    auth_token = PARAMS.get("token", '')
-    cid_associated_to_pid = db.fetch_cid_of_pid(pid=pid)
-    cid_token = is_authorized_no_id(auth_token, user_type='commerce')
-    #check if commerce token is valid
-    if cid_token:
+    uploaded_file = request.files['inpFile']
+    auth_token = PARAMS.get("token", None)
+    cid = is_authorized_no_id(auth_token, user_type='commerce')
+    if cid:
+        cid_associated_to_pid = db.fetch_cid_of_pid(pid=pid)
         #check if commerce is modifying own image
-        if int(cid_associated_to_pid[0][0]) != int(cid_token):
+        if int(cid_associated_to_pid[0][0]) != int(cid):
             return Response(status=401)
         else:
             try:
                 res = f_update_image(
                     'UPLOAD_PATH_PROMOTION',
                     pid,
-                    lambda x, y, z: db.post_promotion_image(filename=x,
+                    lambda x, y, z: db.post_promotion_image(imgname=x,
                                                             ranks=y,
                                                             pid=z),
                     uploaded_file,
                     lambda x: db.get_rank_last_image_promotion(pid=x)) 
                 return jsonify(res)
             except Exception as e:
+                return "fjbh"
                 return Response(status=400)       
     else:
         return Response(status=401)
@@ -733,6 +735,12 @@ def get_images(pid):
     res = db.get_promotion_image(pid=pid)
     return jsonify(res)
 
+@app.route('/get/promotion/image', methods=['POST', 'GET'])
+def get_images_promotions():
+    auth_token = PARAMS.get("token", None)
+    cid = is_authorized_no_id(auth_token, user_type='commerce')
+    res = db.get_promotion_images(cid=cid)
+    return jsonify(res)
 
 @app.route('/promotion/<int:pid>/image', methods=['DELETE'])
 def delete_image(pid):
@@ -758,10 +766,6 @@ def delete_image(pid):
 def upload_commerce_image():
     uploaded_file = request.files['inpFile']
     auth_token = PARAMS.get("token", None)
-    #return repr(uploaded_file.read())
-    #return jsonify(upload_file.filename)
-    #return uploaded_file.filename
-    
     cid = is_authorized_no_id(auth_token, user_type='commerce')
     if cid:
         try:
@@ -770,7 +774,7 @@ def upload_commerce_image():
                             lambda x: db.get_rank_last_image_commerce(cid=x) )         
             return jsonify(res)
         except Exception as e:
-            return jsonify("Dfkjn")
+            return jsonify("error")
             return Response(status=400)
     else:
         return Response(status=401)
@@ -828,6 +832,10 @@ def delete_image_commerce(cid):
 @app.route('/template/commerceImage/<path:path>')
 def send_pic(path):
     return send_from_directory('templates/commerceImage', path)
+
+@app.route('/template/promotionImage/<path:path>')
+def send_pic_promotions(path):
+    return send_from_directory('templates/promotionImage', path)
 
 @app.route('/commerceImage/<path:path>')
 def send_pic_commerce(path):
