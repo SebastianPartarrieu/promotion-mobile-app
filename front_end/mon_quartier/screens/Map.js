@@ -63,7 +63,7 @@ function Map ({navigation}){
   var [images, setImages] = useState([]);
 
 
-
+  useEffect(()=>{sendSearchRequest('',MapUpdateFunction,"commerce");}, []);
   console.log(articles)
 
   useEffect(()=>{sendSearchRequest('',MapUpdateFunction,"commerce");}, []);
@@ -94,7 +94,11 @@ function Map ({navigation}){
     }
     return(buffer)
   } 
+<<<<<<< Updated upstream
   
+=======
+
+>>>>>>> Stashed changes
 
   function SetEtiquettes(){
     /* 
