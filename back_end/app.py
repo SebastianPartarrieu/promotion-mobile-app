@@ -310,8 +310,10 @@ def get_commerce():
     for i, element in enumerate(res):
         current_id = element[0]
         img_paths = db.get_commerce_image(cid=current_id) #path, rank, imid
+        app.logger.debug(img_paths)
         ordered_paths_by_rank = sorted([tup for tup in img_paths], key=lambda x: x[1]) #sort by ranks
         ordered_paths_by_rank = [tup[0] for tup in ordered_paths_by_rank]
+        app.logger.debug(ordered_paths_by_rank)
         element = list(element)
         #element.append(ordered_paths_by_rank)
         images.append(ordered_paths_by_rank)
