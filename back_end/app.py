@@ -435,7 +435,7 @@ def fetch_promotion_of_commerce():
 
 @app.route('/commerce/<int:cid>/promotion', methods=['GET', 'POST'])
 def fetch_promotion_of_commerce_no_id(cid):
-    res = db.fetch_promotion_of_commerce(cid=int(cid))
+    res = db.fetch_promotion_of_commerce_for_client(cid=int(cid))
     images = []
     for i, element in enumerate(res):
         img_paths = db.get_promotion_image(pid=element[0]) #path, rank, id ordered by start date

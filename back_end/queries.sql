@@ -177,6 +177,13 @@ JOIN Commerce AS c USING (cid)
 WHERE c.cid = :cid
 ORDER BY p.tdebut DESC;
 
+--name: fetch_promotion_of_commerce_for_client
+SELECT DISTINCT p.pid, p.pdescription, c.cnom, p.tdebut, p.tfin
+FROM Promotion AS p
+JOIN Commerce AS c USING (cid)
+WHERE c.cid = :cid
+ORDER BY p.tdebut DESC;
+
 --name: post_commerce_image
 INSERT INTO ImageCommerce (imgname, ranks, cid, verified) VALUES (:imgname, :ranks, :cid, FALSE) returning imid;
 
