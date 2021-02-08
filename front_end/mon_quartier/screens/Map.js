@@ -21,7 +21,6 @@ import Fontisto from 'react-native-vector-icons/Fontisto'
 
 
 
-//import articles from "../constants/articles";
 import {sendSearchRequest} from "../navigation/Screens";
 import {RetroStyle} from "../constants/MapData";
 
@@ -46,10 +45,9 @@ function sendArticlesRequest(updateFunction,route){
   )
 }
  
- function Map ({navigation}){
-  
- 
 
+function Map ({navigation}){
+  
 
 
   function MapUpdateFunction(response){
@@ -67,6 +65,8 @@ function sendArticlesRequest(updateFunction,route){
 
 
   console.log(articles)
+
+  useEffect(()=>{sendSearchRequest('',MapUpdateFunction,"commerce");}, []);
 
   function SearchResults(){
     /* 
@@ -94,7 +94,7 @@ function sendArticlesRequest(updateFunction,route){
     }
     return(buffer)
   } 
-  useEffect(()=>{sendSearchRequest('',MapUpdateFunction,"commerce");}, []);
+  
 
   function SetEtiquettes(){
     /* 
@@ -129,6 +129,44 @@ function sendArticlesRequest(updateFunction,route){
     return(buffer)
   }
 
+  function SetCategories(){
+
+    var buffer = [];
+    n = categories.length;
+
+    for(var iter = 0; iter < n; iter++){
+      const id = iter;
+      buffer.push(
+
+        <TouchableOpacity 
+          key={id} 
+          style={styles.chipsItem}>
+          {categories[id].icon} 
+        <Text>{categories[id].name}</Text>
+        </TouchableOpacity>)
+
+    }
+    return buffer
+  }
+
+  const categories =  [
+    {
+      name: 'Restaurant',
+      icon: <Ionicons name="ios-restaurant" style={styles.chipsIcon} size={18} />,
+    },
+    {
+      name: 'Coiffeurs',
+      icon: <Ionicons name="md-restaurant" style={styles.chipsIcon} size={18} />,
+    },
+    {
+      name: 'Magasin',
+      icon: <MaterialCommunityIcons name="food" style={styles.chipsIcon} size={18} />,
+    },
+    {
+      name: 'Hotel',
+      icon: <Fontisto name="hotel" style={styles.chipsIcon} size={15} />,
+    },
+    ]
 
 
   const initialMapState = {
@@ -289,12 +327,7 @@ function sendArticlesRequest(updateFunction,route){
           paddingRight: Platform.OS === 'android' ? 20 : 0
         }}
       >
-        {state.categories.map((category, index) => (
-          <TouchableOpacity key={index} style={styles.chipsItem}>
-            {category.icon}
-            <Text>{category.name}</Text>
-          </TouchableOpacity>
-        ))}
+        <SetCategories/>
       </ScrollView>
       <Animated.ScrollView
         ref={_scrollView}
@@ -366,7 +399,8 @@ const styles = StyleSheet.create({
   },
   chipsItem: {
     flexDirection:"row",
-    backgroundColor:'#fff', 
+    //backgroundColor:'#fff', 
+    backgroundColor:'#AAAA', 
     borderRadius:20,
     padding:8,
     paddingHorizontal:20, 

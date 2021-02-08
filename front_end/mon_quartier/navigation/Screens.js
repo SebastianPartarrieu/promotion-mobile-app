@@ -104,8 +104,10 @@ function sendImageRequest(id,route){
 
 
 function sendSearchRequest(search,updateFunction,route){
+
   const url = new URL(route, server.server)
   url.searchParams.append('search',search)
+  //url.searchParams.append('categorie',categorie)
 
   fetch(url, {
     method : 'GET',
