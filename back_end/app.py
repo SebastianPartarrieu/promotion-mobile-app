@@ -536,13 +536,12 @@ def post_commerce_info():
 
 
 
-@app.route('/logincommerce', methods=["POST"])
+@app.route('/logincommerce', methods=["POST", 'GET'])
 def check_commerce_get_cid():
     cemail, cmdp = PARAMS.get('cemail', None), PARAMS.get('cmdp', None)
     if (cemail is None) or (cmdp is None):
         return jsonify({"status" : "error", "message" : "Invalid email or password"})
         #return jsonify(Response(status=400))
-        
     else:
         res = list(db.fetch_login_commerce(cemail=cemail))
         if len(res) == 0:
