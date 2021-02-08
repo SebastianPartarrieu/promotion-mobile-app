@@ -94,12 +94,6 @@ function Map ({navigation}){
     }
     return(buffer)
   } 
-<<<<<<< Updated upstream
-  
-=======
-
->>>>>>> Stashed changes
-
   function SetEtiquettes(){
     /* 
       Retourne une liste de JSX Elements qui sont les slides en bas correspondants au résultat de la recherche

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState} from "react";
 import {
   StyleSheet,
   Dimensions,
@@ -10,18 +10,28 @@ import {
   Linking
 } from "react-native";
 import { Block, Text, theme } from "galio-framework";
-import { Button, ProfileCard, List , Card} from "../components";
+import { Button, ProfileCard, List , Card, CardPromotion} from "../components";
 import { Images, argonTheme} from "../constants";
 import { HeaderHeight } from "../constants/utils";
 import PropTypes from 'prop-types';
+import server from "../constants/Server";
 //import articles from "../constants/articles"
 
 //MAP
 import MapView, {Marker, PROVIDER_GOOGLE} from "react-native-maps";
 import {RetroStyle} from "../constants/MapData";
+import { useEffect } from "react";
 
 
-
+function sendPromotionsRequest(updateFunction,route){
+  const url = new URL(route, server.server)
+  console.log(url)
+  fetch(url, {
+    method : 'GET'
+  }).then((response) => response.json()).then(updateFunction).catch(
+    (e) => {alert('Something went wrong' + e.message)}
+  )
+}
 
 const { width, height } = Dimensions.get("screen");
 
@@ -43,9 +53,36 @@ export default function Profile(props) {
   const LATITUDE = COMMERCE[6];
   const LONGITUDE = COMMERCE[7];
   //const IMAGES = COMMERCE[8];
+  const URL = COMMERCE[8];
   
 
-  console.log(IMAGES[0])
+  var [promotions, setPromotions] = useState([])
+  var [Pimages, setPimages] = useState([])
+    
+ 
+  function updateFunction(response){
+    { 
+      promotions = setPromotions(response['resultat'])
+      Pimages = setPimages(response['images'])
+      
+      }
+  }
+
+  console.log(promotions)
+  console.log(Pimages)
+const id = ID.toString()
+console.log(id)
+    useEffect( ()=>{sendPromotionsRequest(updateFunction, "commerce/"+id+"/promotion");}, []);
+
+  if (promotions.length == 0 ) {
+  
+    return(
+        <Block center>
+          <Text>pas d'articles</Text>
+        </Block>
+          )}
+
+console.log(promotions)
 
 
   return (
@@ -116,14 +153,25 @@ export default function Profile(props) {
                 >
                   <Button
                     small
-                    style={{ backgroundColor: argonTheme.COLORS.INFO }}
+                    style={{ backgroundColor: "blue" }}
                     onPress={() =>
                         Linking.openURL(
-                            "http://httpbin.org/ip"
+                            URL
                           ).catch(err => console.error("An error occurred", err))
                     }
                   >
                     SITE WEB
+                  </Button>
+                  <Button
+                    small
+                    style={{ backgroundColor: "red" }}
+                    onPress={() =>
+                        Linking.openURL(
+                          "https://www.google.com/maps/dir/?api=1&destination="+ADDRESS
+                          ).catch(err => console.error("An error occurred", err))
+                    }
+                  >
+                    ITINERAIRE
                   </Button>
                 </Block>
                 
@@ -161,15 +209,13 @@ export default function Profile(props) {
                 <Text style={ProfileStyles.promotionTitle}>
                   Promotions
                 </Text>
-                <Block>
-                  <Card item={COMMERCE} im={IMAGES} horizontal/>
-                  <Card item={COMMERCE} im={IMAGES} horizontal/>
-                  <Card item={COMMERCE} im={IMAGES} horizontal/>
-                  <Card item={COMMERCE} im={IMAGES} horizontal/>
-                  
-                </Block>
+                {promotions.map((promotion, index) => {
+                  return(
+                  <Block>
+                    <Card item={promotion} im={Pimages} horizontal/>
+                  </Block>);
+                })}
 
-             
                </Block>
               </Block>
             </Block>
