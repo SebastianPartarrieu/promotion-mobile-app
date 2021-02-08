@@ -36,11 +36,19 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 
 
 
+function sendArticlesRequest(updateFunction,route){
+  const url = new URL(route, server.server)
 
+  fetch(url, {
+    method : 'GET'
+  }).then((response) => response.json()).then(updateFunction).catch(
+    (e) => {alert('Something went wrong' + e.message)}
+  )
+}
  
  function Map ({navigation}){
   
-
+ 
 
 
 
@@ -50,12 +58,12 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
       images = setImages(response['images'])
       }
   }
-  
-  //var articles = props.KOM;
+ 
 
   //var [articles, setArticles] = useState(props.KOM);
   var [articles, setArticles] = useState([]);
   var [images, setImages] = useState([]);
+
 
 
   console.log(articles)
@@ -68,7 +76,13 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
     //const scaleStyle = {transform: [{scale: interpolations[index].scale,},],}; pour rescale
     var buffer = [];
     var n = articles.length;
-
+    const scaleStyle = {
+      transform: [
+        {
+          scale: interpolations[index].scale,
+        },
+      ],
+    };
     for(var iter = 0; iter < n; iter++){
 
       const id = iter;
@@ -80,7 +94,7 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
     }
     return(buffer)
   } 
-
+  useEffect(()=>{sendSearchRequest('',MapUpdateFunction,"commerce");}, []);
 
   function SetEtiquettes(){
     /* 
@@ -91,7 +105,7 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
     for(var iter = 0; iter < n; iter++){
       const id = iter;
       buffer.push(
-      <View style={styles.card} key={id} >
+      <Animated.View style={styles.card} key={id} >
 
         <Image source={{uri: server.server + images[id]}} style={styles.cardImage} resizeMode="contain"/>
     
@@ -109,7 +123,7 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
           <View style={styles.button}>
           </View>
         
-      </View>)
+      </Animated.View>)
 
     }
     return(buffer)
@@ -151,12 +165,12 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 
   let mapIndex = 0;
   let mapAnimation = new Animated.Value(0);
-
+  
   useEffect(() => {
     mapAnimation.addListener(({ value }) => {
       let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
-      if (index >= state.articles.length) {
-        index = state.articles.length - 1;
+      if (index >= articles.length) {
+        index = articles.length - 1;
       }
       if (index <= 0) {
         index = 0;
@@ -169,8 +183,8 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
           mapIndex = index;
           _map.current.animateToRegion(
             {
-              latitude: state.articles[index][6],
-              longitude: state.articles[index][7],
+              latitude: articles[index][6],
+              longitude: articles[index][7],
               latitudeDelta: state.region.latitudeDelta,
               longitudeDelta: state.region.longitudeDelta,
             },
@@ -181,7 +195,7 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
     });
   });
 
-  const interpolations = state.articles.map((marker, index) => {
+  const interpolations = articles.map((marker, index) => {
     const inputRange = [
       (index - 1) * CARD_WIDTH,
       index * CARD_WIDTH,
@@ -224,9 +238,28 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
         followsUserLocation={true}
       >
       
+      {articles.map((marker, index) => {
+          const scaleStyle = {
+            transform: [
+              {
+                scale: interpolations[index].scale,
+              },
+            ],
+          };
+          return (
+            <MapView.Marker key={index} coordinate={{latitude: marker[6], longitude: marker[7]}} onPress={(e)=>onMarkerPress(e)}>
+              <Animated.View style={[styles.markerWrap]}>
+                <Animated.Image
+                  source={require('../assets/imgs/pin.png')}
+                  style={[styles.marker, scaleStyle]}
+                  resizeMode="contain"
+                />
+              </Animated.View>
+            </MapView.Marker>
+          );
+        })}
         
-        
-      <SearchResults/>
+
 
       </MapView>
       <View style={styles.searchBox}>

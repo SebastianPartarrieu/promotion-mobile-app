@@ -176,7 +176,7 @@ function Articles(props) {
               provider={PROVIDER_GOOGLE}
               customMapStyle={RetroStyle}
               style={styles.productMap}
-              onPress={() => navigation.navigate('Map', {comm : articles})}
+              onPress={() => navigation.navigate('Map', {comm : articles, imm: images})}
               showsUserLocation={true}
               followsUserLocation={true}
             >

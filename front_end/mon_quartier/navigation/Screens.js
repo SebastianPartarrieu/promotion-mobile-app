@@ -258,7 +258,7 @@ function ProfileStack(props){
 
 
 function MapStack(props) {
-  //const articles = props.route.params['comm']
+  
   return (
     <Stack.Navigator initialRouteName="Map" mode="card" headerMode="screen" params='Joe'>
       <Stack.Screen
@@ -276,7 +276,6 @@ function MapStack(props) {
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
       >
-       
       </Stack.Screen>
 
     </Stack.Navigator>
