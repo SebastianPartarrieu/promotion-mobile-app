@@ -4,7 +4,7 @@
 INSERT INTO Agglomeration(anom) VALUES ('Paris'), ('Caen'), ('Nice');
 
 -- initial categories
-INSERT INTO Categorie(catnom) VALUES ('Restaurant'), ('Textile'), ('Librairie'), ('Coiffeur'), ('Hotel'), ('Magasin');
+INSERT INTO Categorie(catnom) VALUES ('Restaurant'), ('Textile'), ('Librairie'), ('Coiffeur'), ('Hotel'), ('Magasin'), ('Boulangerie');
 
 -- fictional clients and stores
 INSERT INTO Client(clnom, clpnom, clemail, aid, clmdp) VALUES
@@ -18,11 +18,35 @@ INSERT INTO Commerce(cnom, cpresentation, code_postal, rue_and_num, aid, cmdp, c
 ('La maison des Mines', 'La Maison des Mines et des Ponts',75005,'270 rue saint jacques',1,'password4','matmaz4@mines-paristech.fr',48.841924881665165, 2.3411000804314797),
 ('Panda Wok','Envie d’un repas agréable asiatique ?',75015,'208 rue saint jacques',1,'password3','matmaz3@mines-paristech.fr',48.84554822428966,2.34254952705813),
 ('La Muraille du Phénix','Un bon choix de mets raffinés',75030,'179 rue saint jacques',1,'password2','matmaz2@mines-paristech.fr',48.84561630864182, 2.34271995589359),
-('Mcdonalds','haîne emblématique de restauration rapide',75405,'65 Boulevard Saint-Michel',1,'password1','matmaz1@mines-paristech.fr',48.8471983255236, 2.341062113564534);
-
+('Mcdonalds','haîne emblématique de restauration rapide',75405,'65 Boulevard Saint-Michel',1,'password1','matmaz1@mines-paristech.fr',48.8471983255236, 2.341062113564534),
+('Le Christine','Cuisine française modernisé entre la bistronomie et la gastronomie',75006,'1 rue Christine',1 , 'password', 'contact@restaurantlechristine.com', 48.854312, 2.340345),
+('Le Vin Qui Danse', 'Cuisine Française Moderne et Brunch le Dimanche', 75013, '69 rue broca', 1, 'password', 'gobelins@vqd.fr', 48.836928, 2.347006),
+('Café Le Petit Pont','Pizzas, Tapas, Fondue, Cocktail', 75005, '1 rue du Petit Pont', 1, 'password', 'annelise@cafelepetitpont.com', 48.852668, 2.346724),
+('Atelier Ramey', 'Cuisine française' ,75018, '23 rue Ramey', 1, 'password', 'latelier.ramey@gmail.com' , 48.888327, 2.346721),
+('Le Petit Pontoise', 'Cuisine française traditionnelle. Produits de qualité de nos belles régions  en France. Cuisine Maison par des Maîtres restaurateurs', 75005, '9 rue de pontoise' ,1, 'password','contact@lepetitpontoise.fr', 48.849903, 2.352112),
+('L Ami Pierre','Bistrot, bar à vin.',75011, '5 rue de la Main d Or', 1, 'password', 'robingreiner93@gmail.com', 48.851543, 2.378266),
+('Les Fous de l Île', 'Cuisine française bistronomique',75004, '33 rue des Deux Ponts' ,1,'password','contact@lesfousdelile.com',48.852207,2.356763),
+('Le Mesturet', 'Cuisine traditionnelle française',75002,'77 rue de Richelieu',1, 'password','contact@lemesturet.com',48.869,2.338492),
+('Les Vignes du Liban','Plus ancien restraurant libanais de paris',75015,'291 rue de Vaugirard',1,'password','lesvignesduliban@me.com',48.839274,2.300757),
+('La Rotonde des Lin','Cuisine traditionnelle, grande variété de pizzas, couscous reconnus, dessert maison.',75014,'7 place du 25 août',1,'password','Larotondedeslin@gmail.com', 48.822233,2.325784),
+('Le Colvert Bistrot','Cuisine française bistronomique',75006,'54 rue Saint-André des Arts',1,'password','contact@lecolvertbistrot.com', 48.8535,2.340117),
+('Pleine Terre', 'Cuisine française parfumée d agrumes et d épices par le chef Jimmy Desrivières',75016,'15 rue de Bassano',1,'password','contact@restaurant-pleineterre.com',48.869007,2.297196),
+('Restaurant Menelik','Spécialités éthiopiennes, saveurs d Ethiopie',75017,'4 rue Sauffroy',1,'password','menelik@wanadoo.fr', 48.890705,2.320475);
 
 -- linking stores with their categories
-INSERT INTO CommerceCategorie(cid, catid) VALUES (1, 1), (2, 1), (3, 2), (4, 3),(5, 3);
+INSERT INTO CommerceCategorie(cid, catid) VALUES (1, 1), (2, 1), (3, 2), (4, 3),(5, 3),
+(6, 1),
+(7, 1),
+(8, 1),
+(9, 1),
+(10, 1),
+(11, 1),
+(12, 1),
+(13, 1),
+(14, 1),
+(15, 1),
+(16, 1),
+(17, 1);
 
 -- one or two promotions
 INSERT INTO Promotion(cid, pdescription, tdebut, tfin) VALUES (1, 'La Marguerite a 7€!!!', '2021-01-14'::DATE, NULL),

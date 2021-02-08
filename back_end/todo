@@ -14,8 +14,13 @@
 - blueprint to split flask app.py into multiple files 
 - bien fournir la base de données en exemple préalables 
 - essayer de tout intégrer  
+- better suggestion sending!
 
 MARDI dernier délai pour déployer l'application sur le serveur.
 
 FE:
+
 need to add the filtering function on map view
+favorites!! (Perhaps prompt for favorites as you login for the first time?)
+
+

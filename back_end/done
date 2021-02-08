@@ -33,3 +33,6 @@ Week 01/02 - 05/02:
 - when info for commerce is added, automatically append geolocation to commerce db: this will allow FE client to fetch latitude and longitude for new clients
 - pleeeeins de problèmes avec node_modules, android et ios ...
 
+Final week:
+- added restaurants to database
+- 
