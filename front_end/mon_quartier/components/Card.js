@@ -11,7 +11,7 @@ import server from "../constants/Server";
 
 class Card extends React.Component {
   render() {
-    const { navigation, item,im, horizontal, full, style, ctaColor, imageStyle } = this.props;
+    const { navigation, item, im, horizontal, full, style, ctaColor, imageStyle } = this.props;
 
 
     const imageStyles = [

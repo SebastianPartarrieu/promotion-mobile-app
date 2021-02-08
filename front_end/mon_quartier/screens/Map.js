@@ -66,7 +66,6 @@ function Map ({navigation}){
   var [searchText, setSearchText] = useState('');
 
 
-
   //console.log(articles)
 
   useEffect(()=>{sendSearchRequest('','',MapUpdateFunction,"commerce");}, []);

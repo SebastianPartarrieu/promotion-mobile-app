@@ -6,7 +6,8 @@ import {
   Image,
   ImageBackground,
   Platform,
-  View
+  View,
+  Linking
 } from "react-native";
 import { Block, Text, theme } from "galio-framework";
 import { Button, ProfileCard, List , Card} from "../components";
@@ -116,6 +117,11 @@ export default function Profile(props) {
                   <Button
                     small
                     style={{ backgroundColor: argonTheme.COLORS.INFO }}
+                    onPress={() =>
+                        Linking.openURL(
+                            "http://httpbin.org/ip"
+                          ).catch(err => console.error("An error occurred", err))
+                    }
                   >
                     SITE WEB
                   </Button>
@@ -156,10 +162,10 @@ export default function Profile(props) {
                   Promotions
                 </Text>
                 <Block>
-                  <Card item={COMMERCE} horizontal/>
-                  <Card item={COMMERCE} horizontal/>
-                  <Card item={COMMERCE} horizontal/>
-                  <Card item={COMMERCE} horizontal/>
+                  <Card item={COMMERCE} im={IMAGES} horizontal/>
+                  <Card item={COMMERCE} im={IMAGES} horizontal/>
+                  <Card item={COMMERCE} im={IMAGES} horizontal/>
+                  <Card item={COMMERCE} im={IMAGES} horizontal/>
                   
                 </Block>
 
@@ -189,7 +195,7 @@ profileContainer: {
 },
 profileBackground: {
   width: width,
-  height: height / 2
+  height: height
 },
 profileCard: {
   //position: "relative",
