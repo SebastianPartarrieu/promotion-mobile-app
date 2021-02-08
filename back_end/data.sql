@@ -28,8 +28,7 @@ INSERT INTO CommerceCategorie(cid, catid) VALUES (1, 1), (2, 1), (3, 2), (4, 3),
 INSERT INTO Promotion(cid, pdescription, tdebut, tfin) VALUES (1, 'La Marguerite a 7€!!!', '2021-01-14'::DATE, NULL),
 (1, 'La Napolitaine a 8€', '2021-01-15', '2021-01-15'),
 (3, 'Tous les livres à moins de 10€', '2021-01-15', NULL),
-(2, 'Formule étudiante à 6 euros 50', '2021-01-15', '2021-01-15'),
-(1, 'La Reine a 5 €', '2021-01-15', '2021-01-15');
+(2, 'Formule étudiante à 6 euros 50', '2021-01-15', '2021-01-15');
 
 -- calvin loves food 
 INSERT INTO ClientCategorie(clid, catid) VALUES (4, 1), (1, 3);
@@ -39,13 +38,6 @@ INSERT INTO ClientFavCommerce(clid, cid) VALUES (4, 4), (2, 1), (3, 2);
 
 INSERT INTO Admins(adminemail, adminmdp) VALUES ('sebastian.partarrieu@mines-paristech.fr', 'amazingpassword');
 
-INSERT INTO ImagePromotion (imid, imgname,ranks, verified, pid) VALUES (1, 'a' , 1 ,FALSE, 1);
+INSERT INTO ImagePromotion (imid, imgname,ranks, verified, pid) VALUES (1, '1ad9b3c763dab473c47c85d65cc15fa2.jpg' , 1 ,FALSE, 1), (2, 'b891da14a418d6ed5e916e0276b7cfa4.jpg' , 1 ,FALSE, 2);
+INSERT INTO ImageCommerce (imid, imgname,ranks, verified, cid) VALUES (1, 'a' , 1 ,FALSE, 1);
 
-INSERT INTO ImageCommerce (imid, imgname,ranks, verified, cid) VALUES
-(1, 'mc_do.png' , 1 ,FALSE, 5),
-(2, 'mines_1.jpeg' , 1 ,FALSE, 1),
-(3, 'panda_wok.jpeg', 1, FALSE, 3),
-(4, 'mc_do_2.jpeg', 2, FALSE, 5),
-(5, 'mines_2.jpeg', 2, FALSE, 1),
-(6, 'maison_mines.jpeg', 1, FALSE, 2),
-(7, 'muraille_phoenix.jpeg', 1, FALSE, 4);

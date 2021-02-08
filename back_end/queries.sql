@@ -147,7 +147,10 @@ Where cemail=:cemail;
 INSERT INTO ImagePromotion (imgname, ranks, verified, pid) VALUES (:imgname, :ranks, FALSE, :pid) returning imid;
 
 --name: get_promotion_image
-SELECT 'promotionImage/' || imgname, ranks,imid FROM ImagePromotion where pid=:pid and verified=FALSE ORDER BY ranks asc; 
+SELECT 'promotionImage/' || imgname, ranks, imid FROM ImagePromotion where pid=:pid and verified=FALSE ORDER BY ranks asc; 
+
+--name: get_promotion_images
+SELECT imgname, ranks, imid FROM ImagePromotion join Promotion using (pid) where cid=:cid and verified=FALSE ORDER BY ranks asc; 
 
 --name: delete_promotion_image
 DELETE from ImagePromotion where pid=:pid  and imid=:imid returning imgname;
@@ -186,7 +189,7 @@ DELETE from ImageCommerce where cid=:cid  and imid=:imid returning imgname;
 UPDATE ImageCommerce SET ranks=:ranks WHERE imid=:imid and cid=:cid;
 
 --name: get_rank_last_image_promotion
-Select ranks from ImagePromotion Where pid=:pid order by ranks desc limit 1;
+Select ranks +1 from ImagePromotion Where pid=:pid order by ranks desc limit 1;
 
 --name: get_rank_last_image_commerce
 Select ranks + 1 from ImageCommerce Where cid=:cid order by ranks desc limit 1;
