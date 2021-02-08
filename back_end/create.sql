@@ -17,7 +17,7 @@ CREATE TABLE Client(clid SERIAL PRIMARY KEY,
  
 CREATE TABLE Commerce(cid SERIAL PRIMARY KEY,
                       cnom VARCHAR(32) NOT NULL,
-                      cpresentation VARCHAR(400) NOT NULL,
+                      cpresentation TEXT NOT NULL,
                       cemail VARCHAR(100) UNIQUE NOT NULL,
                       url_ext VARCHAR(150),
                       code_postal INTEGER NOT NULL,

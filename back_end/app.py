@@ -310,8 +310,10 @@ def get_commerce():
     for i, element in enumerate(res):
         current_id = element[0]
         img_paths = db.get_commerce_image(cid=current_id) #path, rank, imid
-        ordered_paths_by_rank = sorted([tup for tup in img_paths], key=lambda x: x[1])
+        app.logger.debug(img_paths)
+        ordered_paths_by_rank = sorted([tup for tup in img_paths], key=lambda x: x[1]) #sort by ranks
         ordered_paths_by_rank = [tup[0] for tup in ordered_paths_by_rank]
+        app.logger.debug(ordered_paths_by_rank)
         element = list(element)
         #element.append(ordered_paths_by_rank)
         images.append(ordered_paths_by_rank)
@@ -410,7 +412,7 @@ def delete_client_info():
         return Response(status=401)
 
 
-@app.route('/mycommerce/promotions', methods=['POST'])
+@app.route('/mycommerce/promotions', methods=['POST', 'GET'])
 def fetch_promotion_of_commerce():
     auth_token = PARAMS.get("token", None)
     cid = is_authorized_no_id(auth_token, user_type='commerce')
@@ -419,6 +421,18 @@ def fetch_promotion_of_commerce():
         return jsonify(res)
     else:
         return jsonify({'status': 'error 400', 'message': 'Something went wrong!'})
+
+@app.route('/commerce/<int:cid>/promotion', methods=['GET'])
+def fetch_promotion_of_commerce_no_id(cid):
+    res = db.fetch_promotion_of_commerce(cid=int(cid))
+    images = []
+    for i, element in enumerate(res):
+        img_paths = db.get_promotion_image(pid=element[0]) #path, rank, id ordered by start date
+        element = list(element)
+        res[i] = element
+        img_paths_ = [el[0] for el in img_paths]
+        images.append(img_paths_)
+    return jsonify({'resultat': res, 'images': images})
 
 
 # COMMERCE INTERFACE
@@ -511,35 +525,37 @@ def post_commerce_info():
                                                         aid=aid)
 
     try:  # catch the exception if the commerce already exists in the database
-        res = db.post_commerce_info(cnom=cnom,
-                                    cpresentation=cpresentation,
-                                    cemail=cemail, aid=int(aid),
-                                    cmdp=cmdp, rue_and_num=rue_and_num,
-                                    code_postal=code_postal, url_ext=url_ext,
-                                    latitude=latitude,
-                                    longitude=longitude)
-
-        p = int(res[0][0])
-        if catnom is not None:
-            catnom = catnom.split(",")
-            for x in catnom:
-                db.post_commerce_categorie(catnom=x, cid=p)
-            return jsonify({'status': 'ok'}), 201
+        if not re.match("[^@]+@[^@]+\.[^@]+", cemail):
+            return jsonify({'status': 'error 400', 'message': 'E-mail is wrong format!'}), 400
         else:
-            return jsonify({'status': 'ok'}), 201
+            res = db.post_commerce_info(cnom=cnom,
+                                        cpresentation=cpresentation,
+                                        cemail=cemail, aid=int(aid),
+                                        cmdp=cmdp, rue_and_num=rue_and_num,
+                                        code_postal=code_postal, url_ext=url_ext,
+                                        latitude=latitude,
+                                        longitude=longitude)
+
+            p = int(res[0][0])
+            if catnom is not None:  #to input different categories for commerce in the db
+                catnom = catnom.split(",")
+                for x in catnom:
+                    db.post_commerce_categorie(catnom=x, cid=p)
+                return jsonify({'status': 'ok'}), 201
+            else:
+                return jsonify({'status': 'ok'}), 201
     except Exception as e:
         # return str(e)
         return jsonify({'status': 'error 400', 'message': 'something went wrong!'}), 400
 
 
 
-@app.route('/logincommerce', methods=["POST"])
+@app.route('/logincommerce', methods=["POST", 'GET'])
 def check_commerce_get_cid():
     cemail, cmdp = PARAMS.get('cemail', None), PARAMS.get('cmdp', None)
     if (cemail is None) or (cmdp is None):
         return jsonify({"status" : "error", "message" : "Invalid email or password"})
         #return jsonify(Response(status=400))
-        
     else:
         res = list(db.fetch_login_commerce(cemail=cemail))
         if len(res) == 0:
