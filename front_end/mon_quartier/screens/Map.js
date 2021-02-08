@@ -62,11 +62,14 @@ function Map ({navigation}){
   var [articles, setArticles] = useState([]);
   var [images, setImages] = useState([]);
 
+  var [category, setCategory] = useState('');
+  var [searchText, setSearchText] = useState('');
 
 
-  console.log(articles)
 
-  useEffect(()=>{sendSearchRequest('',MapUpdateFunction,"commerce");}, []);
+  //console.log(articles)
+
+  useEffect(()=>{sendSearchRequest('','',MapUpdateFunction,"commerce");}, []);
 
   function SearchResults(){
     /* 
@@ -135,17 +138,65 @@ function Map ({navigation}){
     n = categories.length;
 
     for(var iter = 0; iter < n; iter++){
+
       const id = iter;
+      
+
+      //console.log(NomCat)
+
       buffer.push(
 
         <TouchableOpacity 
           key={id} 
-          style={styles.chipsItem}>
-          {categories[id].icon} 
+
+          onPress = {() => (category==categories[id].name)? 
+            (
+              setCategory(''),
+              sendSearchRequest(searchText,'',MapUpdateFunction,"commerce")
+            ) 
+            :
+            (
+              setCategory(categories[id].name),
+              sendSearchRequest(searchText,categories[id].name,MapUpdateFunction,"commerce")
+            )
+          }
+
+          style={(category==categories[id].name)?
+          //style={(true)?
+            {flexDirection:"row",
+            //backgroundColor:'#fff', 
+            backgroundColor:'#AAAA', 
+            borderRadius:20,
+            padding:8,
+            paddingHorizontal:20, 
+            marginHorizontal:10,
+            height:35,
+            shadowColor: '#ccc',
+            shadowOffset: { width: 0, height: 3 },
+            shadowOpacity: 0.5,
+            shadowRadius: 5,
+            elevation: 10,}
+            :
+            {flexDirection:"row",
+            backgroundColor:'#fff', 
+            //backgroundColor:'#AAAA', 
+            borderRadius:20,
+            padding:8,
+            paddingHorizontal:20, 
+            marginHorizontal:10,
+            height:35,
+            shadowColor: '#ccc',
+            shadowOffset: { width: 0, height: 3 },
+            shadowOpacity: 0.5,
+            shadowRadius: 5,
+            elevation: 10,}}>
+            
+            {categories[id].icon} 
         <Text>{categories[id].name}</Text>
         </TouchableOpacity>)
 
     }
+
     return buffer
   }
 
@@ -171,24 +222,7 @@ function Map ({navigation}){
 
   const initialMapState = {
     articles,
-    categories: [
-      {
-        name: 'Restaurant',
-        icon: <Ionicons name="ios-restaurant" style={styles.chipsIcon} size={18} />,
-      },
-      {
-        name: 'Coiffeurs',
-        icon: <Ionicons name="md-restaurant" style={styles.chipsIcon} size={18} />,
-      },
-      {
-        name: 'Magasin',
-        icon: <MaterialCommunityIcons name="food" style={styles.chipsIcon} size={18} />,
-      },
-      {
-        name: 'Hotel',
-        icon: <Fontisto name="hotel" style={styles.chipsIcon} size={15} />,
-      },
-  ],
+
     region: {
       //latitude: articles[0][6],
       //longitude: articles[0][7],
@@ -207,12 +241,16 @@ function Map ({navigation}){
   useEffect(() => {
     mapAnimation.addListener(({ value }) => {
       let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
+      if  (articles == undefined){
+        index = 0
+      }
+      else {
       if (index >= articles.length) {
         index = articles.length - 1;
       }
       if (index <= 0) {
         index = 0;
-      }
+      }}
 
       clearTimeout(regionTimeout);
 
@@ -302,7 +340,10 @@ function Map ({navigation}){
       </MapView>
       <View style={styles.searchBox}>
         <TextInput
-          onChangeText = {(text) => (sendSearchRequest(text,MapUpdateFunction,"commerce"))}
+          //onChangeText = {(text) => (sendSearchRequest(text,category,MapUpdateFunction,"commerce"))}
+
+          onChangeText = {(text) => {setSearchText(text); sendSearchRequest(text,category,MapUpdateFunction,"commerce");}}
+
 
           placeholder="Chercher des commerces"
           placeholderTextColor="#000"
