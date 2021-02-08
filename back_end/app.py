@@ -260,6 +260,10 @@ def mon_compte():
 def add_promotion():
     return render_template('addPromotion.html')
 
+@app.route('/modifierPromotion')
+def modifier_promotion():
+    return render_template('modifierPromotion.html')
+
 @app.route("/version", methods=["GET"])
 def get_version():
     # TODO check read permission
@@ -327,8 +331,16 @@ def get_commerce():
 def get_promotion_info(pid):
     res = db.get_promotion_info(pid=pid)
     return jsonify({'resultat': res})
-
-# ACCOUNT RELATED QUERIES
+   
+@app.route('/promotion/<int:pid>', methods=["DELETE"])
+def delete_promotion_info(pid):
+    auth_token = PARAMS.get("token", None)
+    cid = is_authorized_no_id(auth_token, user_type='commerce')
+    if cid:
+        res = db.delete_promotion_info(pid=pid)
+        return "deleted"
+    else:
+        return jsonify({'status': 'error 400', 'message': 'Something went wrong!'})
 
 
 @app.route('/myclient', methods=["GET"])
@@ -625,7 +637,7 @@ def patch_promotion(pid):
     if cid_token:
         #check if commerce is modifying its own promotion
         if int(cid_associated_to_pid[0][0]) != int(cid_token):
-            return Response(status=401)
+            return jsonify({'status': 'error 401', 'message': 'something went wrong!'}), 401
         else:
             if pdescription is not None:
                 db.patch_promotion_pdescription(pid=pid, pdescription=pdescription)
@@ -635,7 +647,7 @@ def patch_promotion(pid):
                 db.patch_promotion_tfin(pid=pid, tfin=tfin)
             return Response(status=201)
     else:
-        return Response(status=401)
+        return jsonify({'status': 'error 401', 'message': 'something went wrong!'}), 401
 
 # ADMIN INTERFACE
 

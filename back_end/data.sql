@@ -62,7 +62,7 @@ INSERT INTO ClientFavCommerce(clid, cid) VALUES (4, 4), (2, 1), (3, 2);
 
 INSERT INTO Admins(adminemail, adminmdp) VALUES ('sebastian.partarrieu@mines-paristech.fr', 'amazingpassword');
 
-INSERT INTO ImagePromotion(imgname,ranks, verified, pid) VALUES ('1ad9b3c763dab473c47c85d65cc15fa2.jpg' , 1 ,FALSE, 1), ('b891da14a418d6ed5e916e0276b7cfa4.jpg' , 1 ,FALSE, 2);
+INSERT INTO ImagePromotion ( imgname,ranks, verified, pid) VALUES ('0fe66df0582fbfefbd0a3cdb882c59d4.jpg' , 1 ,FALSE, 1), ( 'd46371837147773dee74cf4001460b29.jpg' , 1 ,FALSE, 2);
 INSERT INTO ImageCommerce(imgname,ranks, verified, cid) VALUES
 ('mc_do.png' , 1 ,FALSE, 5),
 ('mc_do_2.jpeg', 2, FALSE, 5),

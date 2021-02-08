@@ -103,17 +103,23 @@ function sendImageRequest(id,route){
 
 
 
-function sendSearchRequest(search,updateFunction,route){
+function sendSearchRequest(search,categorie,updateFunction,route){
 
   const url = new URL(route, server.server)
-  url.searchParams.append('search',search)
-  //url.searchParams.append('categorie',categorie)
+
+  const recherche = search;
+  url.searchParams.append('search',recherche)
+  if (categorie!='')
+    { 
+      url.searchParams.append('categorie',categorie)
+    };
+  
 
   fetch(url, {
     method : 'GET',
     headers: {
-      Accept: 'application/json',
-    }
+      Accept: 'application/json',},
+    //body : JSON.stringify({data :{ "search" : recherche, }})
   }).then((response) => response.json()).then(updateFunction).catch(
     (e) => {alert('Something went wrong' + e.message)}
   )
