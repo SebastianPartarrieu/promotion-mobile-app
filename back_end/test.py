@@ -118,9 +118,9 @@ def test_whatever():
 
 def test_version():
     # only GET is implemented
-    check_api('GET', '/version', 200, '"promotion"', login=ADMIN)
-    check_api('GET', '/version', 200, '"promotion"', login=WRITE)
-    check_api('GET', '/version', 200, '"promotion"', login=READ)
+    check_api('GET', '/version', 200, '"promotion"')
+    check_api('GET', '/version', 200, '"promotion"')
+    check_api('GET', '/version', 200, '"promotion"')
     # check_api('GET', '/version', 403, '"kiva"', login=NONE)
     check_api('POST', '/version', 405)
     check_api('DELETE', '/version', 405)
@@ -315,6 +315,8 @@ def test_AA_workflow_commerce():
     #Posts a juicy new offer
     pid = check_api('POST', '/promotion', 200, data={'token': auth_token, 'pdescription': 'Du fromage pas cher', 'tdebut': '2020-01-25', 'tfin': '2020-01-30'})
 
+    #Modifies juicy new offer
+    
     #Deletes his account
     check_api('DELETE', '/mycommerce', 200, data={'token': auth_token})
 
