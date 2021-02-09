@@ -1,4 +1,4 @@
-import React, { Component, useState} from "react";
+import React, { useState} from "react";
 import {
   StyleSheet,
   Dimensions,
@@ -6,19 +6,18 @@ import {
   Image,
   ImageBackground,
   Platform,
-  View,
   Linking
 } from "react-native";
 import { Block, Text, theme } from "galio-framework";
-import { Button, ProfileCard, List , Card, CardPromotion} from "../components";
-import { Images, argonTheme} from "../constants";
+import { Button , Card} from "../components";
+import { Images } from "../constants";
 import { HeaderHeight } from "../constants/utils";
-import PropTypes from 'prop-types';
+
 import server from "../constants/Server";
 //import articles from "../constants/articles"
 
 //MAP
-import MapView, {Marker, PROVIDER_GOOGLE} from "react-native-maps";
+import MapView, {PROVIDER_GOOGLE} from "react-native-maps";
 import {RetroStyle} from "../constants/MapData";
 import { useEffect } from "react";
 
@@ -52,7 +51,7 @@ export default function Profile(props) {
   const ADDRESS = COMMERCE[5];
   const LATITUDE = COMMERCE[6];
   const LONGITUDE = COMMERCE[7];
-  //const IMAGES = COMMERCE[8];
+
   const URL = COMMERCE[8];
   
 
@@ -70,8 +69,8 @@ export default function Profile(props) {
 
   console.log(promotions)
   console.log(Pimages)
-const id = ID.toString()
-console.log(id)
+  const id = ID.toString()
+  console.log(id)
     useEffect( ()=>{sendPromotionsRequest(updateFunction, "commerce/"+id+"/promotion");}, []);
 
   if (promotions.length == 0 ) {

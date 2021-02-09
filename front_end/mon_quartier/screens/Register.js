@@ -6,11 +6,11 @@ import {
   StatusBar,
   KeyboardAvoidingView
 } from "react-native";
-import { Block, Checkbox, Text, theme } from "galio-framework";
+import { Block, Checkbox, Text } from "galio-framework";
 
 import { Button, Icon, Input } from "../components";
 import { Images, argonTheme } from "../constants";
-import { string } from "prop-types";
+
 
 import server from "../constants/Server";
 

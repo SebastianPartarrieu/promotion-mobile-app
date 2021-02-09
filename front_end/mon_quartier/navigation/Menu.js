@@ -4,7 +4,6 @@ import {
   ScrollView,
   StyleSheet,
   Image,
-  Button
 } from "react-native";
 import { Block, Text, theme } from "galio-framework";
 
@@ -31,10 +30,6 @@ function sendArticlesRequest(updateFunction,route){
 
 function CustomDrawerContent({ drawerPosition, navigation, profile, focused, state, ...rest }) {
 
-  //onsole.log("=------------------------------")
-  //console.log(navigation)
-  //console.log("=------------------------------")
-  
   var [articles, setArticles] = React.useState([])
   function updateFunction(response){
     { 
@@ -60,12 +55,7 @@ function CustomDrawerContent({ drawerPosition, navigation, profile, focused, sta
   ];
 
   function MenuMaker(){
-
-    console.log("=------------------------------")
-    console.log(navigation)
-    console.log("=------------------------------")
-  
-
+    
     var buffer = [];
     const n = 4;
 
