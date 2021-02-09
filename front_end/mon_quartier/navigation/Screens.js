@@ -66,7 +66,7 @@ function searchStack(props) {
   return (
     <Stack.Navigator mode="card" headerMode="screen">
       <Stack.Screen
-        name="Elements"
+        name="Recherche"
         //component={Elements}
         options={{
           header: ({ navigation, scene }) => (
@@ -80,7 +80,7 @@ function searchStack(props) {
           cardStyle: { backgroundColor: "#F8F9FE" }
         }}
       >
-        {props => <Elements {...{f_input : first_input,navigation : navigation}} />}
+        {props => <Recherche {...{f_input : first_input,navigation : navigation}} />}
         
       </Stack.Screen>
     </Stack.Navigator>
@@ -128,7 +128,7 @@ function sendSearchRequest(search,categorie,updateFunction,route){
 
 
 
-function Elements (props){
+function Recherche (props){
 
 
   const first_input = props.f_input;
@@ -160,7 +160,7 @@ function Elements (props){
     }
   }
 
-  useEffect( ()=>{sendSearchRequest(first_input,updateFunction, "commerce");}, []);
+  useEffect( ()=>{sendSearchRequest(first_input,'',updateFunction, "commerce");}, []);
 
   const inputElement = useRef(null);
 
@@ -179,7 +179,7 @@ function Elements (props){
         defaultValue={first_input}
         autoFocus
         maxLength = {30}
-        onChangeText = {(text) => (sendSearchRequest(text,updateFunction,"commerce"))}        
+        onChangeText = {(text) => (sendSearchRequest(text,'',updateFunction,"commerce"))}        
         color="black"
         style = {{
               height: 50,
@@ -368,9 +368,10 @@ function AppStack(props) {
     >
       <Drawer.Screen name="Home" component={HomeStack} />
       <Drawer.Screen name="Profile" component={ProfileStack} />
-      <Drawer.Screen name="Elements" component={searchStack} />
-      <Drawer.Screen name="Account" component={Account} />
+      <Drawer.Screen name="Recherche" component={searchStack} />
+      <Drawer.Screen name="Mon compte" component={Account} />
       <Drawer.Screen name="Map" component={MapStack} />
+
     </Drawer.Navigator>
   );
 }

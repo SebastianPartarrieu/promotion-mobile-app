@@ -161,11 +161,12 @@ function Map ({navigation}){
           }
 
           style={(category==categories[id].name)?
-          //style={(true)?
+
             {flexDirection:"row",
             //backgroundColor:'#fff', 
-            backgroundColor:'#AAAA', 
+            backgroundColor:'#9084b3', 
             borderRadius:20,
+            placeholderTextColor:'#',
             padding:8,
             paddingHorizontal:20, 
             marginHorizontal:10,
@@ -205,19 +206,30 @@ function Map ({navigation}){
       icon: <Ionicons name="ios-restaurant" style={styles.chipsIcon} size={18} />,
     },
     {
-      name: 'Coiffeurs',
+      name: 'Coiffeur',
       icon: <Ionicons name="md-restaurant" style={styles.chipsIcon} size={18} />,
     },
     {
-      name: 'Magasin',
+      name: 'Textile',
       icon: <MaterialCommunityIcons name="food" style={styles.chipsIcon} size={18} />,
     },
     {
-      name: 'Hotel',
+      name: 'Epicerie',
       icon: <Fontisto name="hotel" style={styles.chipsIcon} size={15} />,
     },
+    {
+      name: 'Boulangerie',
+      icon: <Fontisto name="hotel" style={styles.chipsIcon} size={15} />,
+    },
+    {
+      name: 'Autre',
+      icon: <Fontisto name="hotel" style={styles.chipsIcon} size={15} />,
+    },
+    {
+      name: 'Jeux',
+      icon: <Fontisto name="hotel" style={styles.chipsIcon} size={15} />,
+    }
     ]
-
 
   const initialMapState = {
     articles,

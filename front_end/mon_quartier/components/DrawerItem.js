@@ -19,13 +19,13 @@ class DrawerItem extends React.Component {
             color={focused ? "white" : argonTheme.COLORS.PRIMARY}
           />
         );
-      case "Elements":
+      case "Recherche":
         return (
           <Icon
             name="map-big"
             family="ArgonExtra"
             size={14}
-            color={focused ? "white" : argonTheme.COLORS.ERROR}
+            color={focused ? "white" : argonTheme.COLORS.PRIMARY}
           />
         );
       case "Articles":
@@ -37,13 +37,13 @@ class DrawerItem extends React.Component {
             color={focused ? "white" : argonTheme.COLORS.PRIMARY}
           />
         );
-      case "Profile":
+      case "Mon compte":
         return (
           <Icon
             name="chart-pie-35"
             family="ArgonExtra"
             size={14}
-            color={focused ? "white" : argonTheme.COLORS.WARNING}
+            color={focused ? "white" : argonTheme.COLORS.PRIMARY}
           />
         );
       case "Account":
@@ -58,10 +58,11 @@ class DrawerItem extends React.Component {
         case "Map":
           return (
             <Icon
-              name="map"
+              name="map-big"
+        
               family="ArgonExtra"
               size={14}
-              color={focused ? "white" : argonTheme.COLORS.INFO}
+              color={focused ? "white" : argonTheme.COLORS.PRIMARY}
             />
           );
       case "Getting Started":
@@ -94,9 +95,8 @@ class DrawerItem extends React.Component {
             ? Linking.openURL(
                 "http://httpbin.org/ip"
               ).catch(err => console.error("An error occurred", err))
-            : navigation.navigate(title)
-        }
-      >
+            : navigation.navigate(title) //console.log(navigation)//navigation.navigate(title)
+            }>
         <Block flex row style={containerStyles}>
           <Block middle flex={0.1} style={{ marginRight: 5 }}>
             {this.renderIcon()}

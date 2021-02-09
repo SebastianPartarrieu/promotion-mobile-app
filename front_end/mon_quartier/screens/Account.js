@@ -4,11 +4,19 @@ import {
   ImageBackground,
   Dimensions,
   StatusBar,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  View
 } from "react-native";
+
+//import DropdownButton from 'react-bootstrap/DropdownButton';
+//import Dropdown from 'react-bootstrap/Dropdown';
+
+
+import DropDownPicker from 'react-native-dropdown-picker';
+
 import { Block, Checkbox, Text, theme } from "galio-framework";
 import { token } from "./Onboarding";
-import { Button, Icon, Input } from "../components";
+import { Button, Icon, Input, Header } from "../components";
 import { Images, argonTheme } from "../constants";
 import { string } from "prop-types";
 import Onboarding from "./Onboarding";
@@ -47,6 +55,7 @@ function Account({navigation}){
   const [username, setUsername] = useState('email') ;
   const [password, setPassword] = useState('mdp') ;
 
+
   function updateFunction(response){
       { console.log(response)
         response['is_registered']?(
@@ -59,23 +68,46 @@ function Account({navigation}){
         
         }
     }
+
+
     return (
       <Block flex middle>
+        
+
+
         <StatusBar hidden />
         <ImageBackground
           //source={Images.Bacdkground}
           style={{ width, height, zIndex: 1 }}
         >
+          <Header 
+              title="Mon compte" 
+              navigation={navigation} 
+              back
+              //transparent
+              //scene={scene} 
+              //search
+            />
           <Block flex middle>
+            
+            
             <Block style={styles.registerContainer}>
+              
+              
               <Block flex>
+                
+              
                 <Block flex center>
+
+                  
                   <KeyboardAvoidingView
                     style={{ flex: 1 }}
                     behavior="padding"
                     enabled
                   >
+                    
                     <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                    
                       <Input
                       
                         onChangeText={(text) => setLastname(text)}
@@ -127,6 +159,28 @@ function Account({navigation}){
                         }
                       />
                     </Block>
+                    <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                      
+                    <DropDownPicker
+                          items={[
+                                  {label: 'USA', value: 'usa' , hidden: true},
+                                  {label: 'UK', value: 'uk'},
+                                  {label: 'France', value: 'france'},
+                                  ]}
+                          defaultValue={'france'}
+                          containerStyle={{height: 40}}
+                          style={{backgroundColor: '#fafafa'}}
+                          itemStyle={{
+                              justifyContent: 'flex-start'
+                                    }}
+                          dropDownStyle={{backgroundColor: '#fafafa'}}
+                          onChangeItem={item => console.log(item)}
+                        />
+                     
+                    </Block>
+
+
+
                     <Block width={width * 0.8}>
                       <Input
                         id='password'
@@ -147,23 +201,7 @@ function Account({navigation}){
                       />
                     </Block>
                     <Block row width={width * 0.75}>
-                      <Checkbox
-                        checkboxStyle={{
-                          borderWidth: 3
-                        }}
-                        color={argonTheme.COLORS.PRIMARY}
-                        label="J'accepte les conditions de"
-                      />
-                      <Button
-                        style={{ width: 100 }}
-                        color="transparent"
-                        textStyle={{
-                          color: argonTheme.COLORS.PRIMARY,
-                          fontSize: 14
-                        }}
-                      >
-                        confidentialité
-                      </Button>
+
                     </Block>
                     <Block middle>
                       <Button 
@@ -171,7 +209,7 @@ function Account({navigation}){
                         style={styles.createButton}
                         onPress={() => sendRegisterRequest(lastname,firstname,username,password,updateFunction,'signup')}>                        
                         <Text bold size={14} color={argonTheme.COLORS.WHITE}>
-                          CRÉER MON COMPTE
+                          Enregistrer
                         </Text>
                       </Button>
                     </Block>

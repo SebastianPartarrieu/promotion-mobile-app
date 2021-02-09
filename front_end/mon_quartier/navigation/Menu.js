@@ -31,6 +31,9 @@ function sendArticlesRequest(updateFunction,route){
 
 function CustomDrawerContent({ drawerPosition, navigation, profile, focused, state, ...rest }) {
 
+  //onsole.log("=------------------------------")
+  //console.log(navigation)
+  //console.log("=------------------------------")
   
   var [articles, setArticles] = React.useState([])
   function updateFunction(response){
@@ -48,14 +51,20 @@ function CustomDrawerContent({ drawerPosition, navigation, profile, focused, sta
     
 
   const insets = useSafeArea();
+
   const screens = [
     "Accueil", 
-    "Profile",
-    "Elements",
+    "Mon compte",
+    "Recherche",
     "Map",
   ];
 
   function MenuMaker(){
+
+    console.log("=------------------------------")
+    console.log(navigation)
+    console.log("=------------------------------")
+  
 
     var buffer = [];
     const n = 4;
@@ -68,6 +77,7 @@ function CustomDrawerContent({ drawerPosition, navigation, profile, focused, sta
         <DrawerCustomItem
           title={screens[id]}
           key={id}
+          //onPress = {() => navigation.navigate('Map')}
           navigation={navigation}
           //focused={state.index === index ? true : false}
         />
