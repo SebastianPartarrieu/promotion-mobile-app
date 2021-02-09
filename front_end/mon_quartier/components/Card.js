@@ -32,9 +32,9 @@ class Card extends React.Component {
           </Block>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback  onPress = {() => navigation.navigate('Profile', {comm : item, imm:im})}>
-          <Block flex space="between" style={styles.cardDescription}>
-            <Text bold center size={15} style={styles.cardTitle}>{item[1]}</Text>
-            <Text numberOfLines={1} style={styles.cardDescription}>{item[2]}</Text>
+          <Block flex space="between">
+            <Text numberOfLines={1} bold center size={15} style={styles.cardTitle}>{item[1]}</Text>
+            <Text numberOfLines={1} style={full ? styles.fullcardDescription : styles.cardDescription}>{item[2]}</Text>
           </Block>
         </TouchableWithoutFeedback>
       </Block>
@@ -58,29 +58,30 @@ const styles = StyleSheet.create({
     backgroundColor: theme.COLORS.WHITE,
     marginVertical: theme.SIZES.BASE,
     borderWidth: 0,
-    minHeight: 50,
+    //minHeight: 40,
     marginBottom: 16,
     borderRadius: 10,
   },
   cardTitle: {
-    flex: 1,
+    flex: 5,
     flexWrap: 'wrap',
-    marginTop:5
+    marginTop:-5,
+    marginHorizontal:5
 
   },
   imageContainer: {
     borderRadius: 10,
-    elevation: 1,
-    overflow: 'hidden',
+    elevation: 4,
+   // overflow: 'hidden',
     margin: 10
     
   },
   image: {
     // borderRadius: 3,
-    margin: 10
+    margin: 0
   },
   horizontalImage: {
-    height: 50,
+    height: 70,
     width: 'auto',
     
   },
@@ -102,10 +103,19 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     elevation: 2,
   },
+  fullcardDescription: {
+    fontSize: 8,
+    color: "#444",
+    marginHorizontal: 5,
+    //marginTop:15,
+    marginBottom:10
+  },
   cardDescription: {
     fontSize: 8,
     color: "#444",
-    margin:5
+    marginHorizontal: 5,
+    marginTop:5,
+    marginBottom:10
   }
 });
 

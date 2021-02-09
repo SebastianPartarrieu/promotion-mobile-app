@@ -24,7 +24,7 @@ import Fontisto from 'react-native-vector-icons/Fontisto'
 import { useEffect } from "react";
 
 import server from "../constants/Server";
-
+import {sendSearchRequest} from "../navigation/Screens";
 
 
 const { width } = Dimensions.get("screen");
@@ -33,7 +33,7 @@ const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
 
 
-
+/// Requete serveur
 function sendArticlesRequest(updateFunction,route){
   const url = new URL(route, server.server)
 
@@ -46,41 +46,39 @@ function sendArticlesRequest(updateFunction,route){
 
 var k=0;
 
-
+// Screen accueil
 function Articles(props) {
 
     var [articles, setArticles] = React.useState([])
     var [images, setImages] = useState([])
-    
 
-    function updateFunction(response){
+
+    function ArticlesupdateFunction(response){
       { 
         articles = setArticles(response['resultat'])
         images = setImages(response['images'])
-        
         }
     }
     k=1;
+
+    
  
     
-  useEffect( ()=>{sendArticlesRequest(updateFunction, "commerce");}, []);
-
- if (articles.length == 0 ) {
-  
+  useEffect(()=>{sendSearchRequest('','', ArticlesupdateFunction, "commerce");}, []);
+  if (articles.length == 0 ) {
   return(
       <Block center>
         <Text>pas d'articles</Text>
       </Block>
         )}
 
-    //console.log(articles)
-    var i = 0;
-    var suggestions = [];
-    //while(i<6){suggestions.push(articles[i]), i+=1};
 
+
+
+  // suggestions en haut
+    var suggestions = [];
     function Suggest(){
       var buffer = [];
-      //var n = resultat.length;
       var n = 3;
 
       for(var iter = 0; iter < n; iter++){
@@ -95,22 +93,35 @@ function Articles(props) {
       return(buffer)
     }
 
-    function SmallSlide(){
+  // scroll view en bas
+    function SmallSlide({category}){
       var buffer = [];
       var n = articles.length;
-  
-      for(var iter = 0; iter < n; iter++){
+      
+      if (category=='Tous'){
+        for(var iter = 0; iter < n; iter++){
+          const id = iter;
+          buffer.push(
+          <Block style={styles.productScroll}>
+            <Card 
+              item={articles[id]}
+              im = {images[id]}/>
+          </Block>)
+          }}
 
-      const id = iter;
-      buffer.push(
-      <Block style={styles.productScroll}>
-        <Card 
-          item={articles[id]}
-          im = {images[id]}/>
-      </Block>)
-      }
+      else{
+        for(var iter = 0; iter < n; iter++){
+          const id = iter;
+          if (articles[id][9]==category){
+          buffer.push(
+            <Block style={styles.productScroll}>
+              <Card 
+                item={articles[id]}
+                im = {images[id]}/>
+            </Block>)
+            }}}
       return(buffer)
-    }
+  }
 
     //Animations
     const entranceAnimation = new Animated.Value(0);
@@ -122,32 +133,42 @@ function Articles(props) {
 
   //useEffect( ()=>{componentDidMount();}, []);
 
+ //Categories 
+ const categories =  [
+  {
+    name: 'Restaurant',
+    icon: <Ionicons name="ios-restaurant" style={styles.chipsIcon} size={18} />,
+  },
+  {
+    name: 'Coiffeur',
+    icon: <Ionicons name="md-restaurant" style={styles.chipsIcon} size={18} />,
+  },
+  {
+    name: 'Textile',
+    icon: <MaterialCommunityIcons name="food" style={styles.chipsIcon} size={18} />,
+  },
+  {
+    name: 'Epicerie',
+    icon: <Fontisto name="hotel" style={styles.chipsIcon} size={15} />,
+  },
+  {
+    name: 'Boulangerie',
+    icon: <Fontisto name="hotel" style={styles.chipsIcon} size={15} />,
+  },
+  {
+    name: 'Autre',
+    icon: <Fontisto name="hotel" style={styles.chipsIcon} size={15} />,
+  },
+  {
+    name: 'Jeux',
+    icon: <Fontisto name="hotel" style={styles.chipsIcon} size={15} />,
+  }
+  ]
+    
+  
 
 
     const { navigation } = props;
-    const categories= [
-      { 
-        name: 'Fastfood', 
-        icon: <MaterialCommunityIcons style={styles.chipsIcon} name="food-fork-drink" size={18} />,
-      },
-      {
-        name: 'Restaurant',
-        icon: <Ionicons name="ios-restaurant" style={styles.chipsIcon} size={18} />,
-      },
-      {
-        name: 'Coiffeurs',
-        icon: <Ionicons name="md-restaurant" style={styles.chipsIcon} size={18} />,
-      },
-      {
-        name: 'Magasin',
-        icon: <MaterialCommunityIcons name="food" style={styles.chipsIcon} size={18} />,
-      },
-      {
-        name: 'Hotel',
-        icon: <Fontisto name="hotel" style={styles.chipsIcon} size={15} />,
-      },
-    ]
-    
     return (
       <Block flex center>
         <ScrollView
@@ -215,7 +236,7 @@ function Articles(props) {
               </MapView>
             </Animated.View>
           </Block>
-            <Text bold size={26} style={styles.title}>
+        <Text bold size={26} style={styles.title}>
           Catégories
         </Text>
         <Block flex>
@@ -247,6 +268,9 @@ function Articles(props) {
           </Animated.ScrollView>
         </Block>
         <Block flex>
+        <Text bold size={16} style={styles.subtitle}>
+                    Tous
+                  </Text>
           <Animated.ScrollView
             horizontal
             scrollEventThrottle={1}
@@ -267,9 +291,45 @@ function Articles(props) {
             }}
           >
 
-            <SmallSlide/>
+            <SmallSlide category='Tous'/>
           </Animated.ScrollView>
+              
         </Block>
+
+              {categories.map((marker, index) => {
+                console.log(marker.name);
+                return(
+
+               <Block flex>
+                 <Text bold size={16} style={styles.subtitle}>
+                    {marker.name}
+                  </Text>
+                  <Animated.ScrollView
+                    horizontal
+                    scrollEventThrottle={1}
+                    showsHorizontalScrollIndicator={false}
+                    style={{transform: [{translateX: entranceAnimation.interpolate({
+                      inputRange: [80, 100],
+                      outputRange: [1000, 0] 
+                    })}]}}
+                    //style={styles.chipsScrollView}
+                    contentInset={{ // iOS only
+                      top:0,
+                      left:0,
+                      bottom:0,
+                      right:20
+                    }}
+                    contentContainerStyle={{
+                      paddingRight: Platform.OS === 'android' ? 20 : 0
+                    }}
+                  >
+                      
+                  <SmallSlide category={marker.name}/>
+                </Animated.ScrollView>
+              </Block>
+                )
+            })}
+        
         <Block flex>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Block flex row>
@@ -288,6 +348,13 @@ const styles = StyleSheet.create({
     paddingBottom: theme.SIZES.BASE,
     paddingHorizontal: theme.SIZES.BASE * 2,
     marginTop: 22,
+    color: argonTheme.COLORS.HEADER
+  },
+  subtitle: {
+    paddingBottom: theme.SIZES.BASE,
+    paddingHorizontal: theme.SIZES.BASE * 2,
+    marginTop: 10,
+    marginBottom:-20,
     color: argonTheme.COLORS.HEADER
   },
   group: {

@@ -27,7 +27,7 @@ DELETE FROM Promotion WHERE pid = :pid;
 
 
 --name: get_commerce
-SELECT DISTINCT c.cid, c.cnom, c.cpresentation, a.anom, c.code_postal, c.rue_and_num, c.latitude, c.longitude, c.url_ext
+SELECT DISTINCT c.cid, c.cnom, c.cpresentation, a.anom, c.code_postal, c.rue_and_num, c.latitude, c.longitude, c.url_ext, ca.catnom
 FROM Commerce AS c
 JOIN CommerceCategorie AS cc USING (cid)
 JOIN Categorie AS ca USING (catid)
