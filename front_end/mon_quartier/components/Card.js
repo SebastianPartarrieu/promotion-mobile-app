@@ -1,11 +1,9 @@
 import React from 'react';
 import { withNavigation } from '@react-navigation/compat';
 import PropTypes from 'prop-types';
-import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet,Image, TouchableWithoutFeedback } from 'react-native';
 import { Block, Text, theme } from 'galio-framework';
-import Profile from '../screens/Profile';
-import { argonTheme } from '../constants';
-import { articles } from '../constants';
+
 
 import server from "../constants/Server";
 

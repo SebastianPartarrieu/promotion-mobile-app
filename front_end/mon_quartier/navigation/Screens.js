@@ -1,29 +1,24 @@
-import React, { Component, useState, useEffect, useRef, useCallback } from "react";
-import { Easing,
-         Animated, 
+import React, { useState, useEffect, useRef} from "react";
+import {
          Dimensions, 
          View, 
          Text,
          TextInput,
          ScrollView, 
          StyleSheet, 
-         ImageBackground, 
-         Image,
-         SegmentedControlIOSComponent
          } from "react-native";
 
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { Block, theme, Button as GaButton, DeckSwiper } from "galio-framework";
+import { Block, theme } from "galio-framework";
 
 // screens
-import Accueil from "../screens/Home";
+
 import Onboarding from "../screens/Onboarding";
 import Account from "../screens/Account";
 import { token } from "../screens/Onboarding";
-import Pro from "../screens/Pro";
+
 import Profile from "../screens/Profile";
 import Map from "../screens/Map";
 import Register from "../screens/Register";
@@ -33,12 +28,15 @@ import Articles from "../screens/Articles";
 import CustomDrawerContent from "./Menu";
 
 // header for screens
-import { Icon, Header, Button, List } from "../components";
-import { Images, argonTheme, tabs, articles } from "../constants";
-import { HeaderHeight } from "../constants/utils";
-import Input from '../components/Input';
+import { Icon, Header, Button } from "../components";
+import { argonTheme } from "../constants";
+
+
 
 import server from "../constants/Server";
+
+
+import sendSearchRequest from "../constants/Fonction";
 
 
 
@@ -46,7 +44,7 @@ const { width } = Dimensions.get("screen");
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
-const Tab = createBottomTabNavigator();
+
 
 
 
@@ -103,27 +101,7 @@ function sendImageRequest(id,route){
 
 
 
-function sendSearchRequest(search,categorie,updateFunction,route){
 
-  const url = new URL(route, server.server)
-
-  const recherche = search;
-  url.searchParams.append('search',recherche)
-  if (categorie!='')
-    { 
-      url.searchParams.append('categorie',categorie)
-    };
-  
-
-  fetch(url, {
-    method : 'GET',
-    headers: {
-      Accept: 'application/json',},
-    //body : JSON.stringify({data :{ "search" : recherche, }})
-  }).then((response) => response.json()).then(updateFunction).catch(
-    (e) => {alert('Something went wrong' + e.message)}
-  )
-}
 
 
 
@@ -165,9 +143,6 @@ function Recherche (props){
   const inputElement = useRef(null);
 
 
-  
-  //useEffect(() =>{if (inputElement.current){inputElement.current.focus();}},[]);
-
   return (
     <Block>
       <TextInput
@@ -192,7 +167,7 @@ function Recherche (props){
               borderColor: argonTheme.COLORS.BORDER}}
         placeholder="Que recherchez vous?"
         placeholderTextColor={'#8898AA'}
-        //onFocus={() => navigation.navigate('Pro')}
+
         iconContent={<Icon size={16} color={theme.COLORS.MUTED} name="search-zoom-in" family="ArgonExtra" />}
 
         />
@@ -217,9 +192,6 @@ function Recherche (props){
 
 
 function ProfileStack(props){
-    //console.log("======================== ")
-    //console.log()
-    //console.log("======================== ")
     
     const COMMERCE = props.route.params['comm']
     const IMAGES = props.route.params['imm']

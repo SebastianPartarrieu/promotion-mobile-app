@@ -4,14 +4,13 @@ import {
   ImageBackground,
   Dimensions,
   StatusBar,
-  KeyboardAvoidingView,
-  TextInput
+  KeyboardAvoidingView
 } from "react-native";
-import { Block, Checkbox, Text, theme } from "galio-framework";
+import { Block, Text } from "galio-framework";
 
 import { Button, Icon, Input } from "../components";
 import { Images, argonTheme } from "../constants";
-import { string } from "prop-types";
+
 
 import server from "../constants/Server";
 
@@ -63,8 +62,6 @@ function Onboarding({ navigation }){
 
     const [username, setUsername] = useState('email') ;
     const [password, setPassword] = useState('mdp') ;
-    //console.log(password)
-
 
     return (
       <Block flex middle>
@@ -132,7 +129,7 @@ function Onboarding({ navigation }){
 
                     <Text 
                       bold size={13} 
-                      //color={argonTheme.COLORS.RED}
+                      
                       color = {error_text}>
                       Mauvais email ou mot de passe
                     </Text>
@@ -141,7 +138,7 @@ function Onboarding({ navigation }){
                   
                   <Block middle>
                     <Button color="primary" style={styles.createButton}
-                    //onPress={() => navigation.navigate("App")}> 
+                  
                     onPress={() => sendLoginRequest(username,password,updateFunction,'login')}>
                     
                       <Text bold size={14} color={argonTheme.COLORS.WHITE}>

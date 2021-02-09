@@ -1,22 +1,18 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import {
   ScrollView,
   StyleSheet,
   Image,
-  TouchableWithoutFeedback,
-  ImageBackground,
   Dimensions,
-  View,
   TouchableOpacity,
-  Button,
   Animated
 } from "react-native";
 //galio
 import { Block, Text, theme } from "galio-framework";
 //argon
-import { Images, argonTheme, articles } from "../constants/";
+import { argonTheme } from "../constants/";
 import { Card } from "../components/";
-import MapView, {Marker, PROVIDER_GOOGLE} from "react-native-maps";
+import MapView, {PROVIDER_GOOGLE} from "react-native-maps";
 import {RetroStyle} from "../constants/MapData";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -73,14 +69,10 @@ function Articles(props) {
       </Block>
         )}
 
-    //console.log(articles)
-    var i = 0;
-    var suggestions = [];
-    //while(i<6){suggestions.push(articles[i]), i+=1};
 
     function Suggest(){
       var buffer = [];
-      //var n = resultat.length;
+
       var n = 3;
 
       for(var iter = 0; iter < n; iter++){
@@ -119,10 +111,6 @@ function Articles(props) {
         duration: 800,
         useNativeDriver: true
       }).start()
-
-  //useEffect( ()=>{componentDidMount();}, []);
-
-
 
     const { navigation } = props;
     const categories= [

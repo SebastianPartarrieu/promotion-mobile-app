@@ -4,22 +4,16 @@ import {
   ImageBackground,
   Dimensions,
   StatusBar,
-  KeyboardAvoidingView,
-  View
+  KeyboardAvoidingView
 } from "react-native";
-
-//import DropdownButton from 'react-bootstrap/DropdownButton';
-//import Dropdown from 'react-bootstrap/Dropdown';
-
 
 import DropDownPicker from 'react-native-dropdown-picker';
 
-import { Block, Checkbox, Text, theme } from "galio-framework";
+import { Block, Text } from "galio-framework";
 import { token } from "./Onboarding";
 import { Button, Icon, Input, Header } from "../components";
-import { Images, argonTheme } from "../constants";
-import { string } from "prop-types";
-import Onboarding from "./Onboarding";
+import { argonTheme } from "../constants";
+
 
 import server from "../constants/Server";
 import cities from "../constants/cities"

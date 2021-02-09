@@ -11,7 +11,6 @@ import {
   TouchableOpacity,
   Dimensions,
   Platform,
-  Callout, Button, Block
 } from "react-native";
 import MapView, {Marker, PROVIDER_GOOGLE} from "react-native-maps";
 
@@ -21,7 +20,8 @@ import Fontisto from 'react-native-vector-icons/Fontisto'
 
 
 
-import {sendSearchRequest} from "../navigation/Screens";
+import sendSearchRequest from "../constants/Fonction";
+
 import {RetroStyle} from "../constants/MapData";
 
 import server from "../constants/Server";
@@ -58,7 +58,6 @@ function Map ({navigation}){
   }
  
 
-  //var [articles, setArticles] = useState(props.KOM);
   var [articles, setArticles] = useState([]);
   var [images, setImages] = useState([]);
 
@@ -140,9 +139,6 @@ function Map ({navigation}){
 
       const id = iter;
       
-
-      //console.log(NomCat)
-
       buffer.push(
 
         <TouchableOpacity 
@@ -362,7 +358,6 @@ function Map ({navigation}){
       </MapView>
       <View style={styles.searchBox}>
         <TextInput
-          //onChangeText = {(text) => (sendSearchRequest(text,category,MapUpdateFunction,"commerce"))}
 
           onChangeText = {(text) => {setSearchText(text); sendSearchRequest(text,category,MapUpdateFunction,"commerce");}}
 
