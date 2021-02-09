@@ -22,6 +22,7 @@ import { string } from "prop-types";
 import Onboarding from "./Onboarding";
 
 import server from "../constants/Server";
+import cities from "../constants/cities"
 
 const { width, height } = Dimensions.get("screen");
 
@@ -48,13 +49,19 @@ function getInfos(token,updateFunction,route){
 
 function Account({navigation}){
 
+
   const [lastname, setLastname] = useState('nom') ;
   const [firstname, setFirstname] = useState('prenom') ;
+
   const [city, setCity] = useState('');
   
   const [username, setUsername] = useState('email') ;
   const [password, setPassword] = useState('mdp') ;
 
+
+  console.log("===============================")
+  console.log(city)
+  console.log("===============================")
 
   function updateFunction(response){
       { console.log(response)
@@ -142,7 +149,7 @@ function Account({navigation}){
                         }
                       />
                     </Block>
-                    <Block width={width * 0.8} style={{ marginBottom: 15 }}>
+                    <Block width={width * 0.8} style={{ marginBottom: 0 }}>
                       <Input
                         borderless
                         onChangeText={(text) => setUsername(text)}
@@ -161,27 +168,11 @@ function Account({navigation}){
                     </Block>
                     <Block width={width * 0.8} style={{ marginBottom: 15 }}>
                       
-                    <DropDownPicker
-                          items={[
-                                  {label: 'USA', value: 'usa' , hidden: true},
-                                  {label: 'UK', value: 'uk'},
-                                  {label: 'France', value: 'france'},
-                                  ]}
-                          defaultValue={'france'}
-                          containerStyle={{height: 40}}
-                          style={{backgroundColor: '#fafafa'}}
-                          itemStyle={{
-                              justifyContent: 'flex-start'
-                                    }}
-                          dropDownStyle={{backgroundColor: '#fafafa'}}
-                          onChangeItem={item => console.log(item)}
-                        />
+
                      
                     </Block>
 
-
-
-                    <Block width={width * 0.8}>
+                    <Block width={width * 0.8} style={{ marginBottom: 15 }}>
                       <Input
                         id='password'
                         password
@@ -200,14 +191,38 @@ function Account({navigation}){
                         }
                       />
                     </Block>
-                    <Block row width={width * 0.75}>
+
+
+                    <Block width={width * 0.8} style = {{ marginBottom: 150}}>
+
+                    <DropDownPicker
+                          items= {cities}
+
+                          defaultValue={'1'}
+                          containerStyle={{height: 40}}
+                          style={{
+                            backgroundColor: '#FFFFFF',
+                            color:'#000000'}}
+                          //style={{backgroundColor: '#0000'}}
+                          itemStyle={{
+                            justifyContent: 'flex-start'
+                            }}
+                          dropDownStyle={{backgroundColor: '#FFFFFF'}}
+                          onChangeItem={item => setCity(item)}
+                          //city = {city}
+                          labelStyle={{
+                            fontSize: 14,
+                            textAlign: 'left',
+                            color: '#000'
+                            }}
+                        />
 
                     </Block>
                     <Block middle>
                       <Button 
                         color="primary" 
                         style={styles.createButton}
-                        onPress={() => sendRegisterRequest(lastname,firstname,username,password,updateFunction,'signup')}>                        
+                        onPress={() => console.log("Ici, append la BDD avec les nouvelles info utilisateurs.")}>                        
                         <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                           Enregistrer
                         </Text>
