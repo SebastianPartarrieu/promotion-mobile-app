@@ -1,18 +1,4 @@
-When we will link everything to front end, there will be lots of things to keep in mind.
-Here is a short (non exhaustive) list of some of these:
-- on /login it's an HTTP get because we send the token back
-- we will need to store clid and cid locally on FE
-- login FE page should have email, pwd, remember me tick box, , create a new account, change existing pwd
-- format of categorie names "restaurant,textile"
-
 Random things to keep in mind:
-- If we add Image table we need to make sure to drop it in drop.sql and truncate in truncate.sql
-- Same for any other added tables (card scanning functionnality for example)
-- Need to install pyjwt for tokens to work.
-- pid for promotion will be kept with image. If we click on image of promotion and want to go see it's info.
-- if token expires need to go back to login page on FE
-- Be careful for added ' and \n or other escape sequences in strings. Might be a problem when FE sends a token
-- ID will be received on signup and stored locally.
-- when you login, you receive token. Token to be sent with subsequent http requests 
-- token is truly best mechanism as HTTP Basic Authentication wouldn't work well with the web app for commerce.
+
 - Be cafeful for updating ranks for immages of commerce and promtion. Need to keep list of ranks and imid locally and wait for server response before updating.
+- PLEASE SEND YYYY-MM-DD format to BE when you send dates on promotion.

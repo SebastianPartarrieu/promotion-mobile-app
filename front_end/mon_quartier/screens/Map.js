@@ -248,7 +248,14 @@ function Map ({navigation}){
 
   let mapIndex = 0;
   let mapAnimation = new Animated.Value(0);
-  
+  let entranceAnimation = new Animated.Value(0);
+  Animated.timing(entranceAnimation, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true
+      }).start()
+
+
   useEffect(() => {
     mapAnimation.addListener(({ value }) => {
       let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
@@ -306,6 +313,7 @@ function Map ({navigation}){
       x = x - SPACING_FOR_CARD_INSET;
     }
 
+
     _scrollView.current.scrollTo({x: x, y: 0, animated: true});
   }
 
@@ -314,7 +322,10 @@ function Map ({navigation}){
   
 
   return (
-    <View style={styles.container}>
+    <Animated.View style={[styles.container, {transform: [{scale: entranceAnimation.interpolate({
+      inputRange: [0, 1],
+      outputRange: [1, 1] 
+    })}]}]}>
       <MapView
         ref={_map}
         initialRegion={state.region}
@@ -415,7 +426,7 @@ function Map ({navigation}){
 
         <SetEtiquettes/>
       </Animated.ScrollView>
-    </View>
+    </Animated.View>
   );
 }
 

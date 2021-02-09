@@ -21,13 +21,18 @@ FROM Promotion AS p
 JOIN Commerce AS c USING (cid)
 WHERE p.pid = :pid;
 
+--name: delete_promotion_info!
+DELETE FROM ImagePromotion WHERE pid= :pid;
+DELETE FROM Promotion WHERE pid = :pid;
+
+
 --name: get_commerce
-SELECT DISTINCT c.cid, c.cnom, c.cpresentation, a.anom, c.code_postal, c.rue_and_num, c.latitude, c.longitude
+SELECT DISTINCT c.cid, c.cnom, c.cpresentation, a.anom, c.code_postal, c.rue_and_num, c.latitude, c.longitude, c.url_ext
 FROM Commerce AS c
 JOIN CommerceCategorie AS cc USING (cid)
 JOIN Categorie AS ca USING (catid)
 JOIN Agglomeration AS a USING (aid)
-WHERE a.anom LIKE :agg AND ca.catnom LIKE :cat AND c.cnom LIKE '%%' || :search || '%%' 
+WHERE a.anom LIKE :agg AND ca.catnom LIKE '%%'||:cat||'%%' AND c.cnom LIKE '%%' || :search || '%%' 
 ORDER BY 1;
 
 --name: get_client_info
@@ -166,6 +171,13 @@ UPDATE ImagePromotion SET ranks=:ranks WHERE imid=:imid and pid=:pid;
 UPDATE ImagePromotion SET verified=TRUE where imgname=:imgname;
 
 --name: fetch_promotion_of_commerce
+SELECT DISTINCT p.pdescription, c.cnom, p.tdebut, p.pid
+FROM Promotion AS p
+JOIN Commerce AS c USING (cid)
+WHERE c.cid = :cid
+ORDER BY p.tdebut DESC;
+
+--name: fetch_promotion_of_commerce_for_client
 SELECT DISTINCT p.pid, p.pdescription, c.cnom, p.tdebut, p.tfin
 FROM Promotion AS p
 JOIN Commerce AS c USING (cid)

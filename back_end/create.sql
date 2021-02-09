@@ -16,9 +16,9 @@ CREATE TABLE Client(clid SERIAL PRIMARY KEY,
                     UNIQUE(clemail, clmdp));
  
 CREATE TABLE Commerce(cid SERIAL PRIMARY KEY,
-                      cnom VARCHAR(32) NOT NULL,
+                      cnom VARCHAR(100) NOT NULL,
                       cpresentation TEXT NOT NULL,
-                      cemail VARCHAR(100) UNIQUE NOT NULL,
+                      cemail VARCHAR(150) NOT NULL,
                       url_ext VARCHAR(150),
                       code_postal INTEGER NOT NULL,
                       rue_and_num VARCHAR(100) NOT NULL,
@@ -27,11 +27,9 @@ CREATE TABLE Commerce(cid SERIAL PRIMARY KEY,
                       active BOOLEAN DEFAULT True,
                       latitude FLOAT,
                       longitude FLOAT,
-                      UNIQUE(cnom, cpresentation, code_postal, rue_and_num),
-                      UNIQUE(cemail, cmdp));
-                      -- imid INTEGER NOT NULL REFERENCES Image,  
-                      -- clocation GEOGRAPHY UNIQUE NOT NULL,
-                      --UNIQUE (cnom, mdp));
+                      UNIQUE(cemail, cmdp, latitude, longitude),
+                      UNIQUE(cemail, rue_and_num, code_postal),
+                      UNIQUE(rue_and_num, code_postal));
 
 CREATE TABLE CommerceCategorie(cid INTEGER NOT NULL REFERENCES Commerce,
                                catid INTEGER NOT NULL REFERENCES Categorie,

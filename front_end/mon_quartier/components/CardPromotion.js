@@ -9,8 +9,8 @@ import { articles } from '../constants';
 
 import server from "../constants/Server";
 
-class Card extends React.Component {
-  render() {
+export function Cardpromotion() {
+   
     const { navigation, item, im, horizontal, full, style, ctaColor, imageStyle } = this.props;
 
 
@@ -18,23 +18,23 @@ class Card extends React.Component {
       full ? styles.fullImage : styles.horizontalImage,
       imageStyle
     ];
-    const cardContainer = [styles.card, styles.shadow, style];
+    const cardpromotionContainer = [styles.cardpromotion, styles.shadow, style];
     const imgContainer = [styles.imageContainer,
       horizontal ? styles.horizontalStyles : styles.verticalStyles,
       styles.shadow
     ];
     if (im != undefined){
     return (
-      <Block row={horizontal} card flex style={cardContainer}>
-        <TouchableWithoutFeedback onPress = {() => navigation.navigate('Profile', {comm : item, imm:im})}>
+      <Block row={horizontal} cardpromotion flex style={cardpromotionContainer}>
+        <TouchableWithoutFeedback o onPress = {() => navigation.navigate('Profile', {comm : item, imm:im})}>
           <Block flex style={imgContainer}>
             <Image source={{uri: server.server + im[0] }} style={imageStyles} resizeMode="contain"/>
           </Block>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback  onPress = {() => navigation.navigate('Profile', {comm : item, imm:im})}>
-          <Block flex space="between" style={styles.cardDescription}>
-            <Text bold center size={15} style={styles.cardTitle}>{item[1]}</Text>
-            <Text numberOfLines={1} style={styles.cardDescription}>{item[2]}</Text>
+          <Block flex space="between" style={styles.cardpromotionDescription}>
+            <Text bold center size={15} style={styles.cardpromotionTitle}>{item[1]}</Text>
+            <Text numberOfLines={1} style={styles.cardpromotionDescription}>{item[2]}</Text>
           </Block>
         </TouchableWithoutFeedback>
       </Block>
@@ -43,9 +43,9 @@ class Card extends React.Component {
     return(<Block></Block>);
   }
   }
-}
 
-Card.propTypes = {
+
+cardpromotion.propTypes = {
   item: PropTypes.any,
   horizontal: PropTypes.bool,
   full: PropTypes.bool,
@@ -54,7 +54,7 @@ Card.propTypes = {
 }
 
 const styles = StyleSheet.create({
-  card: {
+  cardpromotion: {
     backgroundColor: theme.COLORS.WHITE,
     marginVertical: theme.SIZES.BASE,
     borderWidth: 0,
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     borderRadius: 10,
   },
-  cardTitle: {
+  cardpromotionTitle: {
     flex: 1,
     flexWrap: 'wrap',
     marginTop:5
@@ -102,11 +102,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     elevation: 2,
   },
-  cardDescription: {
+  cardpromotionDescription: {
     fontSize: 8,
     color: "#444",
     margin:5
   }
 });
 
-export default withNavigation(Card);

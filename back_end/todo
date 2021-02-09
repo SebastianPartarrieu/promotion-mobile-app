@@ -1,26 +1,23 @@
-- for now we don't allow password changes: will need to be implemented
 
-- refresh tokens
-- leverage refresh tokens to ask users to reidentify themselves before deleting their account
+Before presentation Friday:
 - constraints on min amount of characters for passwords
-- add admin functionnalities (checking images but also deleting promotion and commerce)
+- refactor code
+- think about patching location
+- Documentation of image helper functions
+- work on presentation
+- possibly deploy app
+- Final FE stuff
 
-- think about what actions a user might be able to do once account is deleted?
+If time for the near-future:
+- generate QR codes for client fidelity card and have commerce scan these
+- blueprint to split flask app.py into multiple cleaned up files
+- more complex form of suggestion sending based on user interaction, clicks, time spent viewing commerce etc..
+
+If ever deployed on a 'real' server for 'real' usage:
+- implementing password changes and secure signup with automated e-mail sending or 2FA
+- refresh tokens to better handle duration of tokens and account deleted
+- add admin functionalities and interface so that an admin may check images, handle commerce accounts and the like
 
 
-
-
-- QR codes for client fidelity : génerer a la volée, pas stocker l'image!
-- blueprint to split flask app.py into multiple files 
-- bien fournir la base de données en exemple préalables 
-- essayer de tout intégrer  
-- better suggestion sending!
-
-MARDI dernier délai pour déployer l'application sur le serveur.
-
-FE:
-
-need to add the filtering function on map view
-favorites!! (Perhaps prompt for favorites as you login for the first time?)
 
 
