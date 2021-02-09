@@ -8,7 +8,8 @@ import {
   Dimensions,
   View,
   TouchableOpacity,
-  Button
+  Button,
+  Animated
 } from "react-native";
 //galio
 import { Block, Text, theme } from "galio-framework";
@@ -62,7 +63,7 @@ function Articles(props) {
     k=1;
  
     
-    useEffect( ()=>{sendArticlesRequest(updateFunction, "commerce");}, []);
+  useEffect( ()=>{sendArticlesRequest(updateFunction, "commerce");}, []);
 
  if (articles.length == 0 ) {
   
@@ -111,6 +112,17 @@ function Articles(props) {
       return(buffer)
     }
 
+    //Animations
+    const entranceAnimation = new Animated.Value(0);
+      Animated.timing(entranceAnimation, {
+        toValue: 100,
+        duration: 800,
+        useNativeDriver: true
+      }).start()
+
+  //useEffect( ()=>{componentDidMount();}, []);
+
+
 
     const { navigation } = props;
     const categories= [
@@ -147,63 +159,75 @@ function Articles(props) {
           Suggestions
         </Text>
         <Block flex >
-            <ScrollView
+            <Animated.ScrollView
               horizontal={true}
               pagingEnabled={true}
               decelerationRate={0}
               scrollEventThrottle={16}
               snapToAlignment="center"
               showsHorizontalScrollIndicator={true}
+              style={{transform: [{translateY: entranceAnimation.interpolate({
+                inputRange: [0, 100],
+                outputRange: [-1000, 0] 
+              })}]}}
               snapToInterval={cardWidth + theme.SIZES.BASE * 0.375}
               contentContainerStyle={{
               paddingHorizontal: theme.SIZES.BASE / 2
               }}
             >
             <Suggest/>
-            </ScrollView>
+            </Animated.ScrollView>
           </Block>
           <Text bold size={16} style={styles.title}>
           Autour de vous
         </Text>
           <Block flex center>
-            <MapView
-              initialRegion={{
-                latitude: articles[0][6],
-                longitude: articles[0][7],
-                latitudeDelta: 0.02864195044303443,
-                longitudeDelta: 0.020142817690068,
-              }}
-              provider={PROVIDER_GOOGLE}
-              customMapStyle={RetroStyle}
-              style={styles.productMap}
-              onPress={() => navigation.navigate('Map', {comm : articles, imm: images})}
-              showsUserLocation={true}
-              followsUserLocation={true}
-            >
-              {articles.map((marker, index) => {
-            
-                return (
-                  <MapView.Marker key={index} coordinate={{latitude: marker[6], longitude: marker[7]}}>
-                    <Image
-                      source={require('../assets/imgs/pin.png')}
-                      style={styles.marker}
-                      resizeMode="contain"
-                    />
-                </MapView.Marker>
-                );
-              })}
-            </MapView>
-            </Block>
+            <Animated.View style={{transform: [{translateX: entranceAnimation.interpolate({
+                inputRange: [40, 100],
+                outputRange: [1000, 0] 
+              })}]}}>
+              <MapView
+                initialRegion={{
+                  latitude: articles[0][6],
+                  longitude: articles[0][7],
+                  latitudeDelta: 0.02864195044303443,
+                  longitudeDelta: 0.020142817690068,
+                }}
+                provider={PROVIDER_GOOGLE}
+                customMapStyle={RetroStyle}
+                style={styles.productMap}
+                onPress={() => navigation.navigate('Map', {comm : articles, imm: images})}
+                showsUserLocation={true}
+                followsUserLocation={true}
+              >
+                {articles.map((marker, index) => {
+              
+                  return (
+                    <MapView.Marker key={index} coordinate={{latitude: marker[6], longitude: marker[7]}}>
+                      <Image
+                        source={require('../assets/imgs/pin.png')}
+                        style={styles.marker}
+                        resizeMode="contain"
+                      />
+                  </MapView.Marker>
+                  );
+                })}
+              </MapView>
+            </Animated.View>
+          </Block>
             <Text bold size={26} style={styles.title}>
           Catégories
         </Text>
         <Block flex>
-            <ScrollView
+            <Animated.ScrollView
             horizontal
             scrollEventThrottle={1}
             showsHorizontalScrollIndicator={false}
             height={50}
-          //  style={styles.chipsScrollView}
+            style={{transform: [{translateX: entranceAnimation.interpolate({
+              inputRange: [60, 100],
+              outputRange: [-1000, 0] 
+            })}]}}
             contentInset={{ // iOS only
               top:0,
               left:0,
@@ -220,14 +244,17 @@ function Articles(props) {
                 <Text>{category.name}</Text>
               </TouchableOpacity>
             ))}
-          </ScrollView>
+          </Animated.ScrollView>
         </Block>
         <Block flex>
-            <ScrollView
+          <Animated.ScrollView
             horizontal
             scrollEventThrottle={1}
             showsHorizontalScrollIndicator={false}
-         
+            style={{transform: [{translateX: entranceAnimation.interpolate({
+              inputRange: [80, 100],
+              outputRange: [1000, 0] 
+            })}]}}
             //style={styles.chipsScrollView}
             contentInset={{ // iOS only
               top:0,
@@ -239,8 +266,9 @@ function Articles(props) {
               paddingRight: Platform.OS === 'android' ? 20 : 0
             }}
           >
+
             <SmallSlide/>
-          </ScrollView>
+          </Animated.ScrollView>
         </Block>
         <Block flex>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
