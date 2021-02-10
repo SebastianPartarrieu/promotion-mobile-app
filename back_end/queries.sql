@@ -171,7 +171,7 @@ UPDATE ImagePromotion SET ranks=:ranks WHERE imid=:imid and pid=:pid;
 UPDATE ImagePromotion SET verified=TRUE where imgname=:imgname;
 
 --name: fetch_promotion_of_commerce
-SELECT DISTINCT p.pdescription, c.cnom, p.tdebut, p.pid
+SELECT DISTINCT p.pdescription, c.cnom, p.tdebut, p.pid, p.tfin
 FROM Promotion AS p
 JOIN Commerce AS c USING (cid)
 WHERE c.cid = :cid
