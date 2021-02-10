@@ -1,0 +1,179 @@
+<html>
+  <body>
+
+    <table border="0" cellpadding="0" cellspacing="0" width="771" align="center">
+    <h1 align="center">Mon Quartier</h1>
+
+      
+        <td width="161" align="right" valign="top">
+            
+        
+            <p>
+                <font color="#000000"><span class="important">Promotions</span></font><br>
+                <a href="http://0.0.0.0:5000/promotions/cid?token&#61;blabla" style="color:#008000; text-decoration:none" target="_blank">Mes INformations</a><br>
+                <a href="http://0.0.0.0:5000/" style="color:#008000; text-decoration:none" target="_blank">Promotions pass&eacute;es</a><br>
+              </p>
+          
+          <p>
+            <font color="#000000"><span class="important">Mon Espace Commer&ccedil;ant</span></font><br>
+            <a href="http://0.0.0.0:5000/informations" style="color:#008000; text-decoration:none" target="_blank">Informations</a><br>
+            <a href="http://0.0.0.0:5000/" style="color:#008000; text-decoration:none" target="_blank">Description</a><br>
+            <a href="http://0.0.0.0:5000/" style="color:#008000; text-decoration:none" target="_blank">D&eacute;connexion</a><br>
+          </p>
+        </td>
+
+        <td width="100" align="center"></td>
+
+        <td width="600" valign="top">
+                
+            <div class="container">
+                <font color="#008000">
+
+                <h2>Modifier une promotion</h2>
+
+                <form>
+    
+
+                    <label for="Nom"><b>URL</b></label>
+                    <input type="text" id="Nom">
+                    </br> </br>
+
+                    <label for="Description"><b>Description</b></label>
+                    <input type="text" id="Description">
+                    </br> </br>
+
+                
+    
+                    <label for="Email"><b>Email</b></label>
+                    <input type="text" id="Email">
+                    </br> </br>
+                    <label for="URL"><b>URL</b></label>
+                    <input type="text" id="URL">
+                    </br> </br>
+
+                    <label for="Code Postal"><b>Code Postal</b></label>
+                    <input type="text" id="Code Postal">
+                    </br> </br>
+                
+
+                    <label for="Addresse"><b>Addresse</b></label>
+                    <input type="text" id="Addresse">
+                    </br> </br>
+                    <label for="Agglomeration"><b>Agglomeration</b></label>
+                    <input type="text" id="Agglomeration">
+                    </br> </br>
+
+                    <label for="Textile"><b>Textile</b></label>
+                    <input type="text" id="Textile">
+                    </br> </br>
+
+                
+
+
+
+                    <div class="clearfix">
+                        <button type="button" class="signupbtn" onclick="mofifier()">Valider</button>
+                        
+                
+                    
+        
+                    </div>
+                </form>
+        </td>
+      
+      
+    </table>
+    <script>    
+        const BASE_URL = "http://0.0.0.0:5000";
+        
+        const LOGIN_PATH = '/commerce/information';
+              
+                 
+                  
+                  var url = BASE_URL + LOGIN_PATH;
+                  const section = document.querySelector('section');
+                  var token= localStorage.getItem("token");
+                  var data = {
+                    
+                    token:token
+                };
+               fetch(
+          url,
+          
+            {method: "POST",
+                    headers : {
+                        "content-type" : "application/json; charset=UTF-8"
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(data=>{return data.json()}).then(res=>{
+     
+        document.getElementById("Nom").value = res[0][0];
+        document.getElementById("Description").value = res[0][1];
+        document.getElementById("Email").value = res[0][2];
+        document.getElementById("URL").value = res[0][3];
+        document.getElementById("Code Postal").value = res[0][4];
+        document.getElementById("Addresse").value = res[0][5];
+        document.getElementById("Agglomeration").value = res[0][6];
+        document.getElementById("Textile").value = res[0][7];
+          })
+
+
+
+          function mofifier()
+            {
+              const BASE_URL = "http://0.0.0.0:5000";
+              
+            const LOGIN_PATH = "/mycommerce";
+                var Nom = document.getElementById("Nom").value;
+
+                var Description = document.getElementById("Description").value;
+                var URL = document.getElementById("URL").value;
+
+                var Email = document.getElementById("Email").value;
+                var Agglomeration = document.getElementById("Agglomeration").value;
+
+                var Description = document.getElementById("Description").value;
+                var Addresse = document.getElementById("Addresse").value;
+
+                var CodePostal = document.getElementById("Code Postal").value;
+                
+                var token= localStorage.getItem("token");
+                var Textile = document.getElementById("Textile").value;
+                
+                var url = BASE_URL + LOGIN_PATH;
+                var data = {
+                    cnom : Nom,
+                    cpresentation: Description,
+                    cemail:Email,
+                    aid:Agglomeration,
+                    code_postal: CodePostal,
+                   
+                    url_ext: URL,
+                    token:token,
+                    rue_and_num: Addresse,
+                    catnom:Textile
+                };
+                
+                fetch(url, {method: "PUT",
+                    headers : {
+                        "content-type" : "application/json; charset=UTF-8"
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(data=>{return data.json()})
+                .then(res=>{
+                    
+                    if(res["status"] != "ok")
+                    {
+                        
+                        alert(res["message"]);
+                    }
+                    else {alert("OK");}
+                })}
+                
+
+
+      </script> 
+  </body>
+</html>
