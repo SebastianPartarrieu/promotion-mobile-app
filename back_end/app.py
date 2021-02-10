@@ -254,6 +254,13 @@ def validate_image(stream):
 
 def f_update_image(nameFolder, id, databaseFunction, uploaded_file, ranksFunction):
     '''
+    save image in the server's folder and the filename in the database for commerce and promotion
+
+    Args:
+        path name to save image, pid/cid, function for saving the image in the databse and the folder in the server
+
+    Output:
+        imid (id of the image)
     '''
     filename=upload_picture(uploaded_file)
     uploaded_file.save(os.path.join(app.config[nameFolder], filename))
@@ -265,11 +272,23 @@ def f_update_image(nameFolder, id, databaseFunction, uploaded_file, ranksFunctio
 
 def f_delete_images(nameFolder, id, databaseFunction):
     '''
+    delete all images for a promotion of a commerce
+
+    Args: 
+        path name to save image, pid/cid, function to delete the image from the database
+
+    Output:
+        status
+
     '''
-    res = databaseFunction(id)
-    for imgname in res:
-        os.remove(os.path.join(app.config[nameFolder], imgname[0]))
-    return "", 204
+    try:
+        res = databaseFunction(id)
+        for imgname in res:
+            os.remove(os.path.join(app.config[nameFolder], imgname[0]))
+        return "", 204
+    except BaseException:
+        return "", 400
+    
 
 #Actual query handling (finally!)
 
@@ -577,6 +596,36 @@ def get_commerce_info(cid):
     images = [tup[0] for tup in images]
     return jsonify({'resultat': res, 'images': images})
 
+@app.route('/commerce/information', methods=["POST"])
+def get_commerce_info_commerce_side():
+    '''
+    Get information about one commerce commerce_ side
+
+    Passed in url:
+        cid: int
+    
+    Response:
+        dict['resultat'] containing:
+            cnom: str
+            cpresentation: str
+            cemail: str
+            url_ext: str
+            code_postal: int
+            rue_and_num: str
+            aid: int for agglomeration
+            catnom: str for categories
+        dict['images'] with img paths to images of commerce
+    '''
+    auth_token = PARAMS.get("token", "")
+    cid = is_authorized_no_id(auth_token, user_type='commerce')
+    if cid:
+        res = db.get_commerce_info(cid=cid)
+        #images = db.get_commerce_image(cid=cid)
+        #images = [tup[0] for tup in images]
+        return jsonify(res)
+    else:
+        return jsonify({'status': 'error 400', 'message': 'Something went wrong!'}), 400
+
 ########## COMMERCE SIDE QUERIES ##########
 
 #Sign-up
@@ -663,8 +712,8 @@ def check_commerce_get_cid():
         res = list(db.fetch_login_commerce(cemail=cemail))
         if len(res) == 0:
             return jsonify({"status" : "error", "message" : "Invalid email or password"}), 401
-        elif cmdp==res[0][2]:
-        #elif check_password_hash(res[0][2], cmdp):
+        #elif cmdp==res[0][2]:
+        elif check_password_hash(res[0][2], cmdp):
             status = db.check_commerce_active(cid=res[0][0])
             if status[0][0]:
                 dict_new = {
@@ -885,6 +934,19 @@ def delete_promotion_info(pid):
 #post image
 @app.route('/promotion/<int:pid>/image', methods=['POST'])
 def upload_image(pid):
+    '''
+    Post an image for a promotion from commerce-side front end
+
+    Passed in url:
+        pid: int
+    Passed in PARAMS:
+        impFile: file
+        auth_token: str, JSON Web Token
+
+    Response:
+        image id: int
+        200, 400 or 401 depending on error or success
+    '''
     uploaded_file = request.files['inpFile']
     auth_token = PARAMS.get("token", None)
     cid = is_authorized_no_id(auth_token, user_type='commerce')
@@ -905,7 +967,6 @@ def upload_image(pid):
                     lambda x: db.get_rank_last_image_promotion(pid=x)) 
                 return jsonify(res)
             except Exception as e:
-                return "fjbh"
                 return Response(status=400)       
     else:
         return Response(status=401)
@@ -931,12 +992,14 @@ def delete_images(pid):
     else:
         return Response(status=401)
 
+
 def dupcheck(x):
    for elem in x:
       if x.count(elem) > 1:
          return True
       return False
 
+#modify an image for a promotion
 @app.route('/promotion/<int:pid>/image', methods=['PUT','PATCH'])
 def change_rank(pid):
     #imageRanks is a list containing image with its rank, i.e. [['image1',1],['image1',2]]
@@ -952,18 +1015,54 @@ def change_rank(pid):
 
 @app.route('/promotion/<int:pid>/image', methods=['GET'])
 def get_images(pid):
+    '''
+    Get the images of a promotions of a commerce
+
+    Passed in url:
+        pid: int
+    
+    Response:
+        if_auth dict containing:
+            image: name fo the image, rank for the order
+        if not error status and message
+    '''
     res = db.get_promotion_image(pid=pid)
     return jsonify(res)
 
 @app.route('/get/promotion/image', methods=['POST', 'GET'])
 def get_images_promotions():
+    '''
+    Get the images of a promotions of a commerce coomerce-side
+
+    Passed in PARAMS:
+        auth_token: str
+
+    Response:
+        if_auth dict containing:
+            image: name fo the image, rank for the order
+        if not error status and message
+    '''
+
     auth_token = PARAMS.get("token", None)
     cid = is_authorized_no_id(auth_token, user_type='commerce')
     res = db.get_promotion_images(cid=cid)
     return jsonify(res)
 
+#delete image fro a promotion
 @app.route('/promotion/<int:pid>/image', methods=['DELETE'])
 def delete_image(pid):
+    '''
+    Delete promotion image
+
+    Passed in url:
+        pid: int
+    Passed in PARAMS:
+        auth_token: str
+
+    Response:
+        str or dict with success of error message.
+    '''
+
     # Authorization checks
     auth_token = PARAMS.get("token", '')
     cid_associated_to_pid = db.fetch_cid_of_pid(pid=pid)
@@ -984,6 +1083,18 @@ def delete_image(pid):
 
 @app.route('/commerce/image', methods=['POST'])
 def upload_commerce_image():
+    '''
+    Post an image for a commerce from commerce-side front end
+
+    Passed in PARAMS:
+        impFile: file
+        auth_token: str, JSON Web Token
+
+    Response:
+        image id: int
+        200, 400 or 401 depending on error or success
+    '''
+
     uploaded_file = request.files['inpFile']
     auth_token = PARAMS.get("token", None)
     cid = is_authorized_no_id(auth_token, user_type='commerce')
@@ -1003,6 +1114,16 @@ def upload_commerce_image():
 #to delete all images of a commerce
 @app.route('/commerce/image', methods=['DELETE'])
 def delete_commerce_images(cid):
+    '''
+    Delete all images for a commerce
+
+    Passed in PARAMS:
+        auth_token: str
+
+    Response:
+        str or dict with success of error message.
+    '''
+
     #Authorization checks 
     auth_token = PARAMS.get("token", '')
     cid = is_authorized_no_id(auth_token, user_type='commerce')
@@ -1031,6 +1152,17 @@ def change_rank_commerce(cid):
 
 @app.route('/get/commerce/image', methods=['POST', 'GET'])
 def get_images_commerce():
+    '''
+    Get the images of a commerce of a commerce commerce-side
+
+    Passed in Params:
+        auth_token: str
+    
+    Response:
+  
+      images name and ranks 
+    '''
+
     auth_token = PARAMS.get("token", None)
     cid = is_authorized_no_id(auth_token, user_type='commerce')
     res = db.get_commerce_image(cid=cid)
@@ -1039,6 +1171,18 @@ def get_images_commerce():
 
 @app.route('/commerce/<int:cid>/image', methods=['DELETE'])
 def delete_image_commerce(cid):
+    '''
+    Delete an image of a commerce
+
+    Passed in url:
+        cid: int
+    Passed in PARAMS:
+        auth_token: str
+
+    Response:
+        str or dict with success of error message.
+    '''
+
     #Authorization checks 
     auth_token = PARAMS.get("token", '')
     if is_authorized(auth_token, user_id=cid, user_type='commerce'):
@@ -1067,6 +1211,10 @@ def logoutcommerce_html():
 def mon_compte():
     return render_template('comptetest.html')
 
+@app.route('/informations')
+def info():
+    return render_template('informations.html')
+
 @app.route('/addPromotion')
 def add_promotion():
     return render_template('addPromotion.html')
@@ -1074,6 +1222,10 @@ def add_promotion():
 @app.route('/modifierPromotion')
 def modifier_promotion():
     return render_template('modifierPromotion.html')
+
+@app.route('/modifierCommerce')
+def modifier_commerce():
+    return render_template('modifierCommerce.html')
 
 @app.route('/template/commerceImage/<path:path>')
 def send_pic(path):

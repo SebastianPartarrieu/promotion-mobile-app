@@ -1,155 +1,207 @@
+<!DOCTYPE html>
 <html>
-  <body>
-
-    <table border="0" cellpadding="0" cellspacing="0" width="771" align="center">
-    <h1 align="center">Mon Quartier</h1>
-
-      
-        <td width="161" align="right" valign="top">
-            
-        
-            <p>
-                <font color="#000000"><span class="important">Promotions</span></font><br>
-                <a href="http://0.0.0.0:5000/promotions/cid?token&#61;blabla" style="color:#008000; text-decoration:none" target="_blank">Mes Promotions</a><br>
-                <a href="http://0.0.0.0:5000/" style="color:#008000; text-decoration:none" target="_blank">Promotions pass&eacute;es</a><br>
-              </p>
-          
-          <p>
-            <font color="#000000"><span class="important">Mon Espace Commer&ccedil;ant</span></font><br>
-            <a href="http://0.0.0.0:5000/informations" style="color:#008000; text-decoration:none" target="_blank">Informations</a><br>
-            <a href="http://0.0.0.0:5000/" style="color:#008000; text-decoration:none" target="_blank">Description</a><br>
-            <a href="http://0.0.0.0:5000/" style="color:#008000; text-decoration:none" target="_blank">D&eacute;connexion</a><br>
-          </p>
-        </td>
-
-        <td width="100" align="center"></td>
-
-        <td width="600" valign="top">
-                
-            <div class="container">
-                <font color="#008000">
-
-                <h2>Modifier une promotion</h2>
-
-                <form>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+        <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+        <link href="css/styles.css" rel="stylesheet" />
+    </head>
+    <body id="page-top">
     
-
-                    <label for="datei"><b>Date de d&eacute;but</b></label>
-                    <input type="text" id="tdebut">
-                    </br> </br>
-
-                    <label for="datef"><b>Date de fin</b></label>
-                    <input type="text" id="tfin">
-                    </br> </br>
-
-                
-
-                    <label for="desc"><b>Description</b></label>
-                    <input type="text" id="pdescription">
-                    </br> </br>
-
-                    <div class="clearfix">
-                        <button type="button" class="signupbtn" onclick="mofifier()">Valider</button>
-                        <button type="button" class="signupbtn" onclick="supprimer()">supprimer</button>
-                        
-                
-                    
+    <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand js-scroll-trigger" href="#page-top"></a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Mon Espace Commerçant
+                    <i class="fas fa-bars ml-1"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ml-auto">
+                    	<li class="nav-item"><a class="nav-link js-scroll-trigger" href="promotions.html">Promotions</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="informations.html">Informations</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="home.html">Déconnexion</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
         
-                    </div>
-                </form>
-        </td>
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container">
+            
+            <h1>Promotions</h1>
+            </br>
+        	</br>
+            
+                
+                <table border="1" cellpadding="10" cellspacing="1" bgcolor="#008000" align="center" width="771">
+
+                    <td bgcolor="#FFFFF9">
+                    <font color="#000000">
       
-      
-    </table>
-    <script>    
-        const BASE_URL = "http://0.0.0.0:5000";
-        var pid=localStorage.getItem("pid");
+		</br>
+        </br>
+  
+        <h2>Modifier ma promotion</h2>
+
+        </br>
+        </br>
+
+        <form>
+
+
+            <label for="datei"><b>Date de d&eacute;but</b></label>
+            <input type="text" id="tdebut">
+            </br> </br>
+
+            <label for="datef"><b>Date de fin</b></label>
+            <input type="text" id="tfin">
+            </br> </br>
+
         
-        const LOGIN_PATH = '/promotion/'+pid;
+
+            <label for="desc"><b>Description</b></label>
+            <input type="text" id="pdescription">
+            </br> </br>
+
+            <div class="clearfix">
+                <button type="button" class="signupbtn" onclick="mofifier()">Valider</button>
+                <button type="button" class="signupbtn" onclick="supprimer()">supprimer</button>
+                
+        
+            
+
+            </div>
+        </form>
+
+        </br>
+        </br>
+
+
+
+</table>
+<script>    
+    const BASE_URL = "http://0.0.0.0:5000";
+    var pid=localStorage.getItem("pid");
+    
+    const LOGIN_PATH = '/promotion/'+pid;
+          
+             
               
-                 
-                  
-                  var url = BASE_URL + LOGIN_PATH;
-                  const section = document.querySelector('section');
-                  
-               fetch(
-          url,
-          {
-              method: 'GET'}
-      ).then(res => res.json()).then( res =>
+              var url = BASE_URL + LOGIN_PATH;
+              const section = document.querySelector('section');
+              
+           fetch(
+      url,
+      {
+          method: 'GET'}
+  ).then(res => res.json()).then( res =>
 {        //var x = res['resultat'];
-        //alert(res["resultat"][0][1]);
-        document.getElementById("pdescription").value = res["resultat"][0][1];
-        document.getElementById("tdebut").value = res["resultat"][0][3];
-        document.getElementById("tfin").value = res["resultat"][0][4];
-          }).catch(error=>console.log(error));
+    //alert(res["resultat"][0][1]);
+    document.getElementById("pdescription").value = res["resultat"][0][1];
+    document.getElementById("tdebut").value = res["resultat"][0][3];
+    document.getElementById("tfin").value = res["resultat"][0][4];
+      }).catch(error=>console.log(error));
 
 
 
-          function mofifier()
+      function mofifier()
+        {
+          const BASE_URL = "http://0.0.0.0:5000";
+          var pid=localStorage.getItem("pid");
+        const LOGIN_PATH = "/promotion/"+pid;
+            var tdebut = document.getElementById("tdebut").value;
+
+            var tfin = document.getElementById("tfin").value;
+            
+            var token= localStorage.getItem("token");
+            var pdescription = document.getElementById("pdescription").value;
+            
+            var url = BASE_URL + LOGIN_PATH;
+            var data = {
+                pdescription : pdescription,
+                tdebut: tdebut,
+                tfin :tfin,
+                token:token
+            };
+            fetch(url, {method: "PUT",
+                headers : {
+                    "content-type" : "application/json; charset=UTF-8"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(data=>{return data.json()})
+            .then(res=>{
+                
+                if(res["status"] != "ok")
+                {
+                    
+                    alert(res["message"]);
+                }
+                else {alert("bravo");}
+            })}
+            function supprimer()
             {
               const BASE_URL = "http://0.0.0.0:5000";
               var pid=localStorage.getItem("pid");
-            const LOGIN_PATH = "/promotion/"+pid;
-                var tdebut = document.getElementById("tdebut").value;
-
-                var tfin = document.getElementById("tfin").value;
+        const LOGIN_PATH = "/promotion/"+pid;
+            var token= localStorage.getItem("token");
+          
+            
+            var url = BASE_URL + LOGIN_PATH;
+            var data = {
+                token:token
+            };
+            fetch(url, {method: "DELETE",
+                headers : {
+                    "content-type" : "application/json; charset=UTF-8"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(data=>{return data.json()})
+            .then(res=>{
                 
-                var token= localStorage.getItem("token");
-                var pdescription = document.getElementById("pdescription").value;
-                
-                var url = BASE_URL + LOGIN_PATH;
-                var data = {
-                    pdescription : pdescription,
-                    tdebut: tdebut,
-                    tfin :tfin,
-                    token:token
-                };
-                fetch(url, {method: "PUT",
-                    headers : {
-                        "content-type" : "application/json; charset=UTF-8"
-                    },
-                    body: JSON.stringify(data)
-                })
-                .then(data=>{return data.json()})
-                .then(res=>{
-                    
-                    if(res["status"] != "ok")
-                    {
-                        
-                        alert(res["message"]);
-                    }
-                    else {alert("bravo");}
-                })}
-                function supprimer()
+                if(res["status"] != "ok")
                 {
-                  const BASE_URL = "http://0.0.0.0:5000";
-                  var pid=localStorage.getItem("pid");
-            const LOGIN_PATH = "/promotion/"+pid;
-                var token= localStorage.getItem("token");
-              
+                    alert(res["message"]);
+                }
+                else {alert("bravo");}
+            })}
+
+
+  </script> 
                 
-                var url = BASE_URL + LOGIN_PATH;
-                var data = {
-                    token:token
-                };
-                fetch(url, {method: "DELETE",
-                    headers : {
-                        "content-type" : "application/json; charset=UTF-8"
-                    },
-                    body: JSON.stringify(data)
-                })
-                .then(data=>{return data.json()})
-                .then(res=>{
-                    
-                    if(res["status"] != "ok")
-                    {
-                        alert(res["message"]);
-                    }
-                    else {alert("bravo");}
-                })}
-
-
-      </script> 
-  </body>
+            </div>
+        </header>
+        
+        <!-- Footer-->
+        <footer class="footer py-4">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-4 text-lg-left">Copyright © Mon Quartier 2021</div>
+                    <div class="col-lg-4 my-3 my-lg-0">
+                        <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                    <div class="col-lg-4 text-lg-right">
+                        <a href="#!">Conditions d'utilisations</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        <script src="assets/mail/jqBootstrapValidation.js"></script>
+        <script src="assets/mail/contact_me.js"></script>
+        <script src="js/scripts.js"></script>
+    </body>
 </html>
