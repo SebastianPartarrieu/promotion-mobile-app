@@ -841,6 +841,7 @@ def patch_promotion(pid):
     auth_token = PARAMS.get("token", '')
     cid_token = is_authorized_no_id(auth_token, user_type="commerce")
     cid_associated_to_pid = db.fetch_cid_of_pid(pid=pid)
+    app.logger.debug(cid_associated_to_pid)
     #check if commerce token is valid
     if cid_token:
         #check if commerce is modifying its own promotion

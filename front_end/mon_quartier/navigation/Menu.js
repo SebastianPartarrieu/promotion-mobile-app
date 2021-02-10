@@ -66,7 +66,7 @@ function CustomDrawerContent({ drawerPosition, navigation, profile, focused, sta
         <Block>
         <DrawerCustomItem
           title={screens[id]}
-          key={id}
+          //key={id}
           //onPress = {() => navigation.navigate('Map')}
           navigation={navigation}
           //focused={state.index === index ? true : false}

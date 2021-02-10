@@ -20,6 +20,8 @@ import Fontisto from 'react-native-vector-icons/Fontisto'
 
 
 
+//import sendSearchRequest from "../constants/Fonction";
+
 import {RetroStyle} from "../constants/MapData";
 
 import server from "../constants/Server";

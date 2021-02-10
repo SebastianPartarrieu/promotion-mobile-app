@@ -16,7 +16,7 @@
           
           <p>
             <font color="#000000"><span class="important">Mon Espace Commer&ccedil;ant</span></font><br>
-            <a href="http://0.0.0.0:5000/" style="color:#008000; text-decoration:none" target="_blank">Informations</a><br>
+            <a href="http://0.0.0.0:5000/informations" style="color:#008000; text-decoration:none" target="_blank">Informations</a><br>
             <a href="http://0.0.0.0:5000/" style="color:#008000; text-decoration:none" target="_blank">Description</a><br>
             <a href="http://0.0.0.0:5000/" style="color:#008000; text-decoration:none" target="_blank">D&eacute;connexion</a><br>
           </p>
@@ -124,8 +124,8 @@
                 function supprimer()
                 {
                   const BASE_URL = "http://0.0.0.0:5000";
-            const LOGIN_PATH = "/promotion/1";
-              
+                  var pid=localStorage.getItem("pid");
+            const LOGIN_PATH = "/promotion/"+pid;
                 var token= localStorage.getItem("token");
               
                 

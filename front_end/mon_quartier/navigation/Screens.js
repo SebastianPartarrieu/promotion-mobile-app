@@ -6,7 +6,6 @@ import {
          TextInput,
          ScrollView, 
          StyleSheet, 
-         Animated
          } from "react-native";
 
 import { createStackNavigator } from "@react-navigation/stack";
@@ -37,34 +36,14 @@ import { argonTheme } from "../constants";
 import server from "../constants/Server";
 
 
-function sendSearchRequest(search,categorie,updateFunction,route){
+//import sendSearchRequest from "../constants/Fonction";
 
-  const url = new URL(route, server.server)
-
-  const recherche = search;
-  url.searchParams.append('search',recherche)
-  if (categorie!='')
-    { 
-      url.searchParams.append('categorie',categorie)
-    };
-  
-
-  fetch(url, {
-    method : 'GET',
-    headers: {
-      Accept: 'application/json',},
-
-  }).then((response) => response.json()).then(updateFunction).catch(
-    (e) => {alert('Something went wrong' + e.message)}
-  )
-}
 
 
 const { width } = Dimensions.get("screen");
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
-
 
 
 
@@ -121,7 +100,27 @@ function sendImageRequest(id,route){
 
 
 
+function sendSearchRequest(search,categorie,updateFunction,route){
 
+  const url = new URL(route, server.server)
+
+  const recherche = search;
+  url.searchParams.append('search',recherche)
+  if (categorie!='')
+    { 
+      url.searchParams.append('categorie',categorie)
+    };
+  
+
+  fetch(url, {
+    method : 'GET',
+    headers: {
+      Accept: 'application/json',},
+
+  }).then((response) => response.json()).then(updateFunction).catch(
+    (e) => {alert('Something went wrong' + e.message)}
+  )
+}
 
 
 
@@ -133,13 +132,7 @@ function Recherche (props){
   const first_input = props.f_input;
   const navigation = props.navigation;
 
-  //Animations
-  let entranceAnimation = new Animated.Value(0);
-  Animated.timing(entranceAnimation, {
-        toValue: 100,
-        duration: 1000,
-        useNativeDriver: true
-      }).start()
+
 
   var [resultat, setResultat] = useState([])
   var [images, setImages] = useState([])
@@ -151,11 +144,9 @@ function Recherche (props){
     for(var iter = 0; iter < n; iter++){
 
       const id = iter;
-      buffer.push(
-      <Button 
-      onPress = {() => navigation.navigate('Profile', {comm : resultat[id],imm : images[id]})} color="secondary" textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }} style={styles.button}>
-        {resultat[iter][1]}
-      </Button>)}
+      buffer.push(<Button onPress = {() => navigation.navigate('Profile', {comm : resultat[id],imm : images[id]})} color="secondary" textStyle={{ color: "black", fontSize: 12, fontWeight: "700" }} style={styles.button}>{resultat[iter][1]}</Button>);
+
+    }
     
     return(buffer)
   } 
@@ -201,21 +192,18 @@ function Recherche (props){
 
         />
 
-    <Animated.ScrollView style={{transform: [{translateY: entranceAnimation.interpolate({
-                inputRange: [0, 100],
-                outputRange: [1000, 0] 
-              })}]}}>
-      <Block flex>
-        <Text bold size={16} style={styles.title}>
-          Resultats
-        </Text>
-        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-          <Block center>
-            <SearchResults/>
-          </Block>
+    <ScrollView>
+    <Block flex>
+      <Text bold size={16} style={styles.title}>
+        Resultats
+      </Text>
+      <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+        <Block center>
+          <SearchResults/>
         </Block>
       </Block>
-    </Animated.ScrollView>
+    </Block>
+    </ScrollView>
     </Block>
   );
 }
