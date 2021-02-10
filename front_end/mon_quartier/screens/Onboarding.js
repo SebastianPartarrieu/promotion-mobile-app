@@ -36,10 +36,11 @@ function sendLoginRequest(username,password,updateFunction,route){
   }
 
 
+
 function Onboarding({ navigation }){
     var [error_text, setError_text] = useState('#0000') ; 
-    navigation.navigate('App')
-    
+    //navigation.navigate('App')
+    //unquote ça pour pas se login
     function updateFunction(response){
       {
         response['is_logged_in']?(
@@ -139,7 +140,7 @@ function Onboarding({ navigation }){
                   <Block middle>
                     <Button color="primary" style={styles.createButton}
                     //onPress={() => navigation.navigate("App")}
-                    //onPress={() => sendLoginRequest(username,password,updateFunction,'login')}
+                    onPress={() => sendLoginRequest(username,password,updateFunction,'login')}
                     >
                     
                       <Text bold size={14} color={argonTheme.COLORS.WHITE}>
