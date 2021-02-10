@@ -25,7 +25,7 @@ text-decoration:none" target="_blank">Promotions pass&eacute;es</a><br>
         <p>
           <font color="#000000"><span class="important">Mon Espace
 Commer&ccedil;ant</span></font><br>
-            <a href="http://0.0.0.0:5000/" style="color:#008000;
+            <a href="http://0.0.0.0:5000/informations" style="color:#008000;
 text-decoration:none" target="_blank">Informations</a><br>
             <a href="http://0.0.0.0:5000/" style="color:#008000;
 text-decoration:none" target="_blank">Description</a><br>
@@ -121,7 +121,7 @@ document.createElement('br');
 //myH2.textContent = promo[i].name;
 myPara1.textContent = 'Description:  ' + promo[i][0];
 myPara2.textContent = 'Date de début:  ' + promo[i][2];
-myPara3.textContent = 'Date de fin:  ' + promo[i][3];
+myPara3.textContent = 'Date de fin:  ' + promo[i][4];
 edit[i].textContent = 'Modifier';
 x.push(promo[i][3]);
 
@@ -137,7 +137,7 @@ myArticle.appendChild(esp2);
                                                
         var img = new Image(100, 100);
          img.src = "http://0.0.0.0:5000/template/promotionImage/"+res[3*i];
-                                                  
+                                                 
        myList.appendChild(img);
 
 //myArticle.appendChild(myH2);
