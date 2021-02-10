@@ -315,8 +315,6 @@ def test_AA_workflow_commerce():
     #Posts a juicy new offer
     pid = check_api('POST', '/promotion', 200, data={'token': auth_token, 'pdescription': 'Du fromage pas cher', 'tdebut': '2020-01-25', 'tfin': '2020-01-30'})
 
-    #Modifies juicy new offer
-    
     #Deletes his account
     check_api('DELETE', '/mycommerce', 200, data={'token': auth_token})
 
