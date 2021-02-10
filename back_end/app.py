@@ -237,6 +237,13 @@ def upload_picture(uploaded_file):
 
 def validate_image(stream):
     '''
+    validatation of the format which should be an image not a text file
+
+    Args: 
+        file.stream
+    
+    Output:
+        extension of the file
     '''
     header = stream.read(512)
     stream.seek(0)
@@ -656,8 +663,8 @@ def check_commerce_get_cid():
         res = list(db.fetch_login_commerce(cemail=cemail))
         if len(res) == 0:
             return jsonify({"status" : "error", "message" : "Invalid email or password"}), 401
-        #elif cmdp==res[0][2]:
-        elif check_password_hash(res[0][2], cmdp):
+        elif cmdp==res[0][2]:
+        #elif check_password_hash(res[0][2], cmdp):
             status = db.check_commerce_active(cid=res[0][0])
             if status[0][0]:
                 dict_new = {

@@ -1,0 +1,120 @@
+<html>
+
+    <head>
+        <script>const BASE_URL = "http://0.0.0.0:5000";
+            const LOGIN_PATH = "/signupcommerce";
+            
+            function signup()
+            {
+                var email = document.getElementById("cemail").value;
+                var cmdp = document.getElementById("cmdp").value;
+                var cnom = document.getElementById("cnom").value;
+                var cpresentation = document.getElementById("cpresentation").value;
+                var catnom = document.getElementById("catnom").value;
+                var url_ext = document.getElementById("url_ext").value;
+                var rue_and_num = document.getElementById("rue_and_num").value;
+                var code_postal = document.getElementById("code_postal").value;
+                var aid = document.getElementById("aid").value;
+                
+                var url = BASE_URL + LOGIN_PATH;
+                var data = {
+                    cemail : email,
+                    cmdp: cmdp,
+                    cnom :cnom,
+                    cpresentation:cpresentation,
+                    catnom:catnom,
+                    url_ext:url_ext,
+                    rue_and_num:rue_and_num,
+                    code_postal:code_postal,
+                    aid:aid
+                };
+    
+                //var stored_result;
+                fetch(url, {method: "POST",
+                    headers : {
+                        "content-type" : "application/json; charset=UTF-8"
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(data=>{return data.json()})
+                .then(res=>{
+                    if(res["status"] != "ok")
+                    {
+                        alert(res["message"]);
+                    }
+                    else
+                    {
+                    
+                        window.location.href="/login/commerce";
+                    }
+                })
+                .catch(error=>console.log(error));
+            }</script> </head><body>
+    <h1 align="center">Mon Quartier</h1>
+
+                <table border="1" cellpadding="10" cellspacing="1" bgcolor="#008000" align="center" width="771">
+
+                    <td bgcolor="#FFFFF9">
+                    <font color="#008000">
+
+                        <form onSubmit="">
+
+                                <div class="container">
+
+                                    <h1>Cr&eacute;er mon compte</h1>
+
+                                        <p>Remplissez les champs suivants afin de cr&eacute;er votre compte.</p>
+                        
+                                        <label for="cemail"><b>Email</b></label>
+                                        <input type="text" id="cemail">
+                                        </br> </br>
+
+                                        <label for="cmdp"><b>Mot de passe</b></label>
+                                        <input type="password" id="cmdp">
+                                        </br> </br>
+
+                                        <label for="cnom"><b>Nom du commerce</b></label>
+                                        <input type="text" id="cnom">
+                                        </br> </br>
+
+                                        <label for="catnom"><b>Cat&eacute;gorie</b></label>
+                                        <input type="text" id="catnom">
+                                        
+                                        <label for="cpresentation"><b>Description du commerce</b></label>
+                                        <input type="text" id="cpresentation">
+                                        </br> </br>
+                                        
+                                        <label for="url_ext"><b>URL (si mon commerce dispose d&#39;un site internet)</b></label>
+                                        <input type="text" id="url_ext">
+                                        </br> </br>
+                                        
+                                        <label for="rue_and_num"><b>Adresse</b></label>
+                                        <input type="text" id="rue_and_num">
+                                        </br> </br>
+                                        
+                                        <label for="code_postal"><b>Code Postal</b></label>
+                                        <input type="text" id="code_postal">
+                                        </br> </br>
+
+                                        <label for="aid"><b>Agglom&eacute;ration</b></label>
+                                        <input type="text" id="aid">
+                                        </br> </br>
+                                        
+                                        <p>En cr&eacute;ant votre compte, vous acceptez les <a href="https://policies.google.com/terms?hl&#61;fr-CA" style="color:dodgerblue" target="_blank">Conditions g&eacute;n&eacute;rales d&#39;utilisation</a>.</p>
+
+                                        <div class="clearfix">
+                                            <button type="button" class="cancelbtn" onclick=window.location.href="/" >Return</button>
+                                            <button type="button" class="signupbtn" onclick="signup()">Valider</button>
+                                        
+                            
+                                        </div>
+                                    
+                                </div>
+                        </form> 
+                        
+                           
+                    </td>
+                </table>
+            
+    </body>
+</html>
