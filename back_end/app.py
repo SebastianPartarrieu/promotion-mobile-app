@@ -712,8 +712,8 @@ def check_commerce_get_cid():
         res = list(db.fetch_login_commerce(cemail=cemail))
         if len(res) == 0:
             return jsonify({"status" : "error", "message" : "Invalid email or password"}), 401
-        #elif cmdp==res[0][2]:
-        elif check_password_hash(res[0][2], cmdp):
+        elif cmdp==res[0][2]:
+        #elif check_password_hash(res[0][2], cmdp):
             status = db.check_commerce_active(cid=res[0][0])
             if status[0][0]:
                 dict_new = {
@@ -782,9 +782,9 @@ def patch_commerce_info():
             catnom = catnom.split(",")
             for x in catnom:
                 db.post_commerce_categorie(catnom=x, cid=cid)
-        return Response(status=201)
+        return jsonify({"status" : "ok", "message" : "changed"}), 200
     else:
-        return Response(status=401)
+        return jsonify({"status" : "error", "message" : "Invalid email or password"}), 401
 
 #Invalidate account
 @app.route('/mycommerce', methods=['DELETE'])
@@ -903,7 +903,7 @@ def patch_promotion(pid):
                 db.patch_promotion_tdebut(pid=pid, tdebut=tdebut)
             if tfin is not None:
                 db.patch_promotion_tfin(pid=pid, tfin=tfin)
-            return Response(status=201)
+            return jsonify({'status': 'ok', 'message': 'good'}), 201
     else:
         return jsonify({'status': 'error 401', 'message': 'something went wrong!'}), 401
 
@@ -925,7 +925,7 @@ def delete_promotion_info(pid):
     cid = is_authorized_no_id(auth_token, user_type='commerce')
     if cid:
         res = db.delete_promotion_info(pid=pid)
-        return "deleted"
+        return jsonify({'status': 'ok', 'message': 'good'}), 201
     else:
         return jsonify({'status': 'error 400', 'message': 'Something went wrong!'}), 400
 
@@ -1227,13 +1227,13 @@ def modifier_promotion():
 def modifier_commerce():
     return render_template('modifierCommerce.html')
 
-@app.route('/template/commerceImage/<path:path>')
+@app.route('/static/commerceImage/<path:path>')
 def send_pic(path):
-    return send_from_directory('templates/commerceImage', path)
+    return send_from_directory('static/commerceImage', path)
 
-@app.route('/template/promotionImage/<path:path>')
+@app.route('/static/promotionImage/<path:path>')
 def send_pic_promotions(path):
-    return send_from_directory('templates/promotionImage', path)
+    return send_from_directory('static/promotionImage', path)
 
 @app.route('/commerceImage/<path:path>')
 def send_pic_commerce(path):
