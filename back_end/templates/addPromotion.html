@@ -1,0 +1,143 @@
+<html>
+    <head>
+        <script>const BASE_URL = "http://0.0.0.0:5000";
+            const LOGIN_PATH = "/promotion";
+            
+            function add()
+            {
+                
+                var tdebut = document.getElementById("tdebut").value;
+
+                var tfin = document.getElementById("tfin").value;
+                
+                var token= localStorage.getItem("token");
+                var pdescription = document.getElementById("pdescription").value;
+                
+                var url = BASE_URL + LOGIN_PATH;
+                var data = {
+                    pdescription : pdescription,
+                    tdebut: tdebut,
+                    tfin :tfin,
+                    token:token
+                };
+                fetch(url, {method: "POST",
+                    headers : {
+                        "content-type" : "application/json; charset=UTF-8"
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(data=>{return data.json()})
+                .then(res=>{
+                    
+                    if(res["status"] != "ok")
+                    {
+                        
+                        alert(res["message"]);
+                    }
+                    else
+                    {
+                        localStorage.setItem("pid", res["pid"]);
+                        alert('added');
+                        document.getElementById("view").disabled = false;
+                    }
+                })
+                .catch(error=>console.log(error));
+            }
+            
+            </script> </head>
+  <body>
+    
+    <table border="0" cellpadding="0" cellspacing="0" width="771" align="center">
+    <h1 align="center">Mon Quartier</h1>
+
+      
+        <td width="161" align="right" valign="top">
+            
+        
+            <p>
+                <font color="#000000"><span class="important">Promotions</span></font><br>
+                <a href="http://0.0.0.0:5000/commercemon-compte" style="color:#008000; text-decoration:none" target="_blank">Mes Promotions</a><br>
+                <a href="http://0.0.0.0:5000/" style="color:#008000; text-decoration:none" target="_blank">Promotions pass&eacute;es</a><br>
+              </p>
+          
+          <p>
+            <font color="#000000"><span class="important">Mon Espace Commer&ccedil;ant</span></font><br>
+            <a href="http://0.0.0.0:5000/" style="color:#008000; text-decoration:none" target="_blank">Informations</a><br>
+            <a href="http://0.0.0.0:5000/" style="color:#008000; text-decoration:none" target="_blank">Description</a><br>
+            <a href="http://0.0.0.0:5000/" style="color:#008000; text-decoration:none" target="_blank">D&eacute;connexion</a><br>
+          </p>
+        </td>
+
+        <td width="100" align="center"></td>
+
+        <td width="600" valign="top">
+                
+            <div class="container">
+                <font color="#008000">
+
+                <h2>Ajouter une promotion</h2>
+
+                <form>
+    
+                   
+
+                    <label for="tdebut"><b>Date de d&eacute;but</b></label>
+                    <input type="date" id="tdebut">
+                    </br> </br>
+
+                    <label for="tfin"><b>Date de fin</b></label>
+                    <input type="date" id="tfin">
+                    </br> </br>
+
+
+                    <label for="pdescription"><b>Description</b></label>
+                    <input type="text" id="pdescription">
+                    </br> </br>
+
+                    <div class="clearfix">
+                        
+                        <button type="button" class="signupbtn" onclick="add()">Valider</button>
+                       
+        
+                    </div>
+                    
+                    
+              
+ 
+                </form>
+                <h1>Picture</h1>
+                <form class="form" id="myForm">
+                 <input type="file" id="inpFile"></br>
+                 <button type="submit" id="view" disabled=true>Upload</button>
+                 
+                </form>
+             <script>
+                 const myForm=document.getElementById("myForm");
+             const inpFile=document.getElementById("inpFile");
+             var token= localStorage.getItem("token");
+             myForm.addEventListener("submit" ,e => { e.preventDefault();
+                 const endpoint ="/promotion/"+localStorage.getItem("pid")+"/image";
+                 const formData= new FormData();
+                 formData.append("inpFile", inpFile.files[0]);
+                 formData.append("token", token);
+                 const options = {
+               method: 'POST',
+               body: formData,
+               // If you add this, upload won't work
+               // headers: {
+               //   'Content-Type': 'multipart/form-data',
+               // }
+             };
+                 fetch(endpoint, options).catch(console.error)})
+                 ;
+                 
+
+             </script>
+        </td>
+      
+      
+    </table>
+
+  </body>
+</html>
+

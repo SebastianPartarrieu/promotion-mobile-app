@@ -1,0 +1,93 @@
+<html>
+    
+    <head>
+        <script>const BASE_URL = "http://0.0.0.0:5000";
+            const LOGIN_PATH = "/logincommerce";
+            
+            function login()
+            {
+                var email = document.getElementById("cemail").value;
+                var cmdp = document.getElementById("cmdp").value;
+            
+                var url = BASE_URL + LOGIN_PATH;
+                var data = {
+                    cemail : email,
+                    cmdp: cmdp
+                };
+                //var stored_result;
+                fetch(url, {method: "POST",
+                    headers : {
+                        "content-type" : "application/json; charset=UTF-8"
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(data=>{return data.json()})
+                .then(res=>{
+                    if(res["status"] != "ok")
+                    {
+                        alert(res["message"]);
+                    }
+                    else
+                    {
+                        localStorage.setItem("token", res["token"]);
+                        window.location.href="/commercemon-compte"
+                    }
+                })
+                .catch(error=>console.log(error));
+            }</script> 
+    </head>
+    <body>
+
+        <h1 align="center">Mon Quartier</h1>
+            
+            <table border="1" cellpadding="10" cellspacing="1" bgcolor="#008000" align="center" width="771">
+
+                <td bgcolor="#FFFFF9">
+                <font color="#008000">
+
+                    <form onSubmit="">
+
+                            <div class="container">
+
+                                <h1>Connexion</h1>
+
+                                    <p>Remplissez les champs suivants afin de vous connecter.</p>
+                    
+                                    <label for="cemail"><b>Email</b></label>
+                                    <input type="text" id="cemail">
+                                    </br></br>
+                                
+                            
+                                    
+                                    <label for="cmdp"><b>Mot de passe</b></label>
+                                    <input type="password" id="cmdp">
+                                    </br></br>
+                                    
+                                    
+
+                                    <label>
+                                    <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Se souvenir de moi
+
+                                    <div>
+                                        <a href="#top" title="Retourner en Haut"><i>Mot de passe oubli&eacute;</i></a>
+                                    </div>
+
+                                    </br>
+                                  
+                                    <div class="clearfix">
+                                        <button type="button" class="cancelbtn" onclick=window.location.href="/" >Return</button>
+                                        <button type="button" class="signupbtn"  onclick="login()">Valider</button>
+                                
+                                    
+                        
+                                    </div>
+                                    
+                                        
+                            </div>
+                    </form> 
+                    
+                    
+            </table>
+        </body>
+
+</html>

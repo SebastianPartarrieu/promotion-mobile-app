@@ -1,0 +1,183 @@
+
+<html>
+
+  <body>
+
+    <table border="0" cellpadding="0" cellspacing="0" width="771"
+align="center">
+
+      <a href="http://0.0.0.0:5000/home/" style="color:#000000;
+text-decoration:none"><h1 align="center">Mon Quartier</h1></a>
+
+      <td width="161" align="right" valign="top">
+
+        <p>
+          <font color="#000000"><span
+class="important">Promotions</span></font><br>
+            <a
+href="http://0.0.0.0:5000/promotions/cid?token&#61;blabla"
+style="color:#008000; text-decoration:none" target="_blank">Mes
+Promotions</a><br>
+            <a href="http://0.0.0.0:5000/" style="color:#008000;
+text-decoration:none" target="_blank">Promotions pass&eacute;es</a><br>
+        </p>
+
+        <p>
+          <font color="#000000"><span class="important">Mon Espace
+Commer&ccedil;ant</span></font><br>
+            <a href="http://0.0.0.0:5000/" style="color:#008000;
+text-decoration:none" target="_blank">Informations</a><br>
+            <a href="http://0.0.0.0:5000/" style="color:#008000;
+text-decoration:none" target="_blank">Description</a><br>
+            <a href="http://0.0.0.0:5000/" style="color:#008000;
+text-decoration:none" target="_blank">D&eacute;connexion</a><br>
+        </p>
+
+      </td>
+      <center>
+        <div id="elementid">
+       
+        </div>
+    </center>
+
+      <td width="100" align="center">
+      </td>
+
+      <td width="600" valign="top">
+
+        <form>
+          <input type="text" name="research">
+          <button type="button">Rechercher</button>
+        </form>
+
+        </br>
+        </br>
+
+        <div>
+          <a href="addPromotion" style="color:#008000; text-decoration:none"
+title="Retourner en Haut"><i>Ajouter une promotion</i></a>
+        </div>
+
+        </br>
+        </br>
+
+        <section style="color:#008000">
+
+        </section>
+
+    </table>
+
+    <script>
+      const BASE_URL = "http://0.0.0.0:5000";
+      
+
+      const LOGIN_PATH = "/mycommerce/promotions";
+            
+                var token= localStorage.getItem("token");
+                
+                var url = BASE_URL + LOGIN_PATH;
+                const section = document.querySelector('section');
+                var data = {
+                    token : token
+                };
+                fetch(
+        url,
+        {
+            method: 'POST',
+                    headers : {
+                        "content-type" : "application/json; charset=UTF-8"}, body: JSON.stringify(data)
+        }
+    ).then(data=>{return data.json()})
+    .then(json => {
+      
+      showPromotions(json);
+    }).catch(error=>console.log(error));
+
+      function showPromotions(jsonObj) { var promo = jsonObj;
+          
+        var edit=[];
+        var x=[];
+
+                                                    for (var i = 0; i <
+promo.length; i++) {
+                                                      var myArticle =
+document.createElement('article');
+                                                      //var myH2 =document.createElement('h2');
+                                                      var myPara1 =
+document.createElement('p');
+                                                      var myPara2 =
+document.createElement('p');
+                                                      var myPara3 =
+document.createElement('p');
+
+                                                      var myList =document.createElement('div');
+                                                      edit.push (document.createElement('button'));
+                                                      
+                                                      var esp1 =
+document.createElement('br');
+                                                      var esp2 =
+document.createElement('br');
+
+//myH2.textContent = promo[i].name;
+myPara1.textContent = 'Description:  ' + promo[i][0];
+myPara2.textContent = 'Date de début:  ' + promo[i][2];
+myPara3.textContent = 'Date de fin:  ' + promo[i][3];
+edit[i].textContent = 'Modifier';
+x.push(promo[i][3]);
+
+
+
+myArticle.appendChild(myList);
+myArticle.appendChild(myPara1);
+myArticle.appendChild(myPara2);
+myArticle.appendChild(myPara3);
+myArticle.appendChild(edit[i]);
+myArticle.appendChild(esp1);
+myArticle.appendChild(esp2);
+                                               
+        var img = new Image(100, 100);
+         img.src = "http://0.0.0.0:5000/template/promotionImage/"+res[3*i];
+                                                  
+       myList.appendChild(img);
+
+//myArticle.appendChild(myH2);
+
+section.appendChild(myArticle);
+                                                    }
+                                                   
+edit.forEach(function(button, index) { button.addEventListener('click', function() { localStorage.setItem("pid", x[index]); window.location.href="/modifierPromotion";
+  }); });
+                                                      
+
+
+                                        };
+                                        
+                                        const PATH="/get/promotion/image";
+                                        
+                                        var token= localStorage.getItem("token");
+                                                    
+                                                    var url = BASE_URL + PATH;
+                                                   
+                                        var data = {
+                                                        token : token
+                                                    };
+                                                    fetch(
+                                            url,
+                                            {
+                                                method: 'POST',
+                                                        headers : {
+                                                            "content-type" : "application/json; charset=UTF-8"}, body: JSON.stringify(data)
+                                            }
+                                        ).then(data=>{return data.json()})
+                                        .then(json => { 
+                                          localStorage.setItem("image", json);
+                                          
+                                    
+                                            }).catch(error=>console.log(error)); 
+                                            var res = localStorage.getItem("image").split(",");
+                                                         
+    </script>
+
+  </body>
+
+</html>

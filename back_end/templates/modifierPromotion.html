@@ -1,0 +1,155 @@
+<html>
+  <body>
+
+    <table border="0" cellpadding="0" cellspacing="0" width="771" align="center">
+    <h1 align="center">Mon Quartier</h1>
+
+      
+        <td width="161" align="right" valign="top">
+            
+        
+            <p>
+                <font color="#000000"><span class="important">Promotions</span></font><br>
+                <a href="http://0.0.0.0:5000/promotions/cid?token&#61;blabla" style="color:#008000; text-decoration:none" target="_blank">Mes Promotions</a><br>
+                <a href="http://0.0.0.0:5000/" style="color:#008000; text-decoration:none" target="_blank">Promotions pass&eacute;es</a><br>
+              </p>
+          
+          <p>
+            <font color="#000000"><span class="important">Mon Espace Commer&ccedil;ant</span></font><br>
+            <a href="http://0.0.0.0:5000/" style="color:#008000; text-decoration:none" target="_blank">Informations</a><br>
+            <a href="http://0.0.0.0:5000/" style="color:#008000; text-decoration:none" target="_blank">Description</a><br>
+            <a href="http://0.0.0.0:5000/" style="color:#008000; text-decoration:none" target="_blank">D&eacute;connexion</a><br>
+          </p>
+        </td>
+
+        <td width="100" align="center"></td>
+
+        <td width="600" valign="top">
+                
+            <div class="container">
+                <font color="#008000">
+
+                <h2>Modifier une promotion</h2>
+
+                <form>
+    
+
+                    <label for="datei"><b>Date de d&eacute;but</b></label>
+                    <input type="text" id="tdebut">
+                    </br> </br>
+
+                    <label for="datef"><b>Date de fin</b></label>
+                    <input type="text" id="tfin">
+                    </br> </br>
+
+                
+
+                    <label for="desc"><b>Description</b></label>
+                    <input type="text" id="pdescription">
+                    </br> </br>
+
+                    <div class="clearfix">
+                        <button type="button" class="signupbtn" onclick="mofifier()">Valider</button>
+                        <button type="button" class="signupbtn" onclick="supprimer()">supprimer</button>
+                        
+                
+                    
+        
+                    </div>
+                </form>
+        </td>
+      
+      
+    </table>
+    <script>    
+        const BASE_URL = "http://0.0.0.0:5000";
+        var pid=localStorage.getItem("pid");
+        
+        const LOGIN_PATH = '/promotion/'+pid;
+              
+                 
+                  
+                  var url = BASE_URL + LOGIN_PATH;
+                  const section = document.querySelector('section');
+                  
+               fetch(
+          url,
+          {
+              method: 'GET'}
+      ).then(res => res.json()).then( res =>
+{        //var x = res['resultat'];
+        //alert(res["resultat"][0][1]);
+        document.getElementById("pdescription").value = res["resultat"][0][1];
+        document.getElementById("tdebut").value = res["resultat"][0][3];
+        document.getElementById("tfin").value = res["resultat"][0][4];
+          }).catch(error=>console.log(error));
+
+
+
+          function mofifier()
+            {
+              const BASE_URL = "http://0.0.0.0:5000";
+              var pid=localStorage.getItem("pid");
+            const LOGIN_PATH = "/promotion/"+pid;
+                var tdebut = document.getElementById("tdebut").value;
+
+                var tfin = document.getElementById("tfin").value;
+                
+                var token= localStorage.getItem("token");
+                var pdescription = document.getElementById("pdescription").value;
+                
+                var url = BASE_URL + LOGIN_PATH;
+                var data = {
+                    pdescription : pdescription,
+                    tdebut: tdebut,
+                    tfin :tfin,
+                    token:token
+                };
+                fetch(url, {method: "PUT",
+                    headers : {
+                        "content-type" : "application/json; charset=UTF-8"
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(data=>{return data.json()})
+                .then(res=>{
+                    
+                    if(res["status"] != "ok")
+                    {
+                        
+                        alert(res["message"]);
+                    }
+                    else {alert("bravo");}
+                })}
+                function supprimer()
+                {
+                  const BASE_URL = "http://0.0.0.0:5000";
+            const LOGIN_PATH = "/promotion/1";
+              
+                var token= localStorage.getItem("token");
+              
+                
+                var url = BASE_URL + LOGIN_PATH;
+                var data = {
+                    token:token
+                };
+                fetch(url, {method: "DELETE",
+                    headers : {
+                        "content-type" : "application/json; charset=UTF-8"
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(data=>{return data.json()})
+                .then(res=>{
+                    
+                    if(res["status"] != "ok")
+                    {
+                        alert(res["message"]);
+                    }
+                    else {alert("bravo");}
+                })}
+
+
+      </script> 
+  </body>
+</html>
