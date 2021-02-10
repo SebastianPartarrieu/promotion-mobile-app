@@ -1,4 +1,4 @@
-export default function sendSearchRequest(search,categorie,updateFunction,route){
+function sendSearchRequest(search,categorie,updateFunction,route){
 
     const url = new URL(route, server.server)
   

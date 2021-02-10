@@ -211,7 +211,7 @@ console.log(promotions)
                 {promotions.map((promotion, index) => {
                   return(
                   <Block>
-                    <Card item={promotion} im={Pimages} horizontal/>
+                    <Card item={promotion} im={Pimages[index]} horizontal/>
                   </Block>);
                 })}
 

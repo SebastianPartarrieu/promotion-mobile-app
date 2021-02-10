@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   cardTitle: {
     flex: 5,
     flexWrap: 'wrap',
-    marginTop:-5,
+    marginTop:5,
     marginHorizontal:5
 
   },

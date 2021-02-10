@@ -138,8 +138,9 @@ function Onboarding({ navigation }){
                   
                   <Block middle>
                     <Button color="primary" style={styles.createButton}
-                  
-                    onPress={() => sendLoginRequest(username,password,updateFunction,'login')}>
+                    //onPress={() => navigation.navigate("App")}
+                    //onPress={() => sendLoginRequest(username,password,updateFunction,'login')}
+                    >
                     
                       <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                         CONNEXION
