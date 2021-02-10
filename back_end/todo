@@ -2,15 +2,18 @@
 Before presentation Friday:
 - constraints on min amount of characters for passwords
 - think about patching location
-- Documentation of image helper functions
 - work on presentation
 - possibly deploy app
 - Final FE stuff
+- insert real promotion and relevant images
+- Film a demo
+
 
 If time for the near-future:
 - generate QR codes for client fidelity card and have commerce scan these
 - blueprint to split flask app.py into multiple cleaned up files
 - more complex form of suggestion sending based on user interaction, clicks, time spent viewing commerce etc..
+- optimisation de certaines requêtes
 
 If ever deployed on a 'real' server for 'real' usage:
 - implementing password changes and secure signup with automated e-mail sending or 2FA
