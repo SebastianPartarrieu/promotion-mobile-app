@@ -75,7 +75,7 @@ export default function Profile(props) {
   function deg2rad(deg) {
     return (deg * Math.PI)/180
   }
-  console.log(userloc.latitude)
+
 
   function Distance(lat1,lng1,lat2,lng2) {
     var R = 6371; // Radius of the earth in km
@@ -91,11 +91,10 @@ export default function Profile(props) {
     return d;
   }
 
-  const DISTANCE = Distance(userloc.latitude, userloc.longitude, LATITUDE, LONGITUDE).toString().substring(0,5)
-  console.log(promotions)
-  console.log(Pimages)
+  const DISTANCE = Distance(userloc.latitude, userloc.longitude, LATITUDE, LONGITUDE).toString().substring(0,4)+"0"
+ 
   const id = ID.toString()
-  console.log(id)
+
   
   useEffect( ()=>{sendPromotionsRequest(updateFunction, "commerce/"+id+"/promotion");}, []);
 
@@ -223,16 +222,6 @@ console.log(promotions)
                   
                     {DESC}
                   </Text>
-                  <Button
-                    color="transparent"
-                    textStyle={{
-                      color: "#233DD2",
-                      fontWeight: "500",
-                      fontSize: 16
-                    }}
-                  >
-                    Show more
-                  </Button>
                 </Block>
                 <Block middle style={{ marginTop: 20, marginBottom: 16 }}>
                   <Block style={ProfileStyles.divider} />

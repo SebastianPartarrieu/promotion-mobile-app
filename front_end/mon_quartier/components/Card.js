@@ -1,15 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { withNavigation } from '@react-navigation/compat';
 import PropTypes from 'prop-types';
 import { StyleSheet,Image, TouchableWithoutFeedback } from 'react-native';
 import { Block, Text, theme } from 'galio-framework';
 
 
+
 import server from "../constants/Server";
 
 class Card extends React.Component {
   render() {
-    const { navigation, item, im, horizontal, full, style, ctaColor, imageStyle } = this.props;
+    const { navigation, item, im, distance, horizontal, full, style, ctaColor, imageStyle } = this.props;
 
 
     const imageStyles = [
@@ -21,6 +22,7 @@ class Card extends React.Component {
       horizontal ? styles.horizontalStyles : styles.verticalStyles,
       styles.shadow
     ];
+   
     if (im != undefined){
     return (
       <Block row={horizontal} card flex style={cardContainer}>
@@ -32,6 +34,7 @@ class Card extends React.Component {
         <TouchableWithoutFeedback  onPress = {() => navigation.navigate('Profile', {comm : item, imm:im})}>
           <Block flex space="between">
             <Text numberOfLines={1} bold center size={15} style={horizontal?styles.cardHorizontalTitle : styles.cardTitle}>{item[1]}</Text>
+            <Text numberOfLines={1} italic center size={10} style={horizontal?styles.cardHorizontalDist : styles.cardDist}>à {distance} km</Text>
             <Text numberOfLines={1} style={full ? styles.fullcardDescription : styles.cardDescription}>{item[2]}</Text>
           </Block>
         </TouchableWithoutFeedback>
@@ -72,6 +75,21 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     marginTop:15,
     marginHorizontal:5
+
+  },
+  cardDist: {
+    flex: 5,
+    flexWrap: 'wrap',
+    marginTop:2,
+    marginHorizontal:5
+
+  },
+  cardHorizontalDist: {
+    flex: 5,
+    flexWrap: 'wrap',
+    marginTop:10,
+    marginHorizontal:5,
+    color: theme.COLORS.WHITE,
 
   },
   imageContainer: {

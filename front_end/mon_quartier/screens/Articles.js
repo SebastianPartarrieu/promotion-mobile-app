@@ -22,7 +22,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto'
 import { useEffect } from "react";
-
+import Geolocation from '@react-native-community/geolocation';
 import server from "../constants/Server";
 function sendSearchRequest(search,categorie,updateFunction,route){
 
@@ -71,7 +71,10 @@ function Articles(props) {
 
     var [articles, setArticles] = React.useState([])
     var [images, setImages] = useState([])
+    var [userloc, setUserloc] = useState([{latitude: 0, longitude: 0}])
 
+    useEffect(()=>{Geolocation.getCurrentPosition((info) => setUserloc(info.coords))},[]); 
+    console.log(userloc.latitude)
 
     function ArticlesupdateFunction(response){
       { 
@@ -102,30 +105,54 @@ function Articles(props) {
       var n = 3;
 
       for(var iter = 0; iter < n; iter++){
-  
+        
+
         const id = iter;
+        const DISTANCE = Distance(userloc.latitude, userloc.longitude, articles[id][6], articles[id][7]).toString().substring(0,4)+"0"
         buffer.push(
           <Block style={styles.productItem} >     
-            <Card item={articles[id]} im ={images[id]} full />
+            <Card item={articles[id]} im ={images[id]} distance = {DISTANCE}
+ full />
           </Block>
         )
       }
       return(buffer)
     }
 
+    function deg2rad(deg) {
+      return (deg * Math.PI)/180
+    }
+    function Distance(lat1,lng1,lat2,lng2) {
+      var R = 6371; // Radius of the earth in km
+      var dLat = deg2rad(lat2-lat1);  // deg2rad below
+      var dLon = deg2rad(lng2-lng1); 
+      var a = 
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+        Math.sin(dLon/2) * Math.sin(dLon/2)
+        ; 
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+      var d = R * c; // Distance in km
+      return d;
+    }
+   
+
+
   // scroll view en bas
     function SmallSlide({category}){
       var buffer = [];
       var n = articles.length;
-      
+   
       if (category=='Tous'){
         for(var iter = 0; iter < n; iter++){
           const id = iter;
+          const DISTANCE = Distance(userloc.latitude, userloc.longitude, articles[id][6], articles[id][7]).toString().substring(0,4)+"0"     
           buffer.push(
           <Block style={styles.productScroll}>
             <Card 
               item={articles[id]}
-              im = {images[id]}/>
+              im = {images[id]}
+              distance = {DISTANCE}/>
           </Block>)
           }}
 
@@ -133,11 +160,13 @@ function Articles(props) {
         for(var iter = 0; iter < n; iter++){
           const id = iter;
           if (articles[id][9]==category){
+            const DISTANCE = Distance(userloc.latitude, userloc.longitude, articles[id][6], articles[id][7]).toString().substring(0,4)+"0"
           buffer.push(
             <Block style={styles.productScroll}>
               <Card 
                 item={articles[id]}
-                im = {images[id]}/>
+                im = {images[id]}
+                distance = {DISTANCE}/>
             </Block>)
             }}}
       return(buffer)
