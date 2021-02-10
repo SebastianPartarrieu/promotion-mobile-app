@@ -300,8 +300,8 @@ function Recherche (props){
         right
         defaultValue={first_input}
         autoFocus
-        maxLength = {30}
-        onChangeText = {(text) => (sendSearchRequest(text,'',updateFunction,"commerce"))}        
+        maxLength = {30}  
+        onChangeText = {(text) => {setSearchText(text); sendSearchRequest(text,category,updateFunction,"commerce");}}    
         color="black"
         style = {{
               height: 50,
