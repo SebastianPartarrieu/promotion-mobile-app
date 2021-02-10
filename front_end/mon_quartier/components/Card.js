@@ -31,7 +31,7 @@ class Card extends React.Component {
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback  onPress = {() => navigation.navigate('Profile', {comm : item, imm:im})}>
           <Block flex space="between">
-            <Text numberOfLines={1} bold center size={15} style={styles.cardTitle}>{item[1]}</Text>
+            <Text numberOfLines={1} bold center size={15} style={horizontal?styles.cardHorizontalTitle : styles.cardTitle}>{item[1]}</Text>
             <Text numberOfLines={1} style={full ? styles.fullcardDescription : styles.cardDescription}>{item[2]}</Text>
           </Block>
         </TouchableWithoutFeedback>
@@ -64,6 +64,13 @@ const styles = StyleSheet.create({
     flex: 5,
     flexWrap: 'wrap',
     marginTop:5,
+    marginHorizontal:5
+
+  },
+  cardHorizontalTitle: {
+    flex: 5,
+    flexWrap: 'wrap',
+    marginTop:15,
     marginHorizontal:5
 
   },

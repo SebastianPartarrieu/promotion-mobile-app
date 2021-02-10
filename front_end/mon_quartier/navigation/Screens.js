@@ -5,7 +5,9 @@ import {
          Text,
          TextInput,
          ScrollView, 
-         StyleSheet, 
+         StyleSheet,
+         Animated ,
+         TouchableOpacity
          } from "react-native";
 
 import { createStackNavigator } from "@react-navigation/stack";
@@ -28,9 +30,12 @@ import Articles from "../screens/Articles";
 import CustomDrawerContent from "./Menu";
 
 // header for screens
-import { Icon, Header, Button } from "../components";
+import { Icon, Header, Button, Card } from "../components";
 import { argonTheme } from "../constants";
 
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Fontisto from 'react-native-vector-icons/Fontisto'
 
 
 import server from "../constants/Server";
@@ -41,6 +46,7 @@ import server from "../constants/Server";
 
 
 const { width } = Dimensions.get("screen");
+const cardWidth = width - theme.SIZES.BASE * 2;
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -131,13 +137,134 @@ function Recherche (props){
 
   const first_input = props.f_input;
   const navigation = props.navigation;
+  var [category, setCategory] = useState('');
+  var [searchText, setSearchText] = useState('');
 
+
+
+  function SetCategories(){
+
+    var buffer = [];
+    n = categories.length;
+
+    for(var iter = 0; iter < n; iter++){
+
+      const id = iter;
+      
+      buffer.push(
+
+        <TouchableOpacity 
+          key={id} 
+
+          onPress = {() => (category==categories[id].name)? 
+            (
+              setCategory(''),
+              sendSearchRequest(searchText,'',updateFunction,"commerce")
+            ) 
+            :
+            (
+              setCategory(categories[id].name),
+              sendSearchRequest(searchText,categories[id].name,updateFunction,"commerce")
+            )
+          }
+
+          style={(category==categories[id].name)?
+
+            {flexDirection:"row",
+            //backgroundColor:'#fff', 
+            backgroundColor:'#9084b3', 
+            borderRadius:20,
+            placeholderTextColor:'#',
+            padding:8,
+            paddingHorizontal:20, 
+            marginHorizontal:10,
+            height:35,
+            shadowColor: '#ccc',
+            shadowOffset: { width: 0, height: 3 },
+            shadowOpacity: 0.5,
+            shadowRadius: 5,
+            elevation: 10,}
+            :
+            {flexDirection:"row",
+            backgroundColor:'#fff', 
+            //backgroundColor:'#AAAA', 
+            borderRadius:20,
+            padding:8,
+            paddingHorizontal:20, 
+            marginHorizontal:10,
+            height:35,
+            shadowColor: '#ccc',
+            shadowOffset: { width: 0, height: 3 },
+            shadowOpacity: 0.5,
+            shadowRadius: 5,
+            elevation: 10,}}>
+            
+            {categories[id].icon} 
+        <Text>{categories[id].name}</Text>
+        </TouchableOpacity>)
+
+    }
+
+    return buffer
+  }
+
+  const categories =  [
+    {
+      name: 'Restaurant',
+      icon: <Ionicons name="ios-restaurant" style={styles.chipsIcon} size={18} />,
+    },
+    {
+      name: 'Coiffeur',
+      icon: <Ionicons name="md-restaurant" style={styles.chipsIcon} size={18} />,
+    },
+    {
+      name: 'Textile',
+      icon: <MaterialCommunityIcons name="food" style={styles.chipsIcon} size={18} />,
+    },
+    {
+      name: 'Epicerie',
+      icon: <Fontisto name="hotel" style={styles.chipsIcon} size={15} />,
+    },
+    {
+      name: 'Boulangerie',
+      icon: <Fontisto name="hotel" style={styles.chipsIcon} size={15} />,
+    },
+    {
+      name: 'Autre',
+      icon: <Fontisto name="hotel" style={styles.chipsIcon} size={15} />,
+    },
+    {
+      name: 'Jeux',
+      icon: <Fontisto name="hotel" style={styles.chipsIcon} size={15} />,
+    }
+    ]
+
+
+  //Animations
+  let entranceAnimation = new Animated.Value(0);
+  Animated.timing(entranceAnimation, {
+        toValue: 100,
+        duration: 1000,
+        useNativeDriver: true
+      }).start()
 
 
   var [resultat, setResultat] = useState([])
   var [images, setImages] = useState([])
 
   function SearchResults(){
+
+    return(
+    
+    resultat.map((commerce, index) => {
+      return(
+      <Block style= {styles.productScroll}>
+        <Card item={commerce} im={images[index]} horizontal />
+      </Block>);
+    }))
+  }
+
+    /*
     var buffer = [];
     var n = resultat.length;
     //var com = 'xxx'
@@ -149,7 +276,7 @@ function Recherche (props){
     }
     
     return(buffer)
-  } 
+  } */
 
   function updateFunction(response){
     { //console.log(response),
@@ -191,8 +318,30 @@ function Recherche (props){
         iconContent={<Icon size={16} color={theme.COLORS.MUTED} name="search-zoom-in" family="ArgonExtra" />}
 
         />
+        <ScrollView
+        horizontal
+        scrollEventThrottle={1}
+        showsHorizontalScrollIndicator={false}
+        height={50}
+        style={styles.chipsScrollView}
+        contentInset={{ // iOS only
+          top:0,
+          left:0,
+          bottom:0,
+          right:20
+        }}
+        contentContainerStyle={{
+          paddingRight: Platform.OS === 'android' ? 20 : 0
+        }}
+      >
+        <SetCategories/>
+      </ScrollView>
 
-    <ScrollView>
+    <Animated.ScrollView
+      style={{transform: [{translateY: entranceAnimation.interpolate({
+      inputRange: [0, 100],
+      outputRange: [1000, 0] 
+        })}]}}>
     <Block flex>
       <Text bold size={16} style={styles.title}>
         Resultats
@@ -203,7 +352,7 @@ function Recherche (props){
         </Block>
       </Block>
     </Block>
-    </ScrollView>
+    </Animated.ScrollView>
     </Block>
   );
 }
@@ -416,6 +565,14 @@ const styles = StyleSheet.create({
   },
   inputDanger: {
     borderBottomColor: argonTheme.COLORS.ERROR
+  },
+  productScroll: {
+    width: cardWidth - theme.SIZES.BASE ,
+    marginHorizontal: theme.SIZES.BASE,
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 7 },
+    shadowRadius: 10,
+    shadowOpacity: 0.2
   },
   social: {
     width: theme.SIZES.BASE * 3.5,

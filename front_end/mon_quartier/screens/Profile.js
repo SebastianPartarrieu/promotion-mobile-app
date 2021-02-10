@@ -71,8 +71,11 @@ export default function Profile(props) {
   console.log(Pimages)
   const id = ID.toString()
   console.log(id)
-    useEffect( ()=>{sendPromotionsRequest(updateFunction, "commerce/"+id+"/promotion");}, []);
+  
+  useEffect( ()=>{sendPromotionsRequest(updateFunction, "commerce/"+id+"/promotion");}, []);
 
+
+  /*
   if (promotions.length == 0 ) {
   
     return(
@@ -83,7 +86,7 @@ export default function Profile(props) {
 
 console.log(promotions)
 
-
+  */
   return (
     <Block flex style={ProfileStyles.profile}>
       <Block flex>
@@ -127,7 +130,7 @@ console.log(promotions)
                 <Block style={ProfileStyles.avatar}>
                   <Image
 
-                    source={{ uri: 'http://localhost:5000/' + IMAGES[0] }}
+                    source={{ uri: server.server + IMAGES[0] }}
                     flex
                     style={{margin:10}}
                     resizeMode="contain"

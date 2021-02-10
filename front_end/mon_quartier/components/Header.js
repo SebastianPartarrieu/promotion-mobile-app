@@ -39,7 +39,7 @@ class Header extends React.Component {
         style={styles.search}
         placeholder="Que recherchez vous?"
         placeholderTextColor={'#8898AA'}
-        onChangeText={(text) => navigation.navigate('Elements',{first_input:text})}
+        onChangeText={(text) => navigation.navigate('Recherche',{first_input:text})}
         iconContent={<Icon size={16} color={theme.COLORS.MUTED} name="search-zoom-in" family="ArgonExtra" />}
       />
     );
