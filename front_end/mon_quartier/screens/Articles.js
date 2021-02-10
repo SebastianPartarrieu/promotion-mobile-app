@@ -191,7 +191,9 @@ function Articles(props) {
                 {articles.map((marker, index) => {
               
                   return (
-                    <MapView.Marker key={index} coordinate={{latitude: marker[6], longitude: marker[7]}}>
+                    <MapView.Marker 
+                      key={index} 
+                      coordinate={{latitude: marker[6], longitude: marker[7]}}>
                       <Image
                         source={require('../assets/imgs/pin.png')}
                         style={styles.marker}
