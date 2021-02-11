@@ -57,7 +57,7 @@ class DrawerItem extends React.Component {
               color={focused ? "white" : argonTheme.COLORS.PRIMARY}
             />
           );
-      case "Getting Started":
+      case "Conditions d'utilisation":
         return (<Icon
           name="spaceship"
           family="ArgonExtra"
@@ -83,7 +83,7 @@ class DrawerItem extends React.Component {
       <TouchableOpacity
         style={{ height: 60 }}
         onPress={() =>
-          title == "Getting Started"
+          title == "Conditions d'utilisation"
             ? Linking.openURL(
                 "http://httpbin.org/ip"
               ).catch(err => console.error("An error occurred", err))

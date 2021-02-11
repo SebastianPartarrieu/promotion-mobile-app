@@ -14,6 +14,8 @@ import { Images, argonTheme } from "../constants";
 
 import server from "../constants/Server";
 
+console.disableYellowBox = true;
+
 const { width, height } = Dimensions.get("screen");
 
 var { token } = '';

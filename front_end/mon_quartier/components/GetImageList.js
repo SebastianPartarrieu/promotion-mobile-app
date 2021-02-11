@@ -3,14 +3,14 @@ import { StyleSheet, Dimensions, FlatList, Animated } from 'react-native';
 import { Block, theme } from 'galio-framework';
 
 import argonTheme from '../constants/Theme';
-
+import server from '../constants/Server';
 
 
 
 
 function GetImageList (cid,updateFunction,route) {
 
-    const url = new URL(route, 'http://localhost:5000/')
+    const url = new URL(route, server.server)
     url.searchParams.append('search',search)
   
     fetch(url, {
