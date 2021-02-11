@@ -229,7 +229,7 @@ function Articles(props) {
         >
         <Block flex style={styles.group}>
         
-        <Text bold size={16} style={styles.title}>
+        <Text bold size={26} style={styles.title}>
           Suggestions
         </Text>
         <Block flex >
@@ -252,7 +252,7 @@ function Articles(props) {
             <Suggest/>
             </Animated.ScrollView>
           </Block>
-          <Text bold size={16} style={styles.title}>
+          <Text bold size={26} style={styles.title}>
           Autour de vous
         </Text>
           <Block flex center>
@@ -295,36 +295,7 @@ function Articles(props) {
         <Text bold size={26} style={styles.title}>
           Catégories
         </Text>
-        <Block flex>
-            <Animated.ScrollView
-            horizontal
-            scrollEventThrottle={1}
-            showsHorizontalScrollIndicator={false}
-            height={50}
-            style={{transform: [{translateX: entranceAnimation.interpolate({
-              inputRange: [60, 100],
-              outputRange: [-1000, 0] 
-            })}]}}
-            contentInset={{ // iOS only
-              top:0,
-              left:0,
-              bottom:0,
-              right:20
-            }}
-            contentContainerStyle={{
-              paddingRight: Platform.OS === 'android' ? 20 : 0
-            }}
-          >
-            {categories.map((category, index) => (
-              <TouchableOpacity 
-                key={index} 
-                style={styles.chipsItem}>
-                {category.icon}
-                <Text>{category.name}</Text>
-              </TouchableOpacity>
-            ))}
-          </Animated.ScrollView>
-        </Block>
+        
         <Block flex>
         <Text bold size={16} style={styles.subtitle}>
                     Tous
@@ -409,13 +380,13 @@ const styles = StyleSheet.create({
   title: {
     paddingBottom: theme.SIZES.BASE,
     paddingHorizontal: theme.SIZES.BASE * 2,
-    marginTop: 22,
+    marginTop: 20,
     color: argonTheme.COLORS.HEADER
   },
   subtitle: {
     paddingBottom: theme.SIZES.BASE,
     paddingHorizontal: theme.SIZES.BASE * 2,
-    marginTop: 10,
+    marginTop: 5,
     marginBottom:-20,
     color: argonTheme.COLORS.HEADER
   },
@@ -469,7 +440,8 @@ const styles = StyleSheet.create({
   productMap: {
     width: cardWidth - theme.SIZES.BASE,
     height: 200,
-    borderRadius: 10
+    borderRadius: 10,
+    marginBottom:10
 
   },
   productPrice: {

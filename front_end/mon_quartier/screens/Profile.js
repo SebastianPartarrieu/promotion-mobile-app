@@ -156,7 +156,7 @@ console.log(promotions)
 
                     source={{ uri: server.server + IMAGES[0] }}
                     flex
-                    style={{margin:10}}
+                    style={{margin:15, borderRadius: 10}}
                     resizeMode="contain"
                   />
 
