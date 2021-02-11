@@ -19,6 +19,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Fontisto from 'react-native-vector-icons/Fontisto'
 
 
+import Geolocation from '@react-native-community/geolocation';
 
 //import sendSearchRequest from "../constants/Fonction";
 
@@ -68,7 +69,24 @@ function sendArticlesRequest(updateFunction,route){
 
 function Map ({navigation}){
   
-
+  function deg2rad(deg) {
+    return (deg * Math.PI)/180
+  }
+  function Distance(lat1,lng1,lat2,lng2) {
+    var R = 6371; // Radius of the earth in km
+    var dLat = deg2rad(lat2-lat1);  // deg2rad below
+    var dLon = deg2rad(lng2-lng1); 
+    var a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2)
+      ; 
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    var d = R * c; // Distance in km
+    return d;
+  }
+  var [userloc, setUserloc] = useState([{latitude: 0, longitude: 0}])
+  useEffect(()=>{Geolocation.getCurrentPosition((info) => setUserloc(info.coords))},[]); 
 
   function MapUpdateFunction(response){
     { //console.log(response),
@@ -125,6 +143,7 @@ function Map ({navigation}){
     var n = articles.length;
     for(var iter = 0; iter < n; iter++){
       const id = iter;
+      const DISTANCE = Distance(userloc.latitude, userloc.longitude, articles[id][6], articles[id][7]).toString().substring(0,4)+"0"     
       buffer.push(
       <Animated.View style={styles.card} key={id} >
 
@@ -138,6 +157,8 @@ function Map ({navigation}){
           </Text>
           
           <Text numberOfLines={1} style={styles.cardDescription}>{articles[id][2]}
+          </Text>
+          <Text numberOfLines={1} style={styles.cardDescription}>{DISTANCE}
           </Text>
           </TouchableOpacity>
           </View>

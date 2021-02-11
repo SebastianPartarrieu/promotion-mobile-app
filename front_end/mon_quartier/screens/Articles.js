@@ -176,7 +176,7 @@ function Articles(props) {
     const entranceAnimation = new Animated.Value(0);
       Animated.timing(entranceAnimation, {
         toValue: 100,
-        duration: 800,
+        duration: 1800,
         useNativeDriver: true
       }).start()
 
