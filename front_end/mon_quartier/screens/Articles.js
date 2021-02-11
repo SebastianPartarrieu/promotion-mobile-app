@@ -148,7 +148,9 @@ function Articles(props) {
           const id = iter;
           const DISTANCE = Distance(userloc.latitude, userloc.longitude, articles[id][6], articles[id][7]).toString().substring(0,4)+"0"     
           buffer.push(
-          <Block style={styles.productScroll}>
+          <Block 
+            style={styles.productScroll}
+            key={id}>
             <Card 
               item={articles[id]}
               im = {images[id]}
@@ -162,7 +164,9 @@ function Articles(props) {
           if (articles[id][9]==category){
             const DISTANCE = Distance(userloc.latitude, userloc.longitude, articles[id][6], articles[id][7]).toString().substring(0,4)+"0"
           buffer.push(
-            <Block style={styles.productScroll}>
+            <Block 
+              style={styles.productScroll}
+              key={id}>
               <Card 
                 item={articles[id]}
                 im = {images[id]}
@@ -274,9 +278,10 @@ function Articles(props) {
               
                   return (
                     <MapView.Marker 
-                      key={index} 
+                      key={index}
                       coordinate={{latitude: marker[6], longitude: marker[7]}}>
                       <Image
+                        
                         source={require('../assets/imgs/pin.png')}
                         style={styles.marker}
                         resizeMode="contain"
@@ -311,7 +316,9 @@ function Articles(props) {
             }}
           >
             {categories.map((category, index) => (
-              <TouchableOpacity key={index} style={styles.chipsItem}>
+              <TouchableOpacity 
+                key={index} 
+                style={styles.chipsItem}>
                 {category.icon}
                 <Text>{category.name}</Text>
               </TouchableOpacity>
@@ -342,20 +349,24 @@ function Articles(props) {
             }}
           >
 
-            <SmallSlide category='Tous'/>
+            <SmallSlide category='Tous' />
           </Animated.ScrollView>
               
         </Block>
 
               {categories.map((marker, index) => {
                 console.log(marker.name);
+
                 return(
 
-               <Block flex>
+               <Block flex
+               key= {index}
+              >
                  <Text bold size={16} style={styles.subtitle}>
                     {marker.name}
                   </Text>
                   <Animated.ScrollView
+
                     horizontal
                     scrollEventThrottle={1}
                     showsHorizontalScrollIndicator={false}

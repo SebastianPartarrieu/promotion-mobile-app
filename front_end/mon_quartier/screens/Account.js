@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
   StyleSheet,
   ImageBackground,
@@ -28,17 +28,12 @@ function getInfos(token,updateFunction,route){
   const url = new URL(route, server)
 
   url.searchParams.append('token',token)
-
-
-
   fetch(url, {
     method : 'GET'
   }).then((response) => response.json()).then(updateFunction).catch(
     (e) => {alert('Something went wrong' + e.message)}
   )
 }
-
-
 
 
 function Account({navigation}){
@@ -52,24 +47,15 @@ function Account({navigation}){
   const [username, setUsername] = useState('email') ;
   const [password, setPassword] = useState('mdp') ;
 
+  
 
-  console.log("===============================")
-  console.log(city)
-  console.log("===============================")
 
   function updateFunction(response){
-      { console.log(response)
-        response['is_registered']?(
-          navigation.navigate("Onboarding")
-        ):
-        (
-          console.log(firstname)
-        )
-          
-        
+      { console.log(response)        
         }
     }
 
+    useEffect( ()=>{getInfos(token,updateFunction,'myclient')}, []);
 
     return (
       <Block flex middle>

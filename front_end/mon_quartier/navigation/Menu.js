@@ -63,7 +63,7 @@ function CustomDrawerContent({ drawerPosition, navigation, profile, focused, sta
 
       const id = iter;
       buffer.push(
-        <Block>
+        <Block key={1000+id}>
         <DrawerCustomItem
           title={screens[id]}
           //key={id}

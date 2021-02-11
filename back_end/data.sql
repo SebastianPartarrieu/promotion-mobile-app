@@ -18,7 +18,7 @@ INSERT INTO Commerce(cnom, cpresentation, code_postal, rue_and_num, aid, cmdp, c
 ('La maison des Mines', 'La Maison des Mines et des Ponts',75005,'270 rue saint jacques',1,'password4','matmaz4@mines-paristech.fr',48.841924881665165, 2.3411000804314797, 'http://www.maisondesmines.com/'),
 ('Panda Wok','Envie d’un repas agréable asiatique ?',75015,'208 rue saint jacques',1,'password3','matmaz3@mines-paristech.fr',48.84554822428966,2.34254952705813, 'https://panda-wok-75005.eatbu.com/?lang=fr'),
 ('La Muraille du Phénix','Un bon choix de mets raffinés',75030,'179 rue saint jacques',1,'password2','matmaz2@mines-paristech.fr',48.84561630864182, 2.34271995589359, ''),
-('Mcdonalds','haîne emblématique de restauration rapide',75405,'65 Boulevard Saint-Michel',1,'password1','matmaz1@mines-paristech.fr',48.8471983255236, 2.341062113564534, 'https://www.restaurants.mcdonalds.fr/mcdonalds-luxembourg-pantheon'),
+('Mcdonalds','chaîne emblématique de restauration rapide',75005,'65 Boulevard Saint-Michel',1,'password1','matmaz1@mines-paristech.fr',48.8471983255236, 2.341062113564534, 'https://www.restaurants.mcdonalds.fr/mcdonalds-luxembourg-pantheon'),
 ('Le Christine','Cuisine française modernisé entre la bistronomie et la gastronomie',75006,'1 rue Christine',1 , 'password', 'contact@restaurantlechristine.com', 48.854312, 2.340345, 'https://www.restaurantlechristine.com/'),
 ('Le Vin Qui Danse', 'Cuisine Française Moderne et Brunch le Dimanche', 75013, '69 rue broca', 1, 'password', 'gobelins@vqd.fr', 48.836928, 2.347006, 'https://vqd.fr/'),
 ('Café Le Petit Pont','Pizzas, Tapas, Fondue, Cocktail', 75005, '1 rue du Petit Pont', 1, 'password', 'annelise@cafelepetitpont.com', 48.852668, 2.346724, 'https://www.lafourchette.com/restaurant/le-petit-pont-r3459'),
@@ -141,9 +141,11 @@ INSERT INTO CommerceCategorie(cid, catid) VALUES (1, 6), (2, 6), (3, 1), (4, 1),
 
 -- one or two promotions
 INSERT INTO Promotion(cid, pdescription, tdebut, tfin) VALUES (1, 'Un diplôme pas cher!', '2021-01-14'::DATE, NULL),
-(2, 'Une chambre en plein Paris', '2019-09-15', '2021-04-15'),
+(2, 'Une chambre en plein Paris pour moins de 400€/mois', '2019-09-15', '2021-04-15'),
 (3, 'Des wok de qualité avec formule étudiant à 9€', '2021-01-15', NULL),
-(5, 'Des prix toujours imbattables', NULL, NULL);
+(5, 'Des prix toujours imbattables', NULL, NULL),
+(6, 'Plat du jour a 12€', NULL, NULL),
+(4, 'La formule a 8€ passe a 6€ pour les trois prochaines semaines', '2021-10-02', '2021-25-02');
 
 -- calvin loves food 
 INSERT INTO ClientCategorie(clid, catid) VALUES (4, 1), (1, 3);
@@ -153,7 +155,14 @@ INSERT INTO ClientFavCommerce(clid, cid) VALUES (4, 4), (2, 1), (3, 2);
 
 INSERT INTO Admins(adminemail, adminmdp) VALUES ('sebastian.partarrieu@mines-paristech.fr', 'amazingpassword');
 
-INSERT INTO ImagePromotion ( imgname,ranks, verified, pid) VALUES ('0fe66df0582fbfefbd0a3cdb882c59d4.jpg' , 1 ,FALSE, 1), ( 'd46371837147773dee74cf4001460b29.jpg' , 1 ,FALSE, 2);
+INSERT INTO ImagePromotion ( imgname,ranks, verified, pid) VALUES
+('mines_2.jpeg' , 1 ,FALSE, 1),
+( 'meuh.jpeg' , 1 ,FALSE, 2),
+('wok.jpeg', 1, FALSE, 3),
+('mc_do_promo.jpeg', 1, FALSE, 4),
+('nouille.jpeg', 1, FALSE, 6),
+('gastronomie.jpeg', FALSE, 5);
+
 INSERT INTO ImageCommerce(imgname,ranks, verified, cid) VALUES
 ('mc_do.png' , 1 ,FALSE, 5),
 ('mc_do_2.jpeg', 2, FALSE, 5),

@@ -10,69 +10,69 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
-        <link href="css/styles.css" rel="stylesheet" />
-    </head>
+        <link href="../../static/css/styles.css" rel="stylesheet" />
+        <script>
+            const BASE_URL = "http://0.0.0.0:5000";
+            const LOGIN_PATH = "/signupcommerce";
+            
+            function signup()
+            {
+                var email = document.getElementById("cemail").value;
+                var cmdp = document.getElementById("cmdp").value;
+                var cnom = document.getElementById("cnom").value;
+                var cpresentation = document.getElementById("cpresentation").value;
+                var catnom = document.getElementById("catnom").value;
+                var url_ext = document.getElementById("url_ext").value;
+                var rue_and_num = document.getElementById("rue_and_num").value;
+                var code_postal = document.getElementById("code_postal").value;
+                var aid = document.getElementById("aid").value;
+                
+                var url = BASE_URL + LOGIN_PATH;
+                var data = {
+                    cemail : email,
+                    cmdp: cmdp,
+                    cnom :cnom,
+                    cpresentation:cpresentation,
+                    catnom:catnom,
+                    url_ext:url_ext,
+                    rue_and_num:rue_and_num,
+                    code_postal:code_postal,
+                    aid:aid
+                };
+    
+                //var stored_result;
+                fetch(url, {method: "POST",
+                    headers : {
+                        "content-type" : "application/json; charset=UTF-8"
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(data=>{return data.json()})
+                .then(res=>{
+                    if(res["status"] != "ok")
+                    {
+                        alert(res["message"]);
+                    }
+                    else
+                    {
+                        //pas necessaire de sauvegarder le cid
+                        localStorage.setItem("cid", res["cid"]);
+                        window.location.href="/login/commerce";
+                    }
+                })
+                .catch(error=>console.log(error));
+            }
+        </script></head>
     <body id="page-top">
         
         <!-- Masthead-->
         <header class="masthead">
             <div class="container">
                 
-                <script>
-        const BASE_URL = "http://0.0.0.0:5000";
-        const LOGIN_PATH = "/signupcommerce";
-        
-        function signup()
-        {
-            var email = document.getElementById("cemail").value;
-            var cmdp = document.getElementById("cmdp").value;
-            var cnom = document.getElementById("cnom").value;
-            var cpresentation = document.getElementById("cpresentation").value;
-            var catnom = document.getElementById("catnom").value;
-            var url_ext = document.getElementById("url_ext").value;
-            var rue_and_num = document.getElementById("rue_and_num").value;
-            var code_postal = document.getElementById("code_postal").value;
-            var aid = document.getElementById("aid").value;
-            
-            var url = BASE_URL + LOGIN_PATH;
-            var data = {
-                cemail : email,
-                cmdp: cmdp,
-                cnom :cnom,
-                cpresentation:cpresentation,
-                catnom:catnom,
-                url_ext:url_ext,
-                rue_and_num:rue_and_num,
-                code_postal:code_postal,
-                aid:aid
-            };
-
-            //var stored_result;
-            fetch(url, {method: "POST",
-                headers : {
-                    "content-type" : "application/json; charset=UTF-8"
-                },
-                body: JSON.stringify(data)
-            })
-            .then(data=>{return data.json()})
-            .then(res=>{
-                if(res["status"] != "ok")
-                {
-                    alert(res["message"]);
-                }
-                else
-                {
-                    //pas necessaire de sauvegarder le cid
-                    localStorage.setItem("cid", res["cid"]);
-                    window.location.href="/login/commerce";
-                }
-            })
-            .catch(error=>console.log(error));
-        }
-    </script>
+               
 
                 <table border="1" cellpadding="10" cellspacing="1" bgcolor="#008000" align="center" width="771">
-
+                   
                     <td bgcolor="#FFFFF9">
                     <font color="#000000">
 
@@ -85,57 +85,51 @@
                                         <p>Remplissez les champs suivants afin de créer votre compte.</p>
                         
                                         <label for="cemail"><b>Email</b></label>
-                                        <input type="text" placeholder="Enter Email" name="cemail" required>
+                                        <input type="text" placeholder="Enter Email" id="cemail" required>
                                         </br> </br>
 
                                         <label for="cmdp"><b>Mot de passe</b></label>
-                                        <input type="password" placeholder="Enter Password" name="cmdp" required>
+                                        <input type="password" placeholder="Enter Password" id="cmdp" required>
                                         </br> </br>
 
                                         <label for="cnom"><b>Nom du commerce</b></label>
-                                        <input type="text" placeholder="Enter Name" name="cnom" required>
+                                        <input type="text" placeholder="Enter Name" id="cnom" required>
                                         </br> </br>
 
                                         <label for="catnom"><b>Catégorie</b></label>
-                                        <input type="text" placeholder="Enter category" name="catnom" required>
+                                        <input type="text" placeholder="Enter category" id="catnom" required>
                                         </br> </br>
                                         
                                         <label for="cpresentation"><b>Description du commerce</b></label>
-                                        <input type="text" placeholder="Enter Description" name="cpresentation" required>
+                                        <input type="text" placeholder="Enter Description" id="cpresentation" required>
                                         </br> </br>
                                         
                                         <label for="url_ext"><b>URL (si mon commerce dispose d'un site internet)</b></label>
-                                        <input type="text" placeholder="Enter URL" name="url_ext">
+                                        <input type="text" placeholder="Enter URL" id="url_ext">
                                         </br> </br>
                                         
                                         <label for="rue_and_num"><b>Adresse</b></label>
-                                        <input type="text" placeholder="Enter Address" name="rue_and_num" required>
+                                        <input type="text" placeholder="Enter Address" id="rue_and_num" required>
                                         </br> </br>
                                         
                                         <label for="code_postal"><b>Code Postal</b></label>
-                                        <input type="text" placeholder="Enter ZIP code" name="code_postal" required>
+                                        <input type="text" placeholder="Enter ZIP code" id="code_postal" required>
                                         </br> </br>
 
                                     
-                                        <label for="aid"><b>Agglomération :</b></label>
                                         
-                                        <select type="text" name="aid" multiple="multiple" required>
                                         
-                                          <option selected="selected" aid='1'>1</option>
-                                          <option aid='2'>Angoulême</option>
-                                          <option aid='3'>Bourg-en-Bresse</option>
-                                          <option aid='4'>Jouy-en-Josas</option>
-                                          <option aid='5'>Gif-sur-Yvette</option>
-                                          <option aid='6'>Palaiseau</option>
-                                        </select>
+                                        <label for="aid"><b>Agglomeration</b></label>
+                                        <input type="text" placeholder="Enter ZIP code" id="aid" required>
+                                        </br> </br>
                                         
                                         </br> </br>
 
                                         <p>En créant votre compte, vous acceptez les <a href="https://policies.google.com/terms?hl=fr-CA" style="color:dodgerblue">Conditions d'utilisation</a>.</p>
 
                                         <div class="clearfix">
-                                            <button type="button" class="cancelbtn">Annuler</button>
-                                            <button type="submit" class="signupbtn">Valider</button>
+                                            <button type="button" class="cancelbtn" onclick=window.location.href="/" >Return</button>
+                                            <button type="button" class="signupbtn" onclick="signup()">Valider</button>
                                         
                             
                                         </div>
@@ -168,8 +162,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-        <script src="assets/mail/jqBootstrapValidation.js"></script>
-        <script src="assets/mail/contact_me.js"></script>
-        <script src="js/scripts.js"></script>
+        <script src="../../static/assets/mail/jqBootstrapValidation.js"></script>
+        <script src="../../static/assets/mail/contact_me.js"></script>
+        <script src="../../static/js/scripts.js"></script>
     </body>
 </html>
