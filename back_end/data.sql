@@ -145,7 +145,7 @@ INSERT INTO Promotion(cid, pdescription, tdebut, tfin) VALUES (1, 'Un diplôme p
 (3, 'Des wok de qualité avec formule étudiant à 9€', '2021-01-15', NULL),
 (5, 'Des prix toujours imbattables', NULL, NULL),
 (6, 'Plat du jour a 12€', NULL, NULL),
-(4, 'La formule a 8€ passe a 6€ pour les trois prochaines semaines', '2021-10-02', '2021-25-02');
+(4, 'La formule a 8€ passe a 6€ pour les trois prochaines semaines', '2021-02-10', '2021-02-25');
 
 -- calvin loves food 
 INSERT INTO ClientCategorie(clid, catid) VALUES (4, 1), (1, 3);
@@ -160,8 +160,8 @@ INSERT INTO ImagePromotion ( imgname,ranks, verified, pid) VALUES
 ( 'meuh.jpeg' , 1 ,FALSE, 2),
 ('wok.jpeg', 1, FALSE, 3),
 ('mc_do_promo.jpeg', 1, FALSE, 4),
-('nouille.jpeg', 1, FALSE, 6),
-('gastronomie.jpeg', FALSE, 5);
+('gastronomie.jpeg', 1, FALSE, 5),
+('nouille.jpeg', 1, FALSE, 6);
 
 INSERT INTO ImageCommerce(imgname,ranks, verified, cid) VALUES
 ('mc_do.png' , 1 ,FALSE, 5),
