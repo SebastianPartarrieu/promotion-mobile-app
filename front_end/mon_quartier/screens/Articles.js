@@ -74,7 +74,7 @@ function Articles(props) {
     var [userloc, setUserloc] = useState([{latitude: 0, longitude: 0}])
 
     useEffect(()=>{Geolocation.getCurrentPosition((info) => setUserloc(info.coords))},[]); 
-    console.log(userloc.latitude)
+    //console.log(userloc.latitude)
 
     function ArticlesupdateFunction(response){
       { 
@@ -326,7 +326,7 @@ function Articles(props) {
         </Block>
 
               {categories.map((marker, index) => {
-                console.log(marker.name);
+                //console.log(marker.name);
 
                 return(
 
