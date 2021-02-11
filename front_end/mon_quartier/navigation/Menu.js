@@ -49,9 +49,9 @@ function CustomDrawerContent({ drawerPosition, navigation, profile, focused, sta
 
   const screens = [
     "Accueil", 
-    "Mon compte",
     "Recherche",
     "Map",
+    "Mon compte",
   ];
 
   function MenuMaker(){

@@ -4,6 +4,11 @@ import { Block, Text, theme } from "galio-framework";
 
 import Icon from "./Icon";
 import argonTheme from "../constants/Theme";
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Fontisto from 'react-native-vector-icons/Fontisto'
+
+
 
 class DrawerItem extends React.Component {
   renderIcon = () => {
@@ -12,21 +17,12 @@ class DrawerItem extends React.Component {
     switch (title) {
       case "Accueil":
         return (
-          <Icon
-            name="shop"
-            family="ArgonExtra"
-            size={14}
-            color={focused ? "white" : argonTheme.COLORS.PRIMARY}
-          />
+          <Ionicons name="ios-home" size={20} color={argonTheme.COLORS.PRIMARY}/>
         );
       case "Recherche":
         return (
-          <Icon
-            name="map-big"
-            family="ArgonExtra"
-            size={14}
-            color={focused ? "white" : argonTheme.COLORS.PRIMARY}
-          />
+          <Ionicons name="ios-search" size={20} color={argonTheme.COLORS.PRIMARY}/>
+
         );
       case "Articles":
         return (
@@ -39,12 +35,8 @@ class DrawerItem extends React.Component {
         );
       case "Mon compte":
         return (
-          <Icon
-            name="chart-pie-35"
-            family="ArgonExtra"
-            size={14}
-            color={focused ? "white" : argonTheme.COLORS.PRIMARY}
-          />
+          <MaterialCommunityIcons name="account" size={20} color={argonTheme.COLORS.PRIMARY}/>
+
         );
       case "Account":
         return (

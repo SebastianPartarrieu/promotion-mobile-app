@@ -211,34 +211,34 @@ function Recherche (props){
   const categories =  [
     {
       name: 'Restaurant',
-      icon: <Ionicons name="ios-restaurant" style={styles.chipsIcon} size={18} />,
-    },
-    {
-      name: 'Coiffeur',
       icon: <Ionicons name="md-restaurant" style={styles.chipsIcon} size={18} />,
     },
     {
+      name: 'Coiffeur',
+      icon: <MaterialCommunityIcons name="walk" style={styles.chipsIcon} size={18} />,
+    },
+    {
       name: 'Textile',
-      icon: <MaterialCommunityIcons name="food" style={styles.chipsIcon} size={18} />,
+      icon: <MaterialCommunityIcons name="shoe-formal" style={styles.chipsIcon} size={18} />,
     },
     {
       name: 'Epicerie',
-      icon: <Fontisto name="hotel" style={styles.chipsIcon} size={15} />,
+      icon: <Fontisto name="shopping-basket" style={styles.chipsIcon} size={15} />,
     },
     {
       name: 'Boulangerie',
-      icon: <Fontisto name="hotel" style={styles.chipsIcon} size={15} />,
-    },
-    {
-      name: 'Autre',
-      icon: <Fontisto name="hotel" style={styles.chipsIcon} size={15} />,
+      icon: <MaterialCommunityIcons name="baguette" style={styles.chipsIcon} size={15} />,
     },
     {
       name: 'Jeux',
-      icon: <Fontisto name="hotel" style={styles.chipsIcon} size={15} />,
-    }
+      icon: <Ionicons name="logo-playstation" style={styles.chipsIcon} size={15} />,
+    },
+    {
+      name: 'Autre',
+      icon: <Ionicons name="ios-add" style={styles.chipsIcon} size={15} />,
+    },
+   
     ]
-
 
   //Animations
   let entranceAnimation = new Animated.Value(0);
