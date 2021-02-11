@@ -110,7 +110,7 @@ function Articles(props) {
         const id = iter;
         const DISTANCE = Distance(userloc.latitude, userloc.longitude, articles[id][6], articles[id][7]).toString().substring(0,4)+"0"
         buffer.push(
-          <Block style={styles.productItem} >     
+          <Block style={styles.productItem} key={id} >     
             <Card item={articles[id]} im ={images[id]} distance = {DISTANCE}
  full />
           </Block>
