@@ -14,7 +14,7 @@ import { Images } from "../constants";
 import { HeaderHeight } from "../constants/utils";
 
 import server from "../constants/Server";
-//import articles from "../constants/articles"
+
 
 //MAP
 import MapView, {PROVIDER_GOOGLE} from "react-native-maps";
@@ -75,8 +75,6 @@ export default function Profile(props) {
   function deg2rad(deg) {
     return (deg * Math.PI)/180
   }
-
-
   function Distance(lat1,lng1,lat2,lng2) {
     var R = 6371; // Radius of the earth in km
     var dLat = deg2rad(lat2-lat1);  // deg2rad below
@@ -90,25 +88,12 @@ export default function Profile(props) {
     var d = R * c; // Distance in km
     return d;
   }
-
   const DISTANCE = Distance(userloc.latitude, userloc.longitude, LATITUDE, LONGITUDE).toString().substring(0,4)+"0"
  
   const id = ID.toString()
 
   useEffect( ()=>{sendPromotionsRequest(updateFunction, "commerce/"+id+"/promotion");}, [id]);
-console.log(id)
-  /*
-  if (promotions.length == 0 ) {
-  
-    return(
-        <Block center>
-          <Text>pas d'articles</Text>
-        </Block>
-          )}
 
-console.log(promotions)
-
-  */
   return (
     <Block flex style={ProfileStyles.profile}>
       <Block flex>
@@ -230,7 +215,7 @@ console.log(promotions)
                 </Text>
                 {promotions.map((promotion, index) => {
                   return(
-                  <Block>
+                  <Block key={index}>
                     <Card item={promotion} im={Pimages[index]} horizontal/>
                   </Block>);
                 })}

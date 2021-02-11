@@ -14,7 +14,7 @@ import {
 //galio
 import { Block, Text, theme } from "galio-framework";
 //argon
-import { Images, argonTheme, articles } from "../constants/";
+import { Images, argonTheme} from "../constants/";
 import { Card } from "../components/";
 import MapView, {Marker, PROVIDER_GOOGLE} from "react-native-maps";
 import {RetroStyle} from "../constants/MapData";
@@ -91,7 +91,7 @@ function Articles(props) {
   if (articles.length == 0 ) {
   return(
       <Block center>
-        <Text>pas d'articles</Text>
+        <Image styles={styles.logo} source={Images.Logo} />
       </Block>
         )}
 
