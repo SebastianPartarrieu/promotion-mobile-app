@@ -40,13 +40,11 @@
             </br>
         	</br>
                 
-                <table border="1" cellpadding="10" cellspacing="1" bgcolor="#008000" align="center" width="771">
+                <table border="1" cellpadding="0" cellspacing="1" bgcolor="#008000" align="center" width="771">
 
                     <td bgcolor="#FFFFF9">
                     <font color="#000000">
-      
-		</br>
-        </br>
+
 
         <section style="color:#000000">
 
@@ -118,6 +116,10 @@
       document.createElement('br');
                                                             var esp2 =
       document.createElement('br');
+      														var esp3 =
+      document.createElement('br');
+                                                            var esp4 =
+      document.createElement('br');
       
       //myH2.textContent = promo[i].name;
       myPara1.textContent = 'Nom du Commerce:  ' + promo[i][0];
@@ -133,7 +135,8 @@
       
       
       myArticle.appendChild(myList);
-      myArticle.appendChild(myList);
+      myArticle.appendChild(esp3);
+      myArticle.appendChild(esp4);
       myArticle.appendChild(myPara1);
       myArticle.appendChild(myPara2);
       myArticle.appendChild(myPara3);
@@ -143,11 +146,10 @@
       myArticle.appendChild(myPara7);
       myArticle.appendChild(myPara8);
       myArticle.appendChild(edit[i]);
-      myArticle.appendChild(esp1);
-      myArticle.appendChild(esp2);
+      
                                                      
               var img = new Image(100, 100);
-               img.src = "http://0.0.0.0:5000/static/"+res[3*i];
+               img.src = "http://0.0.0.0:5000/static/commerceImage/"+promo[3*i];
                                                        
              myList.appendChild(img);
       
