@@ -25,8 +25,6 @@ const { width, height } = Dimensions.get("screen");
 
 
 
-
-
 function Account({navigation}){
 
 
@@ -36,7 +34,9 @@ function Account({navigation}){
   const [city, setCity] = useState('');
   
   const [username, setUsername] = useState('email') ;
-  const [password, setPassword] = useState('mdp') ;
+  //const [password, setPassword] = useState('mdp') ;
+
+  var [validation_text, setValidation_text] = useState('#0000') ; 
 
 
 
@@ -46,6 +46,7 @@ function Account({navigation}){
         setFirstname(response['resultat'][0][1]) 
         setUsername(response['resultat'][0][2]) 
         setCity(response['resultat'][0][3]) 
+        
         }
     }
 
@@ -72,6 +73,7 @@ function Account({navigation}){
       url.searchParams.append("clpnom",firstname)
       url.searchParams.append("clemail",username)
       url.searchParams.append("aid",city_id)
+      setValidation_text('#3c8c3a')
 
       fetch(url, {method : 'PATCH'})
 
@@ -208,6 +210,7 @@ function Account({navigation}){
                         />
 
                     </Block>
+
                     <Block middle>
                       <Button 
                         color="primary" 
@@ -217,6 +220,13 @@ function Account({navigation}){
                           Enregistrer
                         </Text>
                       </Button>
+                      <Block marginTop={20}>
+                      <Text 
+                      bold size={13} 
+                      color = {validation_text}>
+                      Changements enregistrés
+                    </Text>
+                    </Block>
                     </Block>
                   </KeyboardAvoidingView>
                 </Block>
