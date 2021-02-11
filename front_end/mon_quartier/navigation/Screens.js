@@ -244,7 +244,7 @@ function Recherche (props){
   let entranceAnimation = new Animated.Value(0);
   Animated.timing(entranceAnimation, {
         toValue: 100,
-        duration: 1000,
+        duration: 500,
         useNativeDriver: true
       }).start()
 
