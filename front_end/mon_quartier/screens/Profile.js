@@ -26,7 +26,6 @@ import Geolocation from '@react-native-community/geolocation';
 
 function sendPromotionsRequest(updateFunction,route){
   const url = new URL(route, server.server)
-  console.log(url)
   fetch(url, {
     method : 'GET'
   }).then((response) => response.json()).then(updateFunction).catch(
