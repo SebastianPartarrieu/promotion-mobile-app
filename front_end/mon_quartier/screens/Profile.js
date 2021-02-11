@@ -95,10 +95,8 @@ export default function Profile(props) {
  
   const id = ID.toString()
 
-  
-  useEffect( ()=>{sendPromotionsRequest(updateFunction, "commerce/"+id+"/promotion");}, []);
-
-
+  useEffect( ()=>{sendPromotionsRequest(updateFunction, "commerce/"+id+"/promotion");}, [id]);
+console.log(id)
   /*
   if (promotions.length == 0 ) {
   

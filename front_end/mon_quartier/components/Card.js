@@ -11,7 +11,7 @@ import server from "../constants/Server";
 class Card extends React.Component {
   render() {
     const { navigation, item, im, distance, horizontal, full, style, ctaColor, imageStyle } = this.props;
-
+    
 
     const imageStyles = [
       full ? styles.fullImage : styles.horizontalImage,
@@ -27,15 +27,15 @@ class Card extends React.Component {
     return (
       <Block row={horizontal} card flex style={cardContainer}>
         <TouchableWithoutFeedback onPress = {() => navigation.navigate('Profile', {comm : item, imm:im})}>
-          <Block flex style={imgContainer}>
+          <Block style={imgContainer}>
             <Image source={{uri: server.server + im[0] }} style={imageStyles} resizeMode="contain"/>
           </Block>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback  onPress = {() => navigation.navigate('Profile', {comm : item, imm:im})}>
-          <Block flex space="between">
-            <Text numberOfLines={1} bold center size={15} style={horizontal?styles.cardHorizontalTitle : styles.cardTitle}>{item[1]}</Text>
-            <Text numberOfLines={1} italic center size={10} style={horizontal?styles.cardHorizontalDist : styles.cardDist}>à {distance} km</Text>
-            <Text numberOfLines={1} style={full ? styles.fullcardDescription : styles.cardDescription}>{item[2]}</Text>
+          <Block  space="between" style={{flex:3}}>
+            <Text numberOfLines={horizontal ? 2:1} bold center size={15} style={horizontal?styles.cardHorizontalTitle : styles.cardTitle}>{item[1]}</Text>
+             <Text numberOfLines={1} italic center style={horizontal?styles.cardHorizontalDist : styles.cardDist}>à {distance} km</Text>
+            <Text numberOfLines={1} center style={full ? styles.fullcardDescription : styles.cardDescription}>{item[2]}</Text>
           </Block>
         </TouchableWithoutFeedback>
       </Block>
@@ -67,37 +67,39 @@ const styles = StyleSheet.create({
     flex: 5,
     flexWrap: 'wrap',
     marginTop:5,
-    marginHorizontal:5
+    marginHorizontal:15
 
   },
   cardHorizontalTitle: {
-    flex: 5,
+    flex: 4,
     flexWrap: 'wrap',
     marginTop:15,
-    marginHorizontal:5
+    marginHorizontal:15
 
   },
   cardDist: {
+    fontSize:10,
     flex: 5,
     flexWrap: 'wrap',
     marginTop:2,
-    marginHorizontal:5
+    marginHorizontal:15
 
   },
   cardHorizontalDist: {
-    flex: 5,
+    fontSize:0,
+    flex: 4,
     flexWrap: 'wrap',
     marginTop:10,
-    marginHorizontal:5,
+    marginHorizontal:15,
     color: theme.COLORS.WHITE,
 
   },
   imageContainer: {
+    flex:1,
     borderRadius: 10,
     elevation: 4,
    // overflow: 'hidden',
-    margin: 10
-    
+    margin: 10,
   },
   image: {
     // borderRadius: 3,
@@ -136,7 +138,7 @@ const styles = StyleSheet.create({
   cardDescription: {
     fontSize: 8,
     color: "#444",
-    marginHorizontal: 5,
+    marginHorizontal: 15,
     marginTop:5,
     marginBottom:10
   }
