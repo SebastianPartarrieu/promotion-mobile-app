@@ -50,6 +50,10 @@
         </br>
   
           <div>
+          	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+  				<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+  				<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+			</svg>
             <a href="addPromotion" style="color:#008000; text-decoration:none" title="Retourner en Haut"><i>Ajouter une promotion</i></a>
           </div>
   
@@ -113,24 +117,40 @@
                                                         var esp2 =
   document.createElement('br');
   
+  var esp3 =
+  document.createElement('br');
+  
+  var esp4 =
+  document.createElement('br');
+  
+  var esp5 =
+  document.createElement('br');
+  
+  var esp6 =
+  document.createElement('br');
+  
   //myH2.textContent = promo[i].name;
-  myPara1.textContent = 'Description:  ' + promo[i][0];
-  myPara2.textContent = 'Date de début:  ' + promo[i][2];
-  myPara3.textContent = 'Date de fin:  ' + promo[i][4];
+  myPara1.textContent = 'Description:   ' + promo[i][0];
+  myPara2.textContent = 'Date de début:   ' + promo[i][2];
+  myPara3.textContent = 'Date de fin:   ' + promo[i][4];
   edit[i].textContent = 'Modifier';
   x.push(promo[i][3]);
   
   
   
   myArticle.appendChild(myList);
+  myArticle.appendChild(esp5);
+  myArticle.appendChild(esp6);
   myArticle.appendChild(myPara1);
   myArticle.appendChild(myPara2);
   myArticle.appendChild(myPara3);
   myArticle.appendChild(edit[i]);
   myArticle.appendChild(esp1);
   myArticle.appendChild(esp2);
+  myArticle.appendChild(esp3);
+  myArticle.appendChild(esp4);
                                                  
-          var img = new Image(100, 100);
+          var img = new Image(200, 200);
            img.src = "http://0.0.0.0:5000/static/promotionImage/"+res[3*i];
                                                     
          myList.appendChild(img);

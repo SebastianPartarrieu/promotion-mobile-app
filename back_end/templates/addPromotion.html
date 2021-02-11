@@ -88,7 +88,7 @@
                 else
                 {
                     localStorage.setItem("pid", res["pid"]);
-                    alert('added');
+                    alert('Importez une image pour valider votre promotion');
                     document.getElementById("view").disabled = false;
                    
                 }
@@ -125,6 +125,7 @@
             <div class="clearfix">
                 
                 <button type="button" class="signupbtn" onclick="add()">Valider</button>
+                <button type="button" class="cancelbtn" onclick=window.location.href="/commercemon-compte">Annuler</button>
                
 
             </div>
@@ -137,7 +138,7 @@
         <b>Image</b>
          <input type="file" id="inpFile">
          </br> </br>
-         <button type="submit" id="view" disabled=true>Upload</button>
+         <button type="submit" id="view" disabled=true>Importer</button>
         </form>
 
         </br> </br>
