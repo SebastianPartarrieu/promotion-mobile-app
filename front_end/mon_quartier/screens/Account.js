@@ -17,29 +17,20 @@ import { argonTheme } from "../constants";
 
 import server from "../constants/Server";
 import cities from "../constants/cities"
+import { DrawerContentScrollView } from "@react-navigation/drawer";
 
 const { width, height } = Dimensions.get("screen");
 
 
 
 
-function getInfos(token,updateFunction,route){
 
-  const url = new URL(route, server)
-
-  url.searchParams.append('token',token)
-  fetch(url, {
-    method : 'GET'
-  }).then((response) => response.json()).then(updateFunction).catch(
-    (e) => {alert('Something went wrong' + e.message)}
-  )
-}
 
 
 function Account({navigation}){
 
 
-  const [lastname, setLastname] = useState('nom') ;
+  var [lastname, setLastname] = useState('nom') ;
   const [firstname, setFirstname] = useState('prenom') ;
 
   const [city, setCity] = useState('');
@@ -47,20 +38,51 @@ function Account({navigation}){
   const [username, setUsername] = useState('email') ;
   const [password, setPassword] = useState('mdp') ;
 
-  
 
 
   function updateFunction(response){
-      { console.log(response)        
+      { 
+        setLastname(response['resultat'][0][0])  
+        setFirstname(response['resultat'][0][1]) 
+        setUsername(response['resultat'][0][2]) 
+        setCity(response['resultat'][0][3]) 
         }
     }
+
+
+
+    function getInfos(token,updateFunction,route){
+
+      const url = new URL(route, server.server)
+    
+      url.searchParams.append('token',token)
+      fetch(url, {
+        method : 'GET'
+      }).then((response) => response.json()).then(updateFunction).catch(
+        (e) => {alert('Something went wrong' + e.message)}
+      )
+    }
+
+
+    function changeInfos(token,lastname,firstname,username,city_id,route){
+      const url = new URL(route, server.server)
+    
+      url.searchParams.append('token',token)
+      url.searchParams.append("clnom",lastname)
+      url.searchParams.append("clpnom",firstname)
+      url.searchParams.append("clemail",username)
+      url.searchParams.append("aid",city_id)
+
+      fetch(url, {method : 'PATCH'})
+
+    
+    }
+
 
     useEffect( ()=>{getInfos(token,updateFunction,'myclient')}, []);
 
     return (
       <Block flex middle>
-        
-
 
         <StatusBar hidden />
         <ImageBackground
@@ -96,7 +118,7 @@ function Account({navigation}){
                     <Block width={width * 0.8} style={{ marginBottom: 15 }}>
                     
                       <Input
-                      
+                        defaultValue = {lastname}
                         onChangeText={(text) => setLastname(text)}
                         lastname = { lastname }
                         borderless
@@ -115,6 +137,7 @@ function Account({navigation}){
                     <Block width={width * 0.8} style={{ marginBottom: 15 }}>
                       <Input
                         borderless
+                        defaultValue = {firstname}
                         onChangeText={(text) => setFirstname(text)}
                         firstname = { firstname }
                         placeholder="Prénom"
@@ -132,6 +155,9 @@ function Account({navigation}){
                     <Block width={width * 0.8} style={{ marginBottom: 0 }}>
                       <Input
                         borderless
+
+                        defaultValue = {username}
+          
                         onChangeText={(text) => setUsername(text)}
                         username = { username }
                         placeholder="Email"
@@ -153,23 +179,7 @@ function Account({navigation}){
                     </Block>
 
                     <Block width={width * 0.8} style={{ marginBottom: 15 }}>
-                      <Input
-                        id='password'
-                        password
-                        borderless
-                        onChangeText={(text) => setPassword(text)}
-                        password = { password }
-                        placeholder="Mot de passe"
-                        iconContent={
-                          <Icon
-                            size={16}
-                            color={argonTheme.COLORS.ICON}
-                            name="padlock-unlocked"
-                            family="ArgonExtra"
-                            style={styles.inputIcons}
-                          />
-                        }
-                      />
+
                     </Block>
 
 
@@ -188,7 +198,7 @@ function Account({navigation}){
                             justifyContent: 'flex-start'
                             }}
                           dropDownStyle={{backgroundColor: '#FFFFFF'}}
-                          onChangeItem={item => setCity(item)}
+                          onChangeItem={item => setCity(item.value)}
                           //city = {city}
                           labelStyle={{
                             fontSize: 14,
@@ -202,7 +212,7 @@ function Account({navigation}){
                       <Button 
                         color="primary" 
                         style={styles.createButton}
-                        onPress={() => console.log("Ici, append la BDD avec les nouvelles info utilisateurs.")}>                        
+                        onPress={() => changeInfos(token,lastname,firstname,username,city,"/myclient")}>               
                         <Text bold size={14} color={argonTheme.COLORS.WHITE}>
                           Enregistrer
                         </Text>
