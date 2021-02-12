@@ -76,7 +76,8 @@ INSERT INTO Commerce(cnom, cpresentation, code_postal, rue_and_num, aid, cmdp, c
 ('Cuistou', 'Brunch', 75011, '52 Rue Popincourt', 1, 'pwd', 'arthur.barbe@cuistou.fr', 48.8600555451, 2.37571739217, 'https://www.epicery.com/epiceries/cuistou'),
 ('Caviar Latian', 'Caviar', 75016, '36 Rue de l Annonciation', 1, 'pwd', 'contact@caviarlatian.fr', 48.857258097, 2.27846882812, 'https://www.epicery.com/epiceries/caviar-latian'),
 ('Compagnie Générale de la Biscuiterie', 'Chocolat', 75018, '1 Rue Constance', 1, 'pwd', 'alain.delarochere@gmail.com', 48.8852047764, 2.33367359492, 'https://www.epicery.com/epiceries/cie-generale-biscuiterie'),
-('Ava and Mr joe', 'Jeux et jouets pour enfants de 0 à 12 ans.', 75011, '36 bis rue de montreuil', 1, 'pwd', 'Karine@ava-and-mr-joe.fr', 48.8503854906, 2.38670975724, 'https://www.ava-and-mr-joe.fr');
+('Ava and Mr joe', 'Jeux et jouets pour enfants de 0 à 12 ans.', 75011, '36 bis rue de montreuil', 1, 'pwd', 'Karine@ava-and-mr-joe.fr', 48.8503854906, 2.38670975724, 'https://www.ava-and-mr-joe.fr'),
+('Le Choupinet','Restaurant original et fort sympathique au coeur de Paris',75006, '58 Boulevard Saint-Michel',1,'password','lechoupinet@paris.fr',48.848382738180106, 2.340800530679289, 'https://www.lechoupinet.com/');
 
 -- linking stores with their categories
 INSERT INTO CommerceCategorie(cid, catid) VALUES (1, 6), (2, 6), (3, 1), (4, 1),(5, 1),
@@ -137,7 +138,8 @@ INSERT INTO CommerceCategorie(cid, catid) VALUES (1, 6), (2, 6), (3, 1), (4, 1),
 (60, 4),
 (61, 4),
 (62, 5),
-(63, 7);
+(63, 7),
+(64, 1);
 
 -- one or two promotions
 INSERT INTO Promotion(cid, pdescription, tdebut, tfin) VALUES (1, 'Un diplôme pas cher!', '2021-01-14'::DATE, NULL),
@@ -168,5 +170,6 @@ INSERT INTO ImageCommerce(imgname,ranks, verified, cid) VALUES
 ('mines_1.jpeg', 1, FALSE, 1),
 ('maison_mines.jpeg', 1, FALSE, 2),
 ('muraille_phoenix.jpeg', 1, FALSE, 4),
-('panda_wok.jpeg', 1, FALSE, 3);
+('panda_wok.jpeg', 1, FALSE, 3),
+('lechoupinet.jpeg', 1, FALSE, 64);
 
