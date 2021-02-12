@@ -165,9 +165,7 @@ INSERT INTO ImagePromotion ( imgname,ranks, verified, pid) VALUES
 
 INSERT INTO ImageCommerce(imgname,ranks, verified, cid) VALUES
 ('mc_do.png' , 1 ,FALSE, 5),
-('mc_do_2.jpeg', 2, FALSE, 5),
 ('mines_1.jpeg', 1, FALSE, 1),
-('mines_2.jpeg', 2, FALSE, 1),
 ('maison_mines.jpeg', 1, FALSE, 2),
 ('muraille_phoenix.jpeg', 1, FALSE, 4),
 ('panda_wok.jpeg', 1, FALSE, 3);
