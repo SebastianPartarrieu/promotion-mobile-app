@@ -26,7 +26,7 @@
                     <ul class="navbar-nav text-uppercase ml-auto">
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/commercemon-compte">Promotions</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/informations">Informations</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/">Déconnexion</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/" onclick="localStorage.clear();">Déconnexion</a></li>
                     </ul>
                 </div>
             </div>
@@ -86,19 +86,31 @@
 										<select id="Agglomeration">
     										<option value="">--Choisissez une agglomération--</option>
     										<option value="1">Paris</option>
-    										<option value="2">Gif-sur-Yvette</option>
-    										<option value="3">Jouy-en-Josaster</option>
-    										<option value="4">Palaiseau</option>
+    										<option value="2">Caen</option>
+    										<option value="3">Nice</option>
 										</select>
-										</br> </br>
+										</br> </br>  
 
-                    
-               		<form class="form" id="myForm">
+
+
+                    <div class="clearfix">
+                        <button type="button" class="signupbtn" onclick="mofifier()">Valider</button>
+                        <button type="button" class="cancelbtn" onclick=window.location.href="/informations">Annuler</button>
+                    </div>
+                    </br>
+                    </br>
+                </form>
+                
+                
+                <form class="form" id="myForm">
                         <b>Image</b>
                          <input type="file" id="inpFile">
                          </br> </br>
                          <button type="submit" id="view">Importer</button>
+                         
                         </form>
+                        
+                      
                 
                         </br> </br>
                 
@@ -114,18 +126,9 @@
                                 const options = {
                                                 method: 'POST',
                                                 body: formData,};
-                                fetch(endpoint, options).catch(console.error)});
-                     </script>  
-
-
-
-                    <div class="clearfix">
-                        <button type="button" class="signupbtn" onclick="mofifier()">Valider</button>
-                        <button type="button" class="cancelbtn" onclick=window.location.href="/commercemon-compte">Annuler</button>
-                    </div>
-                    </br>
-                    </br>
-                </form>
+                                fetch(endpoint, options).catch(console.error)
+                                window.location.href="/informations";});
+                     </script>
 
                 <script>    
                     const BASE_URL = "http://0.0.0.0:5000";
@@ -213,10 +216,19 @@
                                     
                                     alert(res["message"]);
                                 }
-                                else {window.location.href="/informations";}
+                                else {getConfirmation();}
                             })}
                             
-            
+            function getConfirmation() {
+                  var retVal = confirm("Do you want to add a photo ?");
+                  if( retVal == true ) {
+                     
+                     return true;
+                  } else {
+                    window.location.href="/informations";
+                     return false;
+                  }
+               }
             
                   </script> 
 
